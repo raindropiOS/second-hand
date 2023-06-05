@@ -102,10 +102,10 @@
 			buildConfigurationList = 8F7C71542A2DD79B00C10206 /* Build configuration list for PBXNativeTarget "SecondHand" */;
 			buildPhases = (
 				747B74FEE32CC485FF95A429 /* [CP] Check Pods Manifest.lock */,
+				8F7C71572A2DDF3100C10206 /* SwiftLint */,
 				8F7C713C2A2DD79900C10206 /* Sources */,
 				8F7C713D2A2DD79900C10206 /* Frameworks */,
 				8F7C713E2A2DD79900C10206 /* Resources */,
-				8F7C71572A2DDF3100C10206 /* SwiftLint */,
 			);
 			buildRules = (
 			);
