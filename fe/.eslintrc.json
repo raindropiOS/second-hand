@@ -14,11 +14,12 @@
     },
     "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
     "rules": {
-        "react/react-in-jsx-scope": "off",
-        "camelcase": "error",
-        "spaced-comment": "error",
-        "quotes": ["error", "single"],
-        "no-duplicate-imports": "error",
+        "max-len": [2, { "code": 110 }],
+        "react/react-in-jsx-scope": 0,
+        "camelcase": 2,
+        "spaced-comment": 2,
+        "quotes": [2, "single"],
+        "no-duplicate-imports": 2,
         "react/no-unescaped-entities": 0
     },
     "settings": {
