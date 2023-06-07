@@ -1,29 +1,59 @@
-const fontSizes = {
-  XXL: {
-    fontSize: '32px',
-    lineHeight: '48px',
+const FONT_TOKEN = {
+  LARGE_TITLE: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '34px',
+    LINE_HEIGHT: '41px',
   },
-  XL: {
-    fontSize: '24px',
-    lineHeight: '40px',
+  TITLE_1: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '28px',
+    LINE_HEIGHT: '34px',
   },
-  L: {
-    fontSize: '18px',
-    lineHeight: '32px',
+  TITLE_2: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '22px',
+    LINE_HEIGHT: '28px',
   },
-  M: {
-    fontSize: '16px',
-    lineHeight: '28px',
+  TITLE_3: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '20px',
+    LINE_HEIGHT: '25px',
   },
-  S: {
-    fontSize: '12px',
-    lineHeight: '20px',
+  HEADLINE: {
+    FONT_WEIGHT: '590',
+    FONT_SIZE: '17px',
+    LINE_HEIGHT: '22px',
+  },
+  BODY: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '17px',
+    LINE_HEIGHT: '24px',
+  },
+  CALLOUT: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '17px',
+    LINE_HEIGHT: '21px',
+  },
+  SUBHEAD: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '15px',
+    LINE_HEIGHT: '20px',
+  },
+  FOOTNOTE: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '13px',
+    LINE_HEIGHT: '18px',
+  },
+  CAPTION_1: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '12px',
+    LINE_HEIGHT: '16px',
+  },
+  CAPTION_2: {
+    FONT_WEIGHT: '400',
+    FONT_SIZE: '11px',
+    LINE_HEIGHT: '13px',
   },
 };
 
-const fontWeights = {
-  bold: 700,
-  regular: 500,
-};
-
-export { fontSizes, fontWeights };
+export { FONT_TOKEN };
