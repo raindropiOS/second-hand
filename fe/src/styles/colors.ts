@@ -1,62 +1,61 @@
 const PALETTE = {
   WHITE: '#FFFFFF',
-  GRAY_50: '#FEFEFE',
-  GRAY_100: '#F7F7FC',
-  GRAY_200: '#EFF0F6',
-  GRAY_300: '#D9DBE9',
-  GRAY_400: '#BEC1D5',
-  GRAY_500: '#A0A3BD',
-  GRAY_600: '#6E7191',
-  GRAY_700: '#4E4B66',
-  GRAY_800: '#2A2A44',
-  GRAY_900: '#14142B',
+  BLACK: '#000000',
+  GRAY_50: '#FAFAFA',
+  GRAY_100: 'rgba(249, 249, 249, 0.8)',
+  GRAY_200: 'rgba(245, 245, 245, 0.7)',
+  GRAY_300: 'rgba(179, 179, 179, 0.12)',
+  GRAY_400: 'rgba(118, 118, 128, 0.12)',
+  GRAY_500: 'rgba(179, 179, 179, 0.39)',
+  GRAY_600: 'rgba(0, 0, 0, 0.2)',
+  GRAY_700: 'rgba(60, 60, 67, 0.36)',
+  GRAY_800: 'rgba(60, 60, 67, 0.6)',
+  GRAY_900: '#3C3C43',
+  MINT: '#00C7BE',
+  ORANGE: '#FF9500',
   BLUE: '#007AFF',
-  NAVY: '#0025E6',
   RED: '#FF3B30',
 };
 
-const lightColors = {
-  neutral: {
-    text: {
-      default: PALETTE.GRAY_700,
-      weak: PALETTE.GRAY_600,
-      strong: PALETTE.GRAY_900,
+const LIGHT_COLORS = {
+  NEUTRAL: {
+    TEXT: {
+      DEFAULT: PALETTE.GRAY_900,
+      WEAK: PALETTE.GRAY_800,
+      STRONG: PALETTE.BLACK,
     },
-    background: {
-      default: PALETTE.WHITE,
-      bold: PALETTE.GRAY_200,
-      strong: PALETTE.GRAY_50,
+    BACKGROUND: {
+      DEFAULT: PALETTE.WHITE,
+      WEAK: PALETTE.GRAY_50,
+      BOLD: PALETTE.GRAY_400,
+      BLUR: PALETTE.GRAY_100,
     },
-    border: {
-      default: PALETTE.GRAY_300,
-      active: PALETTE.GRAY_900,
+    BORDER: {
+      DEFAULT: PALETTE.GRAY_500,
+      STRONG: PALETTE.GRAY_700,
     },
-  },
-  accent: {
-    text: {
-      default: PALETTE.GRAY_50,
-      weak: PALETTE.BLUE,
-    },
-    background: {
-      default: PALETTE.BLUE,
-      weak: PALETTE.GRAY_50,
-      strong: PALETTE.GRAY_900,
-    },
-    border: {
-      weak: PALETTE.BLUE,
+    OVERLAY: {
+      DEFAULT: PALETTE.GRAY_600,
     },
   },
-  danger: {
-    text: PALETTE.RED,
-    border: PALETTE.RED,
+  ACCENT: {
+    TEXT: {
+      DEFAULT: PALETTE.WHITE,
+      WEAK: PALETTE.BLACK,
+    },
+    BACKGROUND: {
+      PRIMARY: PALETTE.ORANGE,
+      SECONDARY: PALETTE.MINT,
+    },
   },
-  icon: {
-    text: PALETTE.GRAY_50,
-    background: {
-      blue: PALETTE.BLUE,
-      navy: PALETTE.NAVY,
+  SYSTEM: {
+    DEFAULT: PALETTE.BLUE,
+    WARNING: PALETTE.RED,
+    BACKGROUND: {
+      DEFAULT: PALETTE.WHITE,
+      WEAK: PALETTE.GRAY_200,
     },
   },
 };
 
-export { lightColors };
+export { LIGHT_COLORS };
