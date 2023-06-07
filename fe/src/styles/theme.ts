@@ -1,15 +1,13 @@
 import { DefaultTheme } from 'styled-components';
-import { lightColors } from './colors';
-import { fontSizes, fontWeights } from './fonts';
+import { LIGHT_COLORS } from './colors';
+import { FONT_TOKEN } from './fonts';
 
-export type ColorsType = typeof lightColors;
-export type FontSizesType = typeof fontSizes;
-export type FontWeightsType = typeof fontWeights;
+export type ColorsType = typeof LIGHT_COLORS;
+export type FontTokenType = typeof FONT_TOKEN;
 
 const theme: DefaultTheme = {
-  colors: lightColors,
-  fontSizes,
-  fontWeights,
+  COLORS: LIGHT_COLORS,
+  FONT_TOKEN,
 };
 
 export { theme };

@@ -114,7 +114,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     width: 100%;
     font: inherit;
-    background-color: ${({ theme }) => theme.colors.neutral.background.default};
+    background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.DEFAULT};
     letter-spacing: -0.4px;
     font-size:1.6rem;
   }
