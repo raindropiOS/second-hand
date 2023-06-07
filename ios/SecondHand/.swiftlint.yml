@@ -3,6 +3,7 @@ disabled_rules:
 - trailing_whitespace
 - vertical_whitespace
 - trailing_comma
+- cyclomatic_complexity
 included:
 - SecondHand
 excluded:
