@@ -20,14 +20,14 @@ class TabBarController: UITabBarController {
         let salesLogViewController = SalesLogViewController()
         let likeListViewController = LikeListViewController()
         let chattingViewController = ChattingViewController()
-        let profileViewController = ProfileViewController()
+        let signInViewController = SignInViewController()
         
         let viewControllers = [
             homeViewController,
             salesLogViewController,
             likeListViewController,
             chattingViewController,
-            profileViewController
+            signInViewController
         ]
         
         self.setViewControllers(viewControllers, animated: false)

@@ -21,6 +21,8 @@
 		8F7C71712A31A00400C10206 /* LikeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71702A31A00400C10206 /* LikeListViewController.swift */; };
 		8F7C71732A31A01E00C10206 /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71722A31A01E00C10206 /* ChattingViewController.swift */; };
 		8F7C71752A31A04D00C10206 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71742A31A04D00C10206 /* ProfileViewController.swift */; };
+		8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71762A31C37000C10206 /* SignUpViewController.swift */; };
+		8F7C71792A31C37A00C10206 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71782A31C37A00C10206 /* SignInViewController.swift */; };
 		971E2AF1E98F87C76755A343 /* Pods_SecondHand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +44,8 @@
 		8F7C71702A31A00400C10206 /* LikeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeListViewController.swift; sourceTree = "<group>"; };
 		8F7C71722A31A01E00C10206 /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
 		8F7C71742A31A04D00C10206 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8F7C71762A31C37000C10206 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		8F7C71782A31C37A00C10206 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SecondHand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9808566887603BF383A0FC65 /* Pods-SecondHand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.debug.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +96,8 @@
 				8F7C716E2A319FA400C10206 /* SalesLogViewController.swift */,
 				8F7C71722A31A01E00C10206 /* ChattingViewController.swift */,
 				8F7C71742A31A04D00C10206 /* ProfileViewController.swift */,
+				8F7C71762A31C37000C10206 /* SignUpViewController.swift */,
+				8F7C71782A31C37A00C10206 /* SignInViewController.swift */,
 			);
 			path = SecondHand;
 			sourceTree = "<group>";
@@ -269,7 +275,9 @@
 				8F7C715B2A2ED31700C10206 /* LoginViewController.swift in Sources */,
 				8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */,
 				8F7C71692A319B2900C10206 /* TabBarController.swift in Sources */,
+				8F7C71792A31C37A00C10206 /* SignInViewController.swift in Sources */,
 				8F7C71462A2DD79900C10206 /* SceneDelegate.swift in Sources */,
+				8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */,
 				8F7C71752A31A04D00C10206 /* ProfileViewController.swift in Sources */,
 				8F7C71732A31A01E00C10206 /* ChattingViewController.swift in Sources */,
 				8F7C71712A31A00400C10206 /* LikeListViewController.swift in Sources */,
