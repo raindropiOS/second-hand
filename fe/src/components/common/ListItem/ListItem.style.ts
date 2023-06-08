@@ -5,11 +5,11 @@ const $Wrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  gap: 15px;
 
   width: 361px;
   height: 150px;
   padding: 15px 0;
-  gap: 15px;
   border-bottom: ${({ theme }) => `1px solid ${theme.COLORS.NEUTRAL.BORDER.DEFAULT}`};
 
   cursor: pointer;
@@ -29,11 +29,11 @@ const $TextInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: 4px;
 
   width: 226px;
   height: 120px;
   padding: 4px 0;
-  gap: 4px;
 `;
 
 const $TitleWrapper = styled.div`
@@ -65,7 +65,6 @@ const $StatusPriceWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-
   gap: 4px;
 `;
 
@@ -99,17 +98,15 @@ const $ChatLikeWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  align-self: flex-end;
+  gap: 4px;
 
   padding-top: 24px;
-  gap: 4px;
 
   font-weight: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.FONT_SIZE};
   line-height: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.LINE_HEIGHT};
   color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.DEFAULT};
-
-  justify-self: end;
-  align-self: end;
 `;
 
 export {

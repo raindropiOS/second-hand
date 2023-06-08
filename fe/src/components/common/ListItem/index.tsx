@@ -47,6 +47,7 @@ const ListItem = ({
   const theme = useTheme();
 
   return (
+    // FIXME(jayden): onClick 이벤트를 Touch 관련 이벤트로 대체해야함
     <$Wrapper onClick={onItemClick}>
       <$Image src={img} alt="상품 이미지" />
       <$TextInfoWrapper>
@@ -56,7 +57,7 @@ const ListItem = ({
             <div
               onClick={e => {
                 e.stopPropagation();
-                onItemMoreClick!();
+                onItemMoreClick && onItemMoreClick();
               }}
             >
               <Icon name="more" fill={theme.COLORS.NEUTRAL.TEXT.WEAK} />
