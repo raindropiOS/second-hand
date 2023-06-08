@@ -19,9 +19,13 @@ export const First: Story = {
     price: '24,500',
     chatCount: 2,
     likeCount: 5,
+    isCurrentUserItem: false,
   },
   // NOTE(Jayden): onClick같은 경우는 argsType을 사용해야 test시에도 사용할 수 있다.
-  argTypes: {},
+  argTypes: {
+    onItemClick: { action: 'onItemClick' },
+    onItemMoreClick: { action: 'onItemMoreClick' },
+  },
 };
 
 export const Second: Story = {
@@ -33,10 +37,13 @@ export const Second: Story = {
     status: '예약중',
     price: '59,000',
     chatCount: 0,
-    likeCount: 0,
+    likeCount: 2,
+    isCurrentUserItem: true,
   },
-  // NOTE(Jayden): onClick같은 경우는 argsType을 사용해야 test시에도 사용할 수 있다.
-  argTypes: {},
+  argTypes: {
+    onItemClick: { action: 'onItemClick' },
+    onItemMoreClick: { action: 'onItemMoreClick' },
+  },
 };
 
 export const Third: Story = {
@@ -48,7 +55,10 @@ export const Third: Story = {
     status: '판매중',
     chatCount: 13,
     likeCount: 21,
+    isCurrentUserItem: true,
   },
-  // NOTE(Jayden): onClick같은 경우는 argsType을 사용해야 test시에도 사용할 수 있다.
-  argTypes: {},
+  argTypes: {
+    onItemClick: { action: 'onItemClick' },
+    onItemMoreClick: { action: 'onItemMoreClick' },
+  },
 };
