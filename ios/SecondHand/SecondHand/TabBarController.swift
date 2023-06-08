@@ -8,22 +8,45 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.tabBar.backgroundColor = .orange
+        setTabViewControllers()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setTabViewControllers() {
+        let homeViewController = HomeViewController()
+        let salesLogViewController = SalesLogViewController()
+        let likeListViewController = LikeListViewController()
+        let chattingViewController = ChattingViewController()
+        let profileViewController = ProfileViewController()
+        
+        let viewControllers = [
+            homeViewController,
+            salesLogViewController,
+            likeListViewController,
+            chattingViewController,
+            profileViewController
+        ]
+        
+        self.setViewControllers(viewControllers, animated: false)
+        
+        if let items = self.tabBar.items {
+            items[0].title = "홈"
+            items[0].image = UIImage(systemName: "house")
+            
+            items[1].title = "판매내역"
+            items[1].image = UIImage(systemName: "newspaper")
+            
+            items[2].title = "관심목록"
+            items[2].image = UIImage(systemName: "heart")
+            
+            items[3].title = "채팅"
+            items[3].image = UIImage(systemName: "message")
+            
+            items[4].title = "내 계정"
+            items[4].image = UIImage(systemName: "person")
+        }
     }
-    */
-
 }
