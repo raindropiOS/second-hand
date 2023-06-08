@@ -18,8 +18,8 @@
     "jsx": "react-jsx",
     "paths": {
       "@assets/*": ["src/assets/*"],
-      "@common/*": ["src/component/common/*"],
-      "@components/*": ["src/component/*"],
+      "@common/*": ["src/components/common/*"],
+      "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@context/*": ["src/context/*"],
       "@hooks/*": ["src/hooks/*"],
