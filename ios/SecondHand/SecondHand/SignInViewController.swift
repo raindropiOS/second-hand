@@ -24,6 +24,7 @@ class SignInViewController: UIViewController {
         self.configureNavigationBar()
         self.configureIdInputView()
         self.configureLoginSignUpButton()
+        
     }
     
     private func configureNavigationBar() {
@@ -35,15 +36,21 @@ class SignInViewController: UIViewController {
         idInputView.configureText(labelText: "아이디", textFieldPlaceholder: "아이디를 입력하세요.")
         
         self.idInputView.translatesAutoresizingMaskIntoConstraints = false
+        let height = self.view.frame.height
+        let padding = (60/height) * height
+        
+        NSLayoutConstraint.activate([
+            idInputView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: padding)
+        ])
     }
     
     private func configureLoginSignUpButton() {
+        let height = self.view.frame.height
+        let padding = (60/height) * height
+        
         self.loginButton.setTitle("로그인", for: .normal)
         self.signUpButton.setTitle("회원가입", for: .normal)
-        
         self.signUpButton.setTitleColor(.black, for: .normal)
-//        self.signUpButton.setAttributedTitle(<#T##title: NSAttributedString?##NSAttributedString?#>, for: <#T##UIControl.State#>)
-        
         
         self.view.addSubview(self.stackView)
         
@@ -54,14 +61,9 @@ class SignInViewController: UIViewController {
         self.signUpButton.translatesAutoresizingMaskIntoConstraints = false
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
-//        NSLayoutConstraint.activate([
-//            self.signUpButton.widthAnchor.constraint(equalToConstant: 300),
-//            self.signUpButton.heightAnchor.constraint(equalToConstant: 70),
-//        ])
-        
     }
     
     private func configureLoginButtonAction() {
@@ -164,8 +166,8 @@ class OrangeButton: UIButton {
     private func configureLayout() {
         self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.widthAnchor.constraint(equalToConstant: 300),
-            self.heightAnchor.constraint(equalToConstant: 70)
+            self.widthAnchor.constraint(equalToConstant: 330),
+            self.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
