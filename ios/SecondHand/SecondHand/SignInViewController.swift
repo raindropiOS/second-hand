@@ -8,13 +8,22 @@
 import UIKit
 
 class SignInViewController: UIViewController {
+    let stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        return stack
+    }()
+    
     let idInputView: InputView = InputView()
+    let loginButton: OrangeButton = OrangeButton()
+    let signUpButton: UIButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.configureNavigationBar()
         self.configureIdInputView()
+        self.configureLoginSignUpButton()
     }
     
     private func configureNavigationBar() {
@@ -26,17 +35,45 @@ class SignInViewController: UIViewController {
         idInputView.configureText(labelText: "아이디", textFieldPlaceholder: "아이디를 입력하세요.")
         
         self.idInputView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func configureLoginSignUpButton() {
+        self.loginButton.setTitle("로그인", for: .normal)
+        self.signUpButton.setTitle("회원가입", for: .normal)
+        
+        self.signUpButton.setTitleColor(.black, for: .normal)
+//        self.signUpButton.setAttributedTitle(<#T##title: NSAttributedString?##NSAttributedString?#>, for: <#T##UIControl.State#>)
+        
+        
+        self.view.addSubview(self.stackView)
+        
+        self.stackView.addArrangedSubview(loginButton)
+        self.stackView.addArrangedSubview(signUpButton)
+        
+        self.loginButton.translatesAutoresizingMaskIntoConstraints = false
+        self.signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        self.stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.idInputView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.idInputView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.idInputView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-//            self.idInputView.widthAnchor.constraint(equalToConstant: 200),
-            self.idInputView.heightAnchor.constraint(equalToConstant: 50)
+            self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
+//        NSLayoutConstraint.activate([
+//            self.signUpButton.widthAnchor.constraint(equalToConstant: 300),
+//            self.signUpButton.heightAnchor.constraint(equalToConstant: 70),
+//        ])
+        
+    }
+    
+    private func configureLoginButtonAction() {
+        self.loginButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
+    }
+    
+    @objc func loginButtonAction() {
+        // 로그인 버튼 터치시 수행할 동작
     }
 }
 
-// TODO: 파일 분리 예정
+// TODO: 파일 분리 예정 - 1
 class InputView: UIView {
     
     let horizontalStackView: UIStackView = {
@@ -99,4 +136,41 @@ class InputView: UIView {
             horizontalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
     }
+}
+
+// TODO: 파일 분리 예정 - 2
+class OrangeButton: UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setup()
+    }
+    
+    private func setup() {
+        self.setColor()
+        self.configureLayout()
+        self.configureShape()
+    }
+    
+    private func setColor() {
+        self.backgroundColor = UIColor(named: "orange")
+    }
+    
+    private func configureLayout() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.widthAnchor.constraint(equalToConstant: 300),
+            self.heightAnchor.constraint(equalToConstant: 70)
+        ])
+    }
+    
+    private func configureShape() {
+        self.layer.cornerRadius = 10
+    }
+    
 }
