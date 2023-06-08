@@ -18,8 +18,8 @@
     "jsx": "react-jsx",
     "paths": {
       "@assets/*": ["src/assets/*"],
-      "@common/*": ["src/components/common/*"],
-      "@components/*": ["src/components/*"],
+      "@common/*": ["src/component/common/*"],
+      "@components/*": ["src/component/*"],
       "@constants/*": ["src/constants/*"],
       "@context/*": ["src/context/*"],
       "@hooks/*": ["src/hooks/*"],
@@ -29,6 +29,6 @@
       "@utils/*": ["src/utils/*"]
     }
   },
-  "include": ["src", "craco.config.js"],
+  "include": ["src", "craco.config.js", "src/components/common/Icon/custom.d.ts"],
   "extends": "./tsconfig.paths.json"
 }
