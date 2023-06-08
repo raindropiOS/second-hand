@@ -1,4 +1,4 @@
-import { ThemeProps, createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 // 왜 다른 상태관리 라이브러리 사용 지양하게 했는지?
 const GlobalStyles = createGlobalStyle`
