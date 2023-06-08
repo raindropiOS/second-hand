@@ -15,6 +15,7 @@
 		8F7C715B2A2ED31700C10206 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C715A2A2ED31700C10206 /* LoginViewController.swift */; };
 		8F7C71602A2F730800C10206 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C715F2A2F730800C10206 /* NetworkManager.swift */; };
 		8F7C71652A30488B00C10206 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71642A30488B00C10206 /* FontStyle.swift */; };
+		8F7C71692A319B2900C10206 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71682A319B2900C10206 /* TabBarController.swift */; };
 		971E2AF1E98F87C76755A343 /* Pods_SecondHand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		8F7C715A2A2ED31700C10206 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8F7C715F2A2F730800C10206 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8F7C71642A30488B00C10206 /* FontStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyle.swift; sourceTree = "<group>"; };
+		8F7C71682A319B2900C10206 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SecondHand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9808566887603BF383A0FC65 /* Pods-SecondHand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.debug.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +76,7 @@
 				8F7C715C2A2F094800C10206 /* SupportingFiles */,
 				8F7C714C2A2DD79B00C10206 /* Assets.xcassets */,
 				8F7C71642A30488B00C10206 /* FontStyle.swift */,
+				8F7C71682A319B2900C10206 /* TabBarController.swift */,
 			);
 			path = SecondHand;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				8F7C71602A2F730800C10206 /* NetworkManager.swift in Sources */,
 				8F7C715B2A2ED31700C10206 /* LoginViewController.swift in Sources */,
 				8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */,
+				8F7C71692A319B2900C10206 /* TabBarController.swift in Sources */,
 				8F7C71462A2DD79900C10206 /* SceneDelegate.swift in Sources */,
 				8F7C71652A30488B00C10206 /* FontStyle.swift in Sources */,
 			);
