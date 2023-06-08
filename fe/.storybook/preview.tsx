@@ -1,4 +1,6 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../src/styles/theme';
 import GlobalStyles from '../src/styles/GlobalStyles.style';
 
 import type { Preview, composeStory } from '@storybook/react';
@@ -17,10 +19,10 @@ const preview: Preview = {
 
 export const decorators = [
   Story => (
-    <React.Fragment>
+    <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Story />
-    </React.Fragment>
+    </ThemeProvider>
   ),
 ];
 
