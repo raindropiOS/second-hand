@@ -1,6 +1,7 @@
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import GlobalStyles from '../src/styles/GlobalStyles.style';
 import { theme } from '../src/styles/theme';
+import GlobalStyles from '../src/styles/GlobalStyles.style';
 
 import type { Preview, composeStory } from '@storybook/react';
 
