@@ -53,6 +53,11 @@ class SignUpViewController: UIViewController {
                     button.trailingAnchor.constraint(equalTo: super.view.trailingAnchor, constant: -16),
                     button.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 382)
                 ])
+        view.addSubview(circleButton)
+                NSLayoutConstraint.activate([
+                    circleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    circleButton.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 219.5)
+                ])
     }
     
 
