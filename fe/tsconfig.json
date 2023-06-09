@@ -29,6 +29,6 @@
       "@utils/*": ["src/utils/*"]
     }
   },
-  "include": ["src", "craco.config.js"],
+  "include": ["src", "craco.config.js", "src/components/common/Icon/custom.d.ts"],
   "extends": "./tsconfig.paths.json"
 }
