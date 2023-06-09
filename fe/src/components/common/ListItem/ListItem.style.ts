@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const $Wrapper = styled.div`
+const $ListItemLayout = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -24,7 +24,7 @@ const $Image = styled.img`
   background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.WEAK};
 `;
 
-const $TextInfoWrapper = styled.div`
+const $TextInfoLayout = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -36,7 +36,7 @@ const $TextInfoWrapper = styled.div`
   padding: 4px 0;
 `;
 
-const $TitleWrapper = styled.div`
+const $TitleLayout = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -46,21 +46,21 @@ const $TitleWrapper = styled.div`
   height: 20px;
 `;
 
-const $Title = styled.div`
+const $Title = styled.p`
   font-weight: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.FONT_SIZE};
   line-height: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.LINE_HEIGHT};
   color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.DEFAULT};
 `;
 
-const $LocationTimestamp = styled.div`
+const $LocationTimestamp = styled.p`
   font-weight: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.FONT_SIZE};
   line-height: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.LINE_HEIGHT};
   color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.WEAK};
 `;
 
-const $StatusPriceWrapper = styled.div`
+const $StatusPriceLayout = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -68,7 +68,7 @@ const $StatusPriceWrapper = styled.div`
   gap: 4px;
 `;
 
-const $Status = styled.div`
+const $Status = styled.p`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -86,14 +86,14 @@ const $Status = styled.div`
   color: ${({ theme }) => theme.COLORS.ACCENT.TEXT.DEFAULT};
 `;
 
-const $Price = styled.div`
+const $Price = styled.p`
   font-weight: ${({ theme }) => theme.FONT_TOKEN.HEADLINE.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.HEADLINE.FONT_SIZE};
   line-height: ${({ theme }) => theme.FONT_TOKEN.HEADLINE.LINE_HEIGHT};
   color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.STRONG};
 `;
 
-const $ChatLikeWrapper = styled.div`
+const $ChatLikeLayout = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -110,14 +110,14 @@ const $ChatLikeWrapper = styled.div`
 `;
 
 export {
-  $Wrapper,
+  $ListItemLayout,
   $Image,
-  $TextInfoWrapper,
-  $TitleWrapper,
+  $TextInfoLayout,
+  $TitleLayout,
   $Title,
   $LocationTimestamp,
-  $StatusPriceWrapper,
+  $StatusPriceLayout,
   $Status,
   $Price,
-  $ChatLikeWrapper,
+  $ChatLikeLayout,
 };
