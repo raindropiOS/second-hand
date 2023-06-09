@@ -46,6 +46,13 @@ class SignUpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
+        view.addSubview(button)
+                NSLayoutConstraint.activate([
+                    button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    button.trailingAnchor.constraint(equalTo: super.view.trailingAnchor, constant: -16),
+                    button.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 382)
+                ])
     }
     
 
