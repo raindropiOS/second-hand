@@ -25,6 +25,7 @@ class SignInViewController: UIViewController {
         self.configureIdInputView()
         self.configureLoginSignUpButton()
         
+        self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
     }
     
     private func configureNavigationBar() {
@@ -72,6 +73,11 @@ class SignInViewController: UIViewController {
     
     @objc func loginButtonAction() {
         // 로그인 버튼 터치시 수행할 동작
+    }
+    
+    @objc func signUpButtonTouched() {
+        let signUpViewController = SignUpViewController()
+        self.present(signUpViewController, animated: true)
     }
 }
 
