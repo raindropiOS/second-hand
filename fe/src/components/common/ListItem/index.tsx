@@ -73,16 +73,16 @@ const ListItem = ({
         </$StatusPriceLayout>
         <$ChatLikeLayout>
           {!!chatCount && (
-            <React.Fragment>
+            <>
               <Icon name="message" fill={theme.COLORS.NEUTRAL.TEXT.DEFAULT} />
               <div>{chatCount}</div>
-            </React.Fragment>
+            </>
           )}
           {!!likeCount && (
-            <React.Fragment>
+            <>
               <Icon name="like" fill={theme.COLORS.NEUTRAL.TEXT.DEFAULT} />
               <div>{likeCount}</div>
-            </React.Fragment>
+            </>
           )}
         </$ChatLikeLayout>
       </$TextInfoLayout>
