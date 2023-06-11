@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 const $SaleTabBar = styled.footer`
   display: flex;
   align-items: center;
