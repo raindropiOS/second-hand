@@ -7,7 +7,7 @@
 
 import UIKit.UIImageView
 
-class CircularImageView: UIImageView {
+class ProfileImageView: UIImageView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.cornerRadius = self.frame.size.height / 2
