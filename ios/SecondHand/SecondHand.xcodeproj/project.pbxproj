@@ -25,6 +25,7 @@
 		8FCAA43B2A35D04C0015FE4D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43A2A35D04C0015FE4D /* InputView.swift */; };
 		8FCAA43D2A35D08A0015FE4D /* OrangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43C2A35D08A0015FE4D /* OrangeButton.swift */; };
 		8FCAA43F2A35D21D0015FE4D /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */; };
+		8FCAA48B2A36397D0015FE4D /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */; };
 		971E2AF1E98F87C76755A343 /* Pods_SecondHand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		8FCAA43A2A35D04C0015FE4D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		8FCAA43C2A35D08A0015FE4D /* OrangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrangeButton.swift; sourceTree = "<group>"; };
 		8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
+		8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SecondHand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9808566887603BF383A0FC65 /* Pods-SecondHand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.debug.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +124,7 @@
 				8FCAA43A2A35D04C0015FE4D /* InputView.swift */,
 				8FCAA43C2A35D08A0015FE4D /* OrangeButton.swift */,
 				8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */,
+				8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FCAA48B2A36397D0015FE4D /* ProfileImageView.swift in Sources */,
 				8FCAA43B2A35D04C0015FE4D /* InputView.swift in Sources */,
 				8F7C716F2A319FA400C10206 /* SalesLogViewController.swift in Sources */,
 				8F7C71602A2F730800C10206 /* NetworkManager.swift in Sources */,
