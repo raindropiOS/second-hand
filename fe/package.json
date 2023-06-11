@@ -24,7 +24,8 @@
     "test": "craco test",
     "eject": "craco eject",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_e679a2a81adb48e"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "chromatic": "^6.18.2",
     "craco-alias": "^3.0.1",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
