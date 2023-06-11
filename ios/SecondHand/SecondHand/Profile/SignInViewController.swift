@@ -32,10 +32,26 @@ class SignInViewController: UIViewController {
         self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
     }
     
+    private func configureLoginButtonAction() {
+        self.loginButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
+    }
+    
+    @objc func loginButtonAction() {
+        // 로그인 버튼 터치시 수행할 동작
+    }
+    
+    @objc func signUpButtonTouched() {
+        let signUpViewController = SignUpViewController()
+        self.present(signUpViewController, animated: true)
+    }
+    
     private func configureNavigationBar() {
         self.navigationItem.title = "내 계정"
     }
-    
+}
+
+// MARK: Autolayout
+extension SignInViewController {
     private func configureSeparatorViewUnderNavigationBar() {
         self.view.addSubview(separatorViewUnderNavigationBar)
         self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
@@ -94,18 +110,5 @@ class SignInViewController: UIViewController {
             self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
-    }
-    
-    private func configureLoginButtonAction() {
-        self.loginButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
-    }
-    
-    @objc func loginButtonAction() {
-        // 로그인 버튼 터치시 수행할 동작
-    }
-    
-    @objc func signUpButtonTouched() {
-        let signUpViewController = SignUpViewController()
-        self.present(signUpViewController, animated: true)
     }
 }
