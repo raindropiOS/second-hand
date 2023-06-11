@@ -8,6 +8,7 @@
 import UIKit
 
 class SignInViewController: UIViewController {
+    let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     let idInputView: InputView = InputView()
     let separatorView: SeparatorView = SeparatorView()
     
@@ -23,6 +24,7 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.configureNavigationBar()
+        self.configureSeparatorViewUnderNavigationBar()
         self.configureIdInputView()
         self.configureSeparatorView()
         self.configureLoginSignUpButton()
@@ -34,6 +36,18 @@ class SignInViewController: UIViewController {
         self.navigationItem.title = "내 계정"
     }
     
+    private func configureSeparatorViewUnderNavigationBar() {
+        self.view.addSubview(separatorViewUnderNavigationBar)
+        self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.separatorViewUnderNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.separatorViewUnderNavigationBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.separatorViewUnderNavigationBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.separatorViewUnderNavigationBar.heightAnchor.constraint(equalToConstant: SeparatorView.height)
+        ])
+        self.separatorViewUnderNavigationBar.configure()
+    }
+    
     private func configureIdInputView() {
         self.view.addSubview(idInputView)
         idInputView.configureText(labelText: "아이디", textFieldPlaceholder: "아이디를 입력하세요.")
@@ -43,7 +57,7 @@ class SignInViewController: UIViewController {
         let padding = (60/height) * height
         
         NSLayoutConstraint.activate([
-            idInputView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: padding),
+            idInputView.topAnchor.constraint(equalTo: separatorViewUnderNavigationBar.bottomAnchor, constant: padding),
             idInputView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
         ])
     }
