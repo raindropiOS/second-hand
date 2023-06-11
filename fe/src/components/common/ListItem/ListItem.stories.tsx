@@ -12,10 +12,10 @@ type Story = StoryObj<typeof meta>;
 
 export const First: Story = {
   args: {
-    img: 'https://via.placeholder.com/150',
+    imgUrl: 'https://via.placeholder.com/150',
     title: '파랑 선풍기',
     town: '역삼1동',
-    timestamp: '2시간 전',
+    timestamp: '2023-06-05T00:00:00.000Z',
     status: '판매중',
     price: '24,500',
     chatCount: 2,
@@ -31,10 +31,10 @@ export const First: Story = {
 
 export const Second: Story = {
   args: {
-    img: 'https://via.placeholder.com/150',
+    imgUrl: 'https://via.placeholder.com/150',
     title: '잎사귀 포스터',
     town: '역삼1동',
-    timestamp: '7시간 전',
+    timestamp: '2022-06-05T00:00:00.000Z',
     status: '예약중',
     price: '59,000',
     chatCount: 0,
@@ -49,10 +49,10 @@ export const Second: Story = {
 
 export const Third: Story = {
   args: {
-    img: 'https://via.placeholder.com/150',
+    imgUrl: 'https://via.placeholder.com/150',
     title: '회전 의자',
     town: '역삼 1동',
-    timestamp: '1일 전',
+    timestamp: '2023-06-11T06:00:00.000Z',
     status: '판매중',
     chatCount: 13,
     likeCount: 21,
