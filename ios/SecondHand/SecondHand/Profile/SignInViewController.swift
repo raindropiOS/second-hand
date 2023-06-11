@@ -8,13 +8,14 @@
 import UIKit
 
 class SignInViewController: UIViewController {
+    let idInputView: InputView = InputView()
+    let separatorView: SeparatorView = SeparatorView()
+    
     let stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         return stack
     }()
-    
-    let idInputView: InputView = InputView()
     let loginButton: OrangeButton = OrangeButton()
     let signUpButton: UIButton = UIButton()
     
@@ -23,6 +24,7 @@ class SignInViewController: UIViewController {
         self.view.backgroundColor = .white
         self.configureNavigationBar()
         self.configureIdInputView()
+        self.configureSeparatorView()
         self.configureLoginSignUpButton()
         
         self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
@@ -44,6 +46,18 @@ class SignInViewController: UIViewController {
             idInputView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: padding),
             idInputView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
         ])
+    }
+    
+    private func configureSeparatorView() {
+        self.view.addSubview(separatorView)
+        self.separatorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.separatorView.topAnchor.constraint(equalTo: idInputView.bottomAnchor, constant: SeparatorView.interval),
+            self.separatorView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.separatorView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.separatorView.heightAnchor.constraint(equalToConstant: SeparatorView.height)
+        ])
+        self.separatorView.configure()
     }
     
     private func configureLoginSignUpButton() {
