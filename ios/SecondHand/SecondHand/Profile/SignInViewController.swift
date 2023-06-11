@@ -41,7 +41,8 @@ class SignInViewController: UIViewController {
         let padding = (60/height) * height
         
         NSLayoutConstraint.activate([
-            idInputView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: padding)
+            idInputView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: padding),
+            idInputView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
         ])
     }
     
