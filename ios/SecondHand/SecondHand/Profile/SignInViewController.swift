@@ -11,6 +11,7 @@ class SignInViewController: UIViewController {
     let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     let idInputView: InputView = InputView()
     let separatorView: SeparatorView = SeparatorView()
+    private let topBottomPadding: CGFloat = 80/852
     
     let stackView: UIStackView = {
         let stack = UIStackView()
@@ -70,7 +71,7 @@ extension SignInViewController {
         
         self.idInputView.translatesAutoresizingMaskIntoConstraints = false
         let height = self.view.frame.height
-        let padding = (60/height) * height
+        let padding = self.topBottomPadding * height
         
         NSLayoutConstraint.activate([
             idInputView.topAnchor.constraint(equalTo: separatorViewUnderNavigationBar.bottomAnchor, constant: padding),
@@ -92,7 +93,7 @@ extension SignInViewController {
     
     private func configureLoginSignUpButton() {
         let height = self.view.frame.height
-        let padding = (60/height) * height
+        let padding = self.topBottomPadding * height
         
         self.loginButton.setTitle("로그인", for: .normal)
         self.signUpButton.setTitle("회원가입", for: .normal)
