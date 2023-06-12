@@ -11,7 +11,7 @@ services:
       - application
 
   application:
-    build: ../../../Users/vugil/OneDrive/바탕 화면/새 폴더 (2)
+    build: .
     image: gamja123/second-hand
     container_name: was-application
     ports:
