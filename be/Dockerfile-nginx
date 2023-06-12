@@ -1,0 +1,3 @@
+FROM nginx
+COPY ../../../Users/vugil/OneDrive/바탕%20화면/새%20폴더%20 /etc/nginx/conf.d/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]
