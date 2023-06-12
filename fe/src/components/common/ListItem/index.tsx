@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
 
+import getTimeAgo from '@utils/getTimeAgo';
+
 import Icon from '@common/Icon';
 import {
   $ListItemLayout,
@@ -16,7 +18,7 @@ import {
 } from './ListItem.style';
 
 interface ListItemProps {
-  img: string;
+  imgUrl: string;
   title: string;
   town: string;
   timestamp: string;
@@ -32,7 +34,7 @@ interface ListItemProps {
 const NONE_PRICE = '가격 없음';
 
 const ListItem = ({
-  img,
+  imgUrl,
   title,
   town,
   timestamp,
@@ -47,9 +49,9 @@ const ListItem = ({
   const theme = useTheme();
 
   return (
-    // FIXME(jayden): onClick 이벤트를 Touch 관련 이벤트로 대체해야함
+    // NOTE(jayden): onClick 이벤트를 Touch 관련 이벤트로 대체해야할지 고민해보자!
     <$ListItemLayout onClick={onItemClick}>
-      <$Image src={img} alt="상품 이미지" />
+      <$Image src={imgUrl} alt="상품 이미지" />
       <$TextInfoLayout>
         <$TitleLayout>
           <$Title>{title}</$Title>
@@ -65,7 +67,7 @@ const ListItem = ({
           )}
         </$TitleLayout>
         <$LocationTimestamp>
-          {town}•{timestamp}
+          {town}•{getTimeAgo(timestamp)}
         </$LocationTimestamp>
         <$StatusPriceLayout>
           {status && <$Status>{status}</$Status>}
@@ -73,16 +75,16 @@ const ListItem = ({
         </$StatusPriceLayout>
         <$ChatLikeLayout>
           {!!chatCount && (
-            <React.Fragment>
+            <>
               <Icon name="message" fill={theme.COLORS.NEUTRAL.TEXT.DEFAULT} />
               <div>{chatCount}</div>
-            </React.Fragment>
+            </>
           )}
           {!!likeCount && (
-            <React.Fragment>
+            <>
               <Icon name="like" fill={theme.COLORS.NEUTRAL.TEXT.DEFAULT} />
               <div>{likeCount}</div>
-            </React.Fragment>
+            </>
           )}
         </$ChatLikeLayout>
       </$TextInfoLayout>
