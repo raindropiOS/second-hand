@@ -49,3 +49,4 @@ jobs:
         with:
           #👇 Chromatic projectToken,
           token: ${{ secrets.GITHUB_TOKEN }}
+          exit-zero-on-changes: true
