@@ -11,9 +11,13 @@ interface SaleTabBarProps {
 const SaleTabBar = ({ townNames }: SaleTabBarProps) => {
   const theme = useTheme();
 
+  const townSettingHandler = () => {
+    // TODO(hoonding): 터치(클릭) 핸들러 구현하기.
+  };
+
   return (
     <$SaleTabBar>
-      <$TownSetting>
+      <$TownSetting onTouchEnd={townSettingHandler}>
         <Icon name="townSetting" height={18} width={18} fill={theme.COLORS.NEUTRAL.TEXT.DEFAULT} />
         {townNames}
       </$TownSetting>

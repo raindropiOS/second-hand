@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const $SaleTabBar = styled.footer`
+const $DetailTabBar = styled.footer`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,28 +12,16 @@ const $SaleTabBar = styled.footer`
   background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.WEAK};
 `;
 
-const $TownSetting = styled.button`
+const $LikeLayout = styled.button`
   display: flex;
   align-items: center;
   height: max-content;
   font-size: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.FONT_SIZE};
   font-weight: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.FONT_WEIGHT};
-  color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.DEFAULT};
-  gap: 5px;
-  &:hover {
-    & > svg {
-      fill: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.STRONG};
-    }
-    color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.STRONG};
-  }
+  color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.STRONG};
+  gap: 10px;
 `;
 
-const $KeyboardDown = styled.button`
-  &:hover {
-    & > svg {
-      fill: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.STRONG};
-    }
-  }
-`;
+const $ChatButton = styled.button``;
 
-export { $SaleTabBar, $TownSetting, $KeyboardDown };
+export { $DetailTabBar, $LikeLayout, $ChatButton };
