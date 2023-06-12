@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Button from '.';
-import Icon from '@components/atoms/Icon';
+import Icon from '@atoms/Icon';
 import { theme } from '@styles/theme';
 
 const meta = {

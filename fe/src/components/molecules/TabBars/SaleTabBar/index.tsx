@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
 
-import Icon from '@components/atoms/Icon';
+import Icon from '@atoms/Icon';
 import { $SaleTabBar, $TownSetting, $KeyboardDown } from './SaleTabBar.style';
 
 interface SaleTabBarProps {
