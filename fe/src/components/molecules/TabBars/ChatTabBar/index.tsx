@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { useTheme } from 'styled-components';
 
 import { $ChatTabBar, $SendButton, $ChatInput } from './ChatTabBar.style';
-import Icon from '@components/atoms/Icon';
+import Icon from '@atoms/Icon';
 
 const ChatTabBar = () => {
   const theme = useTheme();

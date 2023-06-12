@@ -3,7 +3,7 @@ import { useTheme } from 'styled-components';
 
 import getTimeAgo from '@utils/getTimeAgo';
 
-import Icon from '@components/atoms/Icon';
+import Icon from '@atoms/Icon';
 import {
   $ListItemLayout,
   $Image,
