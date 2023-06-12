@@ -17,12 +17,19 @@ jobs:
     # Job steps
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          npm install
-          npm run chromatic
+
+      - name: Change directory to 'fe'
+        run: cd fe
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Chromatic
+        run: npm run chromatic
+
+      - name: Publish to Chromatic
         #👇 Adds Chromatic as a step in the workflow
-      - uses: chromaui/action@v1
-        # Options required for Chromatic's GitHub Action
+        uses: chromaui/action@v1
         with:
           #👇 Chromatic projectToken,
           token: ${{ secrets.GITHUB_TOKEN }}
