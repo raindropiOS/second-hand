@@ -7,34 +7,26 @@
 
 import UIKit.UIFont
 
-enum FontStyle {
-    case largeTitle
-    case title1
-    case title2
-    case title3
-    case headline
-    case body
-    case callout
-    case subhead
-    case footnote
-    case caption1
-    case caption2
+struct FontStyle {
+    let size: CGFloat
+    let weight: UIFont.Weight
+    let width: UIFont.Width
+    
+    static let largeTitle = UIFont.systemFont(ofSize: 34, weight: .regular, width: .standard)
+    static let title1 = UIFont.systemFont(ofSize: 28, weight: .regular, width: .standard)
+    static let title2 = UIFont.systemFont(ofSize: 22, weight: .regular, width: .standard)
+    static let title3 = UIFont.systemFont(ofSize: 20, weight: .regular, width: .standard)
+    static let headline = UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
+    static let body = UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
+    static let callout = UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
+    static let subhead = UIFont.systemFont(ofSize: 16, weight: .regular, width: .standard)
+    static let footnote = UIFont.systemFont(ofSize: 15, weight: .regular, width: .standard)
+    static let caption1 = UIFont.systemFont(ofSize: 13, weight: .regular, width: .standard)
+    static let caption2 = UIFont.systemFont(ofSize: 12, weight: .regular, width: .standard)
 }
 
 extension UIFont {
-    static func custom(_ name: FontStyle) -> UIFont {
-        switch name {
-        case .largeTitle: return UIFont.systemFont(ofSize: 34, weight: .regular, width: .standard)
-        case .title1: return UIFont.systemFont(ofSize: 28, weight: .regular, width: .standard)
-        case .title2: return UIFont.systemFont(ofSize: 22, weight: .regular, width: .standard)
-        case .title3: return UIFont.systemFont(ofSize: 20, weight: .regular, width: .standard)
-        case .headline: return UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
-        case .body: return UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
-        case .callout: return UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
-        case .subhead: return UIFont.systemFont(ofSize: 16, weight: .regular, width: .standard)
-        case .footnote: return UIFont.systemFont(ofSize: 15, weight: .regular, width: .standard)
-        case .caption1: return UIFont.systemFont(ofSize: 13, weight: .regular, width: .standard)
-        case .caption2: return UIFont.systemFont(ofSize: 12, weight: .regular, width: .standard)
-        }
+    static func customFont(_ fontStyle: FontStyle) -> UIFont {
+        UIFont.systemFont(ofSize: fontStyle.size, weight: fontStyle.weight, width: fontStyle.width)
     }
 }
