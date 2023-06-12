@@ -7,7 +7,7 @@ name: "스토리북 Chromatic 자동 배포"
 on:
   push:
     branches: [dev-fe]
-    paths: ["fe/src/components/**"]
+    # paths: ["fe/src/components/**"]
 
 env:
   working-directory: "./fe"    
@@ -18,7 +18,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.2
@@ -39,10 +39,13 @@ jobs:
         run: npm install
         working-directory: ${{ env.working-directory }}
 
+      - name: Run Chromatic
+        run: npm run chromatic
+        working-directory: ${{ env.working-directory }}
+
       - name: Publish to Chromatic
         #👇 Adds Chromatic as a step in the workflow
         uses: chromaui/action@v1
         with:
           #👇 Chromatic projectToken,
-          working-directory: ${{ env.working-directory }}
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
