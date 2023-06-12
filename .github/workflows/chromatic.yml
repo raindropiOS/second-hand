@@ -10,7 +10,7 @@ on:
     # paths: ["fe/src/components/**"]
 
 env:
-  working-directory: "./fe"
+  working-directory: fe
 
 jobs:
   test:
@@ -48,5 +48,7 @@ jobs:
         uses: chromaui/action@v1
         with:
           #👇 Chromatic projectToken,
-          path: "https://6484b35101eed27b0b48bfed-hmjtwfytaa.chromatic.com/?path=/story/common-saletabbar--default"
+          working-directory: ${{ env.working-directory }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          nonzeroExitCode: "false"
