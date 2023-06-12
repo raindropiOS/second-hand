@@ -18,8 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Change directory to 'fe'
-        run: cd fe
+      - name: Change directory to 'second-hand/fe'
+        run: cd second-hand/fe
 
       - name: Install dependencies
         run: npm install
