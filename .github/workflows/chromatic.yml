@@ -10,12 +10,12 @@ on:
     # paths: ["fe/src/components/**"]
 
 env:
-  working-directory: "./fe"    
+  working-directory: "./fe"
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v1
