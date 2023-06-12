@@ -17,6 +17,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "craco.config", "src/components/common/Icon/custom.d.ts"],
+  "include": ["src", "src/components/atoms/Icon/custom.d.ts"],
   "extends": "./tsconfig.paths.json"
 }

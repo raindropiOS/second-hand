@@ -3,12 +3,13 @@
     "baseUrl": ".",
     "paths": {
       "@assets/*": ["src/assets/*"],
-      "@common/*": ["src/components/common/*"],
+      "@atoms/*": ["src/components/atoms/*"],
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@context/*": ["src/context/*"],
       "@hooks/*": ["src/hooks/*"],
       "@mocks/*": ["src/mocks/*"],
+      "@molecules/*": ["src/components/molecules/*"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"]
