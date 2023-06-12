@@ -48,5 +48,5 @@ jobs:
         uses: chromaui/action@v1
         with:
           #👇 Chromatic projectToken,
-          working-directory: ${{ env.working-directory }}
+          path: "https://6484b35101eed27b0b48bfed-hmjtwfytaa.chromatic.com/?path=/story/common-saletabbar--default"
           token: ${{ secrets.GITHUB_TOKEN }}
