@@ -2,7 +2,7 @@
 const { CracoAliasPlugin } = require('react-app-alias');
 
 const options = {
-  source: 'tsconfig.json',
+  source: 'tsconfig',
   tsConfigPath: 'tsconfig.paths.json',
 };
 
