@@ -1,7 +1,7 @@
 # .github/workflows/chromatic.yml
 
 # Workflow name
-name: "Chromatic Publish"
+name: "스토리북 Chromatic 자동 배포"
 
 # Event for the workflow
 on:
@@ -9,27 +9,36 @@ on:
     branches: [dev-fe]
     paths: ["fe/src/components/**"]
 
-# List of jobs
-jobs:
-  test:
-    # Operating System
-    runs-on: ubuntu-latest
-    # Job steps
-    steps:
-      - uses: actions/checkout@v3
+env:
+  working-directory: fe
 
-      - name: Change directory to 'fe'
-        run: cd fe
+jobs:
+  storybook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.2
+        with:
+          node-version: lts/Hydrogen
 
       - name: Install dependencies
         run: npm install
+        working-directory: ${{ env.working-directory }}
+
+      - name: Cache node modules
+        uses: actions/cache@v2.1.8
+        # 해당 step을 대표하는 id를 설정할 수도 있다. 해당 값은 뒤의 step에서 사용한다.
+        id: cache
+        with:
+          # node_modules라는 폴더를 검사하여
+          path: node_modules
+          # 아래 키값으로 cache가 돼있는지 확인한다.
+          key: npm-packages-${{ hashFiles('**/package-lock.json') }}
 
       - name: Run Chromatic
-        run: npm run chromatic
-
-      - name: Publish to Chromatic
-        #👇 Adds Chromatic as a step in the workflow
-        uses: chromaui/action@v1
-        with:
-          #👇 Chromatic projectToken,
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run chromatic -- --exit-zero-on-changes
+        working-directory: ${{ env.working-directory }}
