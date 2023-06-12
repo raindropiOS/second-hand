@@ -6,10 +6,7 @@ import com.secondhand.util.StatusEnum;
 import lombok.*;
 
 @Getter
-@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class BoardsDTOResponse {
 
     private String title;

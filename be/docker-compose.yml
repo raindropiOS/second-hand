@@ -1,0 +1,20 @@
+version: "3"
+services:
+  was:
+    image: gamja123/second-hand-nginx
+    container_name: was-nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - application
+
+  application:
+    build: ../../../Users/vugil/OneDrive/바탕 화면/새 폴더 (2)
+    image: gamja123/second-hand
+    container_name: was-application
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
