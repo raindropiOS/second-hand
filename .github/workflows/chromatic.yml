@@ -7,7 +7,7 @@ name: "Chromatic Publish"
 on:
   push:
     branches: [dev-fe]
-    paths: ["src/components/**"]
+    paths: ["fe/src/components/**"]
 
 # List of jobs
 jobs:
