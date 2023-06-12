@@ -16,18 +16,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "paths": {
-      "@assets/*": ["src/assets/*"],
-      "@common/*": ["src/components/common/*"],
-      "@components/*": ["src/components/*"],
-      "@constants/*": ["src/constants/*"],
-      "@context/*": ["src/context/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@mocks/*": ["src/mocks/*"],
-      "@pages/*": ["src/pages/*"],
-      "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"]
-    }
   },
   "include": ["src", "craco.config.js", "src/components/common/Icon/custom.d.ts"],
   "extends": "./tsconfig.paths.json"
