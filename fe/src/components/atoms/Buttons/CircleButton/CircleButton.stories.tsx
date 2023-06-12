@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import CircleButton from '../CircleButton';
+import CircleButton from '.';
 
 const meta = {
   title: 'Common/CircleButton',

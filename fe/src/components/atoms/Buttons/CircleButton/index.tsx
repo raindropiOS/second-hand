@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { $CircleButton, CircleButtonSize } from './CircleButton.style';
-import Icon from '@common/Icon';
-import { IconComponents } from '@common/Icon/IconComponents';
+import Icon from '@components/atoms/Icon';
+import { IconComponents } from '@components/atoms/Icon/IconComponents';
 
 interface CircleButtonProps {
   onClick: () => void;

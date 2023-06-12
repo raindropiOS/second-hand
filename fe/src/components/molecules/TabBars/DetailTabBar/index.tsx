@@ -3,7 +3,7 @@ import React from 'react';
 import convertPriceFormat from '@utils/convertPriceFormat';
 
 import { $DetailTabBar, $ChatButton, $LikeLayout } from './DetailTabBar.style';
-import Icon from '@common/Icon';
+import Icon from '@components/atoms/Icon';
 
 interface DetailTabBarProps {
   price: string;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import Icon from '@common/Icon';
-import type { IconComponents } from '@common/Icon/IconComponents';
+import Icon from '@components/atoms/Icon';
+import type { IconComponents } from '@components/atoms/Icon/IconComponents';
 import { $Tab, $MainTabBar } from './MainTabBar.style';
 
 interface MenuType {
