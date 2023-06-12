@@ -18,12 +18,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.2
         with:
           node-version: lts/Hydrogen
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ${{ env.working-directory }}
 
       - name: Cache node modules
         uses: actions/cache@v2.1.8
@@ -34,10 +38,6 @@ jobs:
           path: node_modules
           # 아래 키값으로 cache가 돼있는지 확인한다.
           key: npm-packages-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install dependencies
-        run: yarn install
-        working-directory: ${{ env.working-directory }}
 
       - name: Run Chromatic
         run: npm run chromatic -- --exit-zero-on-changes
@@ -51,4 +51,4 @@ jobs:
           working-directory: ${{ env.working-directory }}
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          nonzeroExitCode: "false"
+          nonzeroExitCode: "true"
