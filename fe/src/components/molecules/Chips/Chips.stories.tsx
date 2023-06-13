@@ -19,7 +19,9 @@ export const Primary: Story = {
     ],
   },
 
-  argTypes: {},
+  argTypes: {
+    onClick: { action: 'clicked' },
+  },
 };
 
 export const Secondary: Story = {
@@ -31,5 +33,7 @@ export const Secondary: Story = {
     ],
   },
 
-  argTypes: {},
+  argTypes: {
+    onClick: { action: 'clicked' },
+  },
 };
