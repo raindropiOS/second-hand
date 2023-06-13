@@ -1,9 +1,7 @@
 import React from 'react';
-
+import useOutsideClick from '@hooks/useOutsideClick';
 import { $ModalLayout, $CancelButton, $ModalButtons, $ModalFirstButton, $ModalButton } from './Modal.style';
 
-// TODO(hoonding): constants 파일로 빼기.
-// TODO(hoonding): 클릭 시 fetch 요청 보내는 함수 담기.
 export const SALE_MODAL_MENUS = [
   { id: 1, text: '삭제' },
   { id: 2, text: '판매 완료 상태로 전환' },
@@ -21,9 +19,16 @@ interface ModalProps {
 }
 
 const Modal = ({ menus }: ModalProps) => {
-  // TODO(hoonding): 딤처리 + 클릭 이벤트
+  const [isOpen, setIsOpen, ref] = useOutsideClick(false);
+
+  const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+
+    console.log(1);
+  };
+
   return (
-    <$ModalLayout>
+    <$ModalLayout ref={ref} onClick={handleModalClick}>
       <$ModalButtons>
         {menus.map(({ id, text }, index) =>
           index === 0 ? (
