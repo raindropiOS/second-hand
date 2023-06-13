@@ -58,10 +58,8 @@ extension SignInViewController {
         self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.separatorViewUnderNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.separatorViewUnderNavigationBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.separatorViewUnderNavigationBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            self.separatorViewUnderNavigationBar.heightAnchor.constraint(equalToConstant: SeparatorView.height)
         ])
+        self.setSeparatorViewAdditionalAutolayout(separatorViewUnderNavigationBar)
         self.separatorViewUnderNavigationBar.configure()
     }
     
@@ -84,10 +82,8 @@ extension SignInViewController {
         self.separatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.separatorView.topAnchor.constraint(equalTo: idInputView.bottomAnchor, constant: SeparatorView.interval),
-            self.separatorView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.separatorView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            self.separatorView.heightAnchor.constraint(equalToConstant: SeparatorView.height)
         ])
+        self.setSeparatorViewAdditionalAutolayout(separatorView)
         self.separatorView.configure()
     }
     
@@ -110,6 +106,15 @@ extension SignInViewController {
         NSLayoutConstraint.activate([
             self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        ])
+    }
+    
+    // SeparatorView autolayout method
+    private func setSeparatorViewAdditionalAutolayout(_ separatorView: SeparatorView) {
+        NSLayoutConstraint.activate([
+            separatorView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            separatorView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: SeparatorView.height)
         ])
     }
 }
