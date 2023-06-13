@@ -16,13 +16,12 @@ const commonButtonStyle = css`
   // TODO(hoonding): width 바꿔야함.
   width: 377px;
   height: 61px;
-
+  background-color: transparent;
   color: ${({ theme }) => theme.COLORS.SYSTEM.DEFAULT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.TITLE_3.FONT_SIZE};
   font-weight: ${({ theme }) => theme.FONT_TOKEN.TITLE_3.FONT_WEIGHT};
   border-bottom: 0.3px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.STRONG};
 
-  backdrop-filter: blur(11px);
   &:hover {
     opacity: 0.8;
   }
@@ -33,7 +32,6 @@ const $CancelButton = styled.button`
   margin-bottom: 11px;
   font-weight: 600;
   background-color: ${({ theme }) => theme.COLORS.SYSTEM.BACKGROUND.DEFAULT};
-  backdrop-filter: blur(40px);
   border-bottom: none;
   border-radius: 13px;
 `;
@@ -44,7 +42,6 @@ const $ModalButtons = styled.div`
   overflow: hidden;
   width: 377px;
   border-radius: 13px;
-
   background-color: ${({ theme }) => theme.COLORS.SYSTEM.BACKGROUND.WEAK};
 `;
 
