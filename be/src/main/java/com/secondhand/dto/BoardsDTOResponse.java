@@ -1,8 +1,8 @@
-package com.secondhand.domain.board.dto;
+package com.secondhand.dto;
 
 
 import com.secondhand.domain.board.Status;
-import com.secondhand.util.StatusEnum;
+import com.secondhand.domain.board.CountInfo;
 import lombok.*;
 
 @Getter
