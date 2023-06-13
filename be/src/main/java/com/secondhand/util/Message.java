@@ -1,26 +1,17 @@
 package com.secondhand.util;
 
-import com.secondhand.domain.board.dto.BoardsDTOResponse;
-import lombok.Data;
+import lombok.*;
+import org.springframework.http.HttpStatus;
 
-@Data
-public class Message {
+@Builder
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Message<T> {
 
-    private StatusEnum status;
+    private boolean success;
+    private HttpStatus httpStatus;
+    private int apiStatus;
+    private T data;
     private String message;
-    private Object data;
-
-    public Message() {
-        this.status = StatusEnum.BAD_REQUEST;
-        this.data = null;
-        this.message = null;
-    }
-
-    private Message create(Object object) {
-        Message message = new Message();
-        message.setStatus(StatusEnum.OK);
-        message.setMessage("성공 코드");
-        message.setData(object);
-        return message;
-    }
 }

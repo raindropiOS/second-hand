@@ -1,20 +1,17 @@
 package com.secondhand.domain.board;
 
-import com.secondhand.domain.board.dto.BoardsDTOResponse;
-import com.secondhand.domain.board.dto.CountInfo;
+import com.secondhand.dto.BoardsDTOResponse;
 import com.secondhand.util.Message;
 import com.secondhand.util.ResponseEntity;
-import com.secondhand.util.StatusEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.secondhand.domain.board.Status.*;
+import static com.secondhand.domain.board.Status.SELL;
 
 @RequiredArgsConstructor
 @RestController
@@ -77,11 +74,10 @@ public class BoardController {
 
         Message message = new Message();
         if (boardsListResponse == null) {
-            message.setStatus(StatusEnum.NOT_FOUND);
             message.setMessage("실패 코드");
+            message.setSuccess(true);
             return new ResponseEntity<>(message, null, HttpStatus.NOT_FOUND);
         }
-        message.setStatus(StatusEnum.OK);
         message.setMessage("성공 코드");
         message.setData(boardsDTOResponseList);
         return new ResponseEntity<>(message, null, HttpStatus.OK);
@@ -108,7 +104,6 @@ public class BoardController {
 
         Message message = new Message();
 
-        message.setStatus(StatusEnum.OK);
         message.setMessage("성공 코드");
         message.setData(boardsListResponse);
         return new ResponseEntity<>(message, null, HttpStatus.OK);
@@ -135,10 +130,8 @@ public class BoardController {
 
         Message message = new Message();
 
-        message.setStatus(StatusEnum.OK);
         message.setMessage("성공 코드");
         message.setData(boardsListResponse);
         return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
-
 }
