@@ -7,8 +7,8 @@ import Icon from '@atoms/Icon';
 const Login = () => {
   const handleLoginBtnClick = () => {
     const scope = 'user';
-    const redirectURI = '';
-    const clientId = '';
+    const redirectURI = 'http://localhost:3000/auth';
+    const clientId = 'ee6f3962b53224de465f';
 
     window.location.href = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&client_id=${clientId}&scope=${scope}`;
   };
@@ -19,7 +19,7 @@ const Login = () => {
       <$ProfileImage>
         <Icon name="camera" width={40} height={35} />
       </$ProfileImage>
-      <$LoginButton>
+      <$LoginButton onClick={handleLoginBtnClick}>
         <Icon name="github" width={40} height={40} />
         깃허브로 로그인하기
       </$LoginButton>
