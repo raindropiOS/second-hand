@@ -20,9 +20,9 @@ const commonButtonStyle = css`
   color: ${({ theme }) => theme.COLORS.SYSTEM.DEFAULT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.TITLE_3.FONT_SIZE};
   font-weight: ${({ theme }) => theme.FONT_TOKEN.TITLE_3.FONT_WEIGHT};
-  /* neutral/border-strong */
   border-bottom: 0.3px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.STRONG};
 
+  backdrop-filter: blur(11px);
   &:hover {
     opacity: 0.8;
   }
