@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { $ChipLayout } from './Chip.style';
+import { $Chip } from './Chip.style';
 
 interface ChipProps {
   content: string;
@@ -8,7 +8,7 @@ interface ChipProps {
 }
 
 const Chip = ({ content, active }: ChipProps) => {
-  return <$ChipLayout active={active}>{content}</$ChipLayout>;
+  return <$Chip active={active}>{content}</$Chip>;
 };
 
 export default Chip;

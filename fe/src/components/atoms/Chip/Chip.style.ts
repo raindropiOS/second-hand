@@ -11,7 +11,7 @@ const inactiveStyle = css`
   border: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.DEFAULT};
 `;
 
-const $ChipLayout = styled.button<{ active: boolean }>`
+const $Chip = styled.button<{ active: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,4 +24,4 @@ const $ChipLayout = styled.button<{ active: boolean }>`
   ${({ active }) => (active ? activeStyle : inactiveStyle)}
 `;
 
-export { $ChipLayout };
+export { $Chip };
