@@ -2,7 +2,7 @@ import ChatTabBar from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'Common/ChatTabBar',
+  title: 'Molecules/ChatTabBar',
   component: ChatTabBar,
 } satisfies Meta<typeof ChatTabBar>;
 

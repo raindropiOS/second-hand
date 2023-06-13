@@ -2,7 +2,7 @@ import SaleTabBar from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'Common/SaleTabBar',
+  title: 'Molecules/SaleTabBar',
   component: SaleTabBar,
 } satisfies Meta<typeof SaleTabBar>;
 

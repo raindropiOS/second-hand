@@ -2,7 +2,7 @@ import DetailTabBar from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'Common/DetailTabBar',
+  title: 'Molecules/DetailTabBar',
   component: DetailTabBar,
 } satisfies Meta<typeof DetailTabBar>;
 
