@@ -15,6 +15,7 @@ import { ReactComponent as plus } from '@assets/plus.svg';
 import { ReactComponent as search } from '@assets/search.svg';
 import { ReactComponent as soldList } from '@assets/soldList.svg';
 import { ReactComponent as townSetting } from '@assets/townSetting.svg';
+import { ReactComponent as github } from '@assets/github.svg';
 
 const IconComponents = {
   account,
@@ -34,6 +35,7 @@ const IconComponents = {
   search,
   soldList,
   townSetting,
+  github,
 };
 
 export { IconComponents };
