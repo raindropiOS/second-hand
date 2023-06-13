@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import TextInput from '.';
 
 const meta = {
-  title: 'atoms/TextInput',
+  title: 'Atoms/TextInput',
   component: TextInput,
 } satisfies Meta<typeof TextInput>;
 

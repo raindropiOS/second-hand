@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ImageInput from '.';
 
 const meta = {
-  title: 'atoms/ImageInput',
+  title: 'Atoms/ImageInput',
   component: ImageInput,
 } satisfies Meta<typeof ImageInput>;
 
