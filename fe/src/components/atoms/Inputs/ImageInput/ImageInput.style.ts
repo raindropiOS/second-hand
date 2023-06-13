@@ -1,6 +1,21 @@
 import styled, { css } from 'styled-components';
 
-const $ImageInputLabel = styled.label`
+const hiddenInputStyle = css`
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+`;
+
+interface $ImageInputLabelProps {
+  count: number;
+}
+
+const $ImageInputLabel = styled.label<$ImageInputLabelProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,6 +29,12 @@ const $ImageInputLabel = styled.label`
   border-radius: 12px;
 
   cursor: pointer;
+
+  ${({ count }) =>
+    count >= 10 &&
+    css`
+      cursor: not-allowed;
+    `}
 `;
 
 const $ImageInputCount = styled.span`
@@ -24,14 +45,7 @@ const $ImageInputCount = styled.span`
 `;
 
 const $ImageInput = styled.input`
-  position: absolute;
-  width: 0;
-  height: 0;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+  ${hiddenInputStyle}
 `;
 
 export { $ImageInputLabel, $ImageInputCount, $ImageInput };

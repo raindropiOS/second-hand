@@ -18,6 +18,6 @@ export const First: Story = {
 
 export const Second: Story = {
   args: {
-    count: 0,
+    count: 10,
   },
 };

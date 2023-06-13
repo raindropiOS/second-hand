@@ -15,13 +15,23 @@ const ImageInput = ({ count = 0 }: ImageInputProps) => {
 
   return (
     <>
-      <$ImageInputLabel htmlFor="image_input">
-        <Icon name="camera" width={35} height={29} fill={theme.COLORS.NEUTRAL.TEXT.STRONG} />
+      <$ImageInputLabel htmlFor="image_input" count={count}>
+        <Icon
+          name="camera"
+          width={35}
+          height={29}
+          fill={count >= MAX_IMAGE_COUNT ? theme.COLORS.ACCENT.BACKGROUND.PRIMARY : theme.COLORS.NEUTRAL.TEXT.STRONG}
+        />
         <$ImageInputCount>
           {count}/{MAX_IMAGE_COUNT}
         </$ImageInputCount>
       </$ImageInputLabel>
-      <$ImageInput id="image_input" type="file" accept="image/jpg, image/jpeg, image/png" />
+      <$ImageInput
+        id="image_input"
+        type="file"
+        accept="image/jpg, image/jpeg, image/png"
+        disabled={count >= MAX_IMAGE_COUNT}
+      />
     </>
   );
 };
