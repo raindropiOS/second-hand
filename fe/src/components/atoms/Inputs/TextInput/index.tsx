@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 
-import { $TextInput, TextInputCategory } from './TextInput.style';
+import { $TextInputLayout, $TextInput, TextInputCategory } from './TextInput.style';
+import Icon from '@atoms/Icon';
 
 interface TextInputProps {
   value: string;
@@ -12,16 +14,13 @@ interface TextInputProps {
 }
 
 const TextInput = ({ value, onChange, onKeyDown, width = 325, category = 'default', placeholder }: TextInputProps) => {
+  const theme = useTheme();
+
   return (
-    <$TextInput
-      type="text"
-      category={category}
-      value={value}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      width={width}
-      placeholder={placeholder}
-    />
+    <$TextInputLayout width={width} category={category}>
+      {category === 'search' && <Icon name="search" fill={theme.COLORS.NEUTRAL.TEXT.WEAK} />}
+      <$TextInput type="text" value={value} onChange={onChange} onKeyDown={onKeyDown} placeholder={placeholder} />
+    </$TextInputLayout>
   );
 };
 
