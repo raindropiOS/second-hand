@@ -1,4 +1,4 @@
-package com.secondhand.oauth;
+package com.secondhand.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -11,6 +11,5 @@ import lombok.ToString;
 public class OAuthMemberInfoDTO {
     private Long id;
     private String name;
-    @JsonProperty("avatar_url")
     private String avatarUrl;
 }

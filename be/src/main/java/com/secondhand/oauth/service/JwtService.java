@@ -1,6 +1,6 @@
 package com.secondhand.oauth.service;
 
-import com.secondhand.oauth.OAuthMemberInfoDTO;
+import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -13,13 +13,18 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    @Value("${JWT_SECRET_KEY}")
     private String secret; // 시크릿 키를 설정
+
+    public JwtService(@Value("${JWT_SECRET_KEY}") String secret) {
+        this.secret = secret;
+    }
+
+    @Value("${JWT_SECRET_KEY}")
     public String createToken(OAuthMemberInfoDTO memberInfo) {
         return Jwts.builder()
                 .setSubject("login_member")
                 .claim("memberInfo", memberInfo) //페이로드,헤더는 자동설정
-                .setExpiration(new Date((new Date()).getTime() +  24 * 60 * 60 * 1000)) // 토큰의 만료일을 설정 : 현재 1일
+                .setExpiration(new Date((new Date()).getTime() + 24 * 60 * 60 * 1000)) // 토큰의 만료일을 설정 : 현재 1일
                 .signWith(SignatureAlgorithm.HS256, secret) // HS256 알고리즘과 시크릿 키를 사용하여 서명
                 .compact(); // 토큰을 생성하세요.
     }
