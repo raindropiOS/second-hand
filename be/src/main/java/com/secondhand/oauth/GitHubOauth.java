@@ -1,9 +1,10 @@
 package com.secondhand.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.secondhand.oauth.dto.req.AccessTokenRequestBodyDTO;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,19 +21,14 @@ import java.net.http.HttpResponse;
 public class GitHubOauth implements Oauth {
 
     private final GiHubService giHubService;
+    @Value("${OAUTH_GITHUB_URL}")
+    private String url;
+    @Value("${OAUTH_GITHUB_REDIRECT_URL}")
+    private String redirectUrl;
 
-    private final Logger logger = LoggerFactory.getLogger(GitHubOauth.class);
-    private final String url;
-    private final String redirectUrl;
-
-
-    public GitHubOauth(
-            @Value("${OAUTH_GITHUB_URL}") String url,
-            @Value("${OAUTH_GITHUB_REDIRECT_URL}") String redirectUrl,
-            GiHubService giHubService) {
+    @Autowired
+    public GitHubOauth(GiHubService giHubService) {
         this.giHubService = giHubService;
-        this.url = url;
-        this.redirectUrl = redirectUrl;
     }
 
     @Override
@@ -52,7 +48,6 @@ public class GitHubOauth implements Oauth {
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        logger.debug("response = {}", response);
         validateSuccess(response);
 
         return new ObjectMapper().readValue(response.body(), AccessTokenResponseDTO.class);
@@ -69,7 +64,6 @@ public class GitHubOauth implements Oauth {
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        logger.debug("response = {}", response);
         validateSuccess(response);
 
         return new ObjectMapper().readValue(response.body(), OAuthMemberInfoDTO.class);
@@ -78,9 +72,7 @@ public class GitHubOauth implements Oauth {
     private <T> void validateSuccess(final HttpResponse<T> response) {
         final HttpStatus status = HttpStatus.resolve(response.statusCode());
         if (status == null || status.isError()) {
-            logger.warn("URI: {}, STATUS: {}", response.uri(), response.statusCode());
             throw new RuntimeException("요청 처리 실패");
         }
-        logger.info("URI: {}, STATUS: {}, BODY : {}, ", response.uri(), response.statusCode(), response.body());
     }
 }
