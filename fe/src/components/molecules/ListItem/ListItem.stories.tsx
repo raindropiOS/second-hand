@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ListItem from '.';
 
 const meta = {
-  title: 'Common/ListItem',
+  title: 'Molecules/ListItem',
   component: ListItem,
 } satisfies Meta<typeof ListItem>;
 

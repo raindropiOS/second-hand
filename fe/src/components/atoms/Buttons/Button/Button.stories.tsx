@@ -5,7 +5,7 @@ import Icon from '@atoms/Icon';
 import { theme } from '@styles/theme';
 
 const meta = {
-  title: 'Common/Button',
+  title: 'Atoms/Button',
   component: Button,
 } satisfies Meta<typeof Button>;
 

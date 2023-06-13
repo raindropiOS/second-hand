@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import CircleButton from '.';
 
 const meta = {
-  title: 'Common/CircleButton',
+  title: 'Atoms/CircleButton',
   component: CircleButton,
 } satisfies Meta<typeof CircleButton>;
 
