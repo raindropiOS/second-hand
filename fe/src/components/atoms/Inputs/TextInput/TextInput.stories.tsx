@@ -46,3 +46,16 @@ export const Third: Story = {
     onKeyDown: { action: 'onKeyDown' },
   },
 };
+
+export const Fourth: Story = {
+  args: {
+    value: '',
+    width: 325,
+    category: 'search',
+    placeholder: '동명(읍, 면)으로 검색(ex. 서초동)',
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    onKeyDown: { action: 'onKeyDown' },
+  },
+};
