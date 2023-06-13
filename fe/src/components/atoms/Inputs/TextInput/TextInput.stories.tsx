@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import TextInput from '.';
-import React from 'react';
-import { TextInputCategory } from '@atoms/Inputs/TextInput/TextInput.style';
 
 const meta = {
-  title: 'Common/TextInput',
+  title: 'atoms/TextInput',
   component: TextInput,
 } satisfies Meta<typeof TextInput>;
 
