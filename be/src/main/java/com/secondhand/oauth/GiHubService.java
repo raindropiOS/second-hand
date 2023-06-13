@@ -6,14 +6,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class GiHubService {
 
-    private final String clientId;
-    private final String clientSecret;
+    @Value("${OAUTH_GITHUB_CLIENT_ID}")
+    private String clientId;
 
-    public GiHubService(@Value("${OAUTH_GITHUB_CLIENT_ID}") String clientId,
-                        @Value("${OAUTH_GITHUB_CLIENT_SECRET}") String clientSecret) {
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-    }
+    @Value("${OAUTH_GITHUB_CLIENT_SECRET}")
+    private String clientSecret;
 
     public String getClientId() {
         return clientId;

@@ -1,7 +1,7 @@
 package com.secondhand.domain.member;
 
 import com.secondhand.dto.MemberLoginResponseDTO;
-import com.secondhand.oauth.OAuthMemberInfoDTO;
+import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import com.secondhand.oauth.Oauth;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.service.JwtService;
@@ -17,9 +17,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final Logger logger = LoggerFactory.getLogger(MemberService.class);
-
-    private final MemberRepository memberRepository;
     private final Oauth oauth;
     private final JwtService jwtService;
 
@@ -28,7 +25,6 @@ public class MemberService {
     public MemberLoginResponseDTO login(String code) throws IOException, InterruptedException {
         //TODO  authorization code 를 받는다
         AccessTokenResponseDTO token = oauth.getToken(code);
-        logger.debug("AccessTokenResponseDTO = {}", token);
         OAuthMemberInfoDTO memberInfoDTO = oauth.getUserInfo(token.getAccessToken());
         // TODO: 멤버를 저장후 보여준다
         // Member member = memberRepository.save();

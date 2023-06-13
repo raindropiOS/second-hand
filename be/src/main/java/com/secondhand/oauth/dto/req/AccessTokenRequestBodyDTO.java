@@ -1,4 +1,4 @@
-package com.secondhand.oauth;
+package com.secondhand.oauth.dto.req;
 
 import lombok.Builder;
 import lombok.Getter;

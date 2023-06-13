@@ -1,6 +1,6 @@
 package com.secondhand.dto;
 
-import com.secondhand.oauth.OAuthMemberInfoDTO;
+import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
