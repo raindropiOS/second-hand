@@ -7,7 +7,7 @@ import {
   $DropdownLayout,
   $MyTownButton,
   $SettingTownButton,
-} from '@molecules/Dropdown/Dropdown.style';
+} from './Dropdown.style';
 import useOutsideClick from '@hooks/useOutsideClick';
 
 type Town = {
@@ -34,6 +34,7 @@ const Dropdown = ({ towns }: DropdownProps) => {
     setIsDropdownOpen(false);
   };
 
+  // TODO(jayden): '버튼'에 해당하는 컴포넌트들 Button 컴포넌트로 대체
   return (
     <$DropdownContainer ref={ref}>
       <$DropdownButton onClick={handleDropdown}>
