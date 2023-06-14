@@ -1,4 +1,4 @@
-const BASE_API_URL = `${process.env.REACT_APP_BASE_URL}/api`;
+export const BASE_API_URL = `${process.env.REACT_APP_BASE_URL}/api`;
 
 const API_TYPE = Object.freeze({
   CATEGORIES: 'categories',
