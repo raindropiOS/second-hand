@@ -36,7 +36,7 @@ jobs:
       - name: Create application.properties
         run: |
           mkdir -p ./be/src/main/resources/
-          echo "${{ secrets.APPLICATION }}" > ./be/src/main/resources/application.properties
+          echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./be/src/main/resources/application.properties
           cat ./be/src/main/resources/application.properties
         working-directory: ./be
 
