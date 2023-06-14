@@ -22,10 +22,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Build with Gradle --stacktrace
+      - name: Build with Gradle
         run: |
           chmod +x gradlew
-          ./gradlew clean build
+          ./gradlew clean build --stacktrace
         working-directory: ./be
 
       - name: Login to Docker Hub
