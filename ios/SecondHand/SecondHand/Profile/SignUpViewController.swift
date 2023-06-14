@@ -46,6 +46,20 @@ class SignUpViewController: UIViewController {
         button.configuration = config
     }
     
+    private func configureNavigationBar() {
+        self.navigationItem.title = "회원가입"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(dismissButtonTouched))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(finishButtonTouched))
+    }
+    
+    @objc func dismissButtonTouched() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func finishButtonTouched() {
+        // 완료 버튼 누르면 발생할 로직
+    }
+    
     private func configureSeparatorViewUnderNavigationBar() {
         self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
