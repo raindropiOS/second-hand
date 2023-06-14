@@ -12,6 +12,7 @@ class SignUpViewController: UIViewController {
     private let circleButtonContentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 25.5, leading: 20.5, bottom: 25.5, trailing: 20.5)
     private let separatorView: SeparatorView = SeparatorView()
     private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
+    private let idInputView: InputView = InputView()
     private let button: UIButton = {
         let button = UIButton(type: .system)
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 16, weight: .regular)
@@ -55,6 +56,17 @@ class SignUpViewController: UIViewController {
         ])
         self.separatorViewUnderNavigationBar.configure()
     }
+    
+    private func configureIdInputView() {
+        idInputView.configureText(labelText: "아이디", textFieldPlaceholder: "아이디를 입력하세요.")
+        
+        self.idInputView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            idInputView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -40),
+            idInputView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
+        ])
+    }
+    
     private func configureSeparatorView() {
         self.separatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -81,6 +93,7 @@ class SignUpViewController: UIViewController {
                 ])
         self.view.addSubview(separatorView)
         configureSeparatorViewUnderNavigationBar()
+        configureIdInputView()
         configureSeparatorView()
     }
     
