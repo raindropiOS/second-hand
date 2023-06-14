@@ -3,7 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - dev-be
+      - feat/be/Ouath-Moktest
 env:
   working-directory: ./be
   DOCKER_IMAGE: gamja
@@ -33,10 +33,12 @@ jobs:
           chmod +x gradlew
         working-directory: ./be
 
-      - run: touch ./be/src/main/resources/application.properties
-      - run: chmod 777 ./be/src/main/resources/application.properties
-      - run: echo "${{ secrets.APPLICATION }}" > ./be/src/main/resources/application.properties
-      - run: cat ./be/src/main/resources/application.properties
+      - name: Create application.properties
+        run: |
+          mkdir -p ./be/src/main/resources/
+          echo "${{ secrets.APPLICATION }}" > ./be/src/main/resources/application.properties
+          cat ./be/src/main/resources/application.properties
+        working-directory: ./be
 
       - name: Build with Gradle
         run: ./gradlew clean build --stacktrace
