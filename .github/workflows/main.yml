@@ -32,7 +32,6 @@ jobs:
           mkdir -p ./be/src/main/resources/
           echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./be/src/main/resources/application.properties
           cat ./be/src/main/resources/application.properties
-        working-directory: ./be
 
       - name: Build with Gradle
         run: ./gradlew clean build --stacktrace -x test
