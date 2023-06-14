@@ -22,6 +22,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - run: echo "${{ secrets.APPLICATION }}" > ./be/src/main/resources/application.properties
+      - run: cat ./be/src/main/resources/application.properties
+
       - name: Build with Gradle
         run: |
           chmod +x gradlew
