@@ -33,10 +33,10 @@ jobs:
           chmod +x gradlew
         working-directory: ./be
 
-      - run: touch /src/main/resources/application.properties
-      - run: chmod 777 /src/main/resources/application.properties
+      - run: touch ./be/src/main/resources/application.properties
+      - run: chmod 777 ./be/src/main/resources/application.properties
       - run: echo "${{ secrets.APPLICATION }}" > ./be/src/main/resources/application.properties
-      - run: cat /src/main/resources/application.properties
+      - run: cat ./be/src/main/resources/application.properties
 
       - name: Build with Gradle
         run: ./gradlew clean build --stacktrace
