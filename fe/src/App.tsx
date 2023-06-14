@@ -5,7 +5,10 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyles from '@styles/GlobalStyles.style';
 import { theme } from '@styles/theme';
 
+import PATH from '@constants/routerPath';
+
 import Login from '@pages/Login';
+import Auth from '@pages/Auth';
 
 const App = () => {
   return (
@@ -13,22 +16,23 @@ const App = () => {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route path="/home" />
-          <Route path="/home/town-setting" />
-          <Route path="/home/town-setting/search" />
-          <Route path="/home/category" />
+          <Route path="/" element={<Navigate to={PATH.HOME.DEFAULT} />} />
+          <Route path={PATH.HOME.DEFAULT} />
+          <Route path={PATH.HOME.TOWN_SETTING} />
+          <Route path={PATH.HOME.TOWN_SEARCH} />
+          <Route path={PATH.HOME.CATEGORY} />
 
-          <Route path="/sale" />
-          <Route path="/sale/category" />
+          <Route path={PATH.SALE.DEFAULT} />
+          <Route path={PATH.SALE.CATEGORY} />
 
-          <Route path="/product/:productId" />
-          <Route path="/product/:productId/chat/:chatId" />
-          <Route path="/product/sales" />
-          <Route path="/product/like" />
+          <Route path={PATH.PRODUCT.DEFAULT} />
+          <Route path={PATH.PRODUCT.CHAT} />
+          <Route path={PATH.PRODUCT.SALES} />
+          <Route path={PATH.PRODUCT.LIKE} />
 
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/setting" />
+          <Route path={PATH.AUTH.DEFAULT} element={<Auth />} />
+          <Route path={PATH.AUTH.LOGIN} element={<Login />} />
+          <Route path={PATH.AUTH.SETTING} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
