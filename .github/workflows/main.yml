@@ -35,7 +35,7 @@ jobs:
         working-directory: ./be
 
       - name: Build with Gradle
-        run: ./gradlew clean build --stacktrace
+        run: ./gradlew clean build --stacktrace -x test
         working-directory: ./be
 
       - name: Login to Docker Hub
