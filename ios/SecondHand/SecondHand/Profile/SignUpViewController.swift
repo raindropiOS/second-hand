@@ -13,6 +13,7 @@ class SignUpViewController: UIViewController {
     private let separatorView: SeparatorView = SeparatorView()
     private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     private let idInputView: InputView = InputView()
+    
     private let button: UIButton = {
         let button = UIButton(type: .system)
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 16, weight: .regular)
@@ -91,25 +92,42 @@ class SignUpViewController: UIViewController {
         ])
         self.separatorView.configure()
     }
+    
+    private func setCircleButtonLayout() {
+        self.circleButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.circleButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.circleButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 147.5)
+        ])
+    }
+    
+    private func setButtonLayout() {
+        self.button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.button.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 382)
+        ])
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        view.addSubview(button)
-                NSLayoutConstraint.activate([
-                    button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    button.trailingAnchor.constraint(equalTo: super.view.trailingAnchor, constant: -16),
-                    button.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 382)
-                ])
-        view.addSubview(circleButton)
-                NSLayoutConstraint.activate([
-                    circleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    circleButton.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 219.5)
-                ])
+        self.view.addSubview(button)
+        self.view.addSubview(circleButton)
         self.view.addSubview(separatorView)
+        self.view.addSubview(idInputView)
+        self.view.addSubview(separatorViewUnderNavigationBar)
+        
+        setButtonUI(button: button, cornerRadius: 8)
+        setButtonUI(button: circleButton, cornerRadius: 0.5 * circleButton.bounds.size.width)
+        setButtonPadding(button: button, contentInsets: buttonContentInsets)
+        setButtonPadding(button: circleButton, contentInsets: circleButtonContentInsets)
+        configureNavigationBar()
         configureSeparatorViewUnderNavigationBar()
         configureIdInputView()
         configureSeparatorView()
+        setCircleButtonLayout()
+        setButtonLayout()
     }
-    
-
 }
