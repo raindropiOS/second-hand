@@ -11,6 +11,7 @@ class SignUpViewController: UIViewController {
     private let buttonContentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 16, leading: 10, bottom: 16, trailing: 10)
     private let circleButtonContentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 25.5, leading: 20.5, bottom: 25.5, trailing: 20.5)
     private let separatorView: SeparatorView = SeparatorView()
+    private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     private let button: UIButton = {
         let button = UIButton(type: .system)
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 16, weight: .regular)
@@ -44,6 +45,16 @@ class SignUpViewController: UIViewController {
         button.configuration = config
     }
     
+    private func configureSeparatorViewUnderNavigationBar() {
+        self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.separatorViewUnderNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.separatorViewUnderNavigationBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.separatorViewUnderNavigationBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.separatorViewUnderNavigationBar.heightAnchor.constraint(equalToConstant: SeparatorView.height)
+        ])
+        self.separatorViewUnderNavigationBar.configure()
+    }
     private func configureSeparatorView() {
         self.separatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -69,6 +80,7 @@ class SignUpViewController: UIViewController {
                     circleButton.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 219.5)
                 ])
         self.view.addSubview(separatorView)
+        configureSeparatorViewUnderNavigationBar()
         configureSeparatorView()
     }
     
