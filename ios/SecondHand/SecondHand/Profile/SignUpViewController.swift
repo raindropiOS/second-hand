@@ -10,6 +10,7 @@ import UIKit
 class SignUpViewController: UIViewController {
     private let buttonContentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 16, leading: 10, bottom: 16, trailing: 10)
     private let circleButtonContentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 25.5, leading: 20.5, bottom: 25.5, trailing: 20.5)
+    private let separatorView: SeparatorView = SeparatorView()
     private let button: UIButton = {
         let button = UIButton(type: .system)
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 16, weight: .regular)
@@ -43,6 +44,16 @@ class SignUpViewController: UIViewController {
         button.configuration = config
     }
     
+    private func configureSeparatorView() {
+        self.separatorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.separatorView.topAnchor.constraint(equalTo: idInputView.bottomAnchor, constant: SeparatorView.interval),
+            self.separatorView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.separatorView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.separatorView.heightAnchor.constraint(equalToConstant: SeparatorView.height)
+        ])
+        self.separatorView.configure()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -57,6 +68,8 @@ class SignUpViewController: UIViewController {
                     circleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                     circleButton.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 219.5)
                 ])
+        self.view.addSubview(separatorView)
+        configureSeparatorView()
     }
     
 
