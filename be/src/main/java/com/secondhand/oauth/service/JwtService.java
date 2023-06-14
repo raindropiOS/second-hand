@@ -19,7 +19,6 @@ public class JwtService {
         this.secret = secret;
     }
 
-    @Value("${JWT_SECRET_KEY}")
     public String createToken(OAuthMemberInfoDTO memberInfo) {
         return Jwts.builder()
                 .setSubject("login_member")

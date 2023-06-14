@@ -1,6 +1,7 @@
 package com.secondhand.domain.member;
 
 import com.secondhand.dto.MemberLoginResponseDTO;
+import com.secondhand.oauth.GitHubOauth;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import com.secondhand.oauth.Oauth;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
@@ -17,7 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final Oauth oauth;
+    private final GitHubOauth oauth;
     private final JwtService jwtService;
 
 
