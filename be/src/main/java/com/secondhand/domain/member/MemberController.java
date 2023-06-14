@@ -19,7 +19,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/login")
+    @GetMapping("/oauth/login")
     public ResponseEntity<Message<MemberLoginResponseDTO>> login(@RequestParam String code) throws IOException, InterruptedException {
         MemberLoginResponseDTO memberResponseDTO = memberService.login(code);
 
