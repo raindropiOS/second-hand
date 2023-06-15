@@ -1,5 +1,5 @@
 export const BASE_API_URL = `${process.env.REACT_APP_BASE_URL}/api`;
-
+export const KAKAO_BASE_API_URL = `${process.env.REACT_APP_KAKAO_BASE_API_URL}`;
 const API_TYPE = Object.freeze({
   CATEGORIES: 'categories',
   PRODUCTS: 'products',
@@ -18,17 +18,24 @@ const API_TYPE = Object.freeze({
 // };
 
 const CATEGORIES = Object.freeze({
-  GET_ALL_CATEGORIES: `${BASE_API_URL}/${API_TYPE.CATEGORIES}`,
+  GET_ALL_CATEGORIES: `/${API_TYPE.CATEGORIES}`,
 });
 
 const PRODUCTS = Object.freeze({
-  GET_PRODUCTS: (pageNum = null, townId = null, categoryId = null) => `${BASE_API_URL}/${API_TYPE.PRODUCTS}`,
+  GET_PRODUCTS: (pageNum = null, townId = null, categoryId = null) => `/${API_TYPE.PRODUCTS}`,
 });
 
 const TOWNS = Object.freeze({});
 
 const AUTH = Object.freeze({
-  LOGIN: (AUTHORIZATION_CODE: string) => `${BASE_API_URL}/${API_TYPE.AUTH}/login?code=${AUTHORIZATION_CODE}`,
+  LOGIN: (AUTHORIZATION_CODE: string) => `/${API_TYPE.AUTH}/login?code=${AUTHORIZATION_CODE}`,
+  GITHUB_LOGIN_URL: (redirectURI: string, clientId: string, scope: string) =>
+    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&client_id=${clientId}&scope=${scope}`,
 });
 
-export { CATEGORIES, PRODUCTS, TOWNS, AUTH };
+const KAKAO = Object.freeze({
+  GET_CURRENT_LOCATION: (longitude: number, latitude: number) =>
+    `/coord2address.json?x=${latitude}&y=${longitude}&input_coord=WGS84`,
+});
+
+export { CATEGORIES, PRODUCTS, TOWNS, AUTH, KAKAO };
