@@ -7,7 +7,7 @@ const $SaleTabBar = styled.footer`
   flex-direction: flex-start;
   padding: 0px 25px;
   /* TODO(hoonding): width 100%로 바꾸기. */
-  width: 400px;
+  width: 100%;
   height: 83px;
   background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.WEAK};
 `;

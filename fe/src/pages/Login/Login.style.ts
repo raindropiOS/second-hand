@@ -5,8 +5,8 @@ const $LoginLayout = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 400px;
-  height: 800px;
+  width: 100%;
+  height: 100vh;
 `;
 
 const $LoginHeader = styled.header`
