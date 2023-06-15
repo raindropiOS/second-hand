@@ -12,14 +12,14 @@ type Story = StoryObj<typeof meta>;
 
 export const First: Story = {
   args: {
-    imgUrl: 'https://via.placeholder.com/150',
+    productId: 1,
     title: '파랑 선풍기',
-    town: '역삼1동',
-    timestamp: '2023-06-05T00:00:00.000Z',
+    town: { townId: 1, name: '역삼1동' },
+    createdAt: '2023-06-05T00:00:00.000Z',
     status: '판매중',
-    price: '24,500',
-    chatCount: 2,
-    likeCount: 5,
+    price: '24,500원',
+    countInfo: { chatCount: 2, likeCount: 5 },
+    imgUrl: 'https://via.placeholder.com/150',
     isCurrentUserItem: false,
   },
   // NOTE(Jayden): onClick같은 경우는 argsType을 사용해야 test시에도 사용할 수 있다.
@@ -31,14 +31,14 @@ export const First: Story = {
 
 export const Second: Story = {
   args: {
-    imgUrl: 'https://via.placeholder.com/150',
+    productId: 2,
     title: '잎사귀 포스터',
-    town: '역삼1동',
-    timestamp: '2022-06-05T00:00:00.000Z',
+    town: { townId: 2, name: '강남3동' },
+    createdAt: '2022-06-05T00:00:00.000Z',
     status: '예약중',
-    price: '59,000',
-    chatCount: 0,
-    likeCount: 2,
+    price: '59,000원',
+    countInfo: { chatCount: 0, likeCount: 2 },
+    imgUrl: 'https://via.placeholder.com/150',
     isCurrentUserItem: true,
   },
   argTypes: {
@@ -49,13 +49,13 @@ export const Second: Story = {
 
 export const Third: Story = {
   args: {
-    imgUrl: 'https://via.placeholder.com/150',
+    productId: 3,
     title: '회전 의자',
-    town: '역삼 1동',
-    timestamp: '2023-06-11T06:00:00.000Z',
+    town: { townId: 1, name: '역삼1동' },
+    createdAt: '2023-06-11T06:00:00.000Z',
     status: '판매중',
-    chatCount: 13,
-    likeCount: 21,
+    countInfo: { chatCount: 13, likeCount: 21 },
+    imgUrl: 'https://via.placeholder.com/150',
     isCurrentUserItem: true,
   },
   argTypes: {
