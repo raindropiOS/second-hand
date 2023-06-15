@@ -44,7 +44,7 @@ const MainTabBar = () => {
 
   const tabClickHandler = (id: number) => {
     // TODO(hoonding): 탭 클릭 시 router적용 + fetch 요청 보내기.
-    setIsClicked(prev => prev.map((_, index) => (index === id - 1 ? true : false)));
+    setIsClicked(prev => prev.map((_, index) => index === id - 1));
   };
 
   return (

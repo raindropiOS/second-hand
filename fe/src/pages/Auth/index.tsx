@@ -14,9 +14,9 @@ const Auth = () => {
     const getAccessToken = async () => {
       // Type Guard
       // TODO(hoonding): authorizationCode가 없을 경우 처리
+      // TODO(jayden): get이 아닌 post로 바꾸기
       if (!authorizationCode) return;
       const { data } = await axiosFetch.get(AUTH.LOGIN(authorizationCode));
-
       const accessToken = data.accessToken;
 
       if (!sessionStorage.getItem('accessToken')) sessionStorage.setItem('accessToken', accessToken);
