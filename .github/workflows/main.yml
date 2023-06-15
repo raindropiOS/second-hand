@@ -1,0 +1,72 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - dev-be
+env:
+  working-directory: ./be
+  DOCKER_IMAGE: gamja
+  DOCKER_REGISTRY: gamja123
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name:  Gradle
+        run: |
+          chmod +x gradlew
+        working-directory: ./be
+
+      - name: Create application.properties
+        run: |
+          mkdir -p ./be/src/main/resources/
+          echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./be/src/main/resources/application.properties
+          cat ./be/src/main/resources/application.properties
+
+      - name: Build with Gradle
+        run: ./gradlew clean build --stacktrace -x test
+        working-directory: ./be
+
+      - name: Login to Docker Hub
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build and push Docker image
+        working-directory: ./be
+        run: |
+          docker build -t $DOCKER_REGISTRY/second-hand .
+          docker push $DOCKER_REGISTRY/second-hand
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: SSH into EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          working-directory: ./be
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo docker image prune -a --force 
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker pull ${{ secrets.DOCKER_REGISTRY }}/second-hand
+            docker pull ${{ secrets.DOCKER_REGISTRY }}/second-hand-nginx
+            docker-compose up -d
+            docker image prune -f
