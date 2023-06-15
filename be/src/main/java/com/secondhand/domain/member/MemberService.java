@@ -1,9 +1,8 @@
 package com.secondhand.domain.member;
 
-import com.secondhand.dto.MemberLoginResponseDTO;
+import com.secondhand.web.dto.resp.MemberLoginResponseDTO;
 import com.secondhand.oauth.GitHubOauth;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
-import com.secondhand.oauth.Oauth;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.service.JwtService;
 import lombok.RequiredArgsConstructor;

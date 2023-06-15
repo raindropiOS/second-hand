@@ -1,4 +1,4 @@
-package com.secondhand.dto;
+package com.secondhand.web.dto.resp;
 
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import lombok.AllArgsConstructor;

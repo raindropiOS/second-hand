@@ -1,16 +1,16 @@
-package com.secondhand.domain.member;
+package com.secondhand.web.contoroller;
 
-import com.secondhand.dto.MemberLoginResponseDTO;
+import com.secondhand.domain.member.MemberService;
+import com.secondhand.domain.town.TownService;
+import com.secondhand.web.dto.resp.MemberLoginResponseDTO;
 import com.secondhand.util.Message;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -20,6 +20,7 @@ import java.io.IOException;
 public class MemberController {
 
     private final MemberService memberService;
+    private final TownService townService;
     private final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @GetMapping("/auth/login")
@@ -42,4 +43,5 @@ public class MemberController {
     public String home() {
         return "hello";
     }
+
 }
