@@ -1,0 +1,40 @@
+{
+  "success": true,
+  "status": 200,
+  "code": 20000,
+  "data": {
+    "towns": [
+      { "townId": 1, "name": "서울 강남구 역삼1동" },
+      { "townId": 2, "name": "서울 강남구 역삼2동" },
+      { "townId": 3, "name": "서울 강남구 세곡동" },
+      { "townId": 4, "name": "서울 강남구 도곡1동" },
+      { "townId": 5, "name": "서울 강남구 개포동" },
+      { "townId": 6, "name": "서울 강남구 일원동" },
+      { "townId": 7, "name": "서울 강남구 일원본동" },
+      { "townId": 8, "name": "서울 강남구 대치2동" },
+      { "townId": 9, "name": "서울 강남구 자곡동" },
+      { "townId": 10, "name": "서울 강남구 삼성동" },
+      { "townId": 11, "name": "서울 강남구 개포2동" },
+      { "townId": 12, "name": "서울 강남구 율현동" },
+      { "townId": 13, "name": "서울 강남구 대치동" },
+      { "townId": 14, "name": "서울 강남구 대치1동" },
+      { "townId": 15, "name": "서울 강남구 개포1동" },
+      { "townId": 16, "name": "서울 강남구 신사동" },
+      { "townId": 17, "name": "서울 강남구 대치4동" },
+      { "townId": 18, "name": "서울 강남구 삼성2동" },
+      { "townId": 19, "name": "서울 강남구 압구정동" },
+      { "townId": 20, "name": "서울 강남구 논현1동" },
+      { "townId": 21, "name": "서울 강남구 개포3동" },
+      { "townId": 22, "name": "서울 강남구 개포4동" },
+      { "townId": 23, "name": "서울 강남구 삼성1동" },
+      { "townId": 24, "name": "서울 강남구 논현동" },
+      { "townId": 25, "name": "서울 강남구 일원1동" },
+      { "townId": 26, "name": "서울 강남구 청담동" },
+      { "townId": 27, "name": "서울 강남구 역삼동" },
+      { "townId": 28, "name": "서울 강남구 도곡동" },
+      { "townId": 29, "name": "서울 강남구 논현2동" },
+      { "townId": 30, "name": "서울 강남구 도곡2동" },
+      { "townId": 31, "name": "서울 강남구 수서동" }
+    ]
+  }
+}
