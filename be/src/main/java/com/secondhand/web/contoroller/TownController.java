@@ -5,7 +5,6 @@ import com.secondhand.util.Message;
 import com.secondhand.web.dto.resp.MemberLoginResponseDTO;
 import com.secondhand.web.dto.resp.MemberTownInfoResponseDTO;
 import com.secondhand.web.dto.resp.TownDTO;
-import com.secondhand.web.dto.resp.TownsListResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;

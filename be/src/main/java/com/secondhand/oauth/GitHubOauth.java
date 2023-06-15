@@ -1,7 +1,6 @@
 package com.secondhand.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.secondhand.domain.member.MemberController;
 import com.secondhand.oauth.dto.req.AccessTokenRequestBodyDTO;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;

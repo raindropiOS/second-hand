@@ -1,4 +1,4 @@
-package com.secondhand.domain.board;
+package com.secondhand.domain.product;
 
 import lombok.*;
 
