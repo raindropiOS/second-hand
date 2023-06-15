@@ -31,7 +31,7 @@ const FONT_TOKEN = {
   },
   CALLOUT: {
     FONT_WEIGHT: '400',
-    FONT_SIZE: '17px',
+    FONT_SIZE: '16px',
     LINE_HEIGHT: '21px',
   },
   SUBHEAD: {
