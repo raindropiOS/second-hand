@@ -43,7 +43,7 @@ class SignInViewController: UIViewController {
     
     @objc func signUpButtonTouched() {
         let signUpViewController = SignUpViewController()
-        self.present(signUpViewController, animated: true)
+        self.present(UINavigationController(rootViewController: signUpViewController), animated: true)
     }
     
     private func configureNavigationBar() {
