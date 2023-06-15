@@ -19,6 +19,7 @@ import java.io.IOException;
 public class MemberService {
 
     private final GitHubOauth oauth;
+    private final Logger logger = LoggerFactory.getLogger(MemberService.class);
     private final JwtService jwtService;
 
 
@@ -26,7 +27,10 @@ public class MemberService {
     public MemberLoginResponseDTO login(String code) throws IOException, InterruptedException {
         //TODO  authorization code 를 받는다
         AccessTokenResponseDTO token = oauth.getToken(code);
+        logger.debug("token access 토큰 = {}", token);
         OAuthMemberInfoDTO memberInfoDTO = oauth.getUserInfo(token.getAccessToken());
+        logger.debug("token access 토큰 으로 부터받은 회원정보 = {}", memberInfoDTO);
+
         // TODO: 멤버를 저장후 보여준다
         // Member member = memberRepository.save();
         if (checkLoginMember(memberInfoDTO)) {

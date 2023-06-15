@@ -2,10 +2,10 @@ package com.secondhand.domain.board;
 
 import com.secondhand.dto.BoardsDTOResponse;
 import com.secondhand.util.Message;
-import com.secondhand.util.ResponseEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import static com.secondhand.domain.board.Status.SELL;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/boards")
+@RequestMapping("api/boards")
 public class BoardController {
 
     @Operation(
@@ -72,14 +72,24 @@ public class BoardController {
         boardsDTOResponseList.add(boardsListResponse3);
         boardsDTOResponseList.add(boardsListResponse4);
 
-        Message message = new Message();
+
         if (boardsListResponse == null) {
-            message.setMessage("실패 코드");
-            message.setSuccess(true);
+            Message message = Message.builder()
+                    .success(false)
+                    .message("실패")
+                    .apiStatus(20000)
+                    .httpStatus(HttpStatus.NOT_FOUND)
+                    .data(boardsDTOResponseList)
+                    .build();
             return new ResponseEntity<>(message, null, HttpStatus.NOT_FOUND);
         }
-        message.setMessage("성공 코드");
-        message.setData(boardsDTOResponseList);
+        Message message = Message.builder()
+                .success(true)
+                .message("")
+                .apiStatus(20000)
+                .httpStatus(HttpStatus.OK)
+                .data(boardsDTOResponseList)
+                .build();
         return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
@@ -102,10 +112,14 @@ public class BoardController {
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
-        Message message = new Message();
+        Message message = Message.builder()
+                .success(true)
+                .message("")
+                .apiStatus(20000)
+                .httpStatus(HttpStatus.OK)
+                .data(boardsListResponse)
+                .build();
 
-        message.setMessage("성공 코드");
-        message.setData(boardsListResponse);
         return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
@@ -128,10 +142,14 @@ public class BoardController {
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
-        Message message = new Message();
+        Message message = Message.builder()
+                .success(true)
+                .message("")
+                .apiStatus(20000)
+                .httpStatus(HttpStatus.OK)
+                .data(boardsListResponse)
+                .build();
 
-        message.setMessage("성공 코드");
-        message.setData(boardsListResponse);
         return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 }

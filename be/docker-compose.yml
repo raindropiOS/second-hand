@@ -1,15 +1,5 @@
 version: "3"
 services:
-  was:
-    image: gamja123/second-hand-nginx
-    container_name: was-nginx
-    ports:
-      - 80:80
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-    depends_on:
-      - application
-
   application:
     build: .
     image: gamja123/second-hand
@@ -18,3 +8,21 @@ services:
       - 8080:8080
     expose:
       - 8080
+
+  frontend:
+    build: .
+    container_name: frontend
+    image: gamja123/frontend
+    ports:
+      - 3000:3000
+
+  web:
+    image: gamja123/second-hand-nginx
+    container_name: was-nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - frontend
+      - application
