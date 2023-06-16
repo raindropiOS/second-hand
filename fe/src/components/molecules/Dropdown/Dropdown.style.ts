@@ -25,6 +25,7 @@ const $DropdownLayout = styled.section`
 
   border: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.STRONG};
   border-radius: 12px;
+  background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.DEFAULT};
 `;
 
 const $MyTownButton = styled.button`

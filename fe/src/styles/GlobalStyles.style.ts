@@ -120,10 +120,10 @@ const GlobalStyles = createGlobalStyle`
   }
 
   #root {
-    @media all and (min-width:1024px) {} 
+    max-width: 767px;
+    @media all and (min-width:480px) {} 
     /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/ 
     @media all and (max-width:767px) {}
-      margin: 0 80px;
   }
   ol,
   ul,li {

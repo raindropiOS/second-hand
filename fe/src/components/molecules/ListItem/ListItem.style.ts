@@ -7,7 +7,7 @@ const $ListItemLayout = styled.section`
   align-items: center;
   gap: 15px;
 
-  width: 361px;
+  width: 100%;
   height: 150px;
   padding: 15px 0;
   border-bottom: ${({ theme }) => `1px solid ${theme.COLORS.NEUTRAL.BORDER.DEFAULT}`};
@@ -31,7 +31,7 @@ const $TextInfoLayout = styled.section`
   align-items: flex-start;
   gap: 4px;
 
-  width: 226px;
+  width: calc(100% - 152px);
   height: 120px;
   padding: 4px 0;
 `;
@@ -42,15 +42,20 @@ const $TitleLayout = styled.section`
   justify-content: space-between;
   align-items: center;
 
-  width: 226px;
+  width: 100%;
   height: 20px;
 `;
 
 const $Title = styled.p`
+  width: fit-content;
+  height: fit-content;
   font-weight: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.FONT_SIZE};
   line-height: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.LINE_HEIGHT};
   color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.DEFAULT};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const $LocationTimestamp = styled.p`
