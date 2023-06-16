@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import PATH from '@constants/routerPath';
 import { AUTH } from '@constants/API';
-import axiosFetch from 'src/apis/axiosSetting';
+import axiosFetch from 'src/apis/instances/axiosFetch';
 
 const Auth = () => {
   const navigate = useNavigate();
