@@ -1,0 +1,61 @@
+const PALETTE = {
+  WHITE: '#FFFFFF',
+  BLACK: '#000000',
+  GRAY_50: '#FAFAFA',
+  GRAY_100: 'rgba(249, 249, 249, 0.8)',
+  GRAY_200: 'rgba(245, 245, 245, 0.7)',
+  GRAY_300: 'rgba(179, 179, 179, 0.12)',
+  GRAY_400: 'rgba(118, 118, 128, 0.12)',
+  GRAY_500: 'rgba(179, 179, 179, 0.39)',
+  GRAY_600: 'rgba(0, 0, 0, 0.2)',
+  GRAY_700: 'rgba(60, 60, 67, 0.36)',
+  GRAY_800: 'rgba(60, 60, 67, 0.6)',
+  GRAY_900: '#3C3C43',
+  MINT: '#00C7BE',
+  ORANGE: '#FF9500',
+  BLUE: '#007AFF',
+  RED: '#FF3B30',
+};
+
+const LIGHT_COLORS = {
+  NEUTRAL: {
+    TEXT: {
+      DEFAULT: PALETTE.GRAY_900,
+      WEAK: PALETTE.GRAY_800,
+      STRONG: PALETTE.BLACK,
+    },
+    BACKGROUND: {
+      DEFAULT: PALETTE.WHITE,
+      WEAK: PALETTE.GRAY_50,
+      BOLD: PALETTE.GRAY_400,
+      BLUR: PALETTE.GRAY_100,
+    },
+    BORDER: {
+      DEFAULT: PALETTE.GRAY_500,
+      STRONG: PALETTE.GRAY_700,
+    },
+    OVERLAY: {
+      DEFAULT: PALETTE.GRAY_600,
+    },
+  },
+  ACCENT: {
+    TEXT: {
+      DEFAULT: PALETTE.WHITE,
+      WEAK: PALETTE.BLACK,
+    },
+    BACKGROUND: {
+      PRIMARY: PALETTE.ORANGE,
+      SECONDARY: PALETTE.MINT,
+    },
+  },
+  SYSTEM: {
+    DEFAULT: PALETTE.BLUE,
+    WARNING: PALETTE.RED,
+    BACKGROUND: {
+      DEFAULT: PALETTE.WHITE,
+      WEAK: PALETTE.GRAY_200,
+    },
+  },
+};
+
+export { LIGHT_COLORS };
