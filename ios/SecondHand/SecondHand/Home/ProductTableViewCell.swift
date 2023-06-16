@@ -105,3 +105,54 @@ class ProductTableViewCell: UITableViewCell {
         ])
     }
 }
+
+// TODO: 파일 분리 예정 - 1
+class RoundedLabel: UILabel {
+    var edgeInset: UIEdgeInsets = .zero
+    
+    init() {
+        super.init(frame: .zero)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+    
+    func configure(text: String, textColor: UIColor, backgroundColor: UIColor) {
+        self.text = text
+        self.textColor = textColor
+        self.backgroundColor = backgroundColor
+    }
+    
+    private func setup() {
+        makeRoundShape()
+        setTextPadding()
+    }
+    
+    private func makeRoundShape() {
+        let width: CGFloat = 50.0
+        let height: CGFloat = 22.0
+        
+        self.frame.size.width = width
+        self.frame.size.height = height
+        
+        self.clipsToBounds = true
+        self.layer.cornerRadius = height / 2
+    }
+    
+    private func setTextPadding() {
+        self.edgeInset = UIEdgeInsets(top: 3, left: 8, bottom: 3, right: 8)
+    }
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets.init(top: edgeInset.top, left: edgeInset.left, bottom: edgeInset.bottom, right: edgeInset.right)
+        super.drawText(in: rect.inset(by: insets))
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + edgeInset.left + edgeInset.right, height: size.height + edgeInset.top + edgeInset.bottom)
+    }
+}
