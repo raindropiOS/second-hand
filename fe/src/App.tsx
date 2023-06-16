@@ -9,6 +9,7 @@ import PATH from '@constants/routerPath';
 
 import Login from '@pages/Login';
 import Auth from '@pages/Auth';
+import HomeMain from '@pages/Home/HomeMain';
 
 const App = () => {
   return (
@@ -17,7 +18,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to={PATH.HOME.DEFAULT} />} />
-          <Route path={PATH.HOME.DEFAULT} />
+          <Route path={PATH.HOME.DEFAULT} element={<HomeMain />} />
           <Route path={PATH.HOME.TOWN_SETTING} />
           <Route path={PATH.HOME.TOWN_SEARCH} />
           <Route path={PATH.HOME.CATEGORY} />

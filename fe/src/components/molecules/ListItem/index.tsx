@@ -18,31 +18,39 @@ import {
   $ChatLikeLayout,
 } from './ListItem.style';
 
-interface ListItemProps {
-  imgUrl: string;
-  title: string;
-  town: string;
-  timestamp: string;
-  status?: string;
-  price?: string;
+type Town = {
+  townId: number;
+  name: string;
+};
+
+type CountInfo = {
   chatCount: number;
   likeCount: number;
+};
+
+interface ListItemProps {
+  productId: number;
+  title: string;
+  town: Town;
+  createdAt: string;
+  status?: string;
+  price?: string;
+  countInfo: CountInfo;
+  imgUrl: string;
   isCurrentUserItem: boolean;
   onItemClick: () => void;
   onItemMoreClick?: () => void;
 }
 
-const NONE_PRICE = '가격 없음';
-
 const ListItem = ({
-  imgUrl,
+  productId,
   title,
   town,
-  timestamp,
+  createdAt,
   status,
   price,
-  chatCount,
-  likeCount,
+  countInfo,
+  imgUrl,
   isCurrentUserItem,
   onItemClick,
   onItemMoreClick,
@@ -68,23 +76,23 @@ const ListItem = ({
           )}
         </$TitleLayout>
         <$LocationTimestamp>
-          {town}•{getTimeAgo(timestamp)}
+          {town.name}•{getTimeAgo(createdAt)}
         </$LocationTimestamp>
         <$StatusPriceLayout>
           {status && <$Status>{status}</$Status>}
-          <$Price>{price ? `${price}원` : NONE_PRICE}</$Price>
+          <$Price>{price}</$Price>
         </$StatusPriceLayout>
         <$ChatLikeLayout>
-          {!!chatCount && (
+          {!!countInfo.chatCount && (
             <>
               <Icon name="message" fill={theme.COLORS.NEUTRAL.TEXT.DEFAULT} />
-              <div>{chatCount}</div>
+              <div>{countInfo.chatCount}</div>
             </>
           )}
-          {!!likeCount && (
+          {!!countInfo.likeCount && (
             <>
               <Icon name="like" fill={theme.COLORS.NEUTRAL.TEXT.DEFAULT} />
-              <div>{likeCount}</div>
+              <div>{countInfo.likeCount}</div>
             </>
           )}
         </$ChatLikeLayout>
