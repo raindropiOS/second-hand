@@ -6,7 +6,7 @@ import { $DetailTabBar, $ChatButton, $LikeLayout } from './DetailTabBar.style';
 import Icon from '@atoms/Icon';
 
 interface DetailTabBarProps {
-  price: string;
+  price: number;
 }
 
 const DetailTabBar = ({ price }: DetailTabBarProps) => {
