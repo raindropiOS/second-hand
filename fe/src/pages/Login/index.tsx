@@ -7,10 +7,9 @@ import Icon from '@atoms/Icon';
 const Login = () => {
   const handleLoginBtnClick = () => {
     const scope = 'user';
-    const redirectURI = process.env.REACT_APP_REDIRECT_URI;
     const clientId = process.env.REACT_APP_CLIENT_ID;
 
-    window.location.href = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&client_id=${clientId}&scope=${scope}`;
+    window.location.href = `https://github.com/login/oauth/authorize?response_type=code&client_id=${clientId}&scope=${scope}`;
   };
 
   return (
