@@ -38,7 +38,10 @@ class SignInViewController: UIViewController {
     }
     
     @objc func loginButtonAction() {
-        // 로그인 버튼 터치시 수행할 동작
+        let clientId: String = "ClientId"
+        let urlStr = "https://github.com/login/oauth/authorize?client_id=\(clientId)"
+        guard let url = URL(string: urlStr) else { return }
+        UIApplication.shared.open(url)
     }
     
     @objc func signUpButtonTouched() {
@@ -94,6 +97,8 @@ extension SignInViewController {
         self.loginButton.setTitle("로그인", for: .normal)
         self.signUpButton.setTitle("회원가입", for: .normal)
         self.signUpButton.setTitleColor(.black, for: .normal)
+        
+        self.loginButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
         
         self.view.addSubview(self.stackView)
         
