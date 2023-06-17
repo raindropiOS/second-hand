@@ -1,7 +1,7 @@
 package com.secondhand.web.contoroller;
 
 import com.secondhand.util.Message;
-import com.secondhand.web.dto.resp.CategoryDTo;
+import com.secondhand.web.dto.resp.CategoryDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,12 +23,17 @@ public class CategoryController {
             description = "사용자는 모든 카테고리 목록을 가져올 수 있다."
     )
     @GetMapping
-    public ResponseEntity<Message<List<CategoryDTo>>> login() {
+    public ResponseEntity<Message<List<CategoryDTO>>> login() {
+        List<CategoryDTO> categoryDTOList = List.of(new CategoryDTO(1L, "비디오", "url경로"),
+                new CategoryDTO(1L, "비디오", "url경로"),
+                new CategoryDTO(1L, "비디오", "url경로"));
+
         Message message = Message.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
+                .data(categoryDTOList)
                 .build();
 
         return ResponseEntity.ok(message);
