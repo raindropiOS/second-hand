@@ -22,7 +22,7 @@ import static com.secondhand.domain.product.Status.SELL;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
