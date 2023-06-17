@@ -1,13 +1,40 @@
 package com.secondhand.domain.member;
 
+import com.secondhand.domain.interested.Interested;
+import com.secondhand.domain.product.Product;
+import com.secondhand.domain.town.Towns;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
-    private String name;
-    private String number;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
+    private String memberId;
+    @Column
+    private String imagUrl;
+
+    @OneToMany(mappedBy = "product")
+    private List<Product> products;
+
+    @OneToMany(mappedBy = "interested")
+    private List<Interested> interests;
+
+    @ManyToOne
+    @JoinColumn(name = "main_town_id")
+    private Towns mainTown;
+
+    @ManyToOne
+    @JoinColumn(name = "sub_town_id")
+    private Towns subTown;
 }
