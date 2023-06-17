@@ -24,12 +24,6 @@ public class Member {
     @Column
     private String imagUrl;
 
-    @OneToMany(mappedBy = "product")
-    private List<Product> products;
-
-    @OneToMany(mappedBy = "interested")
-    private List<Interested> interests;
-
     @ManyToOne
     @JoinColumn(name = "main_town_id")
     private Towns mainTown;
