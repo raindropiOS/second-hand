@@ -15,31 +15,42 @@ class ProductTableViewCell: UITableViewCell {
     private var productImageView = UIImageView()
     // 상품명, 동 이름, 몇 시간 전, 스택뷰(예약중 라벨 + 가격 라벨), 스택 뷰(좋아요 + 채팅 수)
     private let verticalStackView = UIStackView()
-        private let productNameLabel = UILabel()
-        private let townNameHoursAgoLabel = UILabel()
+    private let productNameLabel = UILabel()
+    private let townNameHoursAgoLabel = UILabel()
     
     // horizontalStackView 작성 예정
     // 예약중 라벨, 가격 라벨
     private let horizontalStackView = UIStackView()
-        // reservationLabel 커스텀 라벨 작성 예정
-        private let reservationLabel = UILabel()
-        private let priceLabel = UILabel()
+    // reservationLabel 커스텀 라벨 작성 예정
+    private let reservationLabel = UILabel()
+    private let priceLabel = UILabel()
     // TODO: chattingAndLikedStackView 작성 예정
     private let chattingAndLikedStackView = UIStackView()
-        // 커스텀 뷰(이미지 뷰 + 텍스트 라벨) 작성 예정
-        // ...
+        
+    private let likedCountView: ImageLabelStackView = {
+        let stack = ImageLabelStackView()
+        if let chatImage = UIImage(systemName: "message") {
+            stack.configure(image: chatImage, text: "1")
+        }
+        return stack
+    }()
+    private let chattingCountView: ImageLabelStackView = {
+        let stack = ImageLabelStackView()
+        if let heartImage = UIImage(systemName: "heart") {
+            stack.configure(image: heartImage, text: "2")
+        }
+        return stack
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.addViews()
-        self.setLayouts()
-        self.configureStackViews()
-        
+        self.setup()
         productImageView.backgroundColor = .gray
         verticalStackView.backgroundColor = .green
-            productNameLabel.backgroundColor = .blue
-            townNameHoursAgoLabel.backgroundColor = .orange
-            productNameLabel.text = "productNameLabel"
-            townNameHoursAgoLabel.text = "townNameHoursAgoLabel"
+        productNameLabel.backgroundColor = .blue
+        townNameHoursAgoLabel.backgroundColor = .orange
+        productNameLabel.text = "productNameLabel"
+        townNameHoursAgoLabel.text = "townNameHoursAgoLabel"
         
         productNameLabel.sizeToFit()
         townNameHoursAgoLabel.sizeToFit()
@@ -47,9 +58,7 @@ class ProductTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.addViews()
-        self.setLayouts()
-        self.configureStackViews()
+        self.setup()
     }
     
     func configure(productName: String, townName: String, hoursPast: String, image: UIImage? = nil) {
@@ -58,18 +67,25 @@ class ProductTableViewCell: UITableViewCell {
         self.productImageView.image = image
     }
     
+    private func setup() {
+        self.addViews()
+        self.setLayouts()
+        self.configureStackViews()
+    }
+    
     private func addViews() {
         self.contentView.addSubview(self.productImageView)
         self.contentView.addSubview(self.verticalStackView)
-
+        
         self.verticalStackView.addArrangedSubview(self.productNameLabel)
         self.verticalStackView.addArrangedSubview(self.townNameHoursAgoLabel)
         
-//        self.contentView.addSubview(self.horizontalStackView)
-//        // 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
-//
-//        self.contentView.addSubview(self.chattingAndLikedStackView)
-//        // 커스텀 뷰(이미지 뷰 + 텍스트 라벨) 스택 뷰에 추가
+        //        self.contentView.addSubview(self.horizontalStackView)
+        //        // 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
+        //
+        self.contentView.addSubview(self.chattingAndLikedStackView)
+        self.chattingAndLikedStackView.addArrangedSubview(likedCountView)
+        self.chattingAndLikedStackView.addArrangedSubview(chattingCountView)
     }
     
     private func configureStackViews() {
@@ -77,18 +93,22 @@ class ProductTableViewCell: UITableViewCell {
         self.verticalStackView.alignment = .leading
         self.verticalStackView.distribution = .fillEqually
         
-//        self.horizontalStackView.axis = .horizontal
+        //        self.horizontalStackView.axis = .horizontal
+        
+        self.chattingAndLikedStackView.axis = .horizontal
+        self.chattingAndLikedStackView.alignment = .trailing
+        self.chattingAndLikedStackView.spacing = 5
     }
-
+    
     func setLayouts() {
         self.productImageView.translatesAutoresizingMaskIntoConstraints = false
         self.verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-//        self.productNameLabel.translatesAutoresizingMaskIntoConstraints = false
-//        self.townNameHoursAgoLabel.translatesAutoresizingMaskIntoConstraints = false
-//        self.horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
-//        self.reservationLabel.translatesAutoresizingMaskIntoConstraints = false
-//        self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
-//        self.chattingAndLikedStackView.translatesAutoresizingMaskIntoConstraints = false
+        //        self.productNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        //        self.townNameHoursAgoLabel.translatesAutoresizingMaskIntoConstraints = false
+        //        self.horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        //        self.reservationLabel.translatesAutoresizingMaskIntoConstraints = false
+        //        self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.chattingAndLikedStackView.translatesAutoresizingMaskIntoConstraints = false
         let imageViewPadding: CGFloat = 16.0
         let verticalStackViewPadding: CGFloat = 16.0
         
@@ -102,6 +122,9 @@ class ProductTableViewCell: UITableViewCell {
             self.verticalStackView.bottomAnchor.constraint(equalTo: self.productImageView.bottomAnchor),
             self.verticalStackView.leadingAnchor.constraint(equalTo: self.productImageView.trailingAnchor, constant: verticalStackViewPadding),
             self.verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -verticalStackViewPadding),
+            
+            self.chattingAndLikedStackView.bottomAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.bottomAnchor),
+            self.chattingAndLikedStackView.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor),
         ])
     }
 }
