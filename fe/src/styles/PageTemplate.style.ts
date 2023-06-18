@@ -14,6 +14,7 @@ const PageTemplateStyle = {
   main: css`
     position: relative;
     top: 50px;
+    max-width: 768px;
     height: calc(100vh - 133px);
     padding: 0 16px;
     overflow: auto;
