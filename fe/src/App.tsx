@@ -10,6 +10,7 @@ import PATH from '@constants/routerPath';
 import Login from '@pages/Login';
 import Auth from '@pages/Auth';
 import HomeMain from '@pages/Home/HomeMain';
+import Sale from '@pages/Sale';
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
           <Route path={PATH.HOME.TOWN_SEARCH} />
           <Route path={PATH.HOME.CATEGORY} />
 
-          <Route path={PATH.SALE.DEFAULT} />
+          <Route path={PATH.SALE.DEFAULT} element={<Sale />} />
           <Route path={PATH.SALE.CATEGORY} />
 
           <Route path={PATH.PRODUCT.DEFAULT} />
