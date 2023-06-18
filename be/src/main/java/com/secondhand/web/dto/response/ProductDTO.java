@@ -1,8 +1,7 @@
-package com.secondhand.web.dto.resp;
+package com.secondhand.web.dto.response;
 
 import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Status;
-import com.secondhand.web.dto.resp.TownDTO;
 
 public class ProductDTO {
     private Long productId;

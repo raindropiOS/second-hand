@@ -1,7 +1,7 @@
 package com.secondhand.web.contoroller;
 
 import com.secondhand.util.Message;
-import com.secondhand.web.dto.resp.CategoryDTO;
+import com.secondhand.web.dto.response.CategoryDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

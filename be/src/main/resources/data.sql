@@ -22,11 +22,11 @@ create table member
     memberToken  varchar(200) not null,
     img_url      varchar(200) null,
     main_town_id bigint       not null,
-    sub_town_id  bigint null,
+    sub_town_id  bigint       null,
     constraint fk_member_town1
-        foreign key (main_town_id) references town (id),
+        foreign key (main_town_id) references town (town_id),
     constraint fk_member_town2
-        foreign key (sub_town_id) references town (id)
+        foreign key (sub_town_id) references town (town_id)
 );
 
 create table product
@@ -35,21 +35,21 @@ create table product
         primary key,
     title         varchar(45)  not null,
     content       text         not null,
-    price         int null,
+    price         int          null,
     status        tinyint      not null,
     created_at    datetime     not null,
-    count_view    smallint null,
-    count_like    smallint null,
+    count_view    smallint     null,
+    count_like    smallint     null,
     thumbnail_url varchar(200) not null,
     town_id       bigint       not null,
     category_id   bigint       not null,
     member_id     bigint       not null,
     constraint fk_product_category1
-        foreign key (category_id) references category (id),
+        foreign key (category_id) references category (category_id),
     constraint fk_product_member1
-        foreign key (member_id) references member (id),
+        foreign key (member_id) references member (member_id),
     constraint fk_product_town1
-        foreign key (town_id) references town (id)
+        foreign key (town_id) references town (town_id)
 );
 
 create table chat_room
@@ -57,17 +57,17 @@ create table chat_room
     chat_room_id bigint auto_increment
         primary key,
     title        varchar(45) null,
-    created_at   datetime not null,
-    contents     text null,
-    product_id   bigint   not null,
-    seller_id    bigint   not null,
-    customer_id  bigint   not null,
+    created_at   datetime    not null,
+    contents     text        null,
+    product_id   bigint      not null,
+    seller_id    bigint      not null,
+    customer_id  bigint      not null,
     constraint fk_chat_room_member1
-        foreign key (seller_id) references member (id),
+        foreign key (seller_id) references member (member_id),
     constraint fk_chat_room_member2
-        foreign key (customer_id) references member (id),
+        foreign key (customer_id) references member (member_id),
     constraint fk_chat_room_product1
-        foreign key (product_id) references product (id)
+        foreign key (product_id) references product (product_id)
 );
 
 create table interested
@@ -76,9 +76,9 @@ create table interested
     product_id    bigint not null,
     member_id     bigint not null,
     constraint fk_interested_member1
-        foreign key (member_id) references member (id),
+        foreign key (member_id) references member (member_id),
     constraint fk_interested_product1
-        foreign key (product_id) references product (id)
+        foreign key (product_id) references product (product_id)
 );
 
 create table product_img
@@ -87,6 +87,6 @@ create table product_img
     img_url        varchar(200) not null,
     product_id     bigint       not null,
     constraint fk_product_img_product
-        foreign key (product_id) references product (id)
+        foreign key (product_id) references product (product_id)
 );
 

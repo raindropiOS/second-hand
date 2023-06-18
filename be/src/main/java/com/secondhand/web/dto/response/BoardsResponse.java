@@ -1,4 +1,4 @@
-package com.secondhand.web.dto.resp;
+package com.secondhand.web.dto.response;
 
 
 import com.secondhand.domain.product.Status;
@@ -7,7 +7,7 @@ import lombok.*;
 
 @Getter
 @Builder
-public class BoardsDTOResponse {
+public class BoardsResponse {
 
     private String title;
     private String town;
