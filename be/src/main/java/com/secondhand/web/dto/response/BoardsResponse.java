@@ -1,13 +1,13 @@
-package com.secondhand.dto;
+package com.secondhand.web.dto.response;
 
 
-import com.secondhand.domain.board.Status;
-import com.secondhand.domain.board.CountInfo;
+import com.secondhand.domain.product.Status;
+import com.secondhand.domain.product.CountInfo;
 import lombok.*;
 
 @Getter
 @Builder
-public class BoardsDTOResponse {
+public class BoardsResponse {
 
     private String title;
     private String town;

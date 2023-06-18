@@ -1,9 +1,8 @@
 package com.secondhand.domain.member;
 
-import com.secondhand.dto.MemberLoginResponseDTO;
+import com.secondhand.web.dto.response.MemberLoginResponse;
 import com.secondhand.oauth.GitHubOauth;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
-import com.secondhand.oauth.Oauth;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -19,21 +18,25 @@ import java.io.IOException;
 public class MemberService {
 
     private final GitHubOauth oauth;
+    private final Logger logger = LoggerFactory.getLogger(MemberService.class);
     private final JwtService jwtService;
 
 
     @Transactional
-    public MemberLoginResponseDTO login(String code) throws IOException, InterruptedException {
+    public MemberLoginResponse login(String code) throws IOException, InterruptedException {
         //TODO  authorization code 를 받는다
         AccessTokenResponseDTO token = oauth.getToken(code);
+        logger.debug("token access 토큰 = {}", token);
         OAuthMemberInfoDTO memberInfoDTO = oauth.getUserInfo(token.getAccessToken());
+        logger.debug("token access 토큰 으로 부터받은 회원정보 = {}", memberInfoDTO);
+
         // TODO: 멤버를 저장후 보여준다
         // Member member = memberRepository.save();
         if (checkLoginMember(memberInfoDTO)) {
         }
         String jwtToken = jwtService.createToken(memberInfoDTO);
 
-        return MemberLoginResponseDTO.of(memberInfoDTO, jwtToken);
+        return MemberLoginResponse.of(memberInfoDTO, jwtToken);
     }
 
     private boolean checkLoginMember(OAuthMemberInfoDTO userInfo) {

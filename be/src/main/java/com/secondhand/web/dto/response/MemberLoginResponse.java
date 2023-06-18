@@ -1,4 +1,4 @@
-package com.secondhand.dto;
+package com.secondhand.web.dto.response;
 
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import lombok.AllArgsConstructor;
@@ -8,13 +8,13 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class MemberLoginResponseDTO {
+public class MemberLoginResponse {
 
     private final String name;
     private final String jwtToken;
 
-    public static MemberLoginResponseDTO of(final OAuthMemberInfoDTO member, final String jwtToken) {
-        return MemberLoginResponseDTO.builder()
+    public static MemberLoginResponse of(final OAuthMemberInfoDTO member, final String jwtToken) {
+        return MemberLoginResponse.builder()
                 .name(member.getName())
                 .jwtToken(jwtToken)
                 .build();
