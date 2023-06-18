@@ -23,6 +23,7 @@
 		8F7C71752A31A04D00C10206 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71742A31A04D00C10206 /* ProfileViewController.swift */; };
 		8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71762A31C37000C10206 /* SignUpViewController.swift */; };
 		8F7C71792A31C37A00C10206 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71782A31C37A00C10206 /* SignInViewController.swift */; };
+		8FA8F2E62A3DCC12002C1828 /* ImageLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8F2E52A3DCC12002C1828 /* ImageLabelStackView.swift */; };
 		8FCAA43B2A35D04C0015FE4D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43A2A35D04C0015FE4D /* InputView.swift */; };
 		8FCAA43D2A35D08A0015FE4D /* OrangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43C2A35D08A0015FE4D /* OrangeButton.swift */; };
 		8FCAA43F2A35D21D0015FE4D /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */; };
@@ -50,6 +51,7 @@
 		8F7C71742A31A04D00C10206 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8F7C71762A31C37000C10206 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		8F7C71782A31C37A00C10206 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		8FA8F2E52A3DCC12002C1828 /* ImageLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabelStackView.swift; sourceTree = "<group>"; };
 		8FCAA43A2A35D04C0015FE4D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		8FCAA43C2A35D08A0015FE4D /* OrangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrangeButton.swift; sourceTree = "<group>"; };
 		8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				8F7C716C2A319EE100C10206 /* HomeViewController.swift */,
 				8F167CED2A386237003805CE /* ProductTableViewCell.swift */,
+				8FA8F2E52A3DCC12002C1828 /* ImageLabelStackView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				8F7C71712A31A00400C10206 /* LikeListViewController.swift in Sources */,
 				8FCAA43F2A35D21D0015FE4D /* SeparatorView.swift in Sources */,
 				8F7C716D2A319EE100C10206 /* HomeViewController.swift in Sources */,
+				8FA8F2E62A3DCC12002C1828 /* ImageLabelStackView.swift in Sources */,
 				8F7C71652A30488B00C10206 /* FontStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
