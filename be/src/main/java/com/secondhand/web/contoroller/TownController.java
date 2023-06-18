@@ -32,6 +32,7 @@ public class TownController {
     @GetMapping
     public ResponseEntity<Message<List<TownDTO>>> read() {
         List<TownDTO> townList = townService.findByAll();
+
         log.debug("전체 동네 목록을 가져온다 = {}", townList);
         List.of(new TownDTO(1L, "서울 강남구 역삼1동"),
                 new TownDTO(1L, "서울 강남구 개포1동"),

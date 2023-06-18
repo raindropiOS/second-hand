@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Towns extends BaseTimeEntity {
+public class Towns {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

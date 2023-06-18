@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TownService {
 
-//    private final TownRepository townRepository;
+    private final TownRepository townRepository;
 
     public List<TownDTO> findByAll() {
 //        List<TownDTO> townList = townRepository.findAll()

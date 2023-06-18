@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.Entity;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,8 @@ public class CategoryController {
             tags = "categories",
             description = "사용자는 모든 카테고리 목록을 가져올 수 있다."
     )
-    @GetMapping
-    public ResponseEntity<Message<List<CategoryDTO>>> login() {
+    @GetMapping("/test")
+    public ResponseEntity<Message> view() {
         List<CategoryDTO> categoryDTOList = List.of(new CategoryDTO(1L, "비디오", "url경로"),
                 new CategoryDTO(1L, "비디오", "url경로"),
                 new CategoryDTO(1L, "비디오", "url경로"));
@@ -36,6 +37,7 @@ public class CategoryController {
                 .data(categoryDTOList)
                 .build();
 
-        return ResponseEntity.ok(message);
+        return ResponseEntity.ok()
+                .body(message);
     }
 }

@@ -1,11 +1,11 @@
 package com.secondhand.oauth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secondhand.oauth.dto.req.AccessTokenRequestBodyDTO;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import com.secondhand.oauth.exception.AccessTokenNotFoundException;
 import com.secondhand.oauth.exception.GitHubRequestException;
+import com.secondhand.oauth.exception.GitHubUserInfoNotFoundException;
 import com.secondhand.oauth.service.GiHubService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +18,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Base64;
 
 @Component
 public class GitHubOauth implements Oauth {
@@ -44,7 +42,7 @@ public class GitHubOauth implements Oauth {
     }
 
     @Override
-    public AccessTokenResponseDTO getToken(String code) throws IOException, InterruptedException {
+    public AccessTokenResponseDTO getToken(String code) {
         AccessTokenRequestBodyDTO requestBodyDTO = AccessTokenRequestBodyDTO.builder()
                 .clientId(giHubService.getClientId())
                 .clientSecret(giHubService.getClientSecret())
@@ -52,7 +50,8 @@ public class GitHubOauth implements Oauth {
                 .build();
         logger.debug("requestBodyDTO = {}", requestBodyDTO);
 
-        return webClient.post()
+
+        AccessTokenResponseDTO accessTokenResponseDTO = webClient.post()
                 .uri(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBodyDTO)
@@ -61,28 +60,22 @@ public class GitHubOauth implements Oauth {
                 .bodyToMono(AccessTokenResponseDTO.class)
                 .blockOptional()
                 .orElseThrow(AccessTokenNotFoundException::new);
+
+        logger.debug("accessTokenResponseDTO = {}", accessTokenResponseDTO);
+
+        return accessTokenResponseDTO;
     }
 
     @Override
-    public OAuthMemberInfoDTO getUserInfo(String accessToken) throws IOException, InterruptedException {
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(redirectUrl))
-                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+    public OAuthMemberInfoDTO getUserInfo(String accessToken) {
+        return webClient.get()
+                .uri(redirectUrl)
+                .accept(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "token" + " " + accessToken)
-                .GET()
-                .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        validateSuccess(response);
-
-        return new ObjectMapper().readValue(response.body(), OAuthMemberInfoDTO.class);
-    }
-
-    private <T> void validateSuccess(final HttpResponse<T> response) {
-        final HttpStatus status = HttpStatus.resolve(response.statusCode());
-        if (status == null || status.isError()) {
-            throw new RuntimeException("요청 처리 실패");
-        }
+                .retrieve()
+                .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(GitHubRequestException::new))
+                .bodyToMono(OAuthMemberInfoDTO.class)
+                .blockOptional()
+                .orElseThrow(GitHubUserInfoNotFoundException::new);
     }
 }

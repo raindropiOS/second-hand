@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class Category extends BaseTimeEntity {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
