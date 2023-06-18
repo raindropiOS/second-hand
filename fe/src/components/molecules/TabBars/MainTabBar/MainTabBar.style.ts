@@ -18,17 +18,18 @@ const $Tab = styled.button<{ clicked: boolean }>`
   align-items: center;
   font-size: 10px;
   font-weight: 510;
-  color: ${({ theme, clicked }) => (clicked ? theme.COLORS.NEUTRAL.TEXT.STRONG : theme.COLORS.NEUTRAL.TEXT.WEAK)};
+  color: ${({ theme, clicked }) => (clicked ? theme.COLORS.ACCENT.BACKGROUND.PRIMARY : theme.COLORS.NEUTRAL.TEXT.WEAK)};
   gap: 7px;
 
   & > svg {
-    fill: ${({ theme, clicked }) => (clicked ? theme.COLORS.NEUTRAL.TEXT.STRONG : theme.COLORS.NEUTRAL.TEXT.WEAK)};
+    fill: ${({ theme, clicked }) =>
+      clicked ? theme.COLORS.ACCENT.BACKGROUND.PRIMARY : theme.COLORS.NEUTRAL.TEXT.WEAK};
   }
   &:hover {
     & > svg {
-      fill: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.STRONG};
+      fill: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.PRIMARY};
     }
-    color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.STRONG};
+    color: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.PRIMARY};
   }
 `;
 

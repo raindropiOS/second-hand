@@ -83,7 +83,7 @@ const $Status = styled.p`
   padding: 10px 8px;
   border-radius: 8px;
 
-  background-color: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.SECONDARY};
+  background-color: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.PRIMARY};
 
   font-weight: ${({ theme }) => theme.FONT_TOKEN.CAPTION_1.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.CAPTION_1.FONT_SIZE};

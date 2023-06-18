@@ -17,7 +17,27 @@ const PageTemplateStyle = {
     height: calc(100vh - 133px);
     padding: 0 16px;
     overflow: auto;
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+      }
+    }
+    &::-webkit-scrollbar {
+      width: 8px; /* 스크롤바의 너비 */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      height: 5%; /* 스크롤바의 길이 */
+      background: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.PRIMARY}; /* 스크롤바의 색상 */
+      visibility: hidden;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 149, 0, 0.1);
+    }
   `,
+
   footer: css`
     position: fixed;
     left: 0;
