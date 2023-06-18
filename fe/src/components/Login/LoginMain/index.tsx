@@ -5,11 +5,13 @@ import Icon from '@atoms/Icon';
 
 interface LoginMainProps {
   onClick: () => void;
+  region: string;
 }
 
-const LoginMain = ({ onClick }: LoginMainProps) => {
+const LoginMain = ({ onClick, region }: LoginMainProps) => {
   return (
     <$LoginMain>
+      {region}
       <$ProfileImage>
         <Icon name="camera" width={40} height={35} />
       </$ProfileImage>

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const useCurrentLocation = (options = {}) => {
-  // location 정보 저장
   const [location, setLocation] = useState<{ latitude: number; longitude: number }>({ latitude: 0, longitude: 0 });
-  // 에러 메세지 저장
   const [error, setError] = useState('');
 
   // Geolocation의 `getCurrentPosition` 메소드에 대한 성공 callback 핸들러
