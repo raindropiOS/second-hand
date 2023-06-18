@@ -8,8 +8,9 @@
 import UIKit
 /// 좋아요 또는 채팅 수를 표시하기 위한 HStackView
 class ImageLabelStackView: UIStackView {
-    let imageView = UIImageView()
-    let label = UILabel()
+    private let imageView = UIImageView()
+    private let label = UILabel()
+    private let spacingValue = 5.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,6 +35,7 @@ class ImageLabelStackView: UIStackView {
     private func setup() {
         self.addViews()
         self.setLayout()
+        self.spacing = spacingValue
     }
     
     private func addViews() {
@@ -43,18 +45,11 @@ class ImageLabelStackView: UIStackView {
     
     private func setLayout() {
         self.imageView.translatesAutoresizingMaskIntoConstraints = false
-        self.label.translatesAutoresizingMaskIntoConstraints = false
         let size = CGSize(width: 24, height: 20)
         
         NSLayoutConstraint.activate([
-            self.imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.imageView.widthAnchor.constraint(equalToConstant: size.width),
             self.imageView.heightAnchor.constraint(equalToConstant: size.height),
-            
-            self.label.topAnchor.constraint(equalTo: self.topAnchor),
-            self.label.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.label.leadingAnchor.constraint(equalTo: self.imageView.trailingAnchor),
-            self.label.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
 }
