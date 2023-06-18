@@ -5,6 +5,7 @@ import { ReactComponent as cancel } from '@assets/Icons/cancel.svg';
 import { ReactComponent as category } from '@assets/Icons/category.svg';
 import { ReactComponent as chevronDown } from '@assets/Icons/chevronDown.svg';
 import { ReactComponent as chevronLeft } from '@assets/Icons/chevronLeft.svg';
+import { ReactComponent as chevronRight } from '@assets/Icons/chevronRight.svg';
 import { ReactComponent as home } from '@assets/Icons/home.svg';
 import { ReactComponent as keyboard } from '@assets/Icons/keyboard.svg';
 import { ReactComponent as like } from '@assets/Icons/like.svg';
@@ -25,6 +26,7 @@ const IconComponents = {
   category,
   chevronDown,
   chevronLeft,
+  chevronRight,
   home,
   keyboard,
   like,
