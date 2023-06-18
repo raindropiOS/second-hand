@@ -22,7 +22,7 @@ class ProductTableViewCell: UITableViewCell {
     // 예약중 라벨, 가격 라벨
     private let horizontalStackView = UIStackView()
     // reservationLabel 커스텀 라벨 작성 예정
-    private let reservationLabel = UILabel()
+    private let reservationLabel = RoundedLabel.reservationLabel
     private let priceLabel = UILabel()
     // TODO: chattingAndLikedStackView 작성 예정
     private let chattingAndLikedStackView = UIStackView()
@@ -49,6 +49,7 @@ class ProductTableViewCell: UITableViewCell {
         verticalStackView.backgroundColor = .green
         productNameLabel.backgroundColor = .blue
         townNameHoursAgoLabel.backgroundColor = .orange
+        horizontalStackView.backgroundColor = .red
         productNameLabel.text = "productNameLabel"
         townNameHoursAgoLabel.text = "townNameHoursAgoLabel"
         
@@ -67,6 +68,10 @@ class ProductTableViewCell: UITableViewCell {
         self.productImageView.image = image
     }
     
+    func toggleReservationLabel() {
+        self.reservationLabel.isHidden.toggle()
+    }
+    
     private func setup() {
         self.addViews()
         self.setLayouts()
@@ -79,10 +84,11 @@ class ProductTableViewCell: UITableViewCell {
         
         self.verticalStackView.addArrangedSubview(self.productNameLabel)
         self.verticalStackView.addArrangedSubview(self.townNameHoursAgoLabel)
+        self.verticalStackView.addArrangedSubview(self.horizontalStackView)
         
-        //        self.contentView.addSubview(self.horizontalStackView)
-        //        // 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
-        //
+//                 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
+        self.horizontalStackView.addArrangedSubview(self.reservationLabel)
+
         self.contentView.addSubview(self.chattingAndLikedStackView)
         self.chattingAndLikedStackView.addArrangedSubview(likedCountView)
         self.chattingAndLikedStackView.addArrangedSubview(chattingCountView)
@@ -93,7 +99,8 @@ class ProductTableViewCell: UITableViewCell {
         self.verticalStackView.alignment = .leading
         self.verticalStackView.distribution = .fillEqually
         
-        //        self.horizontalStackView.axis = .horizontal
+        self.horizontalStackView.axis = .horizontal
+        self.horizontalStackView.spacing = 4
         
         self.chattingAndLikedStackView.axis = .horizontal
         self.chattingAndLikedStackView.alignment = .trailing
@@ -105,8 +112,8 @@ class ProductTableViewCell: UITableViewCell {
         self.verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         //        self.productNameLabel.translatesAutoresizingMaskIntoConstraints = false
         //        self.townNameHoursAgoLabel.translatesAutoresizingMaskIntoConstraints = false
-        //        self.horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
-        //        self.reservationLabel.translatesAutoresizingMaskIntoConstraints = false
+//                self.horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+//        self.reservationLabel.translatesAutoresizingMaskIntoConstraints = false
         //        self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
         self.chattingAndLikedStackView.translatesAutoresizingMaskIntoConstraints = false
         let imageViewPadding: CGFloat = 16.0
@@ -131,6 +138,13 @@ class ProductTableViewCell: UITableViewCell {
 
 // TODO: 파일 분리 예정 - 1
 class RoundedLabel: UILabel {
+    static let reservationLabel: RoundedLabel = {
+        let label = RoundedLabel()
+        if let mintColor = UIColor(named: "mint") {
+            label.configure(text: "예약중", textColor: .white, backgroundColor: mintColor)
+        }
+        return label
+    }()
     var edgeInset: UIEdgeInsets = .zero
     
     init() {
