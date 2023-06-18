@@ -1,12 +1,18 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useRef, useCallback } from 'react';
 
 import { CATEGORIES } from '@constants/categories';
 
 import TextInput from '@atoms/Inputs/TextInput';
-import ImagePreviews from '@components/molecules/ImagePreviews';
-import { $SaleMain, $CategoriesLayout, $RecommendCategories, $SelectCategoryButton } from './SaleMain.style';
-import Chip from '@atoms/Chip';
 import Icon from '@atoms/Icon';
+import Chip from '@atoms/Chip';
+import ImagePreviews from '@components/molecules/ImagePreviews';
+import {
+  $SaleMain,
+  $CategoriesLayout,
+  $RecommendCategories,
+  $SelectCategoryButton,
+  $ContentTextArea,
+} from './SaleMain.style';
 
 type ProductInfo = { title: string; price: string; content: string };
 
@@ -27,13 +33,20 @@ const choiceCategories = (() => {
 })();
 
 const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
-  const [isRecommend, setIsRecommend] = useState(false);
+  const textRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const handleResizeHeight = useCallback(() => {
+    if (!textRef.current) return;
+    const { style } = textRef.current;
+
+    if (parseInt(style.maxHeight) < parseInt(style.height)) return;
+    style.height = textRef.current.scrollHeight + 'px';
+  }, []);
 
   const onTitleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     onChange(prev => {
       return { ...prev, title: target.value };
     });
-    setIsRecommend(true);
   };
 
   const onPriceChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +55,7 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
     });
   };
 
-  const onContentChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const onContentChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     onChange(prev => {
       return { ...prev, content: target.value };
     });
@@ -53,7 +66,7 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
       <ImagePreviews />
       <TextInput onChange={onTitleChange} value={productInfo.title} placeholder="글제목" />
 
-      {isRecommend && (
+      {productInfo.title.length !== 0 && (
         <$CategoriesLayout>
           <$RecommendCategories>
             {choiceCategories.map(category => (
@@ -67,10 +80,12 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
       )}
 
       <TextInput onChange={onPriceChange} value={productInfo.price} placeholder="₩ 가격(선택사항)" />
-      <TextInput
+      <$ContentTextArea
+        ref={textRef}
         onChange={onContentChange}
         value={productInfo.content}
         placeholder="역삼1동에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)"
+        onInput={handleResizeHeight}
       />
     </$SaleMain>
   );
