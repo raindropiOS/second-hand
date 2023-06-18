@@ -23,10 +23,15 @@ class ProductTableViewCell: UITableViewCell {
     private let horizontalStackView = UIStackView()
     // reservationLabel 커스텀 라벨 작성 예정
     private let reservationLabel = RoundedLabel.reservationLabel
-    private let priceLabel = UILabel()
+    private let priceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "24,500원"
+        label.font = FontStyle.headline
+        return label
+    }()
     // TODO: chattingAndLikedStackView 작성 예정
     private let chattingAndLikedStackView = UIStackView()
-        
+    
     private let likedCountView: ImageLabelStackView = {
         let stack = ImageLabelStackView()
         if let chatImage = UIImage(systemName: "message") {
@@ -86,9 +91,10 @@ class ProductTableViewCell: UITableViewCell {
         self.verticalStackView.addArrangedSubview(self.townNameHoursAgoLabel)
         self.verticalStackView.addArrangedSubview(self.horizontalStackView)
         
-//                 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
+        //                 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
         self.horizontalStackView.addArrangedSubview(self.reservationLabel)
-
+        self.horizontalStackView.addArrangedSubview(self.priceLabel)
+        
         self.contentView.addSubview(self.chattingAndLikedStackView)
         self.chattingAndLikedStackView.addArrangedSubview(likedCountView)
         self.chattingAndLikedStackView.addArrangedSubview(chattingCountView)
@@ -112,8 +118,8 @@ class ProductTableViewCell: UITableViewCell {
         self.verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         //        self.productNameLabel.translatesAutoresizingMaskIntoConstraints = false
         //        self.townNameHoursAgoLabel.translatesAutoresizingMaskIntoConstraints = false
-//                self.horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
-//        self.reservationLabel.translatesAutoresizingMaskIntoConstraints = false
+        //                self.horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        //        self.reservationLabel.translatesAutoresizingMaskIntoConstraints = false
         //        self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
         self.chattingAndLikedStackView.translatesAutoresizingMaskIntoConstraints = false
         let imageViewPadding: CGFloat = 16.0
