@@ -23,6 +23,7 @@ const $ImageInputLabel = styled.label<$ImageInputLabelProps>`
   gap: 4px;
 
   width: 80px;
+  min-width: 80px;
   height: 80px;
 
   border: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.DEFAULT};
