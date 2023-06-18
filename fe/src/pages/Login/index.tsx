@@ -6,8 +6,12 @@ import kakaoFetch from 'src/apis/instances/kakaoFetch';
 import useCurrentLocation from '@hooks/useCurentLocation';
 
 import MainTabBar from '@components/molecules/TabBars/MainTabBar';
-import { $LoginLayout, $LoginHeader, $LoginButton, $ProfileImage } from './Login.style';
 import Icon from '@atoms/Icon';
+import LoginHeader from '@components/Login/LoginHeader';
+import LoginMain from '@components/Login/LoginMain';
+
+import { $Template } from '@styles/PageTemplate.style';
+import { $LoginLayout, $LoginHeader, $LoginButton, $ProfileImage } from './Login.style';
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -39,17 +43,11 @@ const Login = () => {
   }, [location]);
 
   return (
-    <$LoginLayout>
-      <$LoginHeader>내 계정</$LoginHeader>
-      <$ProfileImage>
-        <Icon name="camera" width={40} height={35} />
-      </$ProfileImage>
-      <$LoginButton onClick={handleLoginBtnClick}>
-        <Icon name="github" width={40} height={40} />
-        깃허브로 로그인하기
-      </$LoginButton>
+    <$Template>
+      <LoginHeader />
+      <LoginMain onClick={handleLoginBtnClick} />
       <MainTabBar />
-    </$LoginLayout>
+    </$Template>
   );
 };
 
