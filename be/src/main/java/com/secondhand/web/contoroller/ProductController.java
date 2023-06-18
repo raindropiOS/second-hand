@@ -2,13 +2,13 @@ package com.secondhand.web.contoroller;
 
 import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.ProductService;
-import com.secondhand.web.dto.req.FilterRequestDTO;
-import com.secondhand.web.dto.req.ProductLikeResponseDTO;
-import com.secondhand.web.dto.req.ProductSaveRequestDTO;
-import com.secondhand.web.dto.req.ProductUpdateRequestDTO;
-import com.secondhand.web.dto.resp.BoardsDTOResponse;
+import com.secondhand.web.dto.requset.FilterRequest;
+import com.secondhand.web.dto.requset.ProductLikeResponse;
+import com.secondhand.web.dto.requset.ProductSaveRequest;
+import com.secondhand.web.dto.requset.ProductUpdateRequest;
+import com.secondhand.web.dto.response.BoardsResponse;
 import com.secondhand.util.Message;
-import com.secondhand.web.dto.resp.ProductDTO;
+import com.secondhand.web.dto.response.ProductDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class ProductController {
             description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다.."
     )
     @GetMapping
-    public ResponseEntity<Message<List<ProductDTO>>> search(FilterRequestDTO filterRequestDTO) {
+    public ResponseEntity<Message<List<ProductDTO>>> search(FilterRequest filterRequestDTO) {
         Message message = Message.builder()
                 .success(true)
                 .message("")
@@ -84,7 +84,7 @@ public class ProductController {
             description = "사용자는 단일 상품을 등록할 수 있다."
     )
     @PostMapping
-    public ResponseEntity<Message> save(@RequestBody ProductSaveRequestDTO requestDTO) {
+    public ResponseEntity<Message> save(@RequestBody ProductSaveRequest requestDTO) {
         Message message = Message.builder()
                 .success(true)
                 .message("")
@@ -102,7 +102,7 @@ public class ProductController {
     )
     @PutMapping("/{productId}")
     public ResponseEntity<Message> update(@PathVariable long productId,
-                                          @RequestBody ProductUpdateRequestDTO requestDTO) {
+                                          @RequestBody ProductUpdateRequest requestDTO) {
         Message message = Message.builder()
                 .success(true)
                 .message("")
@@ -119,8 +119,8 @@ public class ProductController {
             description = "사용자는상품을 과 관심상품 / 해제 할수 있다.."
     )
     @PatchMapping("/{productId}")
-    public ResponseEntity<Message<ProductLikeResponseDTO>> checkLike(@PathVariable long productId) {
-        ProductLikeResponseDTO dto = new ProductLikeResponseDTO();
+    public ResponseEntity<Message<ProductLikeResponse>> checkLike(@PathVariable long productId) {
+        ProductLikeResponse dto = new ProductLikeResponse();
         Message message = Message.builder()
                 .success(true)
                 .message("")
@@ -141,7 +141,7 @@ public class ProductController {
     public ResponseEntity<Message> allProductList(@PathVariable long townId, @PathVariable long pageNum) {
 
         //TODO create는 DTO 에서 해준다.
-        BoardsDTOResponse boardsListResponse = BoardsDTOResponse.builder()
+        BoardsResponse boardsListResponse = BoardsResponse.builder()
                 .title("파랑 선풍기")
                 .town("역삼 1동")
                 .createdAt("2시간 전")
@@ -151,7 +151,7 @@ public class ProductController {
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
-        BoardsDTOResponse boardsListResponse2 = BoardsDTOResponse.builder()
+        BoardsResponse boardsListResponse2 = BoardsResponse.builder()
                 .title("빨강 선풍기")
                 .town("강남 1동")
                 .createdAt("2시간 전")
@@ -161,7 +161,7 @@ public class ProductController {
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
-        BoardsDTOResponse boardsListResponse3 = BoardsDTOResponse.builder()
+        BoardsResponse boardsListResponse3 = BoardsResponse.builder()
                 .title("노랑 선풍기")
                 .town("대치 1동")
                 .createdAt("2시간 전")
@@ -171,7 +171,7 @@ public class ProductController {
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
-        BoardsDTOResponse boardsListResponse4 = BoardsDTOResponse.builder()
+        BoardsResponse boardsListResponse4 = BoardsResponse.builder()
                 .title("초록 선풍기")
                 .town("역삼 1동")
                 .createdAt("2시간 전")
@@ -180,7 +180,7 @@ public class ProductController {
                 .status(SELL)
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
-        List<BoardsDTOResponse> boardsDTOResponseList = new ArrayList<>();
+        List<BoardsResponse> boardsDTOResponseList = new ArrayList<>();
         boardsDTOResponseList.add(boardsListResponse);
         boardsDTOResponseList.add(boardsListResponse2);
         boardsDTOResponseList.add(boardsListResponse3);
@@ -216,7 +216,7 @@ public class ProductController {
     public ResponseEntity<Message> productDetail(@PathVariable long productId) {
 
         //TODO create는 DTO 에서 해준다.
-        BoardsDTOResponse boardsListResponse = BoardsDTOResponse.builder()
+        BoardsResponse boardsListResponse = BoardsResponse.builder()
                 .title("파랑 선풍기")
                 .town("역삼 1동")
                 .createdAt("2시간 전")
@@ -246,7 +246,7 @@ public class ProductController {
     public ResponseEntity<Message> deleteProduct(@PathVariable long productId) {
 
         //TODO create는 DTO 에서 해준다.
-        BoardsDTOResponse boardsListResponse = BoardsDTOResponse.builder()
+        BoardsResponse boardsListResponse = BoardsResponse.builder()
                 .title("파랑 선풍기")
                 .town("역삼 1동")
                 .createdAt("2시간 전")

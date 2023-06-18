@@ -1,6 +1,8 @@
 package com.secondhand.domain.town;
 
 
-public interface TownRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TownRepository extends JpaRepository<Towns, Long> {
 
 }

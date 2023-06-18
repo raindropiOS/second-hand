@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Towns extends BaseTimeEntity {
+public class Towns {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,4 @@ public class Towns extends BaseTimeEntity {
 
     @Column(length = 45, nullable = false)
     private String district;
-
-    @OneToMany(mappedBy = "product")
-    private List<Product> products;
-
-    @OneToMany(mappedBy = "member")
-    private List<Member> members;
 }

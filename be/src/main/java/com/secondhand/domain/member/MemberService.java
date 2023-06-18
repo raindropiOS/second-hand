@@ -1,6 +1,6 @@
 package com.secondhand.domain.member;
 
-import com.secondhand.web.dto.resp.MemberLoginResponseDTO;
+import com.secondhand.web.dto.response.MemberLoginResponse;
 import com.secondhand.oauth.GitHubOauth;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
@@ -23,7 +23,7 @@ public class MemberService {
 
 
     @Transactional
-    public MemberLoginResponseDTO login(String code) throws IOException, InterruptedException {
+    public MemberLoginResponse login(String code) throws IOException, InterruptedException {
         //TODO  authorization code 를 받는다
         AccessTokenResponseDTO token = oauth.getToken(code);
         logger.debug("token access 토큰 = {}", token);
@@ -36,7 +36,7 @@ public class MemberService {
         }
         String jwtToken = jwtService.createToken(memberInfoDTO);
 
-        return MemberLoginResponseDTO.of(memberInfoDTO, jwtToken);
+        return MemberLoginResponse.of(memberInfoDTO, jwtToken);
     }
 
     private boolean checkLoginMember(OAuthMemberInfoDTO userInfo) {
