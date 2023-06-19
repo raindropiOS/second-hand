@@ -76,12 +76,20 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
     // category state 전달!
     const currentCategoryId = selectedCategory.id;
 
+    sessionStorage.setItem('selectedCategory', JSON.stringify(selectedCategory));
+    sessionStorage.setItem('productInfo', JSON.stringify(productInfo));
     navigate(PATH.SALE.CATEGORY, { state: { currentCategoryId } });
   };
 
   const handleRecommendCategoryClick = (id: number) => {
     setSelectedCategory(CATEGORIES.filter(category => category.id === id)[0]);
   };
+
+  const getPlaceholder = (() => {
+    if (selectedCategory.id === 0)
+      return '역삼1동에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)';
+    return CATEGORIES.filter(({ id }) => id === selectedCategory.id)[0].placeholder;
+  })();
 
   return (
     <$SaleMain>
@@ -111,7 +119,7 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
         ref={textRef}
         onChange={onContentChange}
         value={productInfo.content}
-        placeholder={CATEGORIES.filter(({ id }) => id === selectedCategory.id)[0].placeholder}
+        placeholder={getPlaceholder}
         onInput={handleResizeHeight}
       />
     </$SaleMain>
