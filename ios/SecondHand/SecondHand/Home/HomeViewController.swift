@@ -16,8 +16,20 @@ class HomeViewController: UIViewController {
         
         self.view.addSubview(self.tableView)
         
+        self.configureNavigationBar()
         self.configureTableView()
         self.setTableViewLayout()
+    }
+    
+    private func configureNavigationBar() {
+        let button = UIButton(type: .custom)
+        button.setTitle("역삼 1동", for: .normal)
+        button.titleLabel?.font = FontStyle.headline // 폰트와 크기 설정
+        button.setTitleColor(UIColor(named: "black"), for: .normal)
+
+        let barButtonItem = UIBarButtonItem(customView: button)
+        
+        self.navigationItem.leftBarButtonItem = barButtonItem
     }
     
     private func setTableViewLayout() {

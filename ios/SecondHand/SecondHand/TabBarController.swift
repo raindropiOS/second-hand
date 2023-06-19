@@ -16,7 +16,7 @@ class TabBarController: UITabBarController {
     }
     
     private func setTabViewControllers() {
-        let homeViewController = HomeViewController()
+        let homeViewController = UINavigationController(rootViewController: HomeViewController())
         let salesLogViewController = SalesLogViewController()
         let likeListViewController = LikeListViewController()
         let chattingViewController = ChattingViewController()
