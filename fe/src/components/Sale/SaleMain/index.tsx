@@ -1,6 +1,8 @@
-import React, { ChangeEvent, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { CATEGORIES } from '@constants/categories';
+import PATH from '@constants/routerPath';
 
 import TextInput from '@atoms/Inputs/TextInput';
 import Icon from '@atoms/Icon';
@@ -33,7 +35,10 @@ const choiceCategories = (() => {
 })();
 
 const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
+  const [selectedCategory, setSelectedCategory] =
+    useState<{ id: number; category: string; url: string }[]>(choiceCategories);
   const textRef = useRef<HTMLTextAreaElement | null>(null);
+  const navigate = useNavigate();
 
   const handleResizeHeight = useCallback(() => {
     if (!textRef.current) return;
@@ -61,6 +66,17 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
     });
   };
 
+  const handleCategoryButtonClick = () => {
+    // category state 전달!
+    const currentCategory = selectedCategory.length !== 1 ? [] : selectedCategory;
+
+    navigate(PATH.SALE.CATEGORY, { state: { currentCategory } });
+  };
+
+  const handleRecommendCategoryClick = (id: number) => {
+    setSelectedCategory(CATEGORIES.filter(category => category.id === id));
+  };
+
   return (
     <$SaleMain>
       <ImagePreviews />
@@ -69,11 +85,16 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
       {productInfo.title.length !== 0 && (
         <$CategoriesLayout>
           <$RecommendCategories>
-            {choiceCategories.map(category => (
-              <Chip key={category.id} content={category.category} active={false} />
+            {selectedCategory.map(category => (
+              <Chip
+                key={category.id}
+                content={category.category}
+                active={selectedCategory.length === 1}
+                onClick={() => handleRecommendCategoryClick(category.id)}
+              />
             ))}
           </$RecommendCategories>
-          <$SelectCategoryButton>
+          <$SelectCategoryButton onClick={handleCategoryButtonClick}>
             <Icon name="chevronRight" />
           </$SelectCategoryButton>
         </$CategoriesLayout>
