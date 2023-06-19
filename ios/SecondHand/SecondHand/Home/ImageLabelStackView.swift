@@ -34,22 +34,11 @@ class ImageLabelStackView: UIStackView {
     
     private func setup() {
         self.addViews()
-        self.setLayout()
         self.spacing = spacingValue
     }
     
     private func addViews() {
         self.addArrangedSubview(self.imageView)
         self.addArrangedSubview(self.label)
-    }
-    
-    private func setLayout() {
-        self.imageView.translatesAutoresizingMaskIntoConstraints = false
-        let size = CGSize(width: 24, height: 20)
-        
-        NSLayoutConstraint.activate([
-            self.imageView.widthAnchor.constraint(equalToConstant: size.width),
-            self.imageView.heightAnchor.constraint(equalToConstant: size.height),
-        ])
     }
 }
