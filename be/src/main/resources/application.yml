@@ -1,14 +1,12 @@
-# data source
-# ????
-# logging
-logging:
-  level:
-    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
-    org.springframework.web.reactive: DEBUG
-  error:
-    include-message: always
-
 spring:
   profiles:
     active: local
-    include: auth
+    include:
+      - auth
+      - aws
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+        default_batch_fetch_size: 100
+
