@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTheme } from 'styled-components';
 
 import Icon from '@atoms/Icon';
@@ -8,9 +8,11 @@ const MAX_IMAGE_COUNT = 10;
 
 interface ImageInputProps {
   count: number;
+  imgRef?: React.MutableRefObject<HTMLInputElement | null>;
+  onChange: () => void;
 }
 
-const ImageInput = ({ count = 0 }: ImageInputProps) => {
+const ImageInput = ({ count = 0, imgRef, onChange }: ImageInputProps) => {
   const theme = useTheme();
 
   return (
@@ -31,6 +33,8 @@ const ImageInput = ({ count = 0 }: ImageInputProps) => {
         type="file"
         accept="image/jpg, image/jpeg, image/png"
         disabled={count >= MAX_IMAGE_COUNT}
+        onChange={onChange}
+        ref={imgRef}
       />
     </>
   );
