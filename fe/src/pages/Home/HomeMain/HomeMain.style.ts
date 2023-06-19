@@ -7,4 +7,11 @@ const $ListItemContainer = styled.main`
   align-items: center;
 `;
 
-export { $ListItemContainer };
+const $SaleButtonContainer = styled.div`
+  position: absolute;
+  z-index: 9999;
+  right: 40px;
+  bottom: -10px;
+`;
+
+export { $ListItemContainer, $SaleButtonContainer };

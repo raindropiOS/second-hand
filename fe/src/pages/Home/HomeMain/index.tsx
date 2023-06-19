@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { $Template } from '@styles/PageTemplate.style';
-import { $ListItemContainer } from '@pages/Home/HomeMain/HomeMain.style';
+import { $ListItemContainer, $SaleButtonContainer } from '@pages/Home/HomeMain/HomeMain.style';
 import Navbar from '@components/molecules/Navbar';
 import Dropdown from '@molecules/Dropdown';
 import Icon from '@atoms/Icon';
@@ -9,6 +9,7 @@ import ListItem from '@molecules/ListItem';
 import MainTabBar from '@molecules/TabBars/MainTabBar';
 import ConvertPriceFormat from '@utils/convertPriceFormat';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
+import CircleButton from '@atoms/Buttons/CircleButton';
 
 interface Product {
   productId: number;
@@ -84,6 +85,15 @@ const HomeMain = () => {
               />
             ))}
           </$ListItemContainer>
+          <$SaleButtonContainer>
+            <CircleButton
+              iconName="plus"
+              size="large"
+              onClick={() => {
+                console.log('상품 판매하기');
+              }}
+            />
+          </$SaleButtonContainer>
           <MainTabBar />
         </$Template>
       )}
