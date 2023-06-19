@@ -27,26 +27,58 @@ interface Town {
   name: string;
 }
 
+const useObserver = (callback: IntersectionObserverCallback, options: IntersectionObserverInit) => {
+  const target = useRef<HTMLDivElement>(null);
+  const observer = new IntersectionObserver(callback, options);
+
+  useEffect(() => {
+    if (target.current) observer.observe(target.current);
+  }, [target.current, observer]);
+
+  return target;
+};
+
 const HomeMain = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [towns, setTowns] = useState<Town[]>([]);
+  const [pageNum, setPageNum] = useState(1);
+  const [isPageUpadted, setIsPageUpdated] = useState(false);
+  const callback = (entries: IntersectionObserverEntry[]) => {
+    const entry = entries[0];
+
+    if (!entry.isIntersecting || isPageUpadted) return;
+    if (entry.isIntersecting) setPageNum(prevPageNum => prevPageNum + 1);
+    setIsPageUpdated(true);
+  };
+
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1.0,
+  };
+
+  const target = useObserver(callback, options);
 
   useEffect(() => {
     const getProducts = async () => {
       const response = await mockAxiosFetch('/products', {
         method: 'GET',
+        params: {
+          pageNum, // 현재 페이지를 API로 전달
+        },
       });
       const data = await response.data;
       const isSuccess = data.success;
-      const products = data.data.products;
+      const newProducts = data.data.products;
 
       // FIXME(jayden): error handling 수정하기
       if (!isSuccess) throw new Error('Failed to fetch products');
-      setProducts(products);
+      setProducts(prevProducts => [...prevProducts, ...newProducts]);
     };
 
+    // NOTE(jayden): strict mode로 인해 두번씩 호출됨
     getProducts();
-  }, []);
+  }, [pageNum]);
 
   useEffect(() => {
     const getTowns = async () => {
@@ -84,16 +116,18 @@ const HomeMain = () => {
                 onItemClick={() => console.log('onItemClick')}
               />
             ))}
+            <div ref={target} />
           </$ListItemContainer>
           <$SaleButtonContainer>
             <CircleButton
               iconName="plus"
               size="large"
               onClick={() => {
-                console.log('상품 판매하기');
+                console.log('상품 추가하기');
               }}
             />
           </$SaleButtonContainer>
+
           <MainTabBar />
         </$Template>
       )}
