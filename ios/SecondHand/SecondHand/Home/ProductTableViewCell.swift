@@ -102,6 +102,7 @@ class ProductTableViewCell: UITableViewCell {
         self.reservationPriceStack.addArrangedSubview(self.priceLabel)
         
 //        self.contentView.addSubview(self.chattingAndLikedStackView)
+        self.chattingAndLikedStackView.addArrangedSubview(UIView())
         self.chattingAndLikedStackView.addArrangedSubview(likedCountView)
         self.chattingAndLikedStackView.addArrangedSubview(chattingCountView)
     }
@@ -115,15 +116,14 @@ class ProductTableViewCell: UITableViewCell {
         self.reservationPriceStack.spacing = 4
         
         self.chattingAndLikedStackView.axis = .horizontal
-        self.chattingAndLikedStackView.alignment = .trailing
         self.chattingAndLikedStackView.spacing = 5
     }
     
     func setLayouts() {
         self.productImageView.translatesAutoresizingMaskIntoConstraints = false
         self.verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        
         self.spacing.translatesAutoresizingMaskIntoConstraints = false
+        self.chattingAndLikedStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let imageViewPadding: CGFloat = 16.0
         let verticalStackViewPadding: CGFloat = 16.0
@@ -139,7 +139,9 @@ class ProductTableViewCell: UITableViewCell {
             self.verticalStackView.leadingAnchor.constraint(equalTo: self.productImageView.trailingAnchor, constant: verticalStackViewPadding),
             self.verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -verticalStackViewPadding),
             
-            self.spacing.heightAnchor.constraint(equalToConstant: self.reservationPriceStack.frame.height)
+            self.spacing.heightAnchor.constraint(equalToConstant: self.reservationPriceStack.frame.height),
+            
+            self.chattingAndLikedStackView.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor)
         ])
     }
 }
