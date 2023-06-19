@@ -7,7 +7,7 @@ import com.secondhand.web.dto.requset.ProductLikeResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.response.BoardsResponse;
-import com.secondhand.util.Message;
+import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.ProductDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +33,8 @@ public class ProductController {
             description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다.."
     )
     @GetMapping
-    public ResponseEntity<Message<List<ProductDTO>>> search(FilterRequest filterRequestDTO) {
-        Message message = Message.builder()
+    public ResponseEntity<BasicResponse<List<ProductDTO>>> search(FilterRequest filterRequestDTO) {
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -50,8 +50,8 @@ public class ProductController {
             description = "사용자는 자시의 관심 목록을 카테고리 뱔로 확인 가능."
     )
     @GetMapping("/like")
-    public ResponseEntity<Message<List<ProductDTO>>> productLikeCategoryView() {
-        Message message = Message.builder()
+    public ResponseEntity<BasicResponse<List<ProductDTO>>> productLikeCategoryView() {
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -67,8 +67,8 @@ public class ProductController {
             description = "사용자는 세일/판매 중인 상품을 볼수 있다."
     )
     @GetMapping("/sales")
-    public ResponseEntity<Message<List<ProductDTO>>> productSalesView() {
-        Message message = Message.builder()
+    public ResponseEntity<BasicResponse<List<ProductDTO>>> productSalesView() {
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -84,8 +84,8 @@ public class ProductController {
             description = "사용자는 단일 상품을 등록할 수 있다."
     )
     @PostMapping
-    public ResponseEntity<Message> save(@RequestBody ProductSaveRequest requestDTO) {
-        Message message = Message.builder()
+    public ResponseEntity<BasicResponse> save(@RequestBody ProductSaveRequest requestDTO) {
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -101,9 +101,9 @@ public class ProductController {
             description = "사용자는 단일 상품을 수정할 수 있다."
     )
     @PutMapping("/{productId}")
-    public ResponseEntity<Message> update(@PathVariable long productId,
-                                          @RequestBody ProductUpdateRequest requestDTO) {
-        Message message = Message.builder()
+    public ResponseEntity<BasicResponse> update(@PathVariable long productId,
+                                                @RequestBody ProductUpdateRequest requestDTO) {
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -119,9 +119,9 @@ public class ProductController {
             description = "사용자는상품을 과 관심상품 / 해제 할수 있다.."
     )
     @PatchMapping("/{productId}")
-    public ResponseEntity<Message<ProductLikeResponse>> checkLike(@PathVariable long productId) {
+    public ResponseEntity<BasicResponse<ProductLikeResponse>> checkLike(@PathVariable long productId) {
         ProductLikeResponse dto = new ProductLikeResponse();
-        Message message = Message.builder()
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -138,7 +138,7 @@ public class ProductController {
             description = "사용자는 상품 리스트를 볼 수 있다."
     )
     @GetMapping("/{townId}/{pageNum}")
-    public ResponseEntity<Message> allProductList(@PathVariable long townId, @PathVariable long pageNum) {
+    public ResponseEntity<BasicResponse> allProductList(@PathVariable long townId, @PathVariable long pageNum) {
 
         //TODO create는 DTO 에서 해준다.
         BoardsResponse boardsListResponse = BoardsResponse.builder()
@@ -188,7 +188,7 @@ public class ProductController {
 
 
         if (boardsListResponse == null) {
-            Message message = Message.builder()
+            BasicResponse message = BasicResponse.builder()
                     .success(false)
                     .message("실패")
                     .apiStatus(20000)
@@ -197,7 +197,7 @@ public class ProductController {
                     .build();
             return new ResponseEntity<>(message, null, HttpStatus.NOT_FOUND);
         }
-        Message message = Message.builder()
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -213,7 +213,7 @@ public class ProductController {
             description = "사용자는 단일 상품을 볼 수 있다."
     )
     @GetMapping("/{productId}")
-    public ResponseEntity<Message> productDetail(@PathVariable long productId) {
+    public ResponseEntity<BasicResponse> productDetail(@PathVariable long productId) {
 
         //TODO create는 DTO 에서 해준다.
         BoardsResponse boardsListResponse = BoardsResponse.builder()
@@ -226,7 +226,7 @@ public class ProductController {
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
-        Message message = Message.builder()
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -243,7 +243,7 @@ public class ProductController {
             description = "사용자는 단일 상품 삭제 가능합니다.."
     )
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Message> deleteProduct(@PathVariable long productId) {
+    public ResponseEntity<BasicResponse> deleteProduct(@PathVariable long productId) {
 
         //TODO create는 DTO 에서 해준다.
         BoardsResponse boardsListResponse = BoardsResponse.builder()
@@ -256,7 +256,7 @@ public class ProductController {
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
-        Message message = Message.builder()
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
