@@ -172,19 +172,15 @@ class RoundedLabel: UILabel {
     }
     
     private func setup() {
-        makeRoundShape()
+        makeSmallRoundShape()
         setTextPadding()
     }
     
-    private func makeRoundShape() {
-        let width: CGFloat = 50.0
-        let height: CGFloat = 22.0
+    private func makeSmallRoundShape() {
+//        let height: CGFloat = self.frame.size.height
         
-        self.frame.size.width = width
-        self.frame.size.height = height
-        
-        self.clipsToBounds = true
-        self.layer.cornerRadius = height / 2
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 5
     }
     
     private func setTextPadding() {
