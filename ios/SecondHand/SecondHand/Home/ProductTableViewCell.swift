@@ -12,7 +12,12 @@ class ProductTableViewCell: UITableViewCell {
     private let imageSizeRatio: CGFloat = 120/150 // 상품 이미지 크기 / 셀 높이
     private let centerPaddingRatio: CGFloat = 15/393 // 상품 이미지, 상품 내용 사이 간격 / width 비율
     
-    private var productImageView = UIImageView()
+    private var productImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 8
+        imageView.clipsToBounds = true
+        return imageView
+    }()
     // 상품명, 동 이름, 몇 시간 전, 스택뷰(예약중 라벨 + 가격 라벨), 스택 뷰(좋아요 + 채팅 수)
     private let verticalStackView = UIStackView()
     private let productNameLabel = UILabel()
