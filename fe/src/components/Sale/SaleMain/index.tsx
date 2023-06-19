@@ -1,6 +1,8 @@
-import React, { ChangeEvent, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { CATEGORIES } from '@constants/categories';
+import PATH from '@constants/routerPath';
 
 import TextInput from '@atoms/Inputs/TextInput';
 import Icon from '@atoms/Icon';
@@ -19,6 +21,7 @@ type ProductInfo = { title: string; price: string; content: string };
 interface SaleHeaderProps {
   productInfo: ProductInfo;
   onChange: React.Dispatch<React.SetStateAction<ProductInfo>>;
+  currentCategory: { id: number; category: string; url: string };
 }
 
 const choiceCategories = (() => {
@@ -32,8 +35,16 @@ const choiceCategories = (() => {
   return categories;
 })();
 
-const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
+const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) => {
+  const recommendCategory =
+    currentCategory.id === 0 || choiceCategories.map(({ id }) => id).includes(currentCategory.id)
+      ? choiceCategories
+      : [currentCategory, ...choiceCategories];
+  const [selectedCategory, setSelectedCategory] = useState<{ id: number; category: string; url: string }>(
+    currentCategory
+  );
   const textRef = useRef<HTMLTextAreaElement | null>(null);
+  const navigate = useNavigate();
 
   const handleResizeHeight = useCallback(() => {
     if (!textRef.current) return;
@@ -61,6 +72,17 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
     });
   };
 
+  const handleCategoryButtonClick = () => {
+    // category state 전달!
+    const currentCategoryId = selectedCategory.id;
+
+    navigate(PATH.SALE.CATEGORY, { state: { currentCategoryId } });
+  };
+
+  const handleRecommendCategoryClick = (id: number) => {
+    setSelectedCategory(CATEGORIES.filter(category => category.id === id)[0]);
+  };
+
   return (
     <$SaleMain>
       <ImagePreviews />
@@ -69,11 +91,16 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
       {productInfo.title.length !== 0 && (
         <$CategoriesLayout>
           <$RecommendCategories>
-            {choiceCategories.map(category => (
-              <Chip key={category.id} content={category.category} active={false} />
+            {recommendCategory.map(category => (
+              <Chip
+                key={category.id}
+                content={category.category}
+                active={category.id === selectedCategory.id}
+                onClick={() => handleRecommendCategoryClick(category.id)}
+              />
             ))}
           </$RecommendCategories>
-          <$SelectCategoryButton>
+          <$SelectCategoryButton onClick={handleCategoryButtonClick}>
             <Icon name="chevronRight" />
           </$SelectCategoryButton>
         </$CategoriesLayout>
@@ -84,7 +111,7 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
         ref={textRef}
         onChange={onContentChange}
         value={productInfo.content}
-        placeholder="역삼1동에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)"
+        placeholder={CATEGORIES.filter(({ id }) => id === selectedCategory.id)[0].placeholder}
         onInput={handleResizeHeight}
       />
     </$SaleMain>

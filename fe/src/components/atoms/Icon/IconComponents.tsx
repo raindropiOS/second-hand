@@ -17,6 +17,7 @@ import { ReactComponent as search } from '@assets/Icons/search.svg';
 import { ReactComponent as soldList } from '@assets/Icons/soldList.svg';
 import { ReactComponent as townSetting } from '@assets/Icons/townSetting.svg';
 import { ReactComponent as github } from '@assets/Icons/github.svg';
+import { ReactComponent as checkmark } from '@assets/Icons/checkmark.svg';
 
 const IconComponents = {
   account,
@@ -38,6 +39,7 @@ const IconComponents = {
   soldList,
   townSetting,
   github,
+  checkmark,
 };
 
 export { IconComponents };
