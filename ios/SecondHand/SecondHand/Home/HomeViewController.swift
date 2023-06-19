@@ -21,32 +21,6 @@ class HomeViewController: UIViewController {
         self.setTableViewLayout()
     }
     
-    private func configureNavigationBar() {
-        let button = UIButton(type: .custom)
-        button.setTitle("역삼1동", for: .normal)
-        button.titleLabel?.font = FontStyle.headline
-        button.setTitleColor(UIColor(named: "black"), for: .normal)
-        
-        let dong1 = UIAction(title: "역삼1동") {_ in
-            
-            
-       }
-
-       let configureDongButton = UIAction(title: "내 동네 설정하기") {_ in
-
-           
-       }
-
-       let menu = UIMenu(title: "", options: .displayInline, children: [dong1, configureDongButton])
-
-        button.menu = menu
-        button.showsMenuAsPrimaryAction = true
-
-        let barButtonItem = UIBarButtonItem(customView: button)
-        
-        self.navigationItem.leftBarButtonItem = barButtonItem
-    }
-    
     private func setTableViewLayout() {
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -86,6 +60,49 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let heightAspect: CGFloat = 120.0/393.0
         return heightAspect * self.view.frame.width
+    }
+}
+
+// MARK: NavigationBar
+extension HomeViewController {
+    private func configureNavigationBar() {
+        self.addDongSelectButton()
+        self.addHamburgerMenuButton()
+    }
+    
+    private func addDongSelectButton() {
+        let button = UIButton(type: .custom)
+        button.setTitle("역삼1동", for: .normal)
+        button.titleLabel?.font = FontStyle.headline
+        button.setTitleColor(UIColor(named: "black"), for: .normal)
+        
+        let dong1 = UIAction(title: "역삼1동") {_ in
+            
+            
+       }
+
+       let configureDongButton = UIAction(title: "내 동네 설정하기") {_ in
+
+           
+       }
+
+       let menu = UIMenu(title: "", options: .displayInline, children: [dong1, configureDongButton])
+
+        button.menu = menu
+        button.showsMenuAsPrimaryAction = true
+
+        let barButtonItem = UIBarButtonItem(customView: button)
+        
+        self.navigationItem.leftBarButtonItem = barButtonItem
+    }
+    
+    private func addHamburgerMenuButton() {
+        let hamburgerImage = UIImage(systemName: "line.3.horizontal")
+        let color = UIColor(named: "black") ?? .black
+        let barButton = UIBarButtonItem(image: hamburgerImage, style: .plain, target: self, action: nil)
+        barButton.tintColor = color
+        
+        self.navigationItem.rightBarButtonItem = barButton
     }
 }
 
