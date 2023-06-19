@@ -17,6 +17,7 @@ class ProductTableViewCell: UITableViewCell {
     private let verticalStackView = UIStackView()
     private let productNameLabel = UILabel()
     private let townNameHoursAgoLabel = UILabel()
+    private let cellInsetPadding: CGFloat = 16.0
     
     // horizontalStackView 작성 예정
     // 예약중 라벨, 가격 라벨
@@ -106,7 +107,7 @@ class ProductTableViewCell: UITableViewCell {
     private func configureStackViews() {
         self.verticalStackView.axis = .vertical
         self.verticalStackView.alignment = .leading
-        self.verticalStackView.distribution = .fillEqually
+        self.verticalStackView.distribution = .fillProportionally
         
         self.reservationPriceStack.axis = .horizontal
         self.reservationPriceStack.spacing = 4
@@ -121,17 +122,16 @@ class ProductTableViewCell: UITableViewCell {
         self.spacing.translatesAutoresizingMaskIntoConstraints = false
         self.chattingAndLikedStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        let imageViewPadding: CGFloat = 16.0
         let verticalStackViewPadding: CGFloat = 16.0
         
         NSLayoutConstraint.activate([
-            self.productImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: imageViewPadding),
-            self.productImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -imageViewPadding),
-            self.productImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: imageViewPadding),
+            self.productImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: cellInsetPadding),
+            self.productImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -cellInsetPadding),
+            self.productImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: cellInsetPadding),
             self.productImageView.widthAnchor.constraint(equalTo: self.productImageView.heightAnchor),
             
-            self.verticalStackView.topAnchor.constraint(equalTo: self.productImageView.topAnchor),
-            self.verticalStackView.bottomAnchor.constraint(equalTo: self.productImageView.bottomAnchor),
+            self.verticalStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: self.cellInsetPadding),
+            self.verticalStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -self.cellInsetPadding),
             self.verticalStackView.leadingAnchor.constraint(equalTo: self.productImageView.trailingAnchor, constant: verticalStackViewPadding),
             self.verticalStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -verticalStackViewPadding),
             
