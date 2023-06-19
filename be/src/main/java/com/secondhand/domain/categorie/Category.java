@@ -1,6 +1,5 @@
 package com.secondhand.domain.categorie;
 
-import com.secondhand.util.BaseTimeEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
