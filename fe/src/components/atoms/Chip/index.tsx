@@ -5,7 +5,7 @@ import { $Chip } from './Chip.style';
 interface ChipProps {
   content: string;
   active: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Chip = ({ content, active, onClick }: ChipProps) => {

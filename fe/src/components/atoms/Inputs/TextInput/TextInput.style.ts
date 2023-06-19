@@ -3,8 +3,9 @@ import styled, { css } from 'styled-components';
 export type TextInputCategory = 'default' | 'chat' | 'search';
 
 const defaultStyle = css`
+  padding: 15px 0;
   background: transparent;
-  border-bottom: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.DEFAULT};
+  border-top: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.DEFAULT};
 `;
 
 const chatStyle = css`
@@ -26,8 +27,8 @@ const $TextInputLayout = styled.div<{ width: number; category?: TextInputCategor
   justify-content: flex-start;
   align-items: center;
 
-  width: ${({ width }) => width}px;
-
+  /* width: ${({ width }) => (width === 0 ? '100%' : `${width}px`)}; */
+  width: 100%;
   ${({ category }) => category === 'default' && defaultStyle};
   ${({ category }) => category === 'chat' && chatStyle};
   ${({ category }) => category === 'search' && searchStyle};

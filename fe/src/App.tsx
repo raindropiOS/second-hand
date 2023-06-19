@@ -11,6 +11,7 @@ import Login from '@pages/Login';
 import Auth from '@pages/Auth';
 import HomeMain from '@pages/Home/HomeMain';
 import Sale from '@pages/Sale';
+import SaleCategory from '@pages/Sale/SaleCategory';
 
 const App = () => {
   return (
@@ -25,7 +26,7 @@ const App = () => {
           <Route path={PATH.HOME.CATEGORY} />
 
           <Route path={PATH.SALE.DEFAULT} element={<Sale />} />
-          <Route path={PATH.SALE.CATEGORY} />
+          <Route path={PATH.SALE.CATEGORY} element={<SaleCategory />} />
 
           <Route path={PATH.PRODUCT.DEFAULT} />
           <Route path={PATH.PRODUCT.CHAT} />
