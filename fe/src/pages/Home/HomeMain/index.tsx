@@ -10,6 +10,7 @@ import MainTabBar from '@molecules/TabBars/MainTabBar';
 import ConvertPriceFormat from '@utils/convertPriceFormat';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 import CircleButton from '@atoms/Buttons/CircleButton';
+import { useNavigate } from 'react-router-dom';
 
 interface Product {
   productId: number;
@@ -43,6 +44,7 @@ const HomeMain = () => {
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [isPageUpadted, setIsPageUpdated] = useState(false);
+  const navigate = useNavigate();
   const callback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
@@ -123,11 +125,10 @@ const HomeMain = () => {
               iconName="plus"
               size="large"
               onClick={() => {
-                console.log('상품 추가하기');
+                navigate('/sale');
               }}
             />
           </$SaleButtonContainer>
-
           <MainTabBar />
         </$Template>
       )}
