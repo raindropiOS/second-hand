@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import SaleTabBar from '@components/molecules/TabBars/SaleTabBar';
 import SaleHeader from '@components/Sale/SaleHeader';
@@ -14,11 +15,13 @@ const Sale = () => {
     price: '',
     content: '',
   });
+  const location = useLocation();
+  const currentCategory = location.state ? location.state.currentCategory : { id: 0, category: '', url: '' };
 
   return (
     <$Template>
       <SaleHeader />
-      <SaleMain productInfo={newProductInfo} onChange={setNewProductInfo} />
+      <SaleMain productInfo={newProductInfo} currentCategory={currentCategory} onChange={setNewProductInfo} />
       <SaleTabBar townNames="역삼 1동" />
     </$Template>
   );

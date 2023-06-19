@@ -21,6 +21,7 @@ type ProductInfo = { title: string; price: string; content: string };
 interface SaleHeaderProps {
   productInfo: ProductInfo;
   onChange: React.Dispatch<React.SetStateAction<ProductInfo>>;
+  currentCategory: { id: number; category: string; url: string };
 }
 
 const choiceCategories = (() => {
@@ -34,9 +35,14 @@ const choiceCategories = (() => {
   return categories;
 })();
 
-const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
-  const [selectedCategory, setSelectedCategory] =
-    useState<{ id: number; category: string; url: string }[]>(choiceCategories);
+const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) => {
+  const recommendCategory =
+    currentCategory.id === 0 || choiceCategories.map(({ id }) => id).includes(currentCategory.id)
+      ? choiceCategories
+      : [currentCategory, ...choiceCategories];
+  const [selectedCategory, setSelectedCategory] = useState<{ id: number; category: string; url: string }>(
+    currentCategory
+  );
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const navigate = useNavigate();
 
@@ -68,13 +74,13 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
 
   const handleCategoryButtonClick = () => {
     // category state 전달!
-    const currentCategory = selectedCategory.length !== 1 ? [] : selectedCategory;
+    const currentCategoryId = selectedCategory.id;
 
-    navigate(PATH.SALE.CATEGORY, { state: { currentCategory } });
+    navigate(PATH.SALE.CATEGORY, { state: { currentCategoryId } });
   };
 
   const handleRecommendCategoryClick = (id: number) => {
-    setSelectedCategory(CATEGORIES.filter(category => category.id === id));
+    setSelectedCategory(CATEGORIES.filter(category => category.id === id)[0]);
   };
 
   return (
@@ -85,11 +91,11 @@ const SaleMain = ({ onChange, productInfo }: SaleHeaderProps) => {
       {productInfo.title.length !== 0 && (
         <$CategoriesLayout>
           <$RecommendCategories>
-            {selectedCategory.map(category => (
+            {recommendCategory.map(category => (
               <Chip
                 key={category.id}
                 content={category.category}
-                active={selectedCategory.length === 1}
+                active={category.id === selectedCategory.id}
                 onClick={() => handleRecommendCategoryClick(category.id)}
               />
             ))}
