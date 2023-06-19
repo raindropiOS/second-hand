@@ -45,6 +45,7 @@ const HomeMain = () => {
   const [pageNum, setPageNum] = useState(1);
   const [isPageUpadted, setIsPageUpdated] = useState(false);
   const navigate = useNavigate();
+
   const callback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
@@ -60,6 +61,10 @@ const HomeMain = () => {
   };
 
   const target = useObserver(callback, options);
+
+  const handleTownSettingButtonClick = () => {
+    navigate('/home/town-setting');
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -103,7 +108,7 @@ const HomeMain = () => {
       {!!products.length && !!towns.length && (
         <$Template>
           <Navbar>
-            <Dropdown towns={towns} />
+            <Dropdown towns={towns} onTownSettingClick={handleTownSettingButtonClick} />
             <button>
               <Icon name="category" />
             </button>
