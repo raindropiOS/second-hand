@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import PATH from '@constants/routerPath';
+
 import { $Template } from '@styles/PageTemplate.style';
 import { $ListItemContainer, $SaleButtonContainer } from '@pages/Home/HomeMain/HomeMain.style';
 import Navbar from '@components/molecules/Navbar';
@@ -104,7 +106,11 @@ const HomeMain = () => {
         <$Template>
           <Navbar>
             <Dropdown towns={towns} />
-            <button>
+            <button
+              onClick={() => {
+                navigate(PATH.HOME.CATEGORY);
+              }}
+            >
               <Icon name="category" />
             </button>
           </Navbar>
