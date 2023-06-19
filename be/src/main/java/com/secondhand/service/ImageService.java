@@ -1,5 +1,8 @@
-package com.secondhand.web.contoroller;
+package com.secondhand.service;
 
+import com.secondhand.domain.image.Image;
+import com.secondhand.domain.image.ImageRepository;
+import com.secondhand.web.dto.response.ImageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +24,7 @@ public class ImageService {
 
     public static final String FILE_ROUTE = "images/test/";
     private final S3Client s3Client;
+    private final ImageRepository imageRepository;
 
     @Value("${aws.s3.bucket}")
     private String bucket;
@@ -39,8 +43,8 @@ public class ImageService {
                         .key(fileName)
                         .build())
                 .toString();
-
-        return new ImageResponse(imageUrl);
+        Image image = imageRepository.save(new Image(imageUrl));
+        return new ImageResponse(image);
     }
 
     public String uploads(MultipartFile multipartFile) throws IOException {
@@ -63,6 +67,8 @@ public class ImageService {
                 .toString();
 
         log.debug("imageUrl = {} ", imageUrl);
+        Image image = imageRepository.save(new Image(imageUrl));
+        ImageResponse imageResponse = new ImageResponse(image);
         return imageUrl;
     }
 
