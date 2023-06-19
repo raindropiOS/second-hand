@@ -2,7 +2,7 @@ package com.secondhand.web.contoroller;
 
 import com.secondhand.domain.member.MemberService;
 import com.secondhand.domain.town.TownService;
-import com.secondhand.util.Message;
+import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +32,11 @@ public class MemberController {
             description = "사용자 깃허브를 통한 로그인"
     )
     @GetMapping("/auth/login")
-    public ResponseEntity<Message<MemberLoginResponse>> login(@RequestParam String code) throws IOException, InterruptedException {
+    public ResponseEntity<BasicResponse<MemberLoginResponse>> login(@RequestParam String code) throws IOException, InterruptedException {
         logger.debug("프론트로 부터 받은 코드 = {}", code);
         MemberLoginResponse memberResponseDTO = memberService.login(code);
 
-        Message message = Message.builder()
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -53,9 +53,9 @@ public class MemberController {
             description = "사용자 로그아웃."
     )
     @GetMapping("/auth/logout")
-    public ResponseEntity<Message<MemberLoginResponse>> logout() {
+    public ResponseEntity<BasicResponse<MemberLoginResponse>> logout() {
 
-        Message message = Message.builder()
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)

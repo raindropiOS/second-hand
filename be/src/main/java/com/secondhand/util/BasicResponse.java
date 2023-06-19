@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Message<T> {
+public class BasicResponse<T> {
 
     private boolean success;
     private HttpStatus httpStatus;
