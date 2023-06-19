@@ -2,7 +2,7 @@ name: CI/CD
 
 on:
   push:
-    branches: [ "dev/BE" ]
+    branches: [ "dev/be" ]
 env:
   working-directory: ./be
   DOCKER_IMAGE: gamja
