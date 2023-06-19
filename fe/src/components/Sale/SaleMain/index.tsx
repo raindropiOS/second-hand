@@ -111,7 +111,7 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
         ref={textRef}
         onChange={onContentChange}
         value={productInfo.content}
-        placeholder="역삼1동에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)"
+        placeholder={CATEGORIES.filter(({ id }) => id === selectedCategory.id)[0].placeholder}
         onInput={handleResizeHeight}
       />
     </$SaleMain>

@@ -35,6 +35,7 @@ const $ContentTextArea = styled.textarea`
   resize: none;
   width: 100%;
   max-height: calc(100% - 320px);
+  min-height: 300px;
   padding: 15px 12px;
   background: transparent;
   border-top: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.DEFAULT};
