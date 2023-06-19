@@ -88,3 +88,30 @@ extension HomeViewController: UITableViewDelegate {
         return heightAspect * self.view.frame.width
     }
 }
+
+/// 임시 DTO이자 Combine 대상.
+/// 유저 정보를 담아 관리할 수도 있을 것으로 기대
+class User {
+    /// 임시용
+    static let shared: User = {
+        let user = User()
+        let defaultDong = Dong(name: "역삼1동")
+        user.addDong(defaultDong)
+        return user
+    }()
+    
+    /// 차후 userInfo 타입 선언뒤, nil 값이 아니면 true 반환하여 판별해도 될 듯.
+    var isSignedIn: Bool = true
+    var selectedDong: Dong? {
+        return dongs[0]
+    }
+    private var dongs: [Dong] = []
+    
+    func addDong(_ dong: Dong) {
+        dongs.append(dong)
+    }
+}
+
+struct Dong {
+    let name: String
+}
