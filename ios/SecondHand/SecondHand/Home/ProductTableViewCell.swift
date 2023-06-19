@@ -171,13 +171,14 @@ class RoundedLabel: UILabel {
     }
     
     private func setup() {
+        self.font = FontStyle.caption1
         makeSmallRoundShape()
         setTextPadding()
     }
     
     private func makeSmallRoundShape() {
         self.layer.masksToBounds = true
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 8
     }
     
     private func setTextPadding() {
