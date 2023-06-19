@@ -30,14 +30,14 @@ jobs:
 
       - run: |
           
-          touch ./backend/src/main/resources/application-aws.yml
-          echo "${{ secrets.APPLICATION_AWS }}" > ./backend/src/main/resources/application-aws.yml
+          touch ./be/src/main/resources/application-aws.yml
+          echo "${{ secrets.APPLICATION_AWS }}" > ./be/src/main/resources/application-aws.yml
           
-          touch ./backend/src/main/resources/application-prod.yml
-          echo "${{ secrets.APPLICATION_PROD }}" > ./backend/src/main/resources/application-prod.yml
+          touch ./be/src/main/resources/application-prod.yml
+          echo "${{ secrets.APPLICATION_PROD }}" > ./be/src/main/resources/application-prod.yml
           
-          touch ./backend/src/main/resources/application-oauth.yml
-          echo "${{ secrets.APPLICATION_AUTH }}" > ./backend/src/main/resources/application-auth.yml
+          touch ./be/src/main/resources/application-auth.yml
+          echo "${{ secrets.APPLICATION_AUTH }}" > ./be/src/main/resources/application-auth.yml
 
       - name: Gradle
         run: |
