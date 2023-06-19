@@ -171,7 +171,7 @@ class RoundedLabel: UILabel {
     }
     
     private func setup() {
-        self.font = FontStyle.caption1
+        self.font = FontStyle.footnote
         makeSmallRoundShape()
         setTextPadding()
     }
