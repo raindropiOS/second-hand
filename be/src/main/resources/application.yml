@@ -1,0 +1,14 @@
+# data source
+# ????
+# logging
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+    org.springframework.web.reactive: DEBUG
+  error:
+    include-message: always
+
+spring:
+  profiles:
+    active: local
+    include: auth
