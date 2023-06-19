@@ -53,13 +53,14 @@ class ProductTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setup()
-        productImageView.backgroundColor = .gray
-        verticalStackView.backgroundColor = .green
-        productNameLabel.backgroundColor = .blue
-        townNameHoursAgoLabel.backgroundColor = .orange
-        reservationPriceStack.backgroundColor = .red
-        productNameLabel.text = "productNameLabel"
-        townNameHoursAgoLabel.text = "townNameHoursAgoLabel"
+        productImageView.image = UIImage(named: "FanImage")
+        
+        productNameLabel.text = "파랑 선풍기"
+        productNameLabel.font = FontStyle.subhead
+        
+        townNameHoursAgoLabel.text = "역삼1동 · 2시간 전"
+        townNameHoursAgoLabel.font = FontStyle.footnote
+        townNameHoursAgoLabel.textColor = UIColor(named: "gray300")
         
         productNameLabel.sizeToFit()
         townNameHoursAgoLabel.sizeToFit()

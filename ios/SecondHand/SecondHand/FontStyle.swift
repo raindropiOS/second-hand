@@ -16,7 +16,7 @@ struct FontStyle {
     static let title1 = UIFont.systemFont(ofSize: 28, weight: .regular, width: .standard)
     static let title2 = UIFont.systemFont(ofSize: 22, weight: .regular, width: .standard)
     static let title3 = UIFont.systemFont(ofSize: 20, weight: .regular, width: .standard)
-    static let headline = UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
+    static let headline = UIFont.systemFont(ofSize: 17, weight: .semibold, width: .standard)
     static let body = UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
     static let callout = UIFont.systemFont(ofSize: 17, weight: .regular, width: .standard)
     static let subhead = UIFont.systemFont(ofSize: 16, weight: .regular, width: .standard)
