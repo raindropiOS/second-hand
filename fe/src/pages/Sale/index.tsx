@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import SaleTabBar from '@components/molecules/TabBars/SaleTabBar';
@@ -17,6 +17,11 @@ const Sale = () => {
   });
   const location = useLocation();
   const currentCategory = location.state ? location.state.currentCategory : { id: 0, category: '', url: '' };
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('productInfo')) return;
+    setNewProductInfo(JSON.parse(sessionStorage.getItem('productInfo') as string));
+  }, []);
 
   return (
     <$Template>
