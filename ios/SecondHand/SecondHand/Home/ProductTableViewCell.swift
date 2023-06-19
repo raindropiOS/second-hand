@@ -21,6 +21,9 @@ class ProductTableViewCell: UITableViewCell {
     // horizontalStackView 작성 예정
     // 예약중 라벨, 가격 라벨
     private let horizontalStackView = UIStackView()
+    
+    private let spacing = UIView() // 빈 공간을 위한 뷰
+    
     // reservationLabel 커스텀 라벨 작성 예정
     private let reservationLabel = RoundedLabel.reservationLabel
     private let priceLabel: UILabel = {
@@ -31,7 +34,6 @@ class ProductTableViewCell: UITableViewCell {
     }()
     // TODO: chattingAndLikedStackView 작성 예정
     private let chattingAndLikedStackView = UIStackView()
-    
     private let likedCountView: ImageLabelStackView = {
         let stack = ImageLabelStackView()
         if let chatImage = UIImage(systemName: "message") {
@@ -90,12 +92,16 @@ class ProductTableViewCell: UITableViewCell {
         self.verticalStackView.addArrangedSubview(self.productNameLabel)
         self.verticalStackView.addArrangedSubview(self.townNameHoursAgoLabel)
         self.verticalStackView.addArrangedSubview(self.horizontalStackView)
+        self.verticalStackView.addArrangedSubview(self.spacing)
+        self.verticalStackView.addArrangedSubview(self.chattingAndLikedStackView)
+        
+//        self.verticalStackView.addArrangedSubview()
         
         //                 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
         self.horizontalStackView.addArrangedSubview(self.reservationLabel)
         self.horizontalStackView.addArrangedSubview(self.priceLabel)
         
-        self.contentView.addSubview(self.chattingAndLikedStackView)
+//        self.contentView.addSubview(self.chattingAndLikedStackView)
         self.chattingAndLikedStackView.addArrangedSubview(likedCountView)
         self.chattingAndLikedStackView.addArrangedSubview(chattingCountView)
     }
@@ -116,12 +122,8 @@ class ProductTableViewCell: UITableViewCell {
     func setLayouts() {
         self.productImageView.translatesAutoresizingMaskIntoConstraints = false
         self.verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        //        self.productNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        //        self.townNameHoursAgoLabel.translatesAutoresizingMaskIntoConstraints = false
-        //                self.horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
-        //        self.reservationLabel.translatesAutoresizingMaskIntoConstraints = false
-        //        self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.chattingAndLikedStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.spacing.translatesAutoresizingMaskIntoConstraints = false
+
         let imageViewPadding: CGFloat = 16.0
         let verticalStackViewPadding: CGFloat = 16.0
         
@@ -136,8 +138,7 @@ class ProductTableViewCell: UITableViewCell {
             self.verticalStackView.leadingAnchor.constraint(equalTo: self.productImageView.trailingAnchor, constant: verticalStackViewPadding),
             self.verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -verticalStackViewPadding),
             
-            self.chattingAndLikedStackView.bottomAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.bottomAnchor),
-            self.chattingAndLikedStackView.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor),
+            self.spacing.heightAnchor.constraint(equalToConstant: self.horizontalStackView.frame.height)
         ])
     }
 }
