@@ -95,13 +95,9 @@ class ProductTableViewCell: UITableViewCell {
         self.verticalStackView.addArrangedSubview(self.spacing)
         self.verticalStackView.addArrangedSubview(self.chattingAndLikedStackView)
         
-//        self.verticalStackView.addArrangedSubview()
-        
-        //                 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
         self.reservationPriceStack.addArrangedSubview(self.reservationLabel)
         self.reservationPriceStack.addArrangedSubview(self.priceLabel)
         
-//        self.contentView.addSubview(self.chattingAndLikedStackView)
         self.chattingAndLikedStackView.addArrangedSubview(UIView())
         self.chattingAndLikedStackView.addArrangedSubview(likedCountView)
         self.chattingAndLikedStackView.addArrangedSubview(chattingCountView)
@@ -137,7 +133,7 @@ class ProductTableViewCell: UITableViewCell {
             self.verticalStackView.topAnchor.constraint(equalTo: self.productImageView.topAnchor),
             self.verticalStackView.bottomAnchor.constraint(equalTo: self.productImageView.bottomAnchor),
             self.verticalStackView.leadingAnchor.constraint(equalTo: self.productImageView.trailingAnchor, constant: verticalStackViewPadding),
-            self.verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -verticalStackViewPadding),
+            self.verticalStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -verticalStackViewPadding),
             
             self.spacing.heightAnchor.constraint(equalToConstant: self.reservationPriceStack.frame.height),
             
@@ -179,8 +175,6 @@ class RoundedLabel: UILabel {
     }
     
     private func makeSmallRoundShape() {
-//        let height: CGFloat = self.frame.size.height
-        
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 5
     }
