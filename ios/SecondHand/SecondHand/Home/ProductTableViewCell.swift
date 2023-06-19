@@ -20,7 +20,7 @@ class ProductTableViewCell: UITableViewCell {
     
     // horizontalStackView 작성 예정
     // 예약중 라벨, 가격 라벨
-    private let horizontalStackView = UIStackView()
+    private let reservationPriceStack = UIStackView()
     
     private let spacing = UIView() // 빈 공간을 위한 뷰
     
@@ -56,7 +56,7 @@ class ProductTableViewCell: UITableViewCell {
         verticalStackView.backgroundColor = .green
         productNameLabel.backgroundColor = .blue
         townNameHoursAgoLabel.backgroundColor = .orange
-        horizontalStackView.backgroundColor = .red
+        reservationPriceStack.backgroundColor = .red
         productNameLabel.text = "productNameLabel"
         townNameHoursAgoLabel.text = "townNameHoursAgoLabel"
         
@@ -91,15 +91,15 @@ class ProductTableViewCell: UITableViewCell {
         
         self.verticalStackView.addArrangedSubview(self.productNameLabel)
         self.verticalStackView.addArrangedSubview(self.townNameHoursAgoLabel)
-        self.verticalStackView.addArrangedSubview(self.horizontalStackView)
+        self.verticalStackView.addArrangedSubview(self.reservationPriceStack)
         self.verticalStackView.addArrangedSubview(self.spacing)
         self.verticalStackView.addArrangedSubview(self.chattingAndLikedStackView)
         
 //        self.verticalStackView.addArrangedSubview()
         
         //                 커스텀 reservationLabel, priceLabel 스택 뷰에 추가
-        self.horizontalStackView.addArrangedSubview(self.reservationLabel)
-        self.horizontalStackView.addArrangedSubview(self.priceLabel)
+        self.reservationPriceStack.addArrangedSubview(self.reservationLabel)
+        self.reservationPriceStack.addArrangedSubview(self.priceLabel)
         
 //        self.contentView.addSubview(self.chattingAndLikedStackView)
         self.chattingAndLikedStackView.addArrangedSubview(likedCountView)
@@ -111,8 +111,8 @@ class ProductTableViewCell: UITableViewCell {
         self.verticalStackView.alignment = .leading
         self.verticalStackView.distribution = .fillEqually
         
-        self.horizontalStackView.axis = .horizontal
-        self.horizontalStackView.spacing = 4
+        self.reservationPriceStack.axis = .horizontal
+        self.reservationPriceStack.spacing = 4
         
         self.chattingAndLikedStackView.axis = .horizontal
         self.chattingAndLikedStackView.alignment = .trailing
@@ -122,6 +122,7 @@ class ProductTableViewCell: UITableViewCell {
     func setLayouts() {
         self.productImageView.translatesAutoresizingMaskIntoConstraints = false
         self.verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        
         self.spacing.translatesAutoresizingMaskIntoConstraints = false
 
         let imageViewPadding: CGFloat = 16.0
@@ -138,7 +139,7 @@ class ProductTableViewCell: UITableViewCell {
             self.verticalStackView.leadingAnchor.constraint(equalTo: self.productImageView.trailingAnchor, constant: verticalStackViewPadding),
             self.verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -verticalStackViewPadding),
             
-            self.spacing.heightAnchor.constraint(equalToConstant: self.horizontalStackView.frame.height)
+            self.spacing.heightAnchor.constraint(equalToConstant: self.reservationPriceStack.frame.height)
         ])
     }
 }
