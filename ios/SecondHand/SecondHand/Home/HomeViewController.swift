@@ -23,9 +23,24 @@ class HomeViewController: UIViewController {
     
     private func configureNavigationBar() {
         let button = UIButton(type: .custom)
-        button.setTitle("역삼 1동", for: .normal)
-        button.titleLabel?.font = FontStyle.headline // 폰트와 크기 설정
+        button.setTitle("역삼1동", for: .normal)
+        button.titleLabel?.font = FontStyle.headline
         button.setTitleColor(UIColor(named: "black"), for: .normal)
+        
+        let dong1 = UIAction(title: "역삼1동") {_ in
+            
+            
+       }
+
+       let configureDongButton = UIAction(title: "내 동네 설정하기") {_ in
+
+           
+       }
+
+       let menu = UIMenu(title: "", options: .displayInline, children: [dong1, configureDongButton])
+
+        button.menu = menu
+        button.showsMenuAsPrimaryAction = true
 
         let barButtonItem = UIBarButtonItem(customView: button)
         
