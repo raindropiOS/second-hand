@@ -7,6 +7,7 @@
 
 import Foundation
 
-struct Town {
-    
+struct Town: Decodable {
+    let townId: Int
+    let name: String
 }

@@ -7,6 +7,9 @@
 
 import Foundation
 
-struct Form {
-    
+struct Form: Decodable {
+    let success: Bool
+    let status: Int
+    let code: Int
+    let data: [Product]
 }

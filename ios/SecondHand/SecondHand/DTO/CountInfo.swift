@@ -7,6 +7,7 @@
 
 import Foundation
 
-struct CountInfo {
-    
+struct CountInfo: Decodable {
+    let chatCount: Int
+    let likeCount: Int
 }
