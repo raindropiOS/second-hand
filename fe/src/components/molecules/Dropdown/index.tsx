@@ -9,6 +9,8 @@ import {
   $SettingTownButton,
 } from './Dropdown.style';
 import useOutsideClick from '@hooks/useOutsideClick';
+import PATH from '@constants/routerPath';
+import { useNavigate } from 'react-router-dom';
 
 type Town = {
   townId: number;
@@ -17,28 +19,29 @@ type Town = {
 
 interface DropdownProps {
   towns: Town[];
-  onSettingButtonClick: () => void;
 }
 
 const MY_TOWN_SETTING_WORD = '내 동네 설정하기';
 
 // TODO(jayden): 각 드롭다운 버튼에 onClick 주입하여 데이터 fetch하도록 구현
 // TODO(jayden): 드롭다운 컴포넌트도 compound pattern으로 구현해보기
-const Dropdown = ({ towns, onSettingButtonClick }: DropdownProps) => {
+const Dropdown = ({ towns }: DropdownProps) => {
   const [selectedTown, setSelectedTown] = React.useState(towns[0]);
   const [isDropdownOpen, setIsDropdownOpen, ref] = useOutsideClick(false);
+  const navigate = useNavigate();
 
   const handleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
   const handleSelectTown = (townId: number) => {
     // FIXME(jayden): type assertion 제거
     setSelectedTown(towns.find(town => town.townId === townId) as Town);
     setIsDropdownOpen(false);
   };
 
-  const handleTownSettingClick = () => {
-    onSettingButtonClick();
+  const handleSettingButtonClick = () => {
+    navigate(PATH.HOME.TOWN_SETTING, { state: { towns } });
     setIsDropdownOpen(false);
   };
 
@@ -63,7 +66,7 @@ const Dropdown = ({ towns, onSettingButtonClick }: DropdownProps) => {
           <$SettingTownButton
             onClick={() => {
               handleDropdown();
-              handleTownSettingClick();
+              handleSettingButtonClick();
             }}
           >
             {MY_TOWN_SETTING_WORD}
