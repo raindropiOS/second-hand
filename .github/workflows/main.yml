@@ -50,6 +50,7 @@ jobs:
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker build -t $DOCKER_REGISTRY/second-hand .
           docker push $DOCKER_REGISTRY/second-hand
+        working-directory: ${{ env.working-directory }}
 
   deploy:
     needs: build
