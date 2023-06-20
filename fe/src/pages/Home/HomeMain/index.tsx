@@ -64,10 +64,6 @@ const HomeMain = () => {
 
   const target = useObserver(callback, options);
 
-  const handleSettingButtonClick = () => {
-    navigate(PATH.HOME.TOWN_SETTING, { state: { towns } });
-  };
-
   useEffect(() => {
     const getProducts = async () => {
       const response = await mockAxiosFetch('/products', {
@@ -110,7 +106,7 @@ const HomeMain = () => {
       {!!products.length && !!towns.length && (
         <$Template>
           <Navbar>
-            <Dropdown towns={towns} onSettingButtonClick={handleSettingButtonClick} />
+            <Dropdown towns={towns} />
             <button>
               <Icon name="category" />
             </button>
