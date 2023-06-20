@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import PATH from '@constants/routerPath';
 import { CATEGORIES } from '@constants/categories';
@@ -8,13 +9,12 @@ import { $ListItemContainer, $SaleButtonContainer, $CurrentCategory } from '@pag
 import Navbar from '@components/molecules/Navbar';
 import Dropdown from '@molecules/Dropdown';
 import Icon from '@atoms/Icon';
+import Chip from '@atoms/Chip';
 import ListItem from '@molecules/ListItem';
 import MainTabBar from '@molecules/TabBars/MainTabBar';
 import ConvertPriceFormat from '@utils/convertPriceFormat';
-import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 import CircleButton from '@atoms/Buttons/CircleButton';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Chip from '@atoms/Chip';
+import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 
 interface Product {
   productId: number;
@@ -53,6 +53,7 @@ const HomeMain = () => {
   const [pageNum, setPageNum] = useState(1);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
   const navigate = useNavigate();
+
   const callback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
@@ -68,6 +69,10 @@ const HomeMain = () => {
   };
 
   const target = useObserver(callback, options);
+
+  const handleSettingButtonClick = () => {
+    navigate(PATH.HOME.TOWN_SETTING, { state: { towns } });
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -150,7 +155,7 @@ const HomeMain = () => {
               iconName="plus"
               size="large"
               onClick={() => {
-                navigate('/sale');
+                navigate(PATH.SALE.DEFAULT);
               }}
             />
           </$SaleButtonContainer>
