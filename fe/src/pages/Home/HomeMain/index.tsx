@@ -45,13 +45,13 @@ const HomeMain = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
-  const [isPageUpadted, setIsPageUpdated] = useState(false);
+  const [isPageUpdated, setIsPageUpdated] = useState(false);
   const navigate = useNavigate();
 
   const callback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
-    if (!entry.isIntersecting || isPageUpadted) return;
+    if (!entry.isIntersecting || isPageUpdated) return;
     if (entry.isIntersecting) setPageNum(prevPageNum => prevPageNum + 1);
     setIsPageUpdated(true);
   };
