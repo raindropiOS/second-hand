@@ -57,19 +57,17 @@ const Dropdown = ({ towns, onTownSettingClick }: DropdownProps) => {
                 <$MyTownButton key={townId} onClick={() => handleSelectTown(townId)}>
                   {name.split(' ')[2]}
                 </$MyTownButton>
-                {index === arr.length - 1 && (
-                  <$SettingTownButton
-                    onClick={() => {
-                      handleDropdown();
-                      handleTownSettingClick();
-                    }}
-                  >
-                    {MY_TOWN_SETTING_WORD}
-                  </$SettingTownButton>
-                )}
               </>
             );
           })}
+          <$SettingTownButton
+            onClick={() => {
+              handleDropdown();
+              handleTownSettingClick();
+            }}
+          >
+            {MY_TOWN_SETTING_WORD}
+          </$SettingTownButton>
         </$DropdownLayout>
       )}
     </$DropdownContainer>
