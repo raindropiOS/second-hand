@@ -1,5 +1,6 @@
-package com.secondhand.domain.member;
+package com.secondhand.service;
 
+import com.secondhand.domain.member.MemberRepository;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import com.secondhand.oauth.GitHubOauth;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
@@ -20,6 +21,7 @@ public class MemberService {
     private final GitHubOauth oauth;
     private final Logger logger = LoggerFactory.getLogger(MemberService.class);
     private final JwtService jwtService;
+    private final MemberRepository memberRepository;
 
 
     @Transactional

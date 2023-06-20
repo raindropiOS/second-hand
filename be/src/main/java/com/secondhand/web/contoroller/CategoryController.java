@@ -1,9 +1,9 @@
 package com.secondhand.web.contoroller;
 
 import com.secondhand.domain.categorie.Category;
-import com.secondhand.domain.categorie.CategoryService;
+import com.secondhand.service.CategoryService;
 import com.secondhand.util.BasicResponse;
-import com.secondhand.web.dto.response.CategoryDTO;
+import com.secondhand.web.dto.response.CategoryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +33,16 @@ public class CategoryController {
     @GetMapping("")
     public ResponseEntity<BasicResponse> read() {
         List<Category> categoryList = categoryService.readAll();
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
+        List<CategoryResponse> categoryResponseList = new ArrayList<>();
 
         // Category 객체를 CategoryDTO로 변환
         for (Category category : categoryList) {
-            CategoryDTO categoryDTO = CategoryDTO.builder()
+            CategoryResponse categoryResponse = CategoryResponse.builder()
                     .categoryId(category.getId())
                     .name(category.getName())
                     .imgUrl(category.getImgUrl())
                     .build();
-            categoryDTOList.add(categoryDTO);
+            categoryResponseList.add(categoryResponse);
         }
 
         BasicResponse message = BasicResponse.builder()
@@ -50,7 +50,7 @@ public class CategoryController {
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
-                .data(categoryDTOList)
+                .data(categoryResponseList)
                 .build();
 
         return ResponseEntity.ok()
@@ -59,16 +59,16 @@ public class CategoryController {
 
     @GetMapping("/test")
     public ResponseEntity<BasicResponse> view() {
-        List<CategoryDTO> categoryDTOList = List.of(new CategoryDTO(1L, "비디오", "url경로"),
-                new CategoryDTO(1L, "비디오", "url경로"),
-                new CategoryDTO(1L, "비디오", "url경로"));
+        List<CategoryResponse> categoryResponseList = List.of(new CategoryResponse(1L, "비디오", "url경로"),
+                new CategoryResponse(1L, "비디오", "url경로"),
+                new CategoryResponse(1L, "비디오", "url경로"));
 
         BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
-                .data(categoryDTOList)
+                .data(categoryResponseList)
                 .build();
 
         return ResponseEntity.ok()

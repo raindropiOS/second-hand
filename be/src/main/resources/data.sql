@@ -1,3 +1,4 @@
+use second_hand;
 create table category
 (
     category_id bigint auto_increment primary key,
@@ -7,8 +8,7 @@ create table category
 
 create table town
 (
-    town_id  bigint auto_increment
-        primary key,
+    town_id  bigint primary key,
     city     varchar(45) not null,
     county   varchar(45) not null,
     district varchar(45) not null
@@ -85,7 +85,7 @@ create table product_img
 (
     product_img_id bigint auto_increment primary key,
     img_url        varchar(200) not null,
-    product_id     bigint        null,
+    product_id     bigint       null,
     constraint fk_product_img_product
         foreign key (product_id) references product (product_id)
 );

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class CategoryDTO {
+public class CategoryResponse {
 
     @JsonProperty("categoryId")
     private final Long categoryId;
@@ -17,7 +17,7 @@ public class CategoryDTO {
     private final String imgUrl;
 
     @Builder
-    public CategoryDTO(Long categoryId, String name, String imgUrl) {
+    public CategoryResponse(Long categoryId, String name, String imgUrl) {
         this.categoryId = categoryId;
         this.name = name;
         this.imgUrl = imgUrl;

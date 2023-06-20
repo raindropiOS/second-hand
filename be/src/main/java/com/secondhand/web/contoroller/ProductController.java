@@ -1,7 +1,7 @@
 package com.secondhand.web.contoroller;
 
 import com.secondhand.domain.product.CountInfo;
-import com.secondhand.domain.product.ProductService;
+import com.secondhand.service.ProductService;
 import com.secondhand.web.dto.requset.FilterRequest;
 import com.secondhand.web.dto.requset.ProductLikeResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;

@@ -1,4 +1,4 @@
-package com.secondhand.domain.product;
+package com.secondhand.service;
 
 import org.springframework.stereotype.Service;
 

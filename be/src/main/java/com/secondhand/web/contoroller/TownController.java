@@ -1,12 +1,12 @@
 package com.secondhand.web.contoroller;
 
-import com.secondhand.domain.town.TownService;
+import com.secondhand.service.MemberService;
+import com.secondhand.service.ProductService;
+import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
-import com.secondhand.web.dto.response.MemberLoginResponse;
 import com.secondhand.web.dto.response.MemberTownInfoResponse;
-import com.secondhand.web.dto.response.TownDTO;
+import com.secondhand.web.dto.response.TownResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +23,8 @@ public class TownController {
 
     private final Logger log = LoggerFactory.getLogger(TownController.class);
     private final TownService townService;
+    private final MemberService memberService;
+    private final ProductService productService;
 
     @Operation(
             summary = "전체 동네 목록을 조회",
@@ -30,44 +32,17 @@ public class TownController {
             description = "사용자는 전체 동네 목록을 볼수 있다.."
     )
     @GetMapping
-    public ResponseEntity<BasicResponse<List<TownDTO>>> read() {
-        List<TownDTO> townList = townService.findByAll();
-
+    public BasicResponse<List<TownResponse>> read() {
+        List<TownResponse> townList = townService.findByAll();
         log.debug("전체 동네 목록을 가져온다 = {}", townList);
-        List.of(new TownDTO(1L, "서울 강남구 역삼1동"),
-                new TownDTO(1L, "서울 강남구 개포1동"),
-                new TownDTO(1L, "서울 강남구 역삼2동"));
 
-        BasicResponse message = BasicResponse.builder()
+        return BasicResponse.<List<TownResponse>>builder()
+                .message("성공")
                 .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
                 .data(townList)
-                .build();
-
-        return ResponseEntity.ok(message);
-    }
-
-
-    //TODO : 등록을 숫자로가지고한다? 수정필요
-    @Operation(
-            summary = "상용자 동네 등록",
-            tags = "towns",
-            description = "사용자는 동네를 등록할 수있다."
-    )
-    @PostMapping
-    public ResponseEntity<BasicResponse<MemberLoginResponse>> registerTown(@RequestBody long townId) {
-        townService.save(townId);
-
-        BasicResponse message = BasicResponse.builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
+                .apiStatus(20000)
                 .build();
-
-        return ResponseEntity.ok(message);
     }
 
     @Operation(
