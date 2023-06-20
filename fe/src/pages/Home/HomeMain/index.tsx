@@ -129,11 +129,11 @@ const HomeMain = () => {
             </button>
           </Navbar>
           <$ListItemContainer>
-            <$CurrentCategory>
-              {filterCategoryId !== 0 && (
+            {filterCategoryId !== 0 && (
+              <$CurrentCategory>
                 <Chip content={findCategoryName(filterCategoryId)} active={true} onClick={handleCategory} />
-              )}
-            </$CurrentCategory>
+              </$CurrentCategory>
+            )}
             {products.map(product => (
               <ListItem
                 {...product}

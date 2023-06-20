@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 const currentBox = css`
   border: 2px solid ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.PRIMARY};
   border-radius: 14px;
+  background-color: rgba(255, 149, 0, 0.2);
 `;
 
 const $HomeCategoryMain = styled.main`
