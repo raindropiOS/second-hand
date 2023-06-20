@@ -10,7 +10,6 @@ const TownSetting = () => {
   const data = location.state;
   const towns = data.towns;
 
-  console.log(towns);
   return (
     <>
       <TownSettingHeader />

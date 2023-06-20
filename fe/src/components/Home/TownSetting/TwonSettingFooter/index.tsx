@@ -5,6 +5,7 @@ import { $ButtonContainer } from './TownSettingFooter.style';
 import Icon from '@atoms/Icon';
 import { useTheme } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import PATH from '@constants/routerPath';
 
 interface TownSettingFooterProps {
   towns: { townId: number; name: string }[];
@@ -37,7 +38,7 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
         </Button>
       ))}
       {selectedTowns.length === 1 && (
-        <Button onClick={() => navigate('/home/town-setting/search')} size="large" status="default">
+        <Button onClick={() => navigate(PATH.HOME.TOWN_SEARCH)} size="large" status="default">
           <Icon name="plus" fill={theme.COLORS.NEUTRAL.TEXT.STRONG} />
         </Button>
       )}

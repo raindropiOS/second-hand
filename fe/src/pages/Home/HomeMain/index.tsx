@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { $Template } from '@styles/PageTemplate.style';
 import { $ListItemContainer, $SaleButtonContainer } from '@pages/Home/HomeMain/HomeMain.style';
@@ -8,9 +9,10 @@ import Icon from '@atoms/Icon';
 import ListItem from '@molecules/ListItem';
 import MainTabBar from '@molecules/TabBars/MainTabBar';
 import ConvertPriceFormat from '@utils/convertPriceFormat';
-import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 import CircleButton from '@atoms/Buttons/CircleButton';
-import { useNavigate } from 'react-router-dom';
+import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
+
+import PATH from '@constants/routerPath';
 
 interface Product {
   productId: number;
@@ -62,8 +64,8 @@ const HomeMain = () => {
 
   const target = useObserver(callback, options);
 
-  const handleTownSettingButtonClick = () => {
-    navigate('/home/town-setting', { state: { towns } });
+  const handleSettingButtonClick = () => {
+    navigate(PATH.HOME.TOWN_SETTING, { state: { towns } });
   };
 
   useEffect(() => {
@@ -108,7 +110,7 @@ const HomeMain = () => {
       {!!products.length && !!towns.length && (
         <$Template>
           <Navbar>
-            <Dropdown towns={towns} onTownSettingClick={handleTownSettingButtonClick} />
+            <Dropdown towns={towns} onSettingButtonClick={handleSettingButtonClick} />
             <button>
               <Icon name="category" />
             </button>
@@ -130,7 +132,7 @@ const HomeMain = () => {
               iconName="plus"
               size="large"
               onClick={() => {
-                navigate('/sale');
+                navigate(PATH.SALE.DEFAULT);
               }}
             />
           </$SaleButtonContainer>

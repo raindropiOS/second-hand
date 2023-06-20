@@ -17,14 +17,14 @@ type Town = {
 
 interface DropdownProps {
   towns: Town[];
-  onTownSettingClick: () => void;
+  onSettingButtonClick: () => void;
 }
 
 const MY_TOWN_SETTING_WORD = '내 동네 설정하기';
 
 // TODO(jayden): 각 드롭다운 버튼에 onClick 주입하여 데이터 fetch하도록 구현
 // TODO(jayden): 드롭다운 컴포넌트도 compound pattern으로 구현해보기
-const Dropdown = ({ towns, onTownSettingClick }: DropdownProps) => {
+const Dropdown = ({ towns, onSettingButtonClick }: DropdownProps) => {
   const [selectedTown, setSelectedTown] = React.useState(towns[0]);
   const [isDropdownOpen, setIsDropdownOpen, ref] = useOutsideClick(false);
 
@@ -38,7 +38,7 @@ const Dropdown = ({ towns, onTownSettingClick }: DropdownProps) => {
   };
 
   const handleTownSettingClick = () => {
-    onTownSettingClick();
+    onSettingButtonClick();
     setIsDropdownOpen(false);
   };
 
