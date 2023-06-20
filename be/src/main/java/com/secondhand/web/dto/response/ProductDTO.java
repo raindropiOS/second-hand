@@ -6,7 +6,7 @@ import com.secondhand.domain.product.Status;
 public class ProductDTO {
     private Long productId;
     private String title;
-    private TownDTO town;
+    private TownResponse town;
     private Status status;
     private Long price;
     private CountInfo countInfo;

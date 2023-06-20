@@ -9,6 +9,6 @@ import java.util.List;
 @Builder
 public class TownsListResponse {
 
-    private final List<TownDTO> towns;
+    private final List<TownResponse> towns;
 
 }

@@ -1,7 +1,8 @@
-package com.secondhand.domain.town;
+package com.secondhand.service;
 
+import com.secondhand.domain.town.TownRepository;
 import com.secondhand.web.dto.response.MemberTownInfoResponse;
-import com.secondhand.web.dto.response.TownDTO;
+import com.secondhand.web.dto.response.TownResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class TownService {
 
     private final TownRepository townRepository;
 
-    public List<TownDTO> findByAll() {
+    public List<TownResponse> findByAll() {
 //        List<TownDTO> townList = townRepository.findAll()
 //                .stream().map(towns -> TownDTO.of(towns))
 //                .collect(Collectors.toList());

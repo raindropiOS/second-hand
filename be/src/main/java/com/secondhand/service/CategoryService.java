@@ -1,5 +1,7 @@
-package com.secondhand.domain.categorie;
+package com.secondhand.service;
 
+import com.secondhand.domain.categorie.Category;
+import com.secondhand.domain.categorie.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

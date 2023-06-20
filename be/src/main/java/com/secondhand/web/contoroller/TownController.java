@@ -1,10 +1,10 @@
 package com.secondhand.web.contoroller;
 
-import com.secondhand.domain.town.TownService;
+import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import com.secondhand.web.dto.response.MemberTownInfoResponse;
-import com.secondhand.web.dto.response.TownDTO;
+import com.secondhand.web.dto.response.TownResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
@@ -30,13 +30,13 @@ public class TownController {
             description = "사용자는 전체 동네 목록을 볼수 있다.."
     )
     @GetMapping
-    public ResponseEntity<BasicResponse<List<TownDTO>>> read() {
-        List<TownDTO> townList = townService.findByAll();
+    public ResponseEntity<BasicResponse<List<TownResponse>>> read() {
+        List<TownResponse> townList = townService.findByAll();
 
         log.debug("전체 동네 목록을 가져온다 = {}", townList);
-        List.of(new TownDTO(1L, "서울 강남구 역삼1동"),
-                new TownDTO(1L, "서울 강남구 개포1동"),
-                new TownDTO(1L, "서울 강남구 역삼2동"));
+        List.of(new TownResponse(1L, "서울 강남구 역삼1동"),
+                new TownResponse(1L, "서울 강남구 개포1동"),
+                new TownResponse(1L, "서울 강남구 역삼2동"));
 
         BasicResponse message = BasicResponse.builder()
                 .success(true)

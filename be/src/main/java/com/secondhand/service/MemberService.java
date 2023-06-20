@@ -1,4 +1,4 @@
-package com.secondhand.domain.member;
+package com.secondhand.service;
 
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import com.secondhand.oauth.GitHubOauth;

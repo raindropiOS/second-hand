@@ -1,7 +1,7 @@
 package com.secondhand.web.contoroller;
 
-import com.secondhand.domain.member.MemberService;
-import com.secondhand.domain.town.TownService;
+import com.secondhand.service.MemberService;
+import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
