@@ -38,7 +38,11 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
         </Button>
       ))}
       {selectedTowns.length === 1 && (
-        <Button onClick={() => navigate(PATH.HOME.TOWN_SEARCH)} size="large" status="default">
+        <Button
+          onClick={() => navigate(PATH.HOME.TOWN_SEARCH, { state: { towns: selectedTowns } })}
+          size="large"
+          status="default"
+        >
           <Icon name="plus" fill={theme.COLORS.NEUTRAL.TEXT.STRONG} />
         </Button>
       )}
