@@ -1,18 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
-import { $Template } from '@styles/PageTemplate.style';
-import { $ListItemContainer, $SaleButtonContainer } from '@pages/Home/HomeMain/HomeMain.style';
-import Navbar from '@components/molecules/Navbar';
-import Dropdown from '@molecules/Dropdown';
-import Icon from '@atoms/Icon';
-import ListItem from '@molecules/ListItem';
+import useIntersectionObserver from '@hooks/useIntersectionObserver';
 import MainTabBar from '@molecules/TabBars/MainTabBar';
-import ConvertPriceFormat from '@utils/convertPriceFormat';
-import CircleButton from '@atoms/Buttons/CircleButton';
+import { $Template } from '@styles/PageTemplate.style';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 
-import PATH from '@constants/routerPath';
+import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
+import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
 
 interface Product {
   productId: number;
@@ -30,25 +24,13 @@ interface Town {
   name: string;
 }
 
-const useObserver = (callback: IntersectionObserverCallback, options: IntersectionObserverInit) => {
-  const target = useRef<HTMLDivElement>(null);
-  const observer = new IntersectionObserver(callback, options);
-
-  useEffect(() => {
-    if (target.current) observer.observe(target.current);
-  }, [target.current, observer]);
-
-  return target;
-};
-
 const HomeMain = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
-  const navigate = useNavigate();
 
-  const callback = (entries: IntersectionObserverEntry[]) => {
+  const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
     if (!entry.isIntersecting || isPageUpdated) return;
@@ -56,13 +38,7 @@ const HomeMain = () => {
     setIsPageUpdated(true);
   };
 
-  const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 1.0,
-  };
-
-  const target = useObserver(callback, options);
+  const observerTarget = useIntersectionObserver(intersectionObserverCallback);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -105,33 +81,8 @@ const HomeMain = () => {
     <>
       {!!products.length && !!towns.length && (
         <$Template>
-          <Navbar>
-            <Dropdown towns={towns} />
-            <button>
-              <Icon name="category" />
-            </button>
-          </Navbar>
-          <$ListItemContainer>
-            {products.map(product => (
-              <ListItem
-                {...product}
-                key={product.productId}
-                price={ConvertPriceFormat(product.price)}
-                isCurrentUserItem={true}
-                onItemClick={() => console.log('onItemClick')}
-              />
-            ))}
-            <div ref={target} />
-          </$ListItemContainer>
-          <$SaleButtonContainer>
-            <CircleButton
-              iconName="plus"
-              size="large"
-              onClick={() => {
-                navigate(PATH.SALE.DEFAULT);
-              }}
-            />
-          </$SaleButtonContainer>
+          <HomeMainHeader towns={towns} />
+          <HomeMainMain products={products} observerTarget={observerTarget} />
           <MainTabBar />
         </$Template>
       )}
