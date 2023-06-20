@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import PATH from '@constants/routerPath';
+import { CATEGORIES } from '@constants/categories';
 
 import { $Template } from '@styles/PageTemplate.style';
-import { $ListItemContainer, $SaleButtonContainer } from '@pages/Home/HomeMain/HomeMain.style';
+import { $ListItemContainer, $SaleButtonContainer, $CurrentCategory } from '@pages/Home/HomeMain/HomeMain.style';
 import Navbar from '@components/molecules/Navbar';
 import Dropdown from '@molecules/Dropdown';
 import Icon from '@atoms/Icon';
@@ -12,7 +13,8 @@ import MainTabBar from '@molecules/TabBars/MainTabBar';
 import ConvertPriceFormat from '@utils/convertPriceFormat';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 import CircleButton from '@atoms/Buttons/CircleButton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Chip from '@atoms/Chip';
 
 interface Product {
   productId: number;
@@ -42,15 +44,19 @@ const useObserver = (callback: IntersectionObserverCallback, options: Intersecti
 };
 
 const HomeMain = () => {
+  const { state } = useLocation();
+  const currentCategoryId = state ? state.currentCategoryId : 0;
+
+  const [filterCategoryId, setFilterCategoryId] = useState(currentCategoryId);
   const [products, setProducts] = useState<Product[]>([]);
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
-  const [isPageUpadted, setIsPageUpdated] = useState(false);
+  const [isPageUpdated, setIsPageUpdated] = useState(false);
   const navigate = useNavigate();
   const callback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
-    if (!entry.isIntersecting || isPageUpadted) return;
+    if (!entry.isIntersecting || isPageUpdated) return;
     if (entry.isIntersecting) setPageNum(prevPageNum => prevPageNum + 1);
     setIsPageUpdated(true);
   };
@@ -100,6 +106,14 @@ const HomeMain = () => {
     getTowns();
   }, []);
 
+  const findCategoryName = (categoryId: number) => {
+    return CATEGORIES.filter(({ id }) => id === categoryId)[0].category;
+  };
+
+  const handleCategory = () => {
+    setFilterCategoryId(0);
+  };
+
   return (
     <>
       {!!products.length && !!towns.length && (
@@ -108,13 +122,18 @@ const HomeMain = () => {
             <Dropdown towns={towns} />
             <button
               onClick={() => {
-                navigate(PATH.HOME.CATEGORY);
+                navigate(PATH.HOME.CATEGORY, { state: { currentCategoryId: filterCategoryId } });
               }}
             >
               <Icon name="category" />
             </button>
           </Navbar>
           <$ListItemContainer>
+            <$CurrentCategory>
+              {filterCategoryId !== 0 && (
+                <Chip content={findCategoryName(filterCategoryId)} active={true} onClick={handleCategory} />
+              )}
+            </$CurrentCategory>
             {products.map(product => (
               <ListItem
                 {...product}

@@ -14,4 +14,15 @@ const $SaleButtonContainer = styled.div`
   bottom: -10px;
 `;
 
-export { $ListItemContainer, $SaleButtonContainer };
+const $CurrentCategory = styled.div`
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 8px;
+  font-weight: 400;
+  font-size: 15px;
+  color: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.PRIMARY};
+`;
+
+export { $ListItemContainer, $SaleButtonContainer, $CurrentCategory };
