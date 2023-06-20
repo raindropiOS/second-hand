@@ -63,7 +63,7 @@ const HomeMain = () => {
   const target = useObserver(callback, options);
 
   const handleTownSettingButtonClick = () => {
-    navigate('/home/town-setting');
+    navigate('/home/town-setting', { state: { towns } });
   };
 
   useEffect(() => {
