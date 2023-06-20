@@ -10,6 +10,7 @@ import PATH from '@constants/routerPath';
 import Login from '@pages/Login';
 import Auth from '@pages/Auth';
 import HomeMain from '@pages/Home/HomeMain';
+import HomeCategory from '@pages/Home/HomeCategory';
 import Sale from '@pages/Sale';
 import SaleCategory from '@pages/Sale/SaleCategory';
 import TownSetting from '@pages/Home/TownSetting';
@@ -24,7 +25,7 @@ const App = () => {
           <Route path={PATH.HOME.DEFAULT} element={<HomeMain />} />
           <Route path={PATH.HOME.TOWN_SETTING} element={<TownSetting />} />
           <Route path={PATH.HOME.TOWN_SEARCH} />
-          <Route path={PATH.HOME.CATEGORY} />
+          <Route path={PATH.HOME.CATEGORY} element={<HomeCategory />} />
 
           <Route path={PATH.SALE.DEFAULT} element={<Sale />} />
           <Route path={PATH.SALE.CATEGORY} element={<SaleCategory />} />
