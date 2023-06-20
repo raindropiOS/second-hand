@@ -28,7 +28,11 @@ const TownSearching = () => {
       // 이미 선택된 타운이면 선택 해제
       if (prev.map(town => town.townId).includes(townId)) return prev.filter(town => town.townId !== townId);
       // 선택된 타운이 2개 이상이면 선택 불가
-      if (prev.length >= 2) return prev;
+      if (prev.length >= 2) {
+        // NOTE(jayden): strict mode로 인해, alert가 처음만 두 번 실행됨
+        alert('최대 2개의 동네만 설정할 수 있어요!');
+        return prev;
+      }
       return [...prev, totalTowns.find(town => town.townId === townId)] as Town[];
     });
   };
