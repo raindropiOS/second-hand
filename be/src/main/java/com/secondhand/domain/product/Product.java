@@ -2,7 +2,7 @@ package com.secondhand.domain.product;
 
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.member.Member;
-import com.secondhand.domain.town.Towns;
+import com.secondhand.domain.town.Town;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -25,7 +25,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "town_id")
-    private Towns towns;
+    private Town towns;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

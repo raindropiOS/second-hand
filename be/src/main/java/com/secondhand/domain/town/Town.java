@@ -1,23 +1,20 @@
 package com.secondhand.domain.town;
 
-import com.secondhand.domain.member.Member;
-import com.secondhand.domain.product.Product;
-import com.secondhand.util.BaseTimeEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
-public class Towns {
+public class Town {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "town_id")
     private Long id;
 
     @Column(length = 45, nullable = false)
-    private String name;
+    private String city;
 
     @Column(length = 45, nullable = false)
     private String county;

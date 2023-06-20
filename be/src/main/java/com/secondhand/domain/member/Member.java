@@ -1,14 +1,11 @@
 package com.secondhand.domain.member;
 
-import com.secondhand.domain.interested.Interested;
-import com.secondhand.domain.product.Product;
-import com.secondhand.domain.town.Towns;
+import com.secondhand.domain.town.Town;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -26,9 +23,9 @@ public class Member {
 
     @ManyToOne
     @JoinColumn(name = "main_town_id")
-    private Towns mainTown;
+    private Town mainTown;
 
     @ManyToOne
     @JoinColumn(name = "sub_town_id")
-    private Towns subTown;
+    private Town subTown;
 }
