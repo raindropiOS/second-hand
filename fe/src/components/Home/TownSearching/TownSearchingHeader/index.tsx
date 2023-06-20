@@ -21,7 +21,7 @@ const TownSearchingHeader = ({ selectedTowns }: TownSearchingHeaderProps) => {
       <Button
         onClick={() => {
           if (selectedTowns.length === 0) {
-            alert('최소 1개의 동네를 설정해주세요!');
+            alert('최소 1개의 동네를 설정해주세요.');
             return;
           }
           navigate(PATH.HOME.TOWN_SETTING, { state: { towns: selectedTowns } });

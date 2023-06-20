@@ -18,7 +18,7 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
   const handleTownButtonClick = (id: number) => {
     // TODO(jayden): 추후 모달창 직접 만들어서 띄우기
     if (selectedTowns.length === 1) {
-      alert('최소 1개의 도시가 설정되어야 합니다.');
+      alert('최소 1개의 동네를 설정해주세요.');
       return;
     }
     // TODO(jayden): 추후 모달창 직접 만들어서 띄우기
