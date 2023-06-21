@@ -34,17 +34,20 @@ public class MemberService {
         logger.debug("token access 토큰 = {}", token);
         OAuthMemberInfoDTO memberInfo = oauth.getUserInfo(token.getAccessToken());
         logger.debug("token access 토큰 으로 부터받은 회원정보 = {}", memberInfo);
-        String jwtToken = jwtService.createToken(memberInfo);
 
-        log.debug("jwt token = {}", jwtToken);
         // TODO: 이미 있는 멤버라면 토큰을 업데이트 해주고 아니라면 새로만든다
         if (MemberExists(memberInfo)) {
             Member member = findMemberByMemberName(memberInfo.getLogin());
-            Member updateMember = memberRepository.save(member.update(memberInfo, jwtToken));
-            log.debug("기존에 있던 member 토큰 업데이트 = {}", updateMember);
+            Member updateMember = memberRepository.save(member.update(memberInfo, token.getAccessToken()));
+            log.debug("기존에 있던 member 토큰 업데이트 = {}", updateMember.getId());
+            String jwtToken = jwtService.createToken(updateMember);
             return MemberLoginResponse.of(updateMember, jwtToken);
         }
-        Member member = memberRepository.save(Member.create(memberInfo, jwtToken));
+
+        //TODO: db컬럼에 토큰을 저장해야하나?
+        Member member = memberRepository.save(Member.create(memberInfo, token.getAccessToken()));
+        String jwtToken = jwtService.createToken(member);
+        log.debug("jwt token = {}", jwtToken);
         log.debug("새로운 맴버 생성 = {}", member);
         return MemberLoginResponse.of(member, jwtToken);
     }

@@ -36,7 +36,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         //헤더로 부터 토큰을 얻어온 후 유효한 토큰인지 검증한다. 요청에  디코딩한 값을 세팅
         if (!StringUtils.isEmpty(token) && jwtService.validateToken(token)) {
-            Long userId = jwtService.getSubject(token).orElseThrow();
+            Long userId = jwtService.getSubject(token);
+            log.debug("userId", userId);
             request.setAttribute(USER_ID, userId);
 
             memberRepository.findById(userId)
