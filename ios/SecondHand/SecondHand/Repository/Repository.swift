@@ -9,9 +9,11 @@ import Foundation
 
 protocol Repository {
     associatedtype SomeDatum
+    associatedtype SomeId
     
+    func readAll() -> [SomeDatum]
     func create(_: SomeDatum)
-    func readDatum(key: any Hashable) -> SomeDatum
-    func update(_: SomeDatum)
+    func readDatum(with: SomeId) -> SomeDatum?
+    func update(_: SomeDatum, with: SomeDatum)
     func delete(_: SomeDatum)
 }
