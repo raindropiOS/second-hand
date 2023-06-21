@@ -15,6 +15,7 @@ class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
     private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     private let idInputView: InputView = InputView()
     let phpickerController = UIImagePickerController()
+    let circleButton = ProfileImageView()
     
     private let button: UIButton = {
         let button = UIButton(type: .system)
@@ -23,15 +24,6 @@ class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
         button.setImage(symbolImage, for: .normal)
         button.setTitle("위치 추가", for: .normal)
         return button
-    }()
-    
-    private let circleButton: UIButton = {
-        let circleButton = UIButton(type: .custom)
-        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
-        let symbolImage = UIImage(systemName: "camera", withConfiguration: symbolConfig)
-        circleButton.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-        circleButton.setImage(symbolImage, for: .normal)
-        return circleButton
     }()
     
     private func setButtonUI(button: UIButton, cornerRadius: CGFloat) {
@@ -99,7 +91,9 @@ class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
         self.circleButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.circleButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.circleButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 147.5)
+            self.circleButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 147.5),
+            self.circleButton.widthAnchor.constraint(equalToConstant: 80),
+            self.circleButton.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
     
@@ -178,14 +172,15 @@ class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
         self.view.addSubview(separatorViewUnderNavigationBar)
         
         setButtonUI(button: button, cornerRadius: 8)
-        setButtonUI(button: circleButton, cornerRadius: 0.5 * circleButton.bounds.size.width)
         setButtonPadding(button: button, contentInsets: buttonContentInsets)
-        setButtonPadding(button: circleButton, contentInsets: circleButtonContentInsets)
         configureNavigationBar()
         configureSeparatorViewUnderNavigationBar()
         configureIdInputView()
         configureSeparatorView()
         setCircleButtonLayout()
         setButtonLayout()
+        circleButton.image = UIImage(systemName: "camera")
+        circleButton.makePressable(target: self, action: #selector(presentPhotoPicker))
+
     }
 }
