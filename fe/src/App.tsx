@@ -12,6 +12,7 @@ import Auth from '@pages/Auth';
 import HomeMain from '@pages/Home/HomeMain';
 import TownSetting from '@pages/Home/TownSetting';
 import TownSearching from '@pages/Home/TownSearching';
+import HomeCategory from '@pages/Home/HomeCategory';
 import Sale from '@pages/Sale';
 import SaleCategory from '@pages/Sale/SaleCategory';
 
@@ -25,7 +26,7 @@ const App = () => {
           <Route path={PATH.HOME.DEFAULT} element={<HomeMain />} />
           <Route path={PATH.HOME.TOWN_SETTING} element={<TownSetting />} />
           <Route path={PATH.HOME.TOWN_SEARCH} element={<TownSearching />} />
-          <Route path={PATH.HOME.CATEGORY} />
+          <Route path={PATH.HOME.CATEGORY} element={<HomeCategory />} />
 
           <Route path={PATH.SALE.DEFAULT} element={<Sale />} />
           <Route path={PATH.SALE.CATEGORY} element={<SaleCategory />} />

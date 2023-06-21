@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
+        
 import MainTabBar from '@molecules/TabBars/MainTabBar';
 import { $Template } from '@styles/PageTemplate.style';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
+
 
 import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
 import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
@@ -25,6 +27,10 @@ interface Town {
 }
 
 const HomeMain = () => {
+  const { state } = useLocation();
+  const currentCategoryId = state ? state.currentCategoryId : 0;
+
+  const [filterCategoryId, setFilterCategoryId] = useState(currentCategoryId);
   const [products, setProducts] = useState<Product[]>([]);
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
@@ -76,6 +82,14 @@ const HomeMain = () => {
 
     getTowns();
   }, []);
+
+  const findCategoryName = (categoryId: number) => {
+    return CATEGORIES.filter(({ id }) => id === categoryId)[0].category;
+  };
+
+  const handleCategory = () => {
+    setFilterCategoryId(0);
+  };
 
   return (
     <>
