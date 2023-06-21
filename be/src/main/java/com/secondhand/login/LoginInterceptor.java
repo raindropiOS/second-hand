@@ -27,17 +27,16 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.debug("인터셉터 실행");
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-        if (!handlerMethod.hasMethodAnnotation(LoginCheck.class)) {
+        if (handler instanceof HandlerMethod
+                && !((HandlerMethod) handler).hasMethodAnnotation(LoginCheck.class))
             return true;
-        }
 
         String token = authExtractor.extract(request, BEARER);
 
         //헤더로 부터 토큰을 얻어온 후 유효한 토큰인지 검증한다. 요청에  디코딩한 값을 세팅
         if (!StringUtils.isEmpty(token) && jwtService.validateToken(token)) {
-            Long userId = jwtService.getSubject(token);
+            Long userId = jwtService.getSubject(token).orElseThrow();
             request.setAttribute(USER_ID, userId);
 
             memberRepository.findById(userId)
