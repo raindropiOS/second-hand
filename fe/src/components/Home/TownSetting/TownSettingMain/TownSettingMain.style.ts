@@ -7,10 +7,18 @@ const $TownSettingMainText = styled.section`
   align-items: center;
 
   width: 100%;
-  height: 150px;
+  height: fit-content;
   font-weight: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.FONT_SIZE};
   line-height: ${({ theme }) => theme.FONT_TOKEN.FOOTNOTE.LINE_HEIGHT};
 `;
 
-export { $TownSettingMainText };
+const $MapContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+export { $TownSettingMainText, $MapContainer };

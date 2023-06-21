@@ -22,7 +22,7 @@ const TownSettingHeader = () => {
         <Icon name="chevronLeft" />
         <span>뒤로</span>
       </Button>
-      <span>동네 설정</span>
+      <span>내 동네 설정</span>
       <$RightEmptyBox />
     </Navbar>
   );
