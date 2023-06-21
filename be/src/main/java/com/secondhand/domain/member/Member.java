@@ -18,12 +18,16 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
+
+    @Column
+    private String loginName;
     @Column
     private String memberName;
     private String memberToken;
     @Column
-    private String imagUrl;
+    private String imgUrl;
 
     @ManyToOne
     @JoinColumn(name = "main_town_id")
@@ -36,14 +40,16 @@ public class Member {
     public static Member create(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
         return Member.builder()
                 .memberName(memberInfo.getName())
+                .loginName(memberInfo.getLogin())
                 .memberToken(jwtToken)
-                .imagUrl(memberInfo.getAvatarUrl())
+                .imgUrl(memberInfo.getAvatarUrl())
                 .build();
     }
 
     public Member update(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
         this.memberName = memberInfo.getName();
-        this.imagUrl = memberInfo.getAvatarUrl();
+        this.loginName = memberInfo.getLogin();
+        this.imgUrl = memberInfo.getAvatarUrl();
         this.memberToken = jwtToken;
         return this;
     }
