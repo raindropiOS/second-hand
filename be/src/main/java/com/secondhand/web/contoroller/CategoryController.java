@@ -4,6 +4,7 @@ import com.secondhand.domain.categorie.Category;
 import com.secondhand.service.CategoryService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.CategoryResponse;
+import com.secondhand.web.dto.response.TownResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class CategoryController {
     )
 
     @GetMapping("")
-    public ResponseEntity<BasicResponse> read() {
+    public BasicResponse<List<CategoryResponse>> read() {
         List<Category> categoryList = categoryService.readAll();
         List<CategoryResponse> categoryResponseList = new ArrayList<>();
 
@@ -45,33 +46,12 @@ public class CategoryController {
             categoryResponseList.add(categoryResponse);
         }
 
-        BasicResponse message = BasicResponse.builder()
+        return BasicResponse.<List<CategoryResponse>>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .data(categoryResponseList)
                 .build();
-
-        return ResponseEntity.ok()
-                .body(message);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<BasicResponse> view() {
-        List<CategoryResponse> categoryResponseList = List.of(new CategoryResponse(1L, "비디오", "url경로"),
-                new CategoryResponse(1L, "비디오", "url경로"),
-                new CategoryResponse(1L, "비디오", "url경로"));
-
-        BasicResponse message = BasicResponse.builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .data(categoryResponseList)
-                .build();
-
-        return ResponseEntity.ok()
-                .body(message);
     }
 }

@@ -1,5 +1,7 @@
 package com.secondhand.service;
 
+import com.secondhand.domain.exception.MemberNotFoundException;
+import com.secondhand.domain.member.Member;
 import com.secondhand.domain.member.MemberRepository;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import com.secondhand.oauth.GitHubOauth;
@@ -12,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class MemberService {
 
 
     @Transactional
-    public MemberLoginResponse login(String code) throws IOException, InterruptedException {
+    public MemberLoginResponse login(String code) {
         //TODO  authorization code 를 받는다
         AccessTokenResponseDTO token = oauth.getToken(code);
         logger.debug("token access 토큰 = {}", token);
@@ -44,5 +45,13 @@ public class MemberService {
     private boolean checkLoginMember(OAuthMemberInfoDTO userInfo) {
         //TODO : 토큰을 받은 후 깃허브로 부터 받은 정보가 DB에 저장하거나 있는 정보인지 체크한다.
         return true;
+    }
+
+    public MemberResponse getUserInfo(long userId) {
+        return MemberResponse.of(findUserById(userId));
+    }
+
+    private Member findUserById(long userId) {
+        return memberRepository.findById(userId).orElseThrow(MemberNotFoundException::new);
     }
 }

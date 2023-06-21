@@ -11,6 +11,7 @@ import lombok.Getter;
 public class MemberLoginResponse {
 
     private final String name;
+    private final String imagUrl;
     private final String jwtToken;
 
     public static MemberLoginResponse of(final OAuthMemberInfoDTO member, final String jwtToken) {

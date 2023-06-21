@@ -47,32 +47,6 @@ public class ImageService {
         return new ImageResponse(image);
     }
 
-    public String uploads(MultipartFile multipartFile) throws IOException {
-        String imageName = getImageName(multipartFile);
-        String fileName = FILE_ROUTE + multipartFile.getOriginalFilename();
-
-        log.debug("fileName = {} ", fileName);
-        log.debug("multipartFile = {} ", imageName);
-
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(bucket)
-                .key(fileName)
-                .build();
-        s3Client.putObject(putObjectRequest, RequestBody.fromBytes(multipartFile.getBytes()));
-
-        String imageUrl = s3Client.utilities().getUrl(GetUrlRequest.builder()
-                        .bucket(bucket)
-                        .key(fileName)
-                        .build())
-                .toString();
-
-        log.debug("imageUrl = {} ", imageUrl);
-        Image image = imageRepository.save(new Image(imageUrl));
-        ImageResponse imageResponse = new ImageResponse(image);
-        return imageUrl;
-    }
-
-
     private String getImageName(MultipartFile multipartFile) {
         String newName = UUID.randomUUID().toString();
         String originalFileName = multipartFile.getOriginalFilename();
