@@ -149,6 +149,25 @@ class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
             }
         }
     }
+
+    func authSettingOpen(authString: String) {
+        let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "앱"
+        let message = "\(appName)이(가) \(authString) 접근 허용되어 있지 않습니다. \r\n 설정화면으로 가시겠습니까?"
+        let alert = UIAlertController(title: "설정", message: message, preferredStyle: .alert)
+        let cancle = UIAlertAction(title: "취소", style: .default) { (UIAlertAction) in
+            print("\(String(describing: UIAlertAction.title)) 클릭")
+        }
+
+        let confirm = UIAlertAction(title: "확인", style: .default) { (UIAlertAction) in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }
+
+        alert.addAction(cancle)
+        alert.addAction(confirm)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
