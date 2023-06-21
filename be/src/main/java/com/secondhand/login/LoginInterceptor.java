@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class LoginInterceptor implements HandlerInterceptor {
 
+    public static final String BEARER = "Bearer";
+    public static final String USER_ID = "userId";
     private final AuthorizationExtractor authExtractor;
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
@@ -31,12 +33,12 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        String token = authExtractor.extract(request, "Bearer");
+        String token = authExtractor.extract(request, BEARER);
 
         //헤더로 부터 토큰을 얻어온 후 유효한 토큰인지 검증한다. 요청에  디코딩한 값을 세팅
         if (!StringUtils.isEmpty(token) && jwtService.validateToken(token)) {
             Long userId = jwtService.getSubject(token);
-            request.setAttribute("userId", userId);
+            request.setAttribute(USER_ID, userId);
 
             memberRepository.findById(userId)
                     .orElseThrow(() -> new MemberNotFoundException());
