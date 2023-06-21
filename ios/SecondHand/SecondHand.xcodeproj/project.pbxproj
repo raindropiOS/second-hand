@@ -10,6 +10,7 @@
 		33919F9CB45801DA070B78E8 /* Pods_SecondHand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07FB32A4C88C8F1786D503A7 /* Pods_SecondHand.framework */; };
 		8F0F6B572A41FE2100F8F1D5 /* Pods-SecondHand.secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8F0F6B562A41FE2100F8F1D5 /* Pods-SecondHand.secrets.xcconfig */; };
 		8F0F6B5D2A42C6F000F8F1D5 /* URLRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0F6B5C2A42C6F000F8F1D5 /* URLRequestFactory.swift */; };
+		8F0F6B5F2A42C7E900F8F1D5 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0F6B5E2A42C7E900F8F1D5 /* DataDecoder.swift */; };
 		8F167CEE2A386237003805CE /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F167CED2A386237003805CE /* ProductTableViewCell.swift */; };
 		8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71432A2DD79900C10206 /* AppDelegate.swift */; };
 		8F7C71462A2DD79900C10206 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71452A2DD79900C10206 /* SceneDelegate.swift */; };
@@ -42,6 +43,7 @@
 		33BCF5B7409A53165064EB3E /* Pods-SecondHand.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.release.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.release.xcconfig"; sourceTree = "<group>"; };
 		8F0F6B562A41FE2100F8F1D5 /* Pods-SecondHand.secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.secrets.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.secrets.xcconfig"; sourceTree = "<group>"; };
 		8F0F6B5C2A42C6F000F8F1D5 /* URLRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestFactory.swift; sourceTree = "<group>"; };
+		8F0F6B5E2A42C7E900F8F1D5 /* DataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
 		8F167CED2A386237003805CE /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 		8F7C71402A2DD79900C10206 /* SecondHand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondHand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7C71432A2DD79900C10206 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				8F7C715F2A2F730800C10206 /* NetworkManager.swift */,
 				8F0F6B5C2A42C6F000F8F1D5 /* URLRequestFactory.swift */,
+				8F0F6B5E2A42C7E900F8F1D5 /* DataDecoder.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				8F0F6B5D2A42C6F000F8F1D5 /* URLRequestFactory.swift in Sources */,
 				8F7C71692A319B2900C10206 /* TabBarController.swift in Sources */,
 				8F7C71792A31C37A00C10206 /* SignInViewController.swift in Sources */,
+				8F0F6B5F2A42C7E900F8F1D5 /* DataDecoder.swift in Sources */,
 				8F7C71462A2DD79900C10206 /* SceneDelegate.swift in Sources */,
 				8FCAA43D2A35D08A0015FE4D /* OrangeButton.swift in Sources */,
 				8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */,
