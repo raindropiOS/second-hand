@@ -32,23 +32,27 @@ public class MemberService {
         //TODO  authorization code 를 받는다
         AccessTokenResponseDTO token = oauth.getToken(code);
         logger.debug("token access 토큰 = {}", token);
-        OAuthMemberInfoDTO memberInfoDTO = oauth.getUserInfo(token.getAccessToken());
-        logger.debug("token access 토큰 으로 부터받은 회원정보 = {}", memberInfoDTO);
-        String jwtToken = jwtService.createToken(memberInfoDTO);
+        OAuthMemberInfoDTO memberInfo = oauth.getUserInfo(token.getAccessToken());
+        logger.debug("token access 토큰 으로 부터받은 회원정보 = {}", memberInfo);
+        String jwtToken = jwtService.createToken(memberInfo);
 
+        log.debug("jwt token = {}", jwtToken);
         // TODO: 이미 있는 멤버라면 토큰을 업데이트 해주고 아니라면 새로만든다
-        if (MemberExists(memberInfoDTO)) {
-            Member member = findMemberById(memberInfoDTO.getId());
-            memberRepository.save(member.update(memberInfoDTO, jwtToken));
-            return MemberLoginResponse.of(member, jwtToken);
+        if (MemberExists(memberInfo)) {
+            Member member = findMemberByMemberName(memberInfo.getLogin());
+            Member updateMember = memberRepository.save(member.update(memberInfo, jwtToken));
+            log.debug("기존에 있던 member 토큰 업데이트 = {}", updateMember);
+            return MemberLoginResponse.of(updateMember, jwtToken);
         }
-        Member member = memberRepository.save(Member.create(memberInfoDTO, jwtToken));
+        Member member = memberRepository.save(Member.create(memberInfo, jwtToken));
+        log.debug("새로운 맴버 생성 = {}", member);
         return MemberLoginResponse.of(member, jwtToken);
     }
 
     private boolean MemberExists(OAuthMemberInfoDTO userInfo) {
         //TODO : 토큰을 받은 후 깃허브로 부터 받은 정보가 DB에 저장하거나 있는 정보인지 체크한다.
-        return memberRepository.findById(userInfo.getId()).isPresent();
+        log.debug("userInfo = {}", userInfo.getLogin());
+        return memberRepository.findByMemberName(userInfo.getLogin()).isPresent();
     }
 
     public void logout(long userId) {
@@ -57,13 +61,16 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public Member findMemberById(long userId) {
+        return memberRepository.findById(userId).orElseThrow(MemberNotFoundException::new);
+    }
+
     public MemberResponse getUserInfo(long userId) {
         return MemberResponse.of(findMemberById(userId));
     }
 
 
-    private Member findMemberById(long userId) {
-        return memberRepository.findById(userId).orElseThrow(MemberNotFoundException::new);
+    public Member findMemberByMemberName(String memberName) {
+        return memberRepository.findByMemberName(memberName).orElseThrow(MemberNotFoundException::new);
     }
-
 }
