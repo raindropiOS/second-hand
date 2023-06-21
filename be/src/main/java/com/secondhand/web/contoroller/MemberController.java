@@ -29,20 +29,18 @@ public class MemberController {
             tags = "member",
             description = "사용자 깃허브를 통한 로그인"
     )
-    @GetMapping("/auth/login")
-    public ResponseEntity<BasicResponse<MemberLoginResponse>> login(@RequestParam String code) throws IOException, InterruptedException {
+    @PostMapping("/auth/login")
+    public BasicResponse<MemberLoginResponse> login(@RequestParam String code) throws IOException, InterruptedException {
         logger.debug("프론트로 부터 받은 코드 = {}", code);
         MemberLoginResponse memberResponseDTO = memberService.login(code);
 
-        BasicResponse message = BasicResponse.builder()
+        return BasicResponse.<MemberLoginResponse>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .data(memberResponseDTO)
                 .build();
-
-        return ResponseEntity.ok(message);
     }
 
     @Operation(
