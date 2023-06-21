@@ -13,7 +13,7 @@ protocol Repository {
     
     func readAll() -> [SomeDatum]
     func create(_: SomeDatum)
-    func readDatum(with: SomeId) -> SomeDatum?
+    func read(_: SomeId) -> SomeDatum?
     func update(_: SomeDatum, with: SomeDatum)
     func delete(_: SomeDatum)
 }

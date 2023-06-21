@@ -20,7 +20,7 @@ class ProductRepository: Repository {
         self.products.append(product)
     }
     
-    func readDatum(with id: Int) -> Product? {
+    func read(_ id: Int) -> Product? {
         if let index = self.findIndexOf(id) {
             return products[index]
         }
