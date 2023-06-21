@@ -18,7 +18,7 @@ create table member
 (
     member_id    bigint auto_increment
         primary key,
-    memberId     varchar(45)  not null,
+    memberName     varchar(45)  not null,
     memberToken  varchar(200) not null,
     img_url      varchar(200) null,
     main_town_id bigint       not null,
