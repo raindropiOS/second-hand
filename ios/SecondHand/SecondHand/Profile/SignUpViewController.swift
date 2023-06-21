@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import PhotosUI
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
     private let buttonContentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 16, leading: 10, bottom: 16, trailing: 10)
     private let circleButtonContentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 25.5, leading: 20.5, bottom: 25.5, trailing: 20.5)
     private let separatorView: SeparatorView = SeparatorView()
