@@ -9,12 +9,14 @@ import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -32,26 +34,36 @@ public class MemberService {
         logger.debug("token access 토큰 = {}", token);
         OAuthMemberInfoDTO memberInfoDTO = oauth.getUserInfo(token.getAccessToken());
         logger.debug("token access 토큰 으로 부터받은 회원정보 = {}", memberInfoDTO);
-
-        // TODO: 멤버를 저장후 보여준다
-        // Member member = memberRepository.save();
-        if (checkLoginMember(memberInfoDTO)) {
-        }
         String jwtToken = jwtService.createToken(memberInfoDTO);
 
-        return MemberLoginResponse.of(memberInfoDTO, jwtToken);
+        // TODO: 이미 있는 멤버라면 토큰을 업데이트 해주고 아니라면 새로만든다
+        if (MemberExists(memberInfoDTO)) {
+            Member member = findMemberById(memberInfoDTO.getId());
+            memberRepository.save(member.update(memberInfoDTO, jwtToken));
+            return MemberLoginResponse.of(member, jwtToken);
+        }
+        Member member = memberRepository.save(Member.create(memberInfoDTO, jwtToken));
+        return MemberLoginResponse.of(member, jwtToken);
     }
 
-    private boolean checkLoginMember(OAuthMemberInfoDTO userInfo) {
+    private boolean MemberExists(OAuthMemberInfoDTO userInfo) {
         //TODO : 토큰을 받은 후 깃허브로 부터 받은 정보가 DB에 저장하거나 있는 정보인지 체크한다.
-        return true;
+        return memberRepository.findById(userInfo.getId()).isPresent();
+    }
+
+    public void logout(long userId) {
+        Member member = findMemberById(userId);
+        member.removeToken();
+        memberRepository.save(member);
     }
 
     public MemberResponse getUserInfo(long userId) {
-        return MemberResponse.of(findUserById(userId));
+        return MemberResponse.of(findMemberById(userId));
     }
 
-    private Member findUserById(long userId) {
+
+    private Member findMemberById(long userId) {
         return memberRepository.findById(userId).orElseThrow(MemberNotFoundException::new);
     }
+
 }

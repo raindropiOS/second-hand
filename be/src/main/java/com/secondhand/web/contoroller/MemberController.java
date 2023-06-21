@@ -52,6 +52,7 @@ public class MemberController {
     @LoginCheck
     @GetMapping("/auth/logout")
     public ResponseEntity<BasicResponse<MemberLoginResponse>> logout(@LoginValue long userId) {
+        memberService.logout(userId);
 
         BasicResponse message = BasicResponse.builder()
                 .success(true)
