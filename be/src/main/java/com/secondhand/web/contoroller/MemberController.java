@@ -82,35 +82,4 @@ public class MemberController {
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
-
-    //TODO : 등록을 숫자로가지고한다? 수정필요
-    @Operation(
-            summary = "사용자의 처음 동네 등록",
-            tags = "members",
-            description = "사용자의 화원가입할 때 메인, 서브  동네를 등록할 수있다."
-    )
-    @PostMapping("/members/towns")
-    public BasicResponse registerTown(@RequestBody long townId) {
-        return BasicResponse.builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .build();
-    }
-
-    @Operation(
-            summary = "사용자의 동네 등록",
-            tags = "members",
-            description = "사용자의 메인, 서브 동네를 수정할 수 있다."
-    )
-    @PatchMapping("/members/towns")
-    public BasicResponse updateTown(@RequestBody long townId) {
-        return BasicResponse.builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .build();
-    }
 }
