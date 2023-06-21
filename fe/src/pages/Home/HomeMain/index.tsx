@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
-        
+
 import MainTabBar from '@molecules/TabBars/MainTabBar';
 import { $Template } from '@styles/PageTemplate.style';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 
-
 import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
 import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
+import { CATEGORIES } from '@constants/categories';
 
 interface Product {
   productId: number;
