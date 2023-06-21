@@ -1,5 +1,7 @@
 package com.secondhand.web.contoroller;
 
+import com.secondhand.login.LoginCheck;
+import com.secondhand.login.LoginValue;
 import com.secondhand.service.MemberService;
 import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
@@ -7,14 +9,14 @@ import com.secondhand.web.dto.response.MemberLoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -22,7 +24,6 @@ public class MemberController {
 
     private final MemberService memberService;
     private final TownService townService;
-    private final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Operation(
             summary = "깃허브 로그인",
@@ -31,7 +32,7 @@ public class MemberController {
     )
     @PostMapping("/auth/login")
     public BasicResponse<MemberLoginResponse> login(@RequestParam String code) throws IOException, InterruptedException {
-        logger.debug("프론트로 부터 받은 코드 = {}", code);
+        log.debug("프론트로 부터 받은 코드 = {}", code);
         MemberLoginResponse memberResponseDTO = memberService.login(code);
 
         return BasicResponse.<MemberLoginResponse>builder()
@@ -48,8 +49,9 @@ public class MemberController {
             tags = "member",
             description = "사용자 로그아웃."
     )
+    @LoginCheck
     @GetMapping("/auth/logout")
-    public ResponseEntity<BasicResponse<MemberLoginResponse>> logout() {
+    public ResponseEntity<BasicResponse<MemberLoginResponse>> logout(@LoginValue long userId) {
 
         BasicResponse message = BasicResponse.builder()
                 .success(true)
@@ -59,6 +61,25 @@ public class MemberController {
                 .build();
 
         return ResponseEntity.ok(message);
+    }
+
+    @Operation(
+            summary = "사용자의 정보를 가져온다",
+            tags = "members",
+            description = "사용자의 id를 통해 사용자 정보를 가져온다."
+    )
+    @LoginCheck
+    @GetMapping("/members")
+    public BasicResponse<MemberLoginResponse> info(@LoginValue long userId) {
+        log.debug("사용자 id = {} ", userId);
+        memberService.getUserInfo(userId);
+
+        return BasicResponse.<MemberLoginResponse>builder()
+                .success(true)
+                .message("")
+                .apiStatus(20000)
+                .httpStatus(HttpStatus.OK)
+                .build();
     }
 
     //TODO : 등록을 숫자로가지고한다? 수정필요
