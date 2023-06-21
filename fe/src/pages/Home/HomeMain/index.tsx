@@ -29,6 +29,9 @@ interface Town {
 
 const HomeMain = () => {
   const { state } = useLocation();
+
+  console.log(state);
+
   const currentCategoryId = state ? state.currentCategoryId : 0;
 
   const [filterCategoryId, setFilterCategoryId] = useState(currentCategoryId);
@@ -84,11 +87,7 @@ const HomeMain = () => {
     getTowns();
   }, []);
 
-  const findCategoryName = (categoryId: number) => {
-    return CATEGORIES.filter(({ id }) => id === categoryId)[0].category;
-  };
-
-  const handleCategory = () => {
+  const handleCancelFilter = () => {
     setFilterCategoryId(0);
   };
 
@@ -96,8 +95,13 @@ const HomeMain = () => {
     <>
       {!!products.length && !!towns.length && (
         <$Template>
-          <HomeMainHeader towns={towns} />
-          <HomeMainMain products={products} observerTarget={observerTarget} />
+          <HomeMainHeader towns={towns} currentCategoryId={filterCategoryId} />
+          <HomeMainMain
+            products={products}
+            observerTarget={observerTarget}
+            currentCategoryId={filterCategoryId}
+            handleCancelFilter={handleCancelFilter}
+          />
           <MainTabBar />
         </$Template>
       )}

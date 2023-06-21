@@ -8,9 +8,10 @@ import PATH from '@constants/routerPath';
 
 interface HomeMainHeaderProps {
   towns: { townId: number; name: string }[];
+  currentCategoryId: number;
 }
 
-const HomeMainHeader = ({ towns }: HomeMainHeaderProps) => {
+const HomeMainHeader = ({ towns, currentCategoryId }: HomeMainHeaderProps) => {
   const navigate = useNavigate();
 
   return (
@@ -18,7 +19,7 @@ const HomeMainHeader = ({ towns }: HomeMainHeaderProps) => {
       <Dropdown towns={towns} />
       <button
         onClick={() => {
-          navigate(PATH.HOME.CATEGORY);
+          navigate(PATH.HOME.CATEGORY, { state: { currentCategoryId } });
         }}
       >
         <Icon name="category" />
