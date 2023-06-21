@@ -112,6 +112,24 @@ class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
         ])
     }
     
+    @objc func presentPhotoPicker() {
+        PermissionManager.shared.checkPhotoLibraryAuthorizationStatus { [weak self] authorized in
+            DispatchQueue.main.async {
+                if authorized {
+                    var config = PHPickerConfiguration()
+                    config.filter = PHPickerFilter.images
+                    config.selectionLimit = 1
+                    
+                    let picker = PHPickerViewController(configuration: config)
+                    picker.delegate = self
+                    self?.present(picker, animated: true, completion: nil)
+                } else {
+                    self?.authSettingOpen(authString: "앨범에")
+                }
+            }
+        }
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
