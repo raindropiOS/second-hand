@@ -1,8 +1,8 @@
 package com.secondhand.service;
 
+import com.secondhand.domain.member.Member;
+import com.secondhand.domain.town.Town;
 import com.secondhand.domain.town.TownRepository;
-import com.secondhand.web.dto.response.MemberLoginResponse;
-import com.secondhand.web.dto.response.MemberTownInfoResponse;
 import com.secondhand.web.dto.response.TownResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class TownService {
 
     private final TownRepository townRepository;
+    private final MemberService memberService;
 
     public List<TownResponse> findByAll() {
         return townRepository.findAll()
@@ -22,14 +23,13 @@ public class TownService {
                 .collect(Collectors.toList());
     }
 
-    public void delete(long townId) {
-    }
-
-    public MemberTownInfoResponse findByLoginId() {
-        return new MemberTownInfoResponse();
-    }
-
     public void save(long townId) {
 
+    }
+
+    public TownResponse findTownDetail(long userId) {
+        Member member = memberService.findMemberById(userId);
+        Town mainTown = member.getMainTown();
+        return new TownResponse(mainTown);
     }
 }
