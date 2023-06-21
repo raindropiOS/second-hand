@@ -130,6 +130,25 @@ class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
         }
         
     }
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        let itemProvider = results.first?.itemProvider
+        
+        if let itemProvider = itemProvider,
+           itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                DispatchQueue.main.async {
+                    if let image = image as? UIImage {
+                        self.circleButton.image = image
+                    } else {
+                        print("\(String(describing: error))")
+                        return
+                    }
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
