@@ -15,6 +15,7 @@ import TownSearching from '@pages/Home/TownSearching';
 import HomeCategory from '@pages/Home/HomeCategory';
 import Sale from '@pages/Sale';
 import SaleCategory from '@pages/Sale/SaleCategory';
+import SalesHistory from '@pages/SalesHistory';
 
 const App = () => {
   return (
@@ -33,7 +34,7 @@ const App = () => {
 
           <Route path={PATH.PRODUCT.DEFAULT} />
           <Route path={PATH.PRODUCT.CHAT} />
-          <Route path={PATH.PRODUCT.SALES} />
+          <Route path={PATH.PRODUCT.SALES} element={<SalesHistory />} />
           <Route path={PATH.PRODUCT.LIKE} />
 
           <Route path={PATH.AUTH.DEFAULT} element={<Auth />} />
