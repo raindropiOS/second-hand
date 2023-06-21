@@ -12,6 +12,7 @@ const inactiveStyle = css`
 `;
 
 const $Chip = styled.button<{ active: boolean }>`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

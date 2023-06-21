@@ -29,8 +29,8 @@ const TOWNS = Object.freeze({});
 
 const AUTH = Object.freeze({
   LOGIN: (AUTHORIZATION_CODE: string) => `/${API_TYPE.AUTH}/login?code=${AUTHORIZATION_CODE}`,
-  GITHUB_LOGIN_URL: (redirectURI: string, clientId: string, scope: string) =>
-    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&client_id=${clientId}&scope=${scope}`,
+  GITHUB_LOGIN_URL: (clientId: string, scope: string) =>
+    `https://github.com/login/oauth/authorize?response_type=code&client_id=${clientId}&scope=${scope}`,
 });
 
 const KAKAO = Object.freeze({

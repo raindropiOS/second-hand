@@ -5,13 +5,15 @@ import { $Chip } from './Chip.style';
 interface ChipProps {
   content: string;
   active: boolean;
-  onClick: () => void;
+  onClick?: () => void;
+  children?: React.ReactNode;
 }
 
-const Chip = ({ content, active, onClick }: ChipProps) => {
+const Chip = ({ content, active, onClick, children }: ChipProps) => {
   return (
     <$Chip active={active} onClick={onClick}>
       {content}
+      {children}
     </$Chip>
   );
 };

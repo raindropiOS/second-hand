@@ -12,6 +12,9 @@ const $ListItemLayout = styled.section`
   padding: 15px 0;
   border-bottom: ${({ theme }) => `1px solid ${theme.COLORS.NEUTRAL.BORDER.DEFAULT}`};
 
+  &:hover {
+    background-color: rgba(255, 149, 0, 0.1);
+  }
   cursor: pointer;
 `;
 
@@ -83,7 +86,7 @@ const $Status = styled.p`
   padding: 10px 8px;
   border-radius: 8px;
 
-  background-color: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.SECONDARY};
+  background-color: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.PRIMARY};
 
   font-weight: ${({ theme }) => theme.FONT_TOKEN.CAPTION_1.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.CAPTION_1.FONT_SIZE};

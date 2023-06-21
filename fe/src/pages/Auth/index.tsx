@@ -17,9 +17,13 @@ const Auth = () => {
       // TODO(jayden): get이 아닌 post로 바꾸기
       if (!authorizationCode) return;
       const { data } = await axiosFetch.get(AUTH.LOGIN(authorizationCode));
-      const accessToken = data.accessToken;
+      const jwtToken = data.jwtToken;
+      const name = data.name;
 
-      if (!sessionStorage.getItem('accessToken')) sessionStorage.setItem('accessToken', accessToken);
+      if (!sessionStorage.getItem('accessToken')) {
+        sessionStorage.setItem('accessToken', jwtToken);
+        sessionStorage.setItem('name', name);
+      }
       navigate(PATH.HOME.DEFAULT);
     };
 
