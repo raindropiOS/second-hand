@@ -1,20 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
-import PATH from '@constants/routerPath';
-import { CATEGORIES } from '@constants/categories';
-
-import { $Template } from '@styles/PageTemplate.style';
-import { $ListItemContainer, $SaleButtonContainer, $CurrentCategory } from '@pages/Home/HomeMain/HomeMain.style';
-import Navbar from '@components/molecules/Navbar';
-import Dropdown from '@molecules/Dropdown';
-import Icon from '@atoms/Icon';
-import Chip from '@atoms/Chip';
-import ListItem from '@molecules/ListItem';
+import useIntersectionObserver from '@hooks/useIntersectionObserver';
+        
 import MainTabBar from '@molecules/TabBars/MainTabBar';
-import ConvertPriceFormat from '@utils/convertPriceFormat';
-import CircleButton from '@atoms/Buttons/CircleButton';
+import { $Template } from '@styles/PageTemplate.style';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
+
+
+import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
+import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
 
 interface Product {
   productId: number;
@@ -32,17 +26,6 @@ interface Town {
   name: string;
 }
 
-const useObserver = (callback: IntersectionObserverCallback, options: IntersectionObserverInit) => {
-  const target = useRef<HTMLDivElement>(null);
-  const observer = new IntersectionObserver(callback, options);
-
-  useEffect(() => {
-    if (target.current) observer.observe(target.current);
-  }, [target.current, observer]);
-
-  return target;
-};
-
 const HomeMain = () => {
   const { state } = useLocation();
   const currentCategoryId = state ? state.currentCategoryId : 0;
@@ -52,9 +35,8 @@ const HomeMain = () => {
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
-  const navigate = useNavigate();
 
-  const callback = (entries: IntersectionObserverEntry[]) => {
+  const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
     if (!entry.isIntersecting || isPageUpdated) return;
@@ -62,17 +44,7 @@ const HomeMain = () => {
     setIsPageUpdated(true);
   };
 
-  const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 1.0,
-  };
-
-  const target = useObserver(callback, options);
-
-  const handleSettingButtonClick = () => {
-    navigate(PATH.HOME.TOWN_SETTING, { state: { towns } });
-  };
+  const observerTarget = useIntersectionObserver(intersectionObserverCallback);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -123,42 +95,8 @@ const HomeMain = () => {
     <>
       {!!products.length && !!towns.length && (
         <$Template>
-          <Navbar>
-            <Dropdown towns={towns} />
-            <button
-              onClick={() => {
-                navigate(PATH.HOME.CATEGORY, { state: { currentCategoryId: filterCategoryId } });
-              }}
-            >
-              <Icon name="category" />
-            </button>
-          </Navbar>
-          <$ListItemContainer>
-            {filterCategoryId !== 0 && (
-              <$CurrentCategory>
-                <Chip content={findCategoryName(filterCategoryId)} active={true} onClick={handleCategory} />
-              </$CurrentCategory>
-            )}
-            {products.map(product => (
-              <ListItem
-                {...product}
-                key={product.productId}
-                price={ConvertPriceFormat(product.price)}
-                isCurrentUserItem={true}
-                onItemClick={() => console.log('onItemClick')}
-              />
-            ))}
-            <div ref={target} />
-          </$ListItemContainer>
-          <$SaleButtonContainer>
-            <CircleButton
-              iconName="plus"
-              size="large"
-              onClick={() => {
-                navigate(PATH.SALE.DEFAULT);
-              }}
-            />
-          </$SaleButtonContainer>
+          <HomeMainHeader towns={towns} />
+          <HomeMainMain products={products} observerTarget={observerTarget} />
           <MainTabBar />
         </$Template>
       )}

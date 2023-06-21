@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import TownSettingHeader from '@components/Home/TownSetting/TownSettingHeader';
 import TownSettingMain from '@components/Home/TownSetting/TownSettingMain';
-import TownSettingFooter from '@components/Home/TownSetting/TwonSettingFooter';
+import TownSettingFooter from '@components/Home/TownSetting/TownSettingFooter';
 
 const TownSetting = () => {
   const { state } = useLocation();

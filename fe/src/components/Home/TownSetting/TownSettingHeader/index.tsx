@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import PATH from '@constants/routerPath';
+
 import Button from '@atoms/Buttons/Button';
 import Icon from '@atoms/Icon';
 import Navbar from '@molecules/Navbar';
@@ -13,12 +15,12 @@ const TownSettingHeader = () => {
     <Navbar>
       <Button
         onClick={() => {
-          navigate('/home');
+          navigate(PATH.HOME.DEFAULT);
         }}
         status="ghost"
       >
         <Icon name="chevronLeft" />
-        <span>닫기</span>
+        <span>뒤로</span>
       </Button>
       <span>동네 설정</span>
       <$RightEmptyBox />
