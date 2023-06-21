@@ -14,6 +14,7 @@ class SignUpViewController: UIViewController, PHPickerViewControllerDelegate {
     private let separatorView: SeparatorView = SeparatorView()
     private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     private let idInputView: InputView = InputView()
+    let phpickerController = UIImagePickerController()
     
     private let button: UIButton = {
         let button = UIButton(type: .system)
