@@ -35,7 +35,7 @@ const $ButtonContainer = styled.section`
   justify-content: space-between;
   padding: 0px 8px;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 20px;
   gap: 8px;
   width: 100%;
 `;
