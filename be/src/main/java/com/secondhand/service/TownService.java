@@ -1,6 +1,8 @@
 package com.secondhand.service;
 
+import com.secondhand.domain.exception.TownNotFoundException;
 import com.secondhand.domain.member.Member;
+import com.secondhand.domain.town.Town;
 import com.secondhand.domain.town.TownRepository;
 import com.secondhand.web.dto.response.TownResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +34,9 @@ public class TownService {
         //TODO: subTown은 NULL이 올수있음
         TownResponse subTown = new TownResponse(member.getSubTown());
         return List.of(mainTown, subTown);
+    }
+
+    public Town findById(Long townId) {
+        return townRepository.findById(townId).orElseThrow(TownNotFoundException::new);
     }
 }

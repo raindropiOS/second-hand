@@ -1,6 +1,8 @@
 package com.secondhand.web.contoroller;
 
 import com.secondhand.domain.product.CountInfo;
+import com.secondhand.login.LoginCheck;
+import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductService;
 import com.secondhand.web.dto.requset.FilterRequest;
 import com.secondhand.web.dto.requset.ProductLikeResponse;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.secondhand.domain.product.Status.SELL;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,15 +34,14 @@ public class ProductController {
             description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다.."
     )
     @GetMapping
-    public ResponseEntity<BasicResponse<List<ProductDTO>>> search(FilterRequest filterRequestDTO) {
-        BasicResponse message = BasicResponse.builder()
+    public BasicResponse<List<ProductDTO>> search(FilterRequest filterRequestDTO) {
+        return BasicResponse.<List<ProductDTO>>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .build();
 
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
     @Operation(
@@ -83,16 +83,18 @@ public class ProductController {
             tags = "products",
             description = "사용자는 단일 상품을 등록할 수 있다."
     )
+    @LoginCheck
     @PostMapping
-    public ResponseEntity<BasicResponse> save(@RequestBody ProductSaveRequest requestDTO) {
-        BasicResponse message = BasicResponse.builder()
+    public BasicResponse save(@LoginValue long userId,
+                              @RequestBody ProductSaveRequest productSaveRequest) {
+
+        productService.save(userId, productSaveRequest);
+        return BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .build();
-
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
     @Operation(
@@ -100,6 +102,7 @@ public class ProductController {
             tags = "products",
             description = "사용자는 단일 상품을 수정할 수 있다."
     )
+    @LoginCheck
     @PutMapping("/{productId}")
     public ResponseEntity<BasicResponse> update(@PathVariable long productId,
                                                 @RequestBody ProductUpdateRequest requestDTO) {
@@ -147,7 +150,6 @@ public class ProductController {
                 .createdAt("2시간 전")
                 .price("24,500원")
                 .img("이미지")
-                .status(SELL)
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
@@ -157,7 +159,6 @@ public class ProductController {
                 .createdAt("2시간 전")
                 .price("24,500원")
                 .img("이미지")
-                .status(SELL)
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
@@ -167,7 +168,6 @@ public class ProductController {
                 .createdAt("2시간 전")
                 .price("24,500원")
                 .img("이미지")
-                .status(SELL)
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
@@ -177,7 +177,6 @@ public class ProductController {
                 .createdAt("2시간 전")
                 .price("24,500원")
                 .img("이미지")
-                .status(SELL)
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
         List<BoardsResponse> boardsDTOResponseList = new ArrayList<>();
@@ -222,7 +221,6 @@ public class ProductController {
                 .createdAt("2시간 전")
                 .price("24,500원")
                 .img("이미지")
-                .status(SELL)
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
@@ -252,7 +250,6 @@ public class ProductController {
                 .createdAt("2시간 전")
                 .price("24,500원")
                 .img("이미지")
-                .status(SELL)
                 .countInfo(new CountInfo(1L, 2L))
                 .build();
 
