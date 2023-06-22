@@ -2,14 +2,21 @@ import React from 'react';
 
 import Navbar from '@molecules/Navbar';
 import SegmentedControl from '@molecules/SegmentedControl';
-import { $SegmentedControlContainer } from '@components/SalesHistory/SalesHistoryHeader/SalesHistoryHeader.style';
+import {
+  $SalesHistoryHeaderContainer,
+  $SegmentedControlContainer,
+} from '@components/SalesHistory/SalesHistoryHeader/SalesHistoryHeader.style';
 
 const SALES_STATUSES = [
   { id: 0, title: '판매중' },
   { id: 2, title: '판매완료' },
 ];
 
-const SalesHistoryHeader = () => {
+interface SalesHistoryHeaderProps {
+  onClick: (statusId: number) => void;
+}
+
+const SalesHistoryHeader = ({ onClick }: SalesHistoryHeaderProps) => {
   return (
     <>
       <Navbar>
@@ -22,7 +29,7 @@ const SalesHistoryHeader = () => {
               key={status.id}
               segmentedIndex={index}
               onClick={() => {
-                console.log(status.id);
+                onClick(status.id);
               }}
             >
               {status.title}
