@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import useLikeProductsData from '@apis/api/like';
 
@@ -30,6 +31,7 @@ const Like = () => {
         currentCategory={fetchOptions.categoryId}
       />
       {data && <ListMain products={data.products} />}
+      <Outlet />
     </$Template>
   );
 };
