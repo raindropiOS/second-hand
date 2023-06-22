@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
 
-import MainTabBar from '@molecules/TabBars/MainTabBar';
 import { $Template } from '@styles/PageTemplate.style';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 
 import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
 import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
-import { CATEGORIES } from '@constants/categories';
 
 interface Product {
   productId: number;
@@ -29,8 +27,6 @@ interface Town {
 
 const HomeMain = () => {
   const { state } = useLocation();
-
-  console.log(state);
 
   const currentCategoryId = state ? state.currentCategoryId : 0;
 
@@ -92,9 +88,9 @@ const HomeMain = () => {
   };
 
   return (
-    <>
+    <$Template>
       {!!products.length && !!towns.length && (
-        <$Template>
+        <>
           <HomeMainHeader towns={towns} currentCategoryId={filterCategoryId} />
           <HomeMainMain
             products={products}
@@ -102,10 +98,10 @@ const HomeMain = () => {
             currentCategoryId={filterCategoryId}
             handleCancelFilter={handleCancelFilter}
           />
-          <MainTabBar />
-        </$Template>
+        </>
       )}
-    </>
+      <Outlet />
+    </$Template>
   );
 };
 

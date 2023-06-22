@@ -15,6 +15,9 @@ import TownSearching from '@pages/Home/TownSearching';
 import HomeCategory from '@pages/Home/HomeCategory';
 import Sale from '@pages/Sale';
 import SaleCategory from '@pages/Sale/SaleCategory';
+import SalesHistory from '@pages/SalesHistory';
+import MainTabBar from '@molecules/TabBars/MainTabBar';
+import SaleTabBar from '@molecules/TabBars/SaleTabBar';
 
 const App = () => {
   return (
@@ -23,21 +26,29 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to={PATH.HOME.DEFAULT} />} />
-          <Route path={PATH.HOME.DEFAULT} element={<HomeMain />} />
+          <Route path={PATH.HOME.DEFAULT} element={<HomeMain />}>
+            <Route path={PATH.HOME.DEFAULT} element={<MainTabBar isClickedId={1} />} />
+          </Route>
           <Route path={PATH.HOME.TOWN_SETTING} element={<TownSetting />} />
           <Route path={PATH.HOME.TOWN_SEARCH} element={<TownSearching />} />
           <Route path={PATH.HOME.CATEGORY} element={<HomeCategory />} />
 
-          <Route path={PATH.SALE.DEFAULT} element={<Sale />} />
+          <Route path={PATH.SALE.DEFAULT} element={<Sale />}>
+            <Route path={PATH.SALE.DEFAULT} element={<SaleTabBar townNames="역삼1동" />} />
+          </Route>
           <Route path={PATH.SALE.CATEGORY} element={<SaleCategory />} />
 
           <Route path={PATH.PRODUCT.DEFAULT} />
           <Route path={PATH.PRODUCT.CHAT} />
-          <Route path={PATH.PRODUCT.SALES} />
+          <Route path={PATH.PRODUCT.SALES} element={<SalesHistory />}>
+            <Route path={PATH.PRODUCT.SALES} element={<MainTabBar isClickedId={2} />} />
+          </Route>
           <Route path={PATH.PRODUCT.LIKE} />
 
           <Route path={PATH.AUTH.DEFAULT} element={<Auth />} />
-          <Route path={PATH.AUTH.LOGIN} element={<Login />} />
+          <Route path={PATH.AUTH.LOGIN} element={<Login />}>
+            <Route path={PATH.AUTH.LOGIN} element={<MainTabBar isClickedId={5} />} />
+          </Route>
           <Route path={PATH.AUTH.SETTING} />
         </Routes>
       </BrowserRouter>
