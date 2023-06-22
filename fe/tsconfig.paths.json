@@ -13,7 +13,8 @@
       "@molecules/*": ["src/components/molecules/*"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@type/*": ["src/type/*"]
     }
   }
 }
