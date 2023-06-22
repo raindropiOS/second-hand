@@ -4,12 +4,12 @@ import com.secondhand.domain.product.CountInfo;
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductService;
+import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.requset.FilterRequest;
 import com.secondhand.web.dto.requset.ProductLikeResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.response.BoardsResponse;
-import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.ProductDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -91,9 +90,9 @@ public class ProductController {
         productService.save(userId, productSaveRequest);
         return BasicResponse.builder()
                 .success(true)
-                .message("")
+                .message("상품 등록")
                 .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
+                .httpStatus(HttpStatus.CREATED)
                 .build();
     }
 
@@ -104,16 +103,20 @@ public class ProductController {
     )
     @LoginCheck
     @PutMapping("/{productId}")
-    public ResponseEntity<BasicResponse> update(@PathVariable long productId,
-                                                @RequestBody ProductUpdateRequest requestDTO) {
-        BasicResponse message = BasicResponse.builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .build();
+    public BasicResponse<ProductUpdateResponse> update(@LoginValue long userId,
+                                                       @PathVariable long productId,
+                                                       @RequestBody ProductUpdateRequest updateRequest) {
 
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
+        productService.update(productId, updateRequest);
+        ProductUpdateResponse productUpdateResponse = productService.updateResponse(productId, userId);
+
+        return BasicResponse.<ProductUpdateResponse>builder()
+                .success(true)
+                .message("상품 수정")
+                .apiStatus(20000)
+                .data(productUpdateResponse)
+                .httpStatus(HttpStatus.CREATED)
+                .build();
     }
 
     @Operation(
@@ -136,106 +139,6 @@ public class ProductController {
     }
 
     @Operation(
-            summary = "메인 페이지 상품 리스트",
-            tags = "board",
-            description = "사용자는 상품 리스트를 볼 수 있다."
-    )
-    @GetMapping("/{townId}/{pageNum}")
-    public ResponseEntity<BasicResponse> allProductList(@PathVariable long townId, @PathVariable long pageNum) {
-
-        //TODO create는 DTO 에서 해준다.
-        BoardsResponse boardsListResponse = BoardsResponse.builder()
-                .title("파랑 선풍기")
-                .town("역삼 1동")
-                .createdAt("2시간 전")
-                .price("24,500원")
-                .img("이미지")
-                .countInfo(new CountInfo(1L, 2L))
-                .build();
-
-        BoardsResponse boardsListResponse2 = BoardsResponse.builder()
-                .title("빨강 선풍기")
-                .town("강남 1동")
-                .createdAt("2시간 전")
-                .price("24,500원")
-                .img("이미지")
-                .countInfo(new CountInfo(1L, 2L))
-                .build();
-
-        BoardsResponse boardsListResponse3 = BoardsResponse.builder()
-                .title("노랑 선풍기")
-                .town("대치 1동")
-                .createdAt("2시간 전")
-                .price("24,500원")
-                .img("이미지")
-                .countInfo(new CountInfo(1L, 2L))
-                .build();
-
-        BoardsResponse boardsListResponse4 = BoardsResponse.builder()
-                .title("초록 선풍기")
-                .town("역삼 1동")
-                .createdAt("2시간 전")
-                .price("24,500원")
-                .img("이미지")
-                .countInfo(new CountInfo(1L, 2L))
-                .build();
-        List<BoardsResponse> boardsDTOResponseList = new ArrayList<>();
-        boardsDTOResponseList.add(boardsListResponse);
-        boardsDTOResponseList.add(boardsListResponse2);
-        boardsDTOResponseList.add(boardsListResponse3);
-        boardsDTOResponseList.add(boardsListResponse4);
-
-
-        if (boardsListResponse == null) {
-            BasicResponse message = BasicResponse.builder()
-                    .success(false)
-                    .message("실패")
-                    .apiStatus(20000)
-                    .httpStatus(HttpStatus.NOT_FOUND)
-                    .data(boardsDTOResponseList)
-                    .build();
-            return new ResponseEntity<>(message, null, HttpStatus.NOT_FOUND);
-        }
-        BasicResponse message = BasicResponse.builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .data(boardsDTOResponseList)
-                .build();
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
-    }
-
-    @Operation(
-            summary = "단일 상품 리스트",
-            tags = "board",
-            description = "사용자는 단일 상품을 볼 수 있다."
-    )
-    @GetMapping("/{productId}")
-    public ResponseEntity<BasicResponse> productDetail(@PathVariable long productId) {
-
-        //TODO create는 DTO 에서 해준다.
-        BoardsResponse boardsListResponse = BoardsResponse.builder()
-                .title("파랑 선풍기")
-                .town("역삼 1동")
-                .createdAt("2시간 전")
-                .price("24,500원")
-                .img("이미지")
-                .countInfo(new CountInfo(1L, 2L))
-                .build();
-
-        BasicResponse message = BasicResponse.builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .data(boardsListResponse)
-                .build();
-
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
-    }
-
-    @Operation(
             summary = "상품 삭제",
             tags = "products",
             description = "사용자는 단일 상품 삭제 가능합니다.."
@@ -250,7 +153,7 @@ public class ProductController {
                 .createdAt("2시간 전")
                 .price("24,500원")
                 .img("이미지")
-                .countInfo(new CountInfo(1L, 2L))
+                .countInfo(new CountInfo(1, 2, 3))
                 .build();
 
         BasicResponse message = BasicResponse.builder()
