@@ -33,7 +33,7 @@ public class MemberController {
     @PostMapping("/auth/login")
     public BasicResponse<MemberLoginResponse> login(@RequestBody RequestCode code) throws IOException, InterruptedException {
         log.debug("프론트로 부터 받은 코드 = {}", code);
-        MemberLoginResponse memberResponseDTO = memberService.login(code.getCode());
+        MemberLoginResponse memberResponseDTO = memberService.login(code.getAuthorizationCode());
 
         return BasicResponse.<MemberLoginResponse>builder()
                 .success(true)
