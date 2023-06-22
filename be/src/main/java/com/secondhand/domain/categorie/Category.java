@@ -17,4 +17,7 @@ public class Category {
 
     @Column(name = "img_url", length = 200, nullable = false)
     private String imgUrl;
+
+    @Column(length = 300, nullable = false)
+    private String placeholder;
 }
