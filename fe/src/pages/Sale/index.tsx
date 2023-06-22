@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
-import SaleTabBar from '@components/molecules/TabBars/SaleTabBar';
 import SaleHeader from '@components/Sale/SaleHeader';
 import SaleMain from '@components/Sale/SaleMain';
 
@@ -27,7 +26,7 @@ const Sale = () => {
     <$Template>
       <SaleHeader />
       <SaleMain productInfo={newProductInfo} currentCategory={currentCategory} onChange={setNewProductInfo} />
-      <SaleTabBar townNames="역삼 1동" />
+      <Outlet />
     </$Template>
   );
 };

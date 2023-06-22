@@ -1,10 +1,22 @@
 import MainTabBar from '.';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-export default {
+const meta = {
   title: 'Molecules/MainTabBar',
   component: MainTabBar,
-  args: {},
-} as ComponentMeta<typeof MainTabBar>;
+} satisfies Meta<typeof MainTabBar>;
 
-export const Default: ComponentStory<typeof MainTabBar> = () => <MainTabBar />;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const First: Story = {
+  args: {
+    isClickedId: 0,
+  },
+};
+
+export const Second: Story = {
+  args: {
+    isClickedId: 1,
+  },
+};
