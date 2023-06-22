@@ -22,9 +22,23 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(MissingTokenException.class)
+    public final ResponseEntity<Object> handleTokenExceptions(MissingTokenException e, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
+        return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public final ResponseEntity<Object> handleArgumentExceptions(IllegalArgumentException e, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
+        return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(ElementNotFoundException.class)
     public final ResponseEntity<Object> handleElementNotFoundExceptions(ElementNotFoundException e,
-                                                                      WebRequest request) {
+                                                                        WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
 
@@ -33,7 +47,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     @ExceptionHandler(TownNotFoundException.class)
     public final ResponseEntity<Object> handleTownNotFoundExceptions(TownNotFoundException e,
-                                                                      WebRequest request) {
+                                                                     WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
 
@@ -42,7 +56,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     @ExceptionHandler(MemberNotFoundException.class)
     public final ResponseEntity<Object> handleMemberNotFoundExceptions(MemberNotFoundException e,
-                                                                      WebRequest request) {
+                                                                       WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
 
@@ -51,7 +65,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     @ExceptionHandler(CategoryNotFoundException.class)
     public final ResponseEntity<Object> handleGCategoryFoundExceptions(CategoryNotFoundException e,
-                                                                      WebRequest request) {
+                                                                       WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
 
