@@ -20,6 +20,7 @@ const Auth = () => {
         data: { jwtToken },
       } = await axiosFetch.post(AUTH.LOGIN, { authorizationCode: authorizationCode });
 
+      console.log(jwtToken);
       if (!sessionStorage.getItem('accessToken')) {
         sessionStorage.setItem('accessToken', jwtToken);
       }
