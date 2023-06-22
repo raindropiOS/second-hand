@@ -143,27 +143,17 @@ public class ProductController {
             tags = "products",
             description = "사용자는 단일 상품 삭제 가능합니다.."
     )
+    @LoginCheck
     @DeleteMapping("/{productId}")
-    public ResponseEntity<BasicResponse> deleteProduct(@PathVariable long productId) {
+    public BasicResponse deleteProduct(@LoginValue long userId, @PathVariable long productId) {
+        productService.delete(userId,productId);
 
-        //TODO create는 DTO 에서 해준다.
-        BoardsResponse boardsListResponse = BoardsResponse.builder()
-                .title("파랑 선풍기")
-                .town("역삼 1동")
-                .createdAt("2시간 전")
-                .price("24,500원")
-                .img("이미지")
-                .countInfo(new CountInfo(1, 2, 3))
-                .build();
-
-        BasicResponse message = BasicResponse.builder()
+        return BasicResponse.builder()
                 .success(true)
-                .message("")
+                .message("상품 삭제")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
-                .data(boardsListResponse)
                 .build();
 
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 }

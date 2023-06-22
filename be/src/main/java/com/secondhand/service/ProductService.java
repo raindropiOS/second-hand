@@ -70,6 +70,14 @@ public class ProductService {
                 .build();
     }
 
+
+    public void delete(long userId, long productId) {
+        Product product = findById(productId);
+        if (product.getMember().getId() == userId) {
+            productRepository.delete(product);
+        }
+    }
+
     private static boolean checkIsMine(long userId, Product product) {
         boolean isMine = false;
         if (product.getMember().getId() == userId) {
