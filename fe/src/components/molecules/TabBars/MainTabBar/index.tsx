@@ -47,20 +47,18 @@ const MAIN_TAB_MENUS: MenuType[] = [
   },
 ];
 
-const MainTabBar = () => {
-  const [isClicked, setIsClicked] = useState<boolean[]>([true, false, false, false, false]);
+interface MainTabBarProps {
+  isClickedId: number;
+}
+
+const MainTabBar = ({ isClickedId }: MainTabBarProps) => {
   const navigate = useNavigate();
-  const tabClickHandler = (id: number, path: string) => {
-    // TODO(hoonding): 탭 클릭 시 router적용 + fetch 요청 보내기.
-    setIsClicked(prev => prev.map((_, index) => index === id - 1));
-    navigate(path);
-  };
 
   return (
     <$MainTabBar>
       {MAIN_TAB_MENUS.map(({ id, name, text, path }) => {
         return (
-          <$Tab key={id} onClick={() => tabClickHandler(id, path)} clicked={isClicked[id - 1]}>
+          <$Tab key={id} onClick={() => navigate(path)} clicked={id === isClickedId}>
             <Icon name={name} />
             {text}
           </$Tab>
