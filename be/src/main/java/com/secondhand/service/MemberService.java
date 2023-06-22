@@ -41,6 +41,7 @@ public class MemberService {
             Member updateMember = memberRepository.save(member.update(memberInfo, token.getAccessToken()));
             log.debug("기존에 있던 member 토큰 업데이트 = {}", updateMember.getId());
             String jwtToken = jwtService.createToken(updateMember);
+            log.debug("jwtToken = {}", jwtToken);
             return MemberLoginResponse.of(updateMember, jwtToken);
         }
 
