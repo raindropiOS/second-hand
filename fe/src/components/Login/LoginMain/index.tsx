@@ -11,7 +11,6 @@ interface LoginMainProps {
 const LoginMain = ({ onClick, region }: LoginMainProps) => {
   return (
     <$LoginMain>
-      {region}
       <$ProfileImage>
         <Icon name="camera" width={40} height={35} />
       </$ProfileImage>
