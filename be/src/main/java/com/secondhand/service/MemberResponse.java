@@ -2,8 +2,10 @@ package com.secondhand.service;
 
 import com.secondhand.domain.member.Member;
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
+@Getter
 public class MemberResponse {
 
     private String name;

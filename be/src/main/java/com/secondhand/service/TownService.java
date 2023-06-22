@@ -1,7 +1,6 @@
 package com.secondhand.service;
 
 import com.secondhand.domain.member.Member;
-import com.secondhand.domain.town.Town;
 import com.secondhand.domain.town.TownRepository;
 import com.secondhand.web.dto.response.TownResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +26,11 @@ public class TownService {
 
     }
 
-    public TownResponse findTownDetail(long userId) {
+    public List<TownResponse> findTownDetail(long userId) {
         Member member = memberService.findMemberById(userId);
-        Town mainTown = member.getMainTown();
-        return new TownResponse(mainTown);
+        TownResponse mainTown = new TownResponse(member.getMainTown());
+        //TODO: subTown은 NULL이 올수있음
+        TownResponse subTown = new TownResponse(member.getSubTown());
+        return List.of(mainTown, subTown);
     }
 }

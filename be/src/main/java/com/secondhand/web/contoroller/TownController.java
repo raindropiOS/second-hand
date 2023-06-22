@@ -49,11 +49,11 @@ public class TownController {
     )
     @LoginCheck
     @GetMapping("/member")
-    public BasicResponse<TownResponse> readRegisterByMember(@LoginValue long userId) {
-        TownResponse townDetail = townService.findTownDetail(userId);
+    public BasicResponse<List<TownResponse>> readRegisterByMember(@LoginValue long userId) {
+        List<TownResponse> townDetail = townService.findTownDetail(userId);
         log.debug("사용자가 등록한 동네를 가져올수 있다  = {}", townDetail);
 
-        return BasicResponse.<TownResponse>builder()
+        return BasicResponse.<List<TownResponse>>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)

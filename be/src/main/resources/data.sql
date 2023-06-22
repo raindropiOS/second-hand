@@ -1,4 +1,5 @@
-use second_hand;
+use
+second_hand;
 create table category
 (
     category_id bigint auto_increment primary key,
@@ -18,12 +19,10 @@ create table member
 (
     member_id    bigint auto_increment
         primary key,
-    login_name     varchar(45)  not null,
-    member_name     varchar(45)  not null,
-    member_token  varchar(500) not null,
+    login_name   varchar(45)  not null,
     img_url      varchar(200) null,
-    main_town_id bigint       not null,
-    sub_town_id  bigint       null,
+    main_town_id bigint null,
+    sub_town_id  bigint null,
     constraint fk_member_town1
         foreign key (main_town_id) references town (town_id),
     constraint fk_member_town2
@@ -36,11 +35,11 @@ create table product
         primary key,
     title         varchar(45)  not null,
     content       text         not null,
-    price         int          null,
+    price         int null,
     status        tinyint      not null,
     created_at    datetime     not null,
-    count_view    smallint     null,
-    count_like    smallint     null,
+    count_view    smallint null,
+    count_like    smallint null,
     thumbnail_url varchar(200) not null,
     town_id       bigint       not null,
     category_id   bigint       not null,
@@ -58,11 +57,11 @@ create table chat_room
     chat_room_id bigint auto_increment
         primary key,
     title        varchar(45) null,
-    created_at   datetime    not null,
-    contents     text        null,
-    product_id   bigint      not null,
-    seller_id    bigint      not null,
-    customer_id  bigint      not null,
+    created_at   datetime not null,
+    contents     text null,
+    product_id   bigint   not null,
+    seller_id    bigint   not null,
+    customer_id  bigint   not null,
     constraint fk_chat_room_member1
         foreign key (seller_id) references member (member_id),
     constraint fk_chat_room_member2
@@ -86,7 +85,7 @@ create table product_img
 (
     product_img_id bigint auto_increment primary key,
     img_url        varchar(200) not null,
-    product_id     bigint       null,
+    product_id     bigint null,
     constraint fk_product_img_product
         foreign key (product_id) references product (product_id)
 );
