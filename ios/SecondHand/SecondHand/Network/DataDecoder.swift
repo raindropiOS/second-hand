@@ -7,12 +7,16 @@
 
 import Foundation
 
-class DataDecoder {
-    func decodeJSON<T: Decodable>(_ data: Data) throws -> T {
-        try JSONDecoder().decode(T.self, from: data)
+class DataDecoder: DataDecodable {
+    func decodeJSON<T: Decodable>(_ data: Data, DTO: T.Type) -> Decodable? {
+        do {
+            return try JSONDecoder().decode(DTO.self, from: data)
+        } catch {
+            return nil
+        }
     }
 }
 
 protocol DataDecodable {
-    func decodeJSON<T: Decodable>(_ data: Data) throws -> T
+    func decodeJSON<T: Decodable>(_ data: Data, DTO: T.Type) -> Decodable?
 }
