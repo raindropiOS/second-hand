@@ -23,8 +23,6 @@ public class Member {
 
     @Column
     private String loginName;
-    @Column
-    private String memberName;
     private String memberToken;
     @Column
     private String imgUrl;
@@ -39,7 +37,6 @@ public class Member {
 
     public static Member create(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
         return Member.builder()
-                .memberName(memberInfo.getName())
                 .loginName(memberInfo.getLogin())
                 .memberToken(jwtToken)
                 .imgUrl(memberInfo.getAvatarUrl())
@@ -47,7 +44,6 @@ public class Member {
     }
 
     public Member update(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
-        this.memberName = memberInfo.getName();
         this.loginName = memberInfo.getLogin();
         this.imgUrl = memberInfo.getAvatarUrl();
         this.memberToken = jwtToken;

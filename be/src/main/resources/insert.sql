@@ -1,4 +1,4 @@
-INSERT INTO category (name, img_url)
+INSERT INTO category ( name, img_url,placeholder)
 VALUES ('디지털기기', '이미지url', '모델명, 구성품, 구매 시기, 사용감 (흠집, 파손 여부, 수리 여부), 전자파 인증번호 등\n\n 신뢰할 수 있는 거래를 위해 자세한 정보를 제공해주세요. 훈딩, 제이든, 에디, 하림, 감자, 코어와 함께 해요. '),
        ('생활가전', '이미지url', '모델명, 구성품, 구매 시기, 사용감 (흠집, 파손 여부, 수리 여부), 전자파 인증번호 등\n\n 신뢰할 수 있는 거래를 위해 자세한 정보를 제공해주세요. 훈딩, 제이든, 에디, 하림, 감자, 코어와 함께 해요. '),
        ('가구/인테리어', '이미지url', '모델명, 구매 시기, 크기 (가로/세로/높이), 사용감 (흠집, 파손 여부) 등\n\n 신뢰할 수 있는 거래를 위해 자세한 정보를 제공해주세요. 훈딩, 제이든, 에디, 하림, 감자, 코어와 함께 해요. '),
@@ -53,9 +53,9 @@ VALUES (1, '서울', '강남구', '역삼1동'),
        (31, '서울', '강남구', '수서동');
 
 
-insert into member
-values (1599, 'gamja', null,'123', 1, 2);
+insert into member(login_name, img_url, main_town_id, sub_town_id)
+values ( 'gamja', 'img', 1, 2);
 
 
-INSERT INTO product (title, content, price, status, created_at, count_view, thumbnail_url, town_id, category_id, member_id)
-VALUES ('Example Product', 'This is an example product description.', 100, 1,  NOW(), NULL, 'https://example.com/thumbnail.jpg', 1, 1, 1);
+INSERT INTO product(title, content, price, thumbnail_url, town_id, category_id, member_id)
+VALUES ('Example Product', 'This is an example product description.', 100, 'https://example.com/thumbnail.jpg', 1, 1, 2);

@@ -21,6 +21,7 @@ create table member
     member_id    bigint auto_increment
         primary key,
     login_name   varchar(45)  not null,
+    member_token varchar(45)   null,
     img_url      varchar(200) null,
     main_town_id bigint null,
     sub_town_id  bigint null,
@@ -37,8 +38,8 @@ create table product
     title         varchar(45)  not null,
     content       text         not null,
     price         int null,
-    status        tinyint      default 0,
-    created_at    datetime     not null,
+    status        tinyint      default 0 not null,
+    created_at    datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     count_view    smallint     default 0,
     count_like    smallint     default 0,
     thumbnail_url varchar(200) not null,

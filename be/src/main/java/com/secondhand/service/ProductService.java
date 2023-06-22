@@ -9,6 +9,7 @@ import com.secondhand.domain.town.Town;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.Size;
 
@@ -21,6 +22,7 @@ public class ProductService {
     private final TownService townService;
     private final MemberService memberService;
 
+    @Transactional
     public void save(long userId, ProductSaveRequest requestInfo) {
         Category category = categoryService.findById(requestInfo.getCategoryId());
         Town town = townService.findById(requestInfo.getTownId());
