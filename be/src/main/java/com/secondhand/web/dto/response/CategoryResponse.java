@@ -16,10 +16,14 @@ public class CategoryResponse {
     @JsonProperty("imgUrl")
     private final String imgUrl;
 
+    @JsonProperty("placeholder")
+    private final String placeholder;
+
     @Builder
-    public CategoryResponse(Long categoryId, String name, String imgUrl) {
+    public CategoryResponse(Long categoryId, String name, String imgUrl, String placeholder) {
         this.categoryId = categoryId;
         this.name = name;
         this.imgUrl = imgUrl;
+        this.placeholder = placeholder;
     }
 }

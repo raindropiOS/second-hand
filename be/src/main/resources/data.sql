@@ -4,7 +4,8 @@ create table category
 (
     category_id bigint auto_increment primary key,
     name        varchar(45)  not null,
-    img_url     varchar(200) not null
+    img_url     varchar(200) not null,
+    placeholder varchar(300) not null
 );
 
 create table town

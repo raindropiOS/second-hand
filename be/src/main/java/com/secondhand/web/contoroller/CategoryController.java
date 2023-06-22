@@ -42,6 +42,7 @@ public class CategoryController {
                     .categoryId(category.getId())
                     .name(category.getName())
                     .imgUrl(category.getImgUrl())
+                    .placeholder(category.getPlaceholder())
                     .build();
             categoryResponseList.add(categoryResponse);
         }
