@@ -3,12 +3,17 @@ package com.secondhand.domain.product;
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
-import lombok.Getter;
+import com.secondhand.web.dto.requset.ProductSaveRequest;
+import lombok.*;
 
 import javax.persistence.*;
 
+
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -21,7 +26,7 @@ public class Product {
     private Status status;
     private Integer countView;
     private Integer countLike;
-    private Integer thumbnailUrl;
+    private String thumbnailUrl;
 
     @ManyToOne
     @JoinColumn(name = "town_id")
@@ -34,4 +39,16 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public static Product create(ProductSaveRequest requestInfo, Member member, Category category, Town town) {
+        return Product.builder()
+                .title(requestInfo.getTitle())
+                .content(requestInfo.getContent())
+                .price(requestInfo.getPrice())
+                .thumbnailUrl(requestInfo.getProductImages())
+                .towns(town)
+                .category(category)
+                .member(member)
+                .build();
+    }
 }
