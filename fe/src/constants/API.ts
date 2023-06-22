@@ -7,15 +7,22 @@ const API_TYPE = Object.freeze({
   AUTH: 'auth',
 });
 
-// const createQueryString = params => {
-//   const queryParams = [];
+const createQueryString = (...params: any[]) => {
+  // pageNum = null, categoryId = null 이면 '' 반환
+  // pageNum =1, categoryId = null 이면 'pageNum=1' 반환
+  // pageNum = 1, categoryId = 1 이면 'pageNum=1&categoryId=1' 반환
+  const queryParams: string[] = [];
 
-//   for (const key in params) {
-//     if (params.hasOwnProperty(key) && params[key]) {
-//       queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
-//     }
-//   }
-// };
+  params.forEach(param => {
+    if (param !== null && param !== undefined) {
+      const [key, value] = param;
+
+      queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    }
+  });
+
+  return queryParams.join('&');
+};
 
 const CATEGORIES = Object.freeze({
   GET_ALL_CATEGORIES: `/${API_TYPE.CATEGORIES}`,
@@ -23,6 +30,7 @@ const CATEGORIES = Object.freeze({
 
 const PRODUCTS = Object.freeze({
   GET_PRODUCTS: (pageNum = null, townId = null, categoryId = null) => `/${API_TYPE.PRODUCTS}`,
+  GET_LIKE_PRODUCTS: `/${API_TYPE.PRODUCTS}/like`,
 });
 
 const TOWNS = Object.freeze({});
