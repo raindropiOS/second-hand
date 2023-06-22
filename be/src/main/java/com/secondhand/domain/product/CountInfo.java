@@ -3,9 +3,11 @@ package com.secondhand.domain.product;
 import lombok.*;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CountInfo {
-    private Long chatCount;
-    private Long likeCount;
+    private Integer chatCount;
+    private Integer likeCount;
+    private Integer viewCount;
 }
