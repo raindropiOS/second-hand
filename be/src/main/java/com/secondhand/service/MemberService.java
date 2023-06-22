@@ -48,6 +48,7 @@ public class MemberService {
         //TODO: db컬럼에 토큰을 저장해야하나?
         Member member = memberRepository.save(Member.create(memberInfo, token.getAccessToken()));
         String jwtToken = jwtService.createToken(member);
+        
         log.debug("jwt token = {}", jwtToken);
         log.debug("새로운 맴버 생성 = {}", member);
         return MemberLoginResponse.of(member, jwtToken);
@@ -64,7 +65,6 @@ public class MemberService {
         member.removeToken();
         memberRepository.save(member);
     }
-
 
 
     public MemberResponse getUserInfo(long userId) {
