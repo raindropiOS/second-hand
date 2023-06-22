@@ -6,6 +6,7 @@ import useLikeProductsData from '@apis/api/like';
 import LikeHeader from '@components/Like/LikeHeader';
 import ListMain from '@components/Like/LikeMain';
 import { $Template } from '@styles/PageTemplate.style';
+import Skeleton from '@pages/Loading/Skeleton';
 
 const Like = () => {
   const [fetchOptions, setFetchOptions] = useState({
@@ -14,7 +15,7 @@ const Like = () => {
   });
   const { data, isLoading, isError, error } = useLikeProductsData(fetchOptions.pageNum, fetchOptions.categoryId);
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <Skeleton />;
   if (isError) return <div>에러가 발생했습니다.</div>;
 
   const handleChangeCategory = (categoryId: number) => {
