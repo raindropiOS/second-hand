@@ -7,7 +7,6 @@ const PageTemplateStyle = {
     left: 0;
     width: 100%;
     max-width: 768px;
-    opacity: 0.9;
     backdrop-filter: blur(30px);
     z-index: 9999;
   `,

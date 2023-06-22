@@ -17,12 +17,12 @@ const Auth = () => {
       // TODO(jayden): get이 아닌 post로 바꾸기
       if (!authorizationCode) return;
       const { data } = await axiosFetch.get(AUTH.LOGIN(authorizationCode));
-      const accessToken = data.jwtToken;
+      const jwtToken = data.jwtToken;
       const name = data.name;
 
       if (!sessionStorage.getItem('accessToken')) {
+        sessionStorage.setItem('accessToken', jwtToken);
         sessionStorage.setItem('name', name);
-        sessionStorage.setItem('accessToken', accessToken);
       }
       navigate(PATH.HOME.DEFAULT);
     };

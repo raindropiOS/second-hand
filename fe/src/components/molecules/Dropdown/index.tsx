@@ -9,6 +9,8 @@ import {
   $SettingTownButton,
 } from './Dropdown.style';
 import useOutsideClick from '@hooks/useOutsideClick';
+import PATH from '@constants/routerPath';
+import { useNavigate } from 'react-router-dom';
 
 type Town = {
   townId: number;
@@ -26,13 +28,20 @@ const MY_TOWN_SETTING_WORD = '내 동네 설정하기';
 const Dropdown = ({ towns }: DropdownProps) => {
   const [selectedTown, setSelectedTown] = React.useState(towns[0]);
   const [isDropdownOpen, setIsDropdownOpen, ref] = useOutsideClick(false);
+  const navigate = useNavigate();
 
   const handleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
   const handleSelectTown = (townId: number) => {
     // FIXME(jayden): type assertion 제거
     setSelectedTown(towns.find(town => town.townId === townId) as Town);
+    setIsDropdownOpen(false);
+  };
+
+  const handleSettingButtonClick = () => {
+    navigate(PATH.HOME.TOWN_SETTING, { state: { towns } });
     setIsDropdownOpen(false);
   };
 
@@ -51,12 +60,17 @@ const Dropdown = ({ towns }: DropdownProps) => {
                 <$MyTownButton key={townId} onClick={() => handleSelectTown(townId)}>
                   {name.split(' ')[2]}
                 </$MyTownButton>
-                {index === arr.length - 1 && (
-                  <$SettingTownButton onClick={handleDropdown}>{MY_TOWN_SETTING_WORD}</$SettingTownButton>
-                )}
               </>
             );
           })}
+          <$SettingTownButton
+            onClick={() => {
+              handleDropdown();
+              handleSettingButtonClick();
+            }}
+          >
+            {MY_TOWN_SETTING_WORD}
+          </$SettingTownButton>
         </$DropdownLayout>
       )}
     </$DropdownContainer>

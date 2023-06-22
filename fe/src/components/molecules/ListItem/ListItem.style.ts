@@ -12,6 +12,9 @@ const $ListItemLayout = styled.section`
   padding: 15px 0;
   border-bottom: ${({ theme }) => `1px solid ${theme.COLORS.NEUTRAL.BORDER.DEFAULT}`};
 
+  &:hover {
+    background-color: rgba(255, 149, 0, 0.1);
+  }
   cursor: pointer;
 `;
 

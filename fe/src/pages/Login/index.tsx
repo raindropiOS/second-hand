@@ -16,10 +16,9 @@ const Login = () => {
 
   const handleLoginBtnClick = () => {
     const scope = 'user';
-    const redirectURI = process.env.REACT_APP_REDIRECT_URI as string;
     const clientId = process.env.REACT_APP_CLIENT_ID as string;
 
-    window.location.href = AUTH.GITHUB_LOGIN_URL(redirectURI, clientId, scope);
+    window.location.href = AUTH.GITHUB_LOGIN_URL(clientId, scope);
   };
 
   return (

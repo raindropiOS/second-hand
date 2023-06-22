@@ -8,11 +8,19 @@ type ButtonProps = {
   size?: ButtonSize;
   status?: ButtonStatus;
   justifyContent?: ButtonJustifyContent;
+  className?: string;
 };
 
-const Button = ({ children, onClick, size = 'small', status = 'default', justifyContent = 'center' }: ButtonProps) => {
+const Button = ({
+  className = '',
+  children,
+  onClick,
+  size = 'small',
+  status = 'default',
+  justifyContent = 'center',
+}: ButtonProps) => {
   return (
-    <$Button onClick={onClick} size={size} status={status} justifyContent={justifyContent}>
+    <$Button className={className} onClick={onClick} size={size} status={status} justifyContent={justifyContent}>
       {children}
     </$Button>
   );

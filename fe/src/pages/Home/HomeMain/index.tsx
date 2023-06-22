@@ -1,20 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import PATH from '@constants/routerPath';
-import { CATEGORIES } from '@constants/categories';
+import useIntersectionObserver from '@hooks/useIntersectionObserver';
 
-import { $Template } from '@styles/PageTemplate.style';
-import { $ListItemContainer, $SaleButtonContainer, $CurrentCategory } from '@pages/Home/HomeMain/HomeMain.style';
-import Navbar from '@components/molecules/Navbar';
-import Dropdown from '@molecules/Dropdown';
-import Icon from '@atoms/Icon';
-import ListItem from '@molecules/ListItem';
 import MainTabBar from '@molecules/TabBars/MainTabBar';
-import ConvertPriceFormat from '@utils/convertPriceFormat';
+import { $Template } from '@styles/PageTemplate.style';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
-import CircleButton from '@atoms/Buttons/CircleButton';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Chip from '@atoms/Chip';
+
+import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
+import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
+import { CATEGORIES } from '@constants/categories';
 
 interface Product {
   productId: number;
@@ -32,19 +27,11 @@ interface Town {
   name: string;
 }
 
-const useObserver = (callback: IntersectionObserverCallback, options: IntersectionObserverInit) => {
-  const target = useRef<HTMLDivElement>(null);
-  const observer = new IntersectionObserver(callback, options);
-
-  useEffect(() => {
-    if (target.current) observer.observe(target.current);
-  }, [target.current, observer]);
-
-  return target;
-};
-
 const HomeMain = () => {
   const { state } = useLocation();
+
+  console.log(state);
+
   const currentCategoryId = state ? state.currentCategoryId : 0;
 
   const [filterCategoryId, setFilterCategoryId] = useState(currentCategoryId);
@@ -52,8 +39,8 @@ const HomeMain = () => {
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
-  const navigate = useNavigate();
-  const callback = (entries: IntersectionObserverEntry[]) => {
+
+  const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
     if (!entry.isIntersecting || isPageUpdated) return;
@@ -61,13 +48,7 @@ const HomeMain = () => {
     setIsPageUpdated(true);
   };
 
-  const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 1.0,
-  };
-
-  const target = useObserver(callback, options);
+  const observerTarget = useIntersectionObserver(intersectionObserverCallback);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -106,11 +87,7 @@ const HomeMain = () => {
     getTowns();
   }, []);
 
-  const findCategoryName = (categoryId: number) => {
-    return CATEGORIES.filter(({ id }) => id === categoryId)[0].category;
-  };
-
-  const handleCategory = () => {
+  const handleCancelFilter = () => {
     setFilterCategoryId(0);
   };
 
@@ -118,42 +95,13 @@ const HomeMain = () => {
     <>
       {!!products.length && !!towns.length && (
         <$Template>
-          <Navbar>
-            <Dropdown towns={towns} />
-            <button
-              onClick={() => {
-                navigate(PATH.HOME.CATEGORY, { state: { currentCategoryId: filterCategoryId } });
-              }}
-            >
-              <Icon name="category" />
-            </button>
-          </Navbar>
-          <$ListItemContainer>
-            {filterCategoryId !== 0 && (
-              <$CurrentCategory>
-                <Chip content={findCategoryName(filterCategoryId)} active={true} onClick={handleCategory} />
-              </$CurrentCategory>
-            )}
-            {products.map(product => (
-              <ListItem
-                {...product}
-                key={product.productId}
-                price={ConvertPriceFormat(product.price)}
-                isCurrentUserItem={true}
-                onItemClick={() => console.log('onItemClick')}
-              />
-            ))}
-            <div ref={target} />
-          </$ListItemContainer>
-          <$SaleButtonContainer>
-            <CircleButton
-              iconName="plus"
-              size="large"
-              onClick={() => {
-                navigate('/sale');
-              }}
-            />
-          </$SaleButtonContainer>
+          <HomeMainHeader towns={towns} currentCategoryId={filterCategoryId} />
+          <HomeMainMain
+            products={products}
+            observerTarget={observerTarget}
+            currentCategoryId={filterCategoryId}
+            handleCancelFilter={handleCancelFilter}
+          />
           <MainTabBar />
         </$Template>
       )}

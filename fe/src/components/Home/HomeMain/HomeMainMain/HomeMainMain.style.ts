@@ -25,4 +25,17 @@ const $CurrentCategory = styled.div`
   color: ${({ theme }) => theme.COLORS.ACCENT.BACKGROUND.PRIMARY};
 `;
 
-export { $ListItemContainer, $SaleButtonContainer, $CurrentCategory };
+const $CancelButton = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: -3px;
+  top: -3px;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+`;
+
+export { $ListItemContainer, $SaleButtonContainer, $CurrentCategory, $CancelButton };
