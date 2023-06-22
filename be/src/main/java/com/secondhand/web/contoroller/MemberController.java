@@ -31,9 +31,9 @@ public class MemberController {
             description = "사용자 깃허브를 통한 로그인"
     )
     @PostMapping("/auth/login")
-    public BasicResponse<MemberLoginResponse> login(@RequestParam String code) throws IOException, InterruptedException {
+    public BasicResponse<MemberLoginResponse> login(@RequestBody RequestCode code) throws IOException, InterruptedException {
         log.debug("프론트로 부터 받은 코드 = {}", code);
-        MemberLoginResponse memberResponseDTO = memberService.login(code);
+        MemberLoginResponse memberResponseDTO = memberService.login(code.getAuthorizationCode());
 
         return BasicResponse.<MemberLoginResponse>builder()
                 .success(true)
