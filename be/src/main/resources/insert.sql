@@ -55,3 +55,7 @@ VALUES (1, '서울', '강남구', '역삼1동'),
 
 insert into member
 values (1599, 'gamja', null,'123', 1, 2);
+
+
+INSERT INTO product (title, content, price, status, created_at, count_view, thumbnail_url, town_id, category_id, member_id)
+VALUES ('Example Product', 'This is an example product description.', 100, 1,  NOW(), NULL, 'https://example.com/thumbnail.jpg', 1, 1, 1);
