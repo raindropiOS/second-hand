@@ -12,7 +12,7 @@ class ProductRepository: Repository {
     typealias SomeId = Int
     
     /// Repository Layer와 Network Layer 분리를 위한 delegate 및 extension으로 network 메소드 선언하였습니다.
-    private let networkManagerDelegate: NetworkManageable? = NetworkManager()
+    private let networkManagerDelegate: NetworkManageable = NetworkManager()
     
     private var products: [Product] = []
     
@@ -48,5 +48,13 @@ class ProductRepository: Repository {
     
     private func findIndexOf(_ id: Int) -> Int? {
         self.products.firstIndex(where: { $0.productId == id })
+    }
+}
+
+// MARK: Network Layer
+extension ProductRepository {
+    func storeProducts(query: [String: String]) async {
+        let products = await self.networkManagerDelegate.fetchProducts(query: query)
+        self.products = products
     }
 }

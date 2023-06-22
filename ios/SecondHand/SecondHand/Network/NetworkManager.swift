@@ -13,7 +13,7 @@ class NetworkManager: NetworkManageable {
     private let urlRequestFactory: URLRequestProducible = URLRequestFactory()
     private let dataDecoder: DataDecodable = DataDecoder()
     
-    func fetchProductsData(query: [String: String]) async -> [Product] {
+    func fetchProducts(query: [String: String]) async -> [Product] {
         do {
             let urlRequest = try urlRequestFactory.makeUrlRequest(baseUrlString, query: query)
             let data = try await fetchData(with: urlRequest)
@@ -71,5 +71,5 @@ class NetworkManager: NetworkManageable {
 }
 
 protocol NetworkManageable {
-    func fetchProductsData(query: [String: String]) async throws -> [Product]
+    func fetchProducts(query: [String: String]) async -> [Product]
 }
