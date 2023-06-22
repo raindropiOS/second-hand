@@ -58,4 +58,4 @@ values ( 'gamja', 'img', 1, 2);
 
 
 INSERT INTO product(title, content, price, thumbnail_url, town_id, category_id, member_id)
-VALUES ('Example Product', 'This is an example product description.', 100, 'https://example.com/thumbnail.jpg', 1, 1, 2);
+VALUES ('Example Product', 'This is an example product description.', 100, 'https://example.com/thumbnail.jpg', 1, 1, 1);
