@@ -13,7 +13,7 @@ public class MemberResponse {
 
     public static MemberResponse of(final Member member) {
         return MemberResponse.builder()
-                .name(member.getMemberName())
+                .name(member.getLoginName())
                 .imgUrl(member.getImgUrl())
                 .build();
     }

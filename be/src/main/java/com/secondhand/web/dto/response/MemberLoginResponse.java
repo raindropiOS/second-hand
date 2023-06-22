@@ -16,7 +16,7 @@ public class MemberLoginResponse {
 
     public static MemberLoginResponse of(final Member member, final String jwtToken) {
         return MemberLoginResponse.builder()
-                .name(member.getMemberName())
+                .name(member.getLoginName())
                 .imgUrl(member.getImgUrl())
                 .jwtToken(jwtToken)
                 .build();
