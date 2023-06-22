@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NetworkManager {
+class NetworkManager: NetworkManageable {
     static let shared = NetworkManager()
     
     func requestGithubOAuth() {
@@ -38,4 +38,8 @@ class NetworkManager {
         }.resume()
     }
     
+}
+
+protocol NetworkManageable {
+    func fetchProductsData(query: [String: String]) async throws -> [Product]
 }

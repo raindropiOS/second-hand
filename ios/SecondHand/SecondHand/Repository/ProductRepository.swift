@@ -10,6 +10,10 @@ import Foundation
 class ProductRepository: Repository {
     typealias SomeDatum = Product
     typealias SomeId = Int
+    
+    /// Repository Layer와 Network Layer 분리를 위한 delegate 및 extension으로 network 메소드 선언하였습니다.
+    private let networkManagerDelegate: NetworkManageable? = NetworkManager()
+    
     private var products: [Product] = []
     
     func readAll() -> [Product] {
