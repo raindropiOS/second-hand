@@ -64,14 +64,15 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public Member findMemberById(long userId) {
-        return memberRepository.findById(userId).orElseThrow(MemberNotFoundException::new);
-    }
+
 
     public MemberResponse getUserInfo(long userId) {
         return MemberResponse.of(findMemberById(userId));
     }
 
+    public Member findMemberById(long userId) {
+        return memberRepository.findById(userId).orElseThrow(MemberNotFoundException::new);
+    }
 
     public Member findMemberByMemberName(String memberName) {
         return memberRepository.findByMemberName(memberName).orElseThrow(MemberNotFoundException::new);

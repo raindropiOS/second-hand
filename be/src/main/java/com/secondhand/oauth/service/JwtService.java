@@ -24,7 +24,6 @@ public class JwtService {
     }
 
     public String createToken(Member member) {
-        log.debug("memberID ={}", member.getId());
         return Jwts.builder()
                 .setSubject(SUBJECT_NAME)
                 .claim(MEMBER_ID, member.getId()) //페이로드,헤더는 자동설정
@@ -51,12 +50,11 @@ public class JwtService {
     }
 
     public Long getSubject(String token) {
-        log.debug("jwt token = {}", token);
         Claims claims = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-
-        return claims.get("id", Long.class);
+        log.debug("claims = {}", claims);
+        return claims.get(MEMBER_ID, Long.class);
     }
 }

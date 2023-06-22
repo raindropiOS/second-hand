@@ -2,12 +2,12 @@ package com.secondhand.web.contoroller;
 
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
+import com.secondhand.service.MemberResponse;
 import com.secondhand.service.MemberService;
 import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -71,15 +71,16 @@ public class MemberController {
     )
     @LoginCheck
     @GetMapping("/members")
-    public BasicResponse<MemberLoginResponse> info(@LoginValue long userId) {
+    public BasicResponse<MemberResponse> info(@LoginValue long userId) {
         log.debug("사용자 id = {} ", userId);
-        memberService.getUserInfo(userId);
+        MemberResponse userInfo = memberService.getUserInfo(userId);
 
-        return BasicResponse.<MemberLoginResponse>builder()
+        return BasicResponse.<MemberResponse>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
+                .data(userInfo)
                 .build();
     }
 }
