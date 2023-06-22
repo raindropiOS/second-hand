@@ -1,6 +1,5 @@
 package com.secondhand.web.contoroller;
 
-import com.secondhand.domain.product.CountInfo;
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductService;
@@ -9,7 +8,6 @@ import com.secondhand.web.dto.requset.FilterRequest;
 import com.secondhand.web.dto.requset.ProductLikeResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
-import com.secondhand.web.dto.response.BoardsResponse;
 import com.secondhand.web.dto.response.ProductDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +38,6 @@ public class ProductController {
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .build();
-
     }
 
     @Operation(
@@ -103,14 +100,13 @@ public class ProductController {
     )
     @LoginCheck
     @PutMapping("/{productId}")
-    public BasicResponse<ProductUpdateResponse> update(@LoginValue long userId,
-                                                       @PathVariable long productId,
-                                                       @RequestBody ProductUpdateRequest updateRequest) {
-
+    public BasicResponse<ProductResponse> update(@LoginValue long userId,
+                                                 @PathVariable long productId,
+                                                 @RequestBody ProductUpdateRequest updateRequest) {
         productService.update(productId, updateRequest);
-        ProductUpdateResponse productUpdateResponse = productService.updateResponse(productId, userId);
+        ProductResponse productUpdateResponse = productService.updateResponse(productId, userId);
 
-        return BasicResponse.<ProductUpdateResponse>builder()
+        return BasicResponse.<ProductResponse>builder()
                 .success(true)
                 .message("상품 수정")
                 .apiStatus(20000)
@@ -138,6 +134,27 @@ public class ProductController {
         return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
+
+    @Operation(
+            summary = "상품 디테일 페이지",
+            tags = "products",
+            description = "사용자는 단일 상품을 조회할 수 있다."
+    )
+    @LoginCheck
+    @GetMapping("/{productId}")
+    public BasicResponse<ProductResponse> readDetail(@LoginValue long userId, @PathVariable long productId) {
+
+        ProductResponse detailPage = productService.getDetailPage(userId, productId);
+
+        return BasicResponse.<ProductResponse>builder()
+                .success(true)
+                .message("상품 디테일 페이지")
+                .apiStatus(20000)
+                .data(detailPage)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
     @Operation(
             summary = "상품 삭제",
             tags = "products",
@@ -146,7 +163,7 @@ public class ProductController {
     @LoginCheck
     @DeleteMapping("/{productId}")
     public BasicResponse deleteProduct(@LoginValue long userId, @PathVariable long productId) {
-        productService.delete(userId,productId);
+        productService.delete(userId, productId);
 
         return BasicResponse.builder()
                 .success(true)

@@ -7,7 +7,7 @@ import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.ProductRepository;
 import com.secondhand.domain.town.Town;
-import com.secondhand.web.contoroller.ProductUpdateResponse;
+import com.secondhand.web.contoroller.ProductResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
@@ -46,12 +46,12 @@ public class ProductService {
         return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
 
-    public ProductUpdateResponse updateResponse(long productId, long userId) {
+    //TODO 굳이 필요없어보임
+    public ProductResponse updateResponse(long productId, long userId) {
         Product product = findById(productId);
-        boolean isMine = checkIsMine(userId, product);
 
-        return ProductUpdateResponse.builder()
-                .isMine(isMine)
+        return ProductResponse.builder()
+                .isMine(checkIsMine(userId, product))
                 .seller(product.getMember())
                 .status(product.getStatus())
                 .title(product.getTitle())
@@ -79,10 +79,15 @@ public class ProductService {
     }
 
     private static boolean checkIsMine(long userId, Product product) {
-        boolean isMine = false;
         if (product.getMember().getId() == userId) {
-            isMine = true;
+            return true;
         }
-        return isMine;
+        return false;
+    }
+
+    public ProductResponse getDetailPage(long userId, long productId) {
+        Product product = findById(productId);
+        boolean isMine = checkIsMine(userId, product);
+        return ProductResponse.of(isMine, product);
     }
 }
