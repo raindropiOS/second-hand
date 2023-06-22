@@ -9,7 +9,7 @@ const mockData = {
         title: '스피드랙 철제선반 조립식앵글 렉 펜트리',
         town: { townId: 1, name: '서울 강남구 역삼1동' },
         createdAt: '2023-06-15T06:27:32.166Z',
-        status: '판매중',
+        status: '판매완료',
         price: 10000,
         countInfo: { chatCount: 18, likeCount: 16 },
         imgUrl:
@@ -75,7 +75,7 @@ const mockData = {
         title: '철재서랍장',
         town: { townId: 1, name: '서울 강남구 역삼1동' },
         createdAt: '2023-06-15T06:27:32.167Z',
-        status: '판매중',
+        status: '판매완료',
         price: 10000,
         countInfo: { chatCount: 4, likeCount: 26 },
         imgUrl:
@@ -152,7 +152,7 @@ const mockData = {
         title: '사우스케이프 정품 팬츠',
         town: { townId: 1, name: '서울 강남구 역삼1동' },
         createdAt: '2023-06-15T06:27:32.167Z',
-        status: '판매중',
+        status: '판매완료',
         price: 180000,
         countInfo: { chatCount: 3, likeCount: 22 },
         imgUrl:
@@ -229,7 +229,7 @@ const mockData = {
         title: '스카티카메룬 뉴포트3 거의새거 정품 34인치',
         town: { townId: 1, name: '서울 강남구 역삼1동' },
         createdAt: '2023-06-15T06:27:32.167Z',
-        status: '판매중',
+        status: '판매완료',
         price: 400000,
         countInfo: { chatCount: 2, likeCount: 17 },
         imgUrl:

@@ -5,11 +5,11 @@ import { AUTH, KAKAO } from '@constants/API';
 import kakaoFetch from 'src/apis/instances/kakaoFetch';
 import useCurrentRegion from '@hooks/useCurrentRegion';
 
-import MainTabBar from '@components/molecules/TabBars/MainTabBar';
 import LoginHeader from '@components/Login/LoginHeader';
 import LoginMain from '@components/Login/LoginMain';
 
 import { $Template } from '@styles/PageTemplate.style';
+import { Outlet } from 'react-router-dom';
 
 const Login = () => {
   const { region, error } = useCurrentRegion();
@@ -25,7 +25,7 @@ const Login = () => {
     <$Template>
       <LoginHeader />
       <LoginMain onClick={handleLoginBtnClick} region={region} />
-      <MainTabBar />
+      <Outlet />
     </$Template>
   );
 };

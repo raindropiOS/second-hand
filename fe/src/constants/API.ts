@@ -5,6 +5,7 @@ const API_TYPE = Object.freeze({
   PRODUCTS: 'products',
   TOWNS: 'towns',
   AUTH: 'auth',
+  MEMBERS: 'members',
 });
 
 const createQueryString = (...params: any[]) => {
@@ -36,7 +37,8 @@ const PRODUCTS = Object.freeze({
 const TOWNS = Object.freeze({});
 
 const AUTH = Object.freeze({
-  LOGIN: (AUTHORIZATION_CODE: string) => `/${API_TYPE.AUTH}/login?code=${AUTHORIZATION_CODE}`,
+  LOGIN: `/${API_TYPE.AUTH}/login`,
+  MEMBERS: `/${API_TYPE.MEMBERS}`,
   GITHUB_LOGIN_URL: (clientId: string, scope: string) =>
     `https://github.com/login/oauth/authorize?response_type=code&client_id=${clientId}&scope=${scope}`,
 });
