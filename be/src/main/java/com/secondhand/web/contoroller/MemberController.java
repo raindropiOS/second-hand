@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -27,7 +26,7 @@ public class MemberController {
 
     @Operation(
             summary = "깃허브 로그인",
-            tags = "member",
+            tags = "members",
             description = "사용자 깃허브를 통한 로그인"
     )
     @PostMapping("/auth/login")
@@ -37,7 +36,7 @@ public class MemberController {
 
         return BasicResponse.<MemberLoginResponse>builder()
                 .success(true)
-                .message("")
+                .message("로그인")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .data(memberResponseDTO)
@@ -46,22 +45,21 @@ public class MemberController {
 
     @Operation(
             summary = "로그아웃",
-            tags = "member",
+            tags = "members",
             description = "사용자 로그아웃."
     )
     @LoginCheck
     @GetMapping("/auth/logout")
-    public ResponseEntity<BasicResponse<MemberLoginResponse>> logout(@LoginValue long userId) {
+    public BasicResponse logout(@LoginValue long userId) {
+        log.debug("로그아웃 요청");
         memberService.logout(userId);
 
-        BasicResponse message = BasicResponse.builder()
+        return BasicResponse.builder()
                 .success(true)
-                .message("")
+                .message("로그아웃")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .build();
-
-        return ResponseEntity.ok(message);
     }
 
     @Operation(
@@ -77,7 +75,7 @@ public class MemberController {
 
         return BasicResponse.<MemberResponse>builder()
                 .success(true)
-                .message("")
+                .message("사용자 정보를 가져온다")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .data(userInfo)
