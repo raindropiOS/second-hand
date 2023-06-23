@@ -7,8 +7,38 @@
 
 import Foundation
 
-class NetworkManager {
+class NetworkManager: NetworkManageable {
     static let shared = NetworkManager()
+    private let baseUrlString = Bundle.main.object(forInfoDictionaryKey: "baseUrl") as? String ?? ""
+    private let urlRequestFactory: URLRequestProducible = URLRequestFactory()
+    private let dataDecoder: DataDecodable = DataDecoder()
+    
+    func fetchProducts(query: [String: String]) async -> [Product] {
+        do {
+            let urlRequest = try urlRequestFactory.makeUrlRequest(baseUrlString, query: query)
+            let data = try await fetchData(with: urlRequest)
+            let productsForm = dataDecoder.decodeJSON(data, DTO: Form.self) as? Form
+            let products: [Product]? = productsForm?.data
+            return products ?? []
+        } catch {
+            print("error : \(error)")
+            return []
+        }
+    }
+    
+    private func fetchData(with urlRequest: URLRequest) async throws -> Data {
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        guard let httpResponse = response as? HTTPURLResponse else {
+                throw URLError(.badServerResponse)
+            }
+        
+        let status = httpResponse.statusCode
+        if status >= 200 && status < 300 {
+            return data
+        } else {
+            throw NSError(domain: "com.SecondHand.fetchDataError", code: status, userInfo: nil)
+        }
+    }
     
     func requestGithubOAuth() {
         let clientId: String = "exampleId"
@@ -38,4 +68,8 @@ class NetworkManager {
         }.resume()
     }
     
+}
+
+protocol NetworkManageable {
+    func fetchProducts(query: [String: String]) async -> [Product]
 }
