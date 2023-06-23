@@ -24,6 +24,13 @@ class TownSearchViewController: UIViewController, UISearchControllerDelegate, UI
         searchBarController.delegate = self
         searchBarController.searchBar.delegate = self
     }
+    func setupSubviews() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+    }
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
