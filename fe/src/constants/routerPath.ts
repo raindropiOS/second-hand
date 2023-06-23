@@ -20,6 +20,13 @@ const PATH = Object.freeze({
     LOGIN: '/auth/login',
     SETTING: '/auth/setting',
   },
+  IS_CLICKED_ID: {
+    HOME: 1,
+    SALES: 2,
+    LIKE: 3,
+    CHAT: 4,
+    LOGIN: 5,
+  },
 });
 
 export default PATH;

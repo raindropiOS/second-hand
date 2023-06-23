@@ -17,6 +17,7 @@ import {
   $Price,
   $ChatLikeLayout,
 } from './ListItem.style';
+import getStatusWord from '@utils/getStatusWord';
 
 type Town = {
   townId: number;
@@ -33,7 +34,7 @@ interface ListItemProps {
   title: string;
   town: Town;
   createdAt: string;
-  status?: string;
+  status: number;
   price?: string;
   countInfo: CountInfo;
   imgUrl: string;
@@ -79,7 +80,7 @@ const ListItem = ({
           {town.name}•{getTimeAgo(createdAt)}
         </$LocationTimestamp>
         <$StatusPriceLayout>
-          {status && <$Status>{status}</$Status>}
+          <$Status>{getStatusWord(status)}</$Status>
           <$Price>{price}</$Price>
         </$StatusPriceLayout>
         <$ChatLikeLayout>

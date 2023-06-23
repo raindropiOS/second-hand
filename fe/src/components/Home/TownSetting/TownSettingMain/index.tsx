@@ -12,32 +12,31 @@ const geolocationOptions = {
 
 const TownSettingMain = () => {
   const { location, error } = useCurrentLocation(geolocationOptions);
-  const createMap = () => {
-    return (
-      <$MapContainer>
-        <Map
-          center={{ lat: Number(`${location.latitude}`), lng: Number(`${location.longitude}`) }}
-          style={{ width: '100%', height: '360px' }}
-        >
-          <MapMarker
-            position={{ lat: Number(`${location.latitude}`), lng: Number(`${location.longitude}`) }}
-            image={{
-              src: `${process.env.PUBLIC_URL}/assets/marker.png`,
-              size: {
-                width: 50,
-                height: 50,
-              },
-            }}
-          />
-        </Map>
-      </$MapContainer>
-    );
-  };
 
   return (
-    <div>
-      <$TownSettingMainText>{createMap()}</$TownSettingMainText>
-    </div>
+    <>
+      {location && (
+        <$TownSettingMainText>
+          <$MapContainer>
+            <Map
+              center={{ lat: Number(`${location.latitude}`), lng: Number(`${location.longitude}`) }}
+              style={{ width: '100%', height: '360px' }}
+            >
+              <MapMarker
+                position={{ lat: Number(`${location.latitude}`), lng: Number(`${location.longitude}`) }}
+                image={{
+                  src: `${process.env.PUBLIC_URL}/assets/marker.png`,
+                  size: {
+                    width: 50,
+                    height: 50,
+                  },
+                }}
+              />
+            </Map>
+          </$MapContainer>
+        </$TownSettingMainText>
+      )}
+    </>
   );
 };
 
