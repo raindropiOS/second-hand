@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import MapKit
 
 class TownSearchViewController: UIViewController, UISearchControllerDelegate, UISearchBarDelegate {
     let searchBarController = UISearchController()
+    let tableView = UITableView()
+    private var searchCompleter = MKLocalSearchCompleter()
+
+    var searchResults = [MKLocalSearchCompletion]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
