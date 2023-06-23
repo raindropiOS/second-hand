@@ -24,6 +24,11 @@ class TownSearchViewController: UIViewController, UISearchControllerDelegate, UI
         searchBarController.delegate = self
         searchBarController.searchBar.delegate = self
     }
+    
+    @objc func dismissButtonTouched() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func setupSubviews() {
         tableView.delegate = self
         tableView.dataSource = self
