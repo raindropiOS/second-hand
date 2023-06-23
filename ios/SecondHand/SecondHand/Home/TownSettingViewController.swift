@@ -8,7 +8,7 @@
 import UIKit
 
 class TownSettingViewController: UIViewController {
-
+    private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     private let descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.text = "지역은 최소 1개, \n 최대 2개까지 설정 가능해요"
@@ -27,6 +27,8 @@ class TownSettingViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        configureNavigationBar()
+        configureSeparatorViewUnderNavigationBar()
         button.addTarget(self, action: #selector(presentTownSearchView), for: .touchUpInside)
     }
     
@@ -38,6 +40,9 @@ class TownSettingViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+    private func configureNavigationBar() {
+        self.navigationItem.title = "동네 설정"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(dismissButtonTouched))
     }
     */
 
@@ -45,5 +50,16 @@ class TownSettingViewController: UIViewController {
         let townSearchViewController = TownSearchViewController()
         self.present(UINavigationController(rootViewController: townSearchViewController), animated: true)
         
+    }
+    
+    private func configureSeparatorViewUnderNavigationBar() {
+        self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.separatorViewUnderNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.separatorViewUnderNavigationBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.separatorViewUnderNavigationBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.separatorViewUnderNavigationBar.heightAnchor.constraint(equalToConstant: SeparatorView.height)
+        ])
+        self.separatorViewUnderNavigationBar.configure()
     }
 }
