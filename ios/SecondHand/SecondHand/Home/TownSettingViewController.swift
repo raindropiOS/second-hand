@@ -41,8 +41,11 @@ class TownSettingViewController: UIViewController {
         self.navigationItem.title = "동네 설정"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(dismissButtonTouched))
     }
-    */
-
+    
+    @objc func dismissButtonTouched() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @objc func presentTownSearchView() {
         let townSearchViewController = TownSearchViewController()
         self.present(UINavigationController(rootViewController: townSearchViewController), animated: true)
