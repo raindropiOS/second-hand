@@ -23,23 +23,20 @@ class TownSettingViewController: UIViewController {
         button.configuration = UIButton.Configuration.filled()
         return button
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor = .white
+        self.view.addSubview(separatorViewUnderNavigationBar)
+        self.view.addSubview(descriptionLabel)
+        self.view.addSubview(button)
         configureNavigationBar()
         configureSeparatorViewUnderNavigationBar()
+        setDescriptionLabelLayout()
+        setButtonLayout()
         button.addTarget(self, action: #selector(presentTownSearchView), for: .touchUpInside)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     private func configureNavigationBar() {
         self.navigationItem.title = "동네 설정"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(dismissButtonTouched))
