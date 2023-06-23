@@ -13,6 +13,7 @@
 		8F0F6B5F2A42C7E900F8F1D5 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0F6B5E2A42C7E900F8F1D5 /* DataDecoder.swift */; };
 		8F0F6B612A42E31100F8F1D5 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0F6B602A42E31100F8F1D5 /* Repository.swift */; };
 		8F0F6B632A42F1FE00F8F1D5 /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0F6B622A42F1FE00F8F1D5 /* ProductRepository.swift */; };
+		8F0F6B662A44117200F8F1D5 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0F6B652A44117200F8F1D5 /* ProductViewModel.swift */; };
 		8F167CEE2A386237003805CE /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F167CED2A386237003805CE /* ProductTableViewCell.swift */; };
 		8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71432A2DD79900C10206 /* AppDelegate.swift */; };
 		8F7C71462A2DD79900C10206 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71452A2DD79900C10206 /* SceneDelegate.swift */; };
@@ -48,6 +49,7 @@
 		8F0F6B5E2A42C7E900F8F1D5 /* DataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
 		8F0F6B602A42E31100F8F1D5 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		8F0F6B622A42F1FE00F8F1D5 /* ProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepository.swift; sourceTree = "<group>"; };
+		8F0F6B652A44117200F8F1D5 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		8F167CED2A386237003805CE /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 		8F7C71402A2DD79900C10206 /* SecondHand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondHand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7C71432A2DD79900C10206 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
+		8F0F6B672A44117600F8F1D5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8F0F6B652A44117200F8F1D5 /* ProductViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		8F7C71372A2DD79900C10206 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +134,7 @@
 				8F7C71612A2F731A00C10206 /* Network */,
 				8F0F6B642A42F20A00F8F1D5 /* Repository */,
 				8FA8F32F2A408B5B002C1828 /* DTO */,
+				8F0F6B672A44117600F8F1D5 /* ViewModel */,
 				8FCAA4392A35454E0015FE4D /* Home */,
 				8FCAA4382A3544F40015FE4D /* SalesLog */,
 				8FCAA4362A3542F40015FE4D /* LikeList */,
@@ -375,6 +386,7 @@
 				8F7C71692A319B2900C10206 /* TabBarController.swift in Sources */,
 				8F7C71792A31C37A00C10206 /* SignInViewController.swift in Sources */,
 				8F0F6B632A42F1FE00F8F1D5 /* ProductRepository.swift in Sources */,
+				8F0F6B662A44117200F8F1D5 /* ProductViewModel.swift in Sources */,
 				8F0F6B5F2A42C7E900F8F1D5 /* DataDecoder.swift in Sources */,
 				8F7C71462A2DD79900C10206 /* SceneDelegate.swift in Sources */,
 				8FCAA43D2A35D08A0015FE4D /* OrangeButton.swift in Sources */,
@@ -644,6 +656,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SecondHand/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
