@@ -7,7 +7,8 @@
 
 import UIKit
 
-class TownSearchViewController: UIViewController {
+class TownSearchViewController: UIViewController, UISearchControllerDelegate, UISearchBarDelegate {
+    let searchBarController = UISearchController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
