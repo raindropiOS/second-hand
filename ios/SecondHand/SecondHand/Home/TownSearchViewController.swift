@@ -12,6 +12,13 @@ class TownSearchViewController: UIViewController, UISearchControllerDelegate, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    private func configureNavigationBar() {
+        self.navigationItem.title = ""
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(dismissButtonTouched))
+        self.navigationItem.searchController = searchBarController
+        searchBarController.delegate = self
+        searchBarController.searchBar.delegate = self
+    }
 
         // Do any additional setup after loading the view.
     }
