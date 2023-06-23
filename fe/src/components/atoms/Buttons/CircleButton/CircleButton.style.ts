@@ -28,8 +28,8 @@ const $CircleButton = styled.button<{ size: CircleButtonSize }>`
       height: 56px;
       border-radius: 56px;
       > svg {
-        width: 18px;
-        height: 18px;
+        width: 28px;
+        height: 28px;
       }
     `}
 `;

@@ -13,7 +13,7 @@ interface CircleButtonProps {
 const CircleButton = ({ onClick, size = 'small', iconName }: CircleButtonProps) => {
   return (
     <$CircleButton size={size} onClick={onClick}>
-      <Icon name={iconName} />
+      <Icon name={iconName} width={20} height={20} />
     </$CircleButton>
   );
 };

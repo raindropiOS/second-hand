@@ -20,12 +20,14 @@ interface ChipsContextType {
 interface ChipsListProps {
   categories: Categories;
   onClick: (id: number) => void;
+  currentCategory: number;
 }
 
 interface ItemProps {
   id: number;
   category: string;
   onClick: (id: number) => void;
+  currentCategory: number;
 }
 
 const ChipsContext = createContext<ChipsContextType>({
@@ -41,7 +43,7 @@ const Chips = ({ categories, children }: ChipsProps) => {
   return <ChipsContext.Provider value={{ categories, activeItem, setActiveItem }}>{children}</ChipsContext.Provider>;
 };
 
-const Item = ({ id, category, onClick }: ItemProps) => {
+const Item = ({ id, category, onClick, currentCategory }: ItemProps) => {
   const { activeItem, setActiveItem } = useContext(ChipsContext);
 
   const handleClick = () => {
@@ -49,19 +51,25 @@ const Item = ({ id, category, onClick }: ItemProps) => {
     onClick(id); // parent에서의 filter state 변경
   };
 
-  return <Chip active={activeItem === id} content={category} onClick={handleClick} />;
+  return <Chip active={currentCategory === id} content={category} onClick={handleClick} />;
 };
 
 Chips.Item = Item;
 
-const ChipList = ({ categories, onClick }: ChipsListProps) => {
+const ChipList = ({ categories, onClick, currentCategory }: ChipsListProps) => {
   const newCategories = [{ id: 0, category: '전체' }, ...categories];
 
   return (
     <$ChipsLayout>
       <Chips categories={newCategories}>
         {newCategories.map(({ id, category }: Category) => (
-          <Chips.Item key={id} id={id} category={category} onClick={onClick} />
+          <Chips.Item
+            key={id}
+            id={id}
+            category={category}
+            onClick={() => onClick(id)}
+            currentCategory={currentCategory}
+          />
         ))}
       </Chips>
     </$ChipsLayout>

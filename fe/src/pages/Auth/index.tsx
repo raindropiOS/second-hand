@@ -16,17 +16,33 @@ const Auth = () => {
       // TODO(hoonding): authorizationCode가 없을 경우 처리
       // TODO(jayden): get이 아닌 post로 바꾸기
       if (!authorizationCode) return;
-      const { data } = await axiosFetch.get(AUTH.LOGIN(authorizationCode));
-      const accessToken = data.accessToken;
 
-      if (!sessionStorage.getItem('accessToken')) sessionStorage.setItem('accessToken', accessToken);
+      const {
+        data: {
+          data: { jwtToken },
+        },
+      } = await axiosFetch.post(AUTH.LOGIN, { authorizationCode });
+
+      if (!sessionStorage.getItem('accessToken')) {
+        sessionStorage.setItem('accessToken', jwtToken);
+      }
+
+      const {
+        data: {
+          data: { name, imgUrl },
+        },
+      } = await axiosFetch.get(AUTH.MEMBERS);
+
+      sessionStorage.setItem('name', name);
+      sessionStorage.setItem('imgUrl', imgUrl);
+
       navigate(PATH.HOME.DEFAULT);
     };
 
     getAccessToken();
   }, [window.location]);
 
-  return <></>;
+  return <>로딩 중</>;
 };
 
 export default Auth;

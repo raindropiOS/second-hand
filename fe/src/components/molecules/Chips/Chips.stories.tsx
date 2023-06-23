@@ -17,6 +17,7 @@ export const Primary: Story = {
       { id: 2, category: '유아동' },
       { id: 3, category: '취미/게임/음반' },
     ],
+    currentCategory: 1,
   },
 
   argTypes: {
@@ -31,6 +32,7 @@ export const Secondary: Story = {
       { id: 2, category: '가공식품' },
       { id: 3, category: '기타 중고물품' },
     ],
+    currentCategory: 1,
   },
 
   argTypes: {

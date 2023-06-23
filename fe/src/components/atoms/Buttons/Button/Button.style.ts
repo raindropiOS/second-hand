@@ -67,16 +67,9 @@ const $Button = styled.button<{ size: ButtonSize; status: ButtonStatus; justifyC
 
   border-radius: 8px;
 
-  ${props => props.size === 'small' && sizeStyles.small}
-  ${props => props.size === 'medium' && sizeStyles.medium}
-  ${props => props.size === 'large' && sizeStyles.large}
-  
-  ${props => props.justifyContent === 'center' && justifyContentStyles.center}
-  ${props => props.justifyContent === 'between' && justifyContentStyles.between}
-  
-  ${props => props.status === 'default' && statusStyles.default}
-  ${props => props.status === 'active' && statusStyles.active}
-  ${props => props.status === 'ghost' && statusStyles.ghost}
+  ${props => sizeStyles[props.size]}
+  ${props => justifyContentStyles[props.justifyContent]}
+  ${props => statusStyles[props.status]}
 `;
 
 export { $Button };

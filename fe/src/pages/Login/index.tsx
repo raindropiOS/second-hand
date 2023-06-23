@@ -1,30 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import MainTabBar from '@components/molecules/TabBars/MainTabBar';
-import { $LoginLayout, $LoginHeader, $LoginButton, $ProfileImage } from './Login.style';
-import Icon from '@atoms/Icon';
+import { AUTH, KAKAO } from '@constants/API';
+
+import kakaoFetch from 'src/apis/instances/kakaoFetch';
+import useCurrentRegion from '@hooks/useCurrentRegion';
+
+import LoginHeader from '@components/Login/LoginHeader';
+import LoginMain from '@components/Login/LoginMain';
+
+import { $Template } from '@styles/PageTemplate.style';
+import { Outlet } from 'react-router-dom';
 
 const Login = () => {
+  const { region, error } = useCurrentRegion();
+
   const handleLoginBtnClick = () => {
     const scope = 'user';
-    const redirectURI = process.env.REACT_APP_REDIRECT_URI;
-    const clientId = process.env.REACT_APP_CLIENT_ID;
+    const clientId = process.env.REACT_APP_CLIENT_ID as string;
 
-    window.location.href = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${redirectURI}&client_id=${clientId}&scope=${scope}`;
+    window.location.href = AUTH.GITHUB_LOGIN_URL(clientId, scope);
   };
 
   return (
-    <$LoginLayout>
-      <$LoginHeader>내 계정</$LoginHeader>
-      <$ProfileImage>
-        <Icon name="camera" width={40} height={35} />
-      </$ProfileImage>
-      <$LoginButton onClick={handleLoginBtnClick}>
-        <Icon name="github" width={40} height={40} />
-        깃허브로 로그인하기
-      </$LoginButton>
-      <MainTabBar />
-    </$LoginLayout>
+    <$Template>
+      <LoginHeader />
+      <LoginMain onClick={handleLoginBtnClick} region={region} />
+      <Outlet />
+    </$Template>
   );
 };
 

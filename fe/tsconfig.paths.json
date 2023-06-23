@@ -4,6 +4,7 @@
     "paths": {
       "@assets/*": ["src/assets/*"],
       "@atoms/*": ["src/components/atoms/*"],
+      "@apis/*": ["src/apis/*"],
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@context/*": ["src/context/*"],
@@ -12,7 +13,8 @@
       "@molecules/*": ["src/components/molecules/*"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@type/*": ["src/type/*"]
     }
   }
 }
