@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 상품 목록 API DTO
 struct Form: Decodable {
     let success: Bool
     let status: Int

@@ -12,6 +12,7 @@ class DataDecoder: DataDecodable {
         do {
             return try JSONDecoder().decode(DTO.self, from: data)
         } catch {
+            print("error : \(error)")
             return nil
         }
     }
