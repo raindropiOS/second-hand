@@ -62,4 +62,22 @@ class TownSettingViewController: UIViewController {
         ])
         self.separatorViewUnderNavigationBar.configure()
     }
+    
+    private func setDescriptionLabelLayout() {
+        self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.descriptionLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.descriptionLabel.topAnchor.constraint(equalTo: self.separatorViewUnderNavigationBar.bottomAnchor, constant: 50)
+        ])
+    }
+    private func setButtonLayout() {
+        self.button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.button.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            self.button.widthAnchor.constraint(equalToConstant: 100),
+            self.button.heightAnchor.constraint(equalToConstant: 100)
+        ])
+    }
+    
 }
