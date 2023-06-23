@@ -37,6 +37,7 @@ class HomeViewController: UIViewController {
         
         self.tableView.register(ProductTableViewCell.self, forCellReuseIdentifier: ProductTableViewCell.identifier)
     }
+
 }
 
 // MARK: UITableViewDataSource
@@ -82,7 +83,8 @@ extension HomeViewController {
        }
 
        let configureDongButton = UIAction(title: "내 동네 설정하기") {_ in
-
+           let townSettingViewController = TownSettingViewController()
+           self.present(UINavigationController(rootViewController: townSettingViewController), animated: true)
            
        }
 
