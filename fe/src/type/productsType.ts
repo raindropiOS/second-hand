@@ -4,7 +4,7 @@ export interface ProductType {
   title: string;
   createdAt: string;
   town: { townId: number; name: string };
-  status: string; // TODO: API 협의 후 number로 변경
+  status: number;
   price: number;
   countInfo: { chatCount: number; likeCount: number };
   imgUrl: string;

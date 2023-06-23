@@ -17,7 +17,7 @@ interface HomeMainMainProps {
     title: string;
     town: { townId: number; name: string };
     createdAt: string;
-    status: string;
+    status: number;
     price: number;
     countInfo: { chatCount: number; likeCount: number };
     imgUrl: string;
