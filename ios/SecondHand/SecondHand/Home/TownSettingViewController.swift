@@ -16,10 +16,18 @@ class TownSettingViewController: UIViewController {
         descriptionLabel.numberOfLines = 2
         return descriptionLabel
     }()
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setTitle("TEST", for: .normal)
+        button.tintColor = .blue
+        button.configuration = UIButton.Configuration.filled()
+        return button
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        button.addTarget(self, action: #selector(presentTownSearchView), for: .touchUpInside)
     }
     
 
@@ -33,4 +41,9 @@ class TownSettingViewController: UIViewController {
     }
     */
 
+    @objc func presentTownSearchView() {
+        let townSearchViewController = TownSearchViewController()
+        self.present(UINavigationController(rootViewController: townSearchViewController), animated: true)
+        
+    }
 }
