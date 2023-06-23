@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import PATH from '@constants/routerPath';
 import { AUTH } from '@constants/API';
 import axiosFetch from 'src/apis/instances/axiosFetch';
+import Skeleton from '@pages/Loading/Skeleton';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const Auth = () => {
     getAccessToken();
   }, [window.location]);
 
-  return <>로딩 중</>;
+  return <Skeleton />;
 };
 
 export default Auth;
