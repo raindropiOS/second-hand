@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_img_id")
     private Long id;
 
     @NotNull

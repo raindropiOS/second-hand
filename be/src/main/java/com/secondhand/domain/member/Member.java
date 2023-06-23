@@ -53,4 +53,13 @@ public class Member {
     public void removeToken() {
         this.memberToken = null;
     }
+
+    public void changeTown(Town town) {
+        this.mainTown = town;
+    }
+
+    public void updateTowns(Town mainTown, Town subTown) {
+        this.mainTown = mainTown;
+        this.subTown = subTown;
+    }
 }

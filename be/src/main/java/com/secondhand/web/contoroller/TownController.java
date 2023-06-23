@@ -4,6 +4,7 @@ import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
+import com.secondhand.web.dto.requset.TownRequest;
 import com.secondhand.web.dto.response.TownResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -69,8 +70,12 @@ public class TownController {
             description = "사용자의 화원가입할 때 메인, 서브  동네를 등록할 수있다."
     )
     @LoginCheck
-    @PostMapping("/members/towns")
-    public BasicResponse registerTown(@RequestBody long townId) {
+    @PostMapping
+    public BasicResponse registerTown(@LoginValue long userId,
+                                      @RequestBody long townId) {
+
+        townService.save(userId, townId);
+
         return BasicResponse.builder()
                 .success(true)
                 .message("")
@@ -85,8 +90,12 @@ public class TownController {
             description = "사용자의 메인, 서브 동네를 수정할 수 있다."
     )
     @LoginCheck
-    @PatchMapping("/members/towns")
-    public BasicResponse updateTown(@RequestBody long townId) {
+    @PatchMapping
+    public BasicResponse updateTown(@LoginValue long userId,
+                                    @RequestBody TownRequest townRequest) {
+
+        townService.update(userId, townRequest);
+
         return BasicResponse.builder()
                 .success(true)
                 .message("")
