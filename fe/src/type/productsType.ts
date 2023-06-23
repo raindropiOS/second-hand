@@ -15,6 +15,10 @@ export interface LikeProductsType {
   categoryIds: number[];
 }
 
+export interface SaleHistoryProductsType {
+  products: ProductType[];
+}
+
 export interface APIDefaultResponseType {
   success: boolean;
   status: number;
