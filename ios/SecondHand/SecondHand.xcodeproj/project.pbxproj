@@ -30,6 +30,8 @@
 		8FCAA48B2A36397D0015FE4D /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */; };
 		971E2AF1E98F87C76755A343 /* Pods_SecondHand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */; };
 		CC208F442A41AAE300C19467 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC208F432A41AAE300C19467 /* PermissionManager.swift */; };
+		CC208F462A42DBAF00C19467 /* TownSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC208F452A42DBAF00C19467 /* TownSettingViewController.swift */; };
+		CC208F482A42E8F700C19467 /* TownSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC208F472A42E8F700C19467 /* TownSearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,8 @@
 		91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SecondHand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9808566887603BF383A0FC65 /* Pods-SecondHand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.debug.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.debug.xcconfig"; sourceTree = "<group>"; };
 		CC208F432A41AAE300C19467 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		CC208F452A42DBAF00C19467 /* TownSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownSettingViewController.swift; sourceTree = "<group>"; };
+		CC208F472A42E8F700C19467 /* TownSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownSearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +186,8 @@
 				8F7C716C2A319EE100C10206 /* HomeViewController.swift */,
 				8F167CED2A386237003805CE /* ProductTableViewCell.swift */,
 				8FA8F2E52A3DCC12002C1828 /* ImageLabelStackView.swift */,
+				CC208F452A42DBAF00C19467 /* TownSettingViewController.swift */,
+				CC208F472A42E8F700C19467 /* TownSearchViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -329,8 +335,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC208F442A41AAE300C19467 /* PermissionManager.swift in Sources */,
+				CC208F482A42E8F700C19467 /* TownSearchViewController.swift in Sources */,
 				8FCAA48B2A36397D0015FE4D /* ProfileImageView.swift in Sources */,
 				8FCAA43B2A35D04C0015FE4D /* InputView.swift in Sources */,
+				CC208F462A42DBAF00C19467 /* TownSettingViewController.swift in Sources */,
 				8F7C716F2A319FA400C10206 /* SalesLogViewController.swift in Sources */,
 				8F7C71602A2F730800C10206 /* NetworkManager.swift in Sources */,
 				8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */,

@@ -41,6 +41,20 @@ class TownSearchViewController: UIViewController, UISearchControllerDelegate, UI
 
     /*
     // MARK: - Navigation
+extension TownSearchViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.searchResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            
+        cell.textLabel?.text = searchResults[indexPath.row].title
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        return cell
+        }
+}
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
