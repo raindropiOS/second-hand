@@ -20,7 +20,7 @@ const PATH = Object.freeze({
     LOGIN: '/auth/login',
     SETTING: '/auth/setting',
   },
-  IS_CLICKER_ID: {
+  IS_CLICKED_ID: {
     HOME: 1,
     SALES: 2,
     LIKE: 3,

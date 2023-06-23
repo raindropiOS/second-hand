@@ -33,7 +33,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Navigate to={PATH.HOME.DEFAULT} />} />
             <Route path={PATH.HOME.DEFAULT} element={<HomeMain />}>
-              <Route path={PATH.HOME.DEFAULT} element={<MainTabBar isClickedId={PATH.IS_CLICKER_ID.HOME} />} />
+              <Route path={PATH.HOME.DEFAULT} element={<MainTabBar isClickedId={PATH.IS_CLICKED_ID.HOME} />} />
             </Route>
             <Route path={PATH.HOME.TOWN_SETTING} element={<TownSetting />} />
             <Route path={PATH.HOME.TOWN_SEARCH} element={<TownSearching />} />
@@ -47,15 +47,15 @@ const App = () => {
             <Route path={PATH.PRODUCT.DEFAULT} />
             <Route path={PATH.PRODUCT.CHAT} />
             <Route path={PATH.PRODUCT.SALES} element={<SalesHistory />}>
-              <Route path={PATH.PRODUCT.SALES} element={<MainTabBar isClickedId={PATH.IS_CLICKER_ID.SALES} />} />
+              <Route path={PATH.PRODUCT.SALES} element={<MainTabBar isClickedId={PATH.IS_CLICKED_ID.SALES} />} />
             </Route>
             <Route path={PATH.PRODUCT.LIKE} element={<Like />}>
-              <Route path={PATH.PRODUCT.LIKE} element={<MainTabBar isClickedId={PATH.IS_CLICKER_ID.LIKE} />} />
+              <Route path={PATH.PRODUCT.LIKE} element={<MainTabBar isClickedId={PATH.IS_CLICKED_ID.LIKE} />} />
             </Route>
 
             <Route path={PATH.AUTH.DEFAULT} element={<Auth />} />
             <Route path={PATH.AUTH.LOGIN} element={<Login />}>
-              <Route path={PATH.AUTH.LOGIN} element={<MainTabBar isClickedId={PATH.IS_CLICKER_ID.LOGIN} />} />
+              <Route path={PATH.AUTH.LOGIN} element={<MainTabBar isClickedId={PATH.IS_CLICKED_ID.LOGIN} />} />
             </Route>
             <Route path={PATH.AUTH.SETTING} />
           </Routes>
