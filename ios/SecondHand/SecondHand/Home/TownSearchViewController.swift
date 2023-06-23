@@ -25,7 +25,13 @@ class TownSearchViewController: UIViewController, UISearchControllerDelegate, UI
         searchBarController.searchBar.delegate = self
     }
 
-        // Do any additional setup after loading the view.
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     func setupSearchCompleter() {
@@ -39,8 +45,6 @@ class TownSearchViewController: UIViewController, UISearchControllerDelegate, UI
         }
 }
 
-    /*
-    // MARK: - Navigation
 extension TownSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.searchResults.count
@@ -56,15 +60,11 @@ extension TownSearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
 }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
 extension TownSearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         searchBar(self.searchBarController.searchBar, textDidChange: self.searchBarController.searchBar.text ?? "")
     }
-    */
+}
 
 extension TownSearchViewController: MKLocalSearchCompleterDelegate {
     // 자동완성 완료 시에 결과를 받는 함수
