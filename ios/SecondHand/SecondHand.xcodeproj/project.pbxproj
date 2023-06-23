@@ -39,6 +39,8 @@
 		8FCAA43D2A35D08A0015FE4D /* OrangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43C2A35D08A0015FE4D /* OrangeButton.swift */; };
 		8FCAA43F2A35D21D0015FE4D /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */; };
 		8FCAA48B2A36397D0015FE4D /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */; };
+		971E2AF1E98F87C76755A343 /* Pods_SecondHand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */; };
+		CC208F442A41AAE300C19467 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC208F432A41AAE300C19467 /* PermissionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +80,9 @@
 		8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		E499461128D922FE59459A04 /* Pods-SecondHand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.debug.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.debug.xcconfig"; sourceTree = "<group>"; };
+		91DCE9083621EAF5805543A3 /* Pods_SecondHand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SecondHand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9808566887603BF383A0FC65 /* Pods-SecondHand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.debug.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.debug.xcconfig"; sourceTree = "<group>"; };
+		CC208F432A41AAE300C19467 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +136,7 @@
 		8F7C71422A2DD79900C10206 /* SecondHand */ = {
 			isa = PBXGroup;
 			children = (
+				CC208F422A41AAAE00C19467 /* Permission */,
 				8F7C71612A2F731A00C10206 /* Network */,
 				8F0F6B642A42F20A00F8F1D5 /* Repository */,
 				8FA8F32F2A408B5B002C1828 /* DTO */,
@@ -242,6 +248,14 @@
 				07FB32A4C88C8F1786D503A7 /* Pods_SecondHand.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CC208F422A41AAAE00C19467 /* Permission */ = {
+			isa = PBXGroup;
+			children = (
+				CC208F432A41AAE300C19467 /* PermissionManager.swift */,
+			);
+			path = Permission;
 			sourceTree = "<group>";
 		};
 		D7C660D9C43ACA63A840F117 /* Pods */ = {
@@ -374,6 +388,7 @@
 			files = (
 				8FA8F32E2A408B53002C1828 /* Product.swift in Sources */,
 				8FA8F3352A413F64002C1828 /* CountInfo.swift in Sources */,
+				CC208F442A41AAE300C19467 /* PermissionManager.swift in Sources */,
 				8FCAA48B2A36397D0015FE4D /* ProfileImageView.swift in Sources */,
 				8FCAA43B2A35D04C0015FE4D /* InputView.swift in Sources */,
 				8F7C716F2A319FA400C10206 /* SalesLogViewController.swift in Sources */,
@@ -629,6 +644,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SecondHand/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "권한 내놔";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -659,6 +675,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SecondHand/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "권한 내놔";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
