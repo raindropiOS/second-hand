@@ -19,9 +19,9 @@ export interface SaleHistoryProductsType {
   products: ProductType[];
 }
 
-export interface APIDefaultResponseType {
+export interface APIDefaultResponseType<T> {
   success: boolean;
   status: number;
   code: number;
-  data: any;
+  data: T;
 }

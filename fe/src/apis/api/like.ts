@@ -19,7 +19,7 @@ const getLikeProducts = async (pageNum?: number, categoryId?: number) => {
 
 const useLikeProductsData = (pageNum?: number, categoryId?: number) => {
   if (categoryId === 0) categoryId = undefined;
-  return useQuery<APIDefaultResponseType, AxiosError, LikeProductsType>(
+  return useQuery<APIDefaultResponseType<LikeProductsType>, AxiosError, LikeProductsType>(
     ['likeProducts', pageNum, categoryId],
     () => getLikeProducts(pageNum, categoryId),
     { select: data => data.data }

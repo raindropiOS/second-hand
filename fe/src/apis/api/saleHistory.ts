@@ -18,7 +18,7 @@ const getSaleHistoryProducts = async (pageNum?: number, status?: number) => {
 };
 
 const useSaleHistoryProductsData = (pageNum?: number, status?: number) => {
-  return useQuery<APIDefaultResponseType, AxiosError, SaleHistoryProductsType>(
+  return useQuery<APIDefaultResponseType<SaleHistoryProductsType>, AxiosError, SaleHistoryProductsType>(
     ['likeProducts', pageNum, status],
     () => getSaleHistoryProducts(pageNum, status),
     { select: data => data.data }
