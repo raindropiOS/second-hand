@@ -2,14 +2,15 @@ package com.secondhand.service;
 
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.exception.ProductNotFoundException;
+import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.ProductRepository;
 import com.secondhand.domain.town.Town;
-import com.secondhand.web.contoroller.ProductResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
+import com.secondhand.web.dto.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,9 +50,11 @@ public class ProductService {
     //TODO 굳이 필요없어보임
     public ProductResponse updateResponse(long productId, long userId) {
         Product product = findById(productId);
+        Member member = memberService.findMemberById(userId);
+        boolean isMine = member.checkProductIsMine(productId);
 
         return ProductResponse.builder()
-                .isMine(checkIsMine(userId, product))
+                .isMine(isMine)
                 .seller(product.getMember())
                 .status(product.getStatus())
                 .title(product.getTitle())
@@ -78,16 +81,24 @@ public class ProductService {
         }
     }
 
-    private static boolean checkIsMine(long userId, Product product) {
-        if (product.getMember().getId() == userId) {
-            return true;
-        }
-        return false;
-    }
 
     public ProductResponse getDetailPage(long userId, long productId) {
         Product product = findById(productId);
-        boolean isMine = checkIsMine(userId, product);
+        Member member = memberService.findMemberById(userId);
+        boolean isMine = member.checkProductIsMine(productId);
         return ProductResponse.of(isMine, product);
+    }
+
+    @Transactional
+    public void registerLike(long userId, long productId, boolean liked) {
+
+        Member member = memberService.findMemberById(userId);
+        Product product = findById(productId);
+        //관심상품 체크
+        Interested interested = Interested.create(member, product, liked);
+
+        product.updateInterested(interested);
+
+        productRepository.save(product);
     }
 }

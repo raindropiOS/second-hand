@@ -35,6 +35,10 @@ public class Member {
     @JoinColumn(name = "sub_town_id")
     private Town subTown;
 
+//    @OneToMany(mappedBy = "member")
+//    private List<Interested> members = new ArrayList<>();
+
+
     public static Member create(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
         return Member.builder()
                 .loginName(memberInfo.getLogin())
@@ -61,5 +65,16 @@ public class Member {
     public void updateTowns(Town mainTown, Town subTown) {
         this.mainTown = mainTown;
         this.subTown = subTown;
+    }
+
+    public void updateMainTowns(Town mainTown) {
+        this.mainTown = mainTown;
+    }
+
+    public boolean checkProductIsMine(long id) {
+        if (this.getId() == id) {
+            return true;
+        }
+        return false;
     }
 }

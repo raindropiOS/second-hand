@@ -6,6 +6,7 @@ import com.secondhand.service.MemberResponse;
 import com.secondhand.service.MemberService;
 import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
+import com.secondhand.web.dto.requset.RequestCode;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

@@ -4,11 +4,10 @@ import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
-import com.secondhand.web.dto.requset.FilterRequest;
-import com.secondhand.web.dto.requset.ProductLikeResponse;
-import com.secondhand.web.dto.requset.ProductSaveRequest;
-import com.secondhand.web.dto.requset.ProductUpdateRequest;
+import com.secondhand.web.dto.requset.*;
 import com.secondhand.web.dto.response.ProductDTO;
+import com.secondhand.web.dto.response.ProductLikeResponse;
+import com.secondhand.web.dto.response.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -120,10 +119,16 @@ public class ProductController {
             tags = "products",
             description = "사용자는상품을 과 관심상품 / 해제 할수 있다.."
     )
+    @LoginCheck
     @PatchMapping("/{productId}")
-    public ResponseEntity<BasicResponse<ProductLikeResponse>> checkLike(@PathVariable long productId) {
+    public BasicResponse checkLike(@LoginValue long userId,
+                                   @PathVariable long productId,
+                                   @RequestBody LikeRequest likeRequest) {
+
+        productService.registerLike(userId, productId, likeRequest.isLiked());
+
         ProductLikeResponse dto = new ProductLikeResponse();
-        BasicResponse message = BasicResponse.builder()
+        return BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
@@ -131,7 +136,6 @@ public class ProductController {
                 .data(dto)
                 .build();
 
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
 

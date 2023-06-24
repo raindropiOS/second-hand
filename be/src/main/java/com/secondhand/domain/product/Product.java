@@ -1,6 +1,7 @@
 package com.secondhand.domain.product;
 
 import com.secondhand.domain.categorie.Category;
+import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
@@ -8,6 +9,8 @@ import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -44,6 +47,9 @@ public class Product {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @OneToMany(mappedBy = "product")
+    private List<Interested> interesteds = new ArrayList<>();
+
     public static Product create(ProductSaveRequest requestInfo, Member member, Category category, Town town) {
         return Product.builder()
                 .title(requestInfo.getTitle())
@@ -66,5 +72,11 @@ public class Product {
         this.thumbnailUrl = updateRequest.getProductImages();
         this.category = category;
         this.towns = town;
+    }
+
+    //연관 관계 메서드
+    public void updateInterested(Interested interested) {
+        this.interesteds.add(interested);
+        interested.setProduct(this);
     }
 }
