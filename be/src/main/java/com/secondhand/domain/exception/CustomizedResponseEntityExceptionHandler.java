@@ -66,4 +66,13 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(StatusNotFoundException.class)
+    public final ResponseEntity<Object> handleStatusNotFoundExceptions(CategoryNotFoundException e,
+                                                                       WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
 }

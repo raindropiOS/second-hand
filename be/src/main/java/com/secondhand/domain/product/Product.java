@@ -79,4 +79,8 @@ public class Product {
         this.interesteds.add(interested);
         interested.setProduct(this);
     }
+
+    public void updateStatus(Status status) {
+        this.status = status;
+    }
 }

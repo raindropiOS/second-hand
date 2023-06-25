@@ -120,7 +120,7 @@ public class ProductController {
             description = "사용자는상품을 과 관심상품 / 해제 할수 있다.."
     )
     @LoginCheck
-    @PatchMapping("/{productId}")
+    @PatchMapping("/{productId}/likes")
     public BasicResponse checkLike(@LoginValue long userId,
                                    @PathVariable long productId,
                                    @RequestBody LikeRequest likeRequest) {
@@ -135,7 +135,27 @@ public class ProductController {
                 .httpStatus(HttpStatus.OK)
                 .data(dto)
                 .build();
+    }
 
+    @Operation(
+            summary = "사용자는 특정 상품의 상태를 변경할 수 있다",
+            tags = "products",
+            description = "사용자는 특정 상품의 상태를 변경할 수 있다"
+    )
+    @LoginCheck
+    @PatchMapping("/{productId}")
+    public BasicResponse checkStatus(@LoginValue long userId,
+                                     @PathVariable long productId,
+                                     @RequestBody UpdateProductStateRequest stateRequest) {
+
+        productService.updateStatus(userId, productId, stateRequest);
+
+        return BasicResponse.builder()
+                .success(true)
+                .message("")
+                .apiStatus(20000)
+                .httpStatus(HttpStatus.OK)
+                .build();
     }
 
     @Operation(
