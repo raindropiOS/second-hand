@@ -55,6 +55,7 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
         log.debug("claims = {}", claims);
+        log.debug("MEMBER_ID = {}", claims.get(MEMBER_ID, Long.class));
         return claims.get(MEMBER_ID, Long.class);
     }
 }

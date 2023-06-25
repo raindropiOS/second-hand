@@ -24,7 +24,7 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) webRequest.getNativeRequest();
-        log.debug("USER_ID", USER_ID);
+        log.debug("USER_ID", httpServletRequest.getAttribute(USER_ID));
         if (httpServletRequest.getAttribute(USER_ID) == null) {
             throw new MissingTokenException("로그인 해주세요.");
         }

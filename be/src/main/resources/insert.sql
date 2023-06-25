@@ -57,6 +57,8 @@ insert into member(login_name, img_url, main_town_id, sub_town_id)
 values ( 'gamja', 'img', 1, 2);
 insert into member(login_name, img_url, main_town_id, sub_town_id)
 values ( 'gyee', 'img', 1, 2);
+insert into member(login_name, img_url, main_town_id, sub_town_id)
+values ( 'core', 'img', 1, 2);
 
 INSERT INTO product(title, content, price, thumbnail_url, town_id, category_id, member_id)
 VALUES ('Example Product', 'This is an example product description.', 100, 'https://example.com/thumbnail.jpg', 1, 1, 1);

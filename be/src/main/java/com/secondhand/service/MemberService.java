@@ -10,8 +10,6 @@ import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final GitHubOauth oauth;
-    private final Logger logger = LoggerFactory.getLogger(MemberService.class);
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
 
@@ -31,9 +28,9 @@ public class MemberService {
     public MemberLoginResponse login(String code) {
         //TODO  authorization code 를 받는다
         AccessTokenResponseDTO token = oauth.getToken(code);
-        logger.debug("token access 토큰 = {}", token);
+        log.debug("token access 토큰 = {}", token);
         OAuthMemberInfoDTO memberInfo = oauth.getUserInfo(token.getAccessToken());
-        logger.debug("token access 토큰 으로 부터받은 회원정보 = {}", memberInfo);
+        log.debug("token access 토큰 으로 부터받은 회원정보 = {}", memberInfo);
 
         // TODO: 이미 있는 멤버라면 토큰을 업데이트 해주고 아니라면 새로만든다
         if (MemberExists(memberInfo)) {
@@ -68,7 +65,7 @@ public class MemberService {
 
 
     public MemberResponse getUserInfo(long userId) {
-        return MemberResponse.of(findMemberById(userId));
+        return MemberResponse.from(findMemberById(userId));
     }
 
     public Member findMemberById(long userId) {

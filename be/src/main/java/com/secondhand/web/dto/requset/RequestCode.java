@@ -1,10 +1,8 @@
 package com.secondhand.web.dto.requset;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
-@RequiredArgsConstructor
 public class RequestCode {
-    private final String code;
+    private String authorizationCode;
 }
