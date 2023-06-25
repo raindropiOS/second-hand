@@ -21,10 +21,8 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @Column
     private String loginName;
     private String memberToken;
-    @Column
     private String imgUrl;
 
     @ManyToOne

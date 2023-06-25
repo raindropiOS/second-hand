@@ -1,5 +1,7 @@
 package com.secondhand.domain.exception;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +19,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllExceptions(Exception e, WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -25,22 +27,15 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     @ExceptionHandler(MissingTokenException.class)
     public final ResponseEntity<Object> handleTokenExceptions(MissingTokenException e, WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
-        return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public final ResponseEntity<Object> handleArgumentExceptions(IllegalArgumentException e, WebRequest request) {
-        ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
-        return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ElementNotFoundException.class)
     public final ResponseEntity<Object> handleElementNotFoundExceptions(ElementNotFoundException e,
                                                                         WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -49,7 +44,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleTownNotFoundExceptions(TownNotFoundException e,
                                                                      WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -58,7 +53,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleMemberNotFoundExceptions(MemberNotFoundException e,
                                                                        WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -67,7 +62,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleGCategoryFoundExceptions(CategoryNotFoundException e,
                                                                        WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class TownRegisterRequest {
-    private long townId;
+    private Long townId;
 }

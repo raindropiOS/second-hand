@@ -23,7 +23,7 @@ public class TownService {
 
     public List<TownResponse> findByAll() {
         return townRepository.findAll()
-                .stream().map(towns -> new TownResponse(towns))
+                .stream().map(TownResponse::new)
                 .collect(Collectors.toList());
     }
 

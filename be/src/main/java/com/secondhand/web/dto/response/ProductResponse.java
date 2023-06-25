@@ -5,17 +5,13 @@ import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.Status;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductResponse {
     private boolean isMine;
     private Member seller;

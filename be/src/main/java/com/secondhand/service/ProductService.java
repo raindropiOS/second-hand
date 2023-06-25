@@ -52,25 +52,7 @@ public class ProductService {
         Product product = findById(productId);
         Member member = memberService.findMemberById(userId);
         boolean isMine = member.checkProductIsMine(productId);
-
-        return ProductResponse.builder()
-                .isMine(isMine)
-                .seller(product.getMember())
-                .status(product.getStatus())
-                .title(product.getTitle())
-                .content(product.getContent())
-                .createdAt(LocalDateTime.now())
-                .category(product.getCategory())
-                .price(product.getPrice())
-                .countInfo(
-                        CountInfo.builder()
-                                .chatCount(0)
-                                .likeCount(product.getCountLike())
-                                .viewCount(product.getCountView())
-                                .build()
-                )
-                .isLiked(true)
-                .build();
+        return ProductResponse.of(isMine, product);
     }
 
 

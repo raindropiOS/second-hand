@@ -73,7 +73,11 @@ public class TownController {
     @PostMapping
     public BasicResponse registerTown(@LoginValue long userId,
                                       @RequestBody TownRegisterRequest request) {
-        log.debug("townid ={} ", request);
+
+        if (request.getTownId() == null) {
+            throw new IllegalArgumentException("필수 지역 정보 없음");
+        }
+
         townService.save(userId, request.getTownId());
 
         return BasicResponse.builder()
