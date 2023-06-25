@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Table(name = "INTERESTED")
 @Entity
+@Table(name = "INTERESTED")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
