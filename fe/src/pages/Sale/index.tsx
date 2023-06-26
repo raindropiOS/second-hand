@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
+import PATH from '@constants/routerPath';
+import usePostNewProduct from '@apis/api/sale';
 import SaleHeader from '@components/Sale/SaleHeader';
 import SaleMain from '@components/Sale/SaleMain';
 
@@ -9,7 +12,6 @@ import { $Template } from '@styles/PageTemplate.style';
 const Sale = () => {
   // TODO(hoonding): img도 추가해야함.
   // NOTE(hoonding): useReducer 도 고려.
-
   const [newProductInfo, setNewProductInfo] = useState<{ title: string; price: string; content: string }>({
     title: '',
     price: '',
@@ -17,8 +19,11 @@ const Sale = () => {
   });
 
   const [imgFiles, setImgFiles] = useState<{ file: File; url: string }[]>([]);
+  const navigate = useNavigate();
   const location = useLocation();
   const currentCategory = location.state ? location.state.currentCategory : { id: 0, category: '', url: '' };
+
+  const { mutate: addNewProduct, isLoading, isError, isSuccess } = usePostNewProduct();
 
   useEffect(() => {
     if (!sessionStorage.getItem('productInfo')) return;
@@ -46,16 +51,16 @@ const Sale = () => {
       townId: 1,
     };
 
-    // for (let i = 0; i < imgFiles.length; i++) {
-    //   formData.append('file', imgFiles[i].file);
-    // }
     imgFiles.forEach(({ file }) => {
-      console.log(11);
       formData.append('productImages', file);
     });
     formData.append('contents', new Blob([JSON.stringify(contentsData)], { type: 'application/json' }));
 
-    console.log(formData.get('productImages'), formData.get('contents'));
+    addNewProduct(formData, {
+      onSuccess: ({ data }) => {
+        navigate(PATH.PRODUCT.DETAIL(data.productId));
+      },
+    });
   };
 
   return (
