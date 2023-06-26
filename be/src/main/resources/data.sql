@@ -46,6 +46,7 @@ create table product
     town_id       bigint       not null,
     category_id   bigint       not null,
     member_id     bigint       not null,
+    deleted       tinyint(1)   not null default 0
     constraint fk_product_category1
         foreign key (category_id) references category (category_id),
     constraint fk_product_member1

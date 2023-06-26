@@ -2,23 +2,25 @@ package com.secondhand.service;
 
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.exception.ProductNotFoundException;
-import com.secondhand.domain.interested.Interested;
-import com.secondhand.domain.interested.InterestedRepository;
 import com.secondhand.domain.member.Member;
+import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
-import com.secondhand.domain.product.ProductRepository;
-import com.secondhand.domain.product.Status;
 import com.secondhand.domain.town.Town;
-import com.secondhand.web.contoroller.UpdateProductStateRequest;
+import com.secondhand.service.repository.ProductRepository;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
+import com.secondhand.web.dto.requset.ProductSearchCondition;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
+import com.secondhand.web.dto.response.MainPageResponse;
+import com.secondhand.web.dto.response.ProductPagingResponse;
 import com.secondhand.web.dto.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -27,7 +29,6 @@ public class ProductService {
     private final CategoryService categoryService;
     private final TownService townService;
     private final MemberService memberService;
-    private final InterestedRepository interestedRepository;
 
     @Transactional
     public void save(long userId, ProductSaveRequest requestInfo) {
@@ -46,15 +47,16 @@ public class ProductService {
         product.update(updateRequest, category, town);
     }
 
+    public Product findById(long productId) {
+        return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
+    }
 
     //TODO 굳이 필요없어보임
     public ProductResponse updateResponse(long productId, long userId) {
         Product product = findById(productId);
-        Member member = memberService.findMemberById(userId);
-        boolean isMine = member.checkProductIsMine(productId);
+        boolean isMine = checkIsMine(userId, product);
         return ProductResponse.of(isMine, product);
     }
-
 
     public void delete(long userId, long productId) {
         Product product = findById(productId);
@@ -63,37 +65,26 @@ public class ProductService {
         }
     }
 
+    private static boolean checkIsMine(long userId, Product product) {
+        if (product.getMember().getId() == userId) {
+            return true;
+        }
+        return false;
+    }
 
     public ProductResponse getDetailPage(long userId, long productId) {
         Product product = findById(productId);
-        Member member = memberService.findMemberById(userId);
-        boolean isMine = member.checkProductIsMine(productId);
+        boolean isMine = checkIsMine(userId, product);
         return ProductResponse.of(isMine, product);
     }
 
-    @Transactional
-    public void registerLike(long userId, long productId, boolean liked) {
-        Member member = memberService.findMemberById(userId);
-        Product product = findById(productId);
-        log.debug("관심 목록 업데이 전의 product= {} ,", product);
-        //관심상품 체크
-        Interested interested = Interested.create(member, product, liked);
-        log.debug("interested = {} ,", interested);
-        interestedRepository.save(interested);
-        product.updateInterested(interested);
-        log.debug("관심 목록 업데이트 후의 product= {} ,", product);
-    }
+    @Transactional(readOnly = true)
+    public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
+        townService.findById(productSearchCondition.getTownId());
+        List<Product> all = productRepository.findAll();
 
-    @Transactional
-    public void updateStatus(long userId, long productId, UpdateProductStateRequest stateRequest) {
-        //있는 회원인지 검증
-        memberService.findMemberById(userId);
-        Product product = findById(productId);
-        Status status = Status.getStatusByValue(stateRequest.getState());
-        product.updateStatus(status);
-    }
-
-    public Product findById(long productId) {
-        return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
+        Page<ProductPagingResponse> page = productRepository.searchPage(productSearchCondition, pageable, userId);
+        CountInfo countInfo = new CountInfo();
+        return MainPageResponse.of(page, countInfo);
     }
 }

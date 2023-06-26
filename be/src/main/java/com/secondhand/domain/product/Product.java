@@ -4,6 +4,7 @@ import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
+import com.secondhand.util.BaseTimeEntity;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import lombok.*;
@@ -18,7 +19,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Product {
+public class Product extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,21 +35,22 @@ public class Product {
     private Integer countView;
     private Integer countLike;
     private String thumbnailUrl;
+    private boolean deleted;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "town_id")
     private Town towns;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @OneToMany(mappedBy = "product")
-    private List<Interested> interesteds = new ArrayList<>();
+    private List<ProductImage> productImages = new ArrayList<>();
 
     public static Product create(ProductSaveRequest requestInfo, Member member, Category category, Town town) {
         return Product.builder()

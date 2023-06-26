@@ -2,14 +2,19 @@ package com.secondhand.web.contoroller;
 
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
+import com.secondhand.service.CategoryService;
 import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
-import com.secondhand.web.dto.requset.*;
+import com.secondhand.web.dto.requset.ProductSearchCondition;
+import com.secondhand.web.dto.requset.ProductLikeResponse;
+import com.secondhand.web.dto.requset.ProductSaveRequest;
+import com.secondhand.web.dto.requset.ProductUpdateRequest;
+import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductDTO;
-import com.secondhand.web.dto.response.ProductLikeResponse;
 import com.secondhand.web.dto.response.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,18 +28,24 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
     @Operation(
             summary = "상품 10개씩 리스트",
             tags = "products",
-            description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다.."
+            description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다(지역 과 카테고리) 좋아요유무.."
     )
+    @LoginCheck
     @GetMapping
-    public BasicResponse<List<ProductDTO>> search(FilterRequest filterRequestDTO) {
-        return BasicResponse.<List<ProductDTO>>builder()
+    public BasicResponse<MainPageResponse> viewPage(ProductSearchCondition productSearchCondition, Pageable pageable, @LoginValue long userId) {
+
+        MainPageResponse mainPageResponse = productService.getProductList(productSearchCondition, pageable, userId);
+
+        return BasicResponse.<MainPageResponse>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
+                .data(mainPageResponse)
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
@@ -44,16 +55,15 @@ public class ProductController {
             tags = "products",
             description = "사용자는 자시의 관심 목록을 카테고리 뱔로 확인 가능."
     )
+    @LoginCheck
     @GetMapping("/like")
-    public ResponseEntity<BasicResponse<List<ProductDTO>>> productLikeCategoryView() {
-        BasicResponse message = BasicResponse.builder()
+    public BasicResponse<MainPageResponse> productLikeCategoryView() {
+        return BasicResponse.<MainPageResponse>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .build();
-
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
     @Operation(
@@ -61,6 +71,7 @@ public class ProductController {
             tags = "products",
             description = "사용자는 세일/판매 중인 상품을 볼수 있다."
     )
+    @LoginCheck
     @GetMapping("/sales")
     public ResponseEntity<BasicResponse<List<ProductDTO>>> productSalesView() {
         BasicResponse message = BasicResponse.builder()
@@ -120,43 +131,20 @@ public class ProductController {
             description = "사용자는상품을 과 관심상품 / 해제 할수 있다.."
     )
     @LoginCheck
-    @PatchMapping("/{productId}/likes")
-    public BasicResponse checkLike(@LoginValue long userId,
-                                   @PathVariable long productId,
-                                   @RequestBody LikeRequest likeRequest) {
-
-        productService.registerLike(userId, productId, likeRequest.isLiked());
-
+    @PatchMapping("/{productId}")
+    public ResponseEntity<BasicResponse<ProductLikeResponse>> checkLike(@PathVariable long productId) {
         ProductLikeResponse dto = new ProductLikeResponse();
-        return BasicResponse.builder()
+        BasicResponse message = BasicResponse.builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .data(dto)
                 .build();
+
+        return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
-    @Operation(
-            summary = "사용자는 특정 상품의 상태를 변경할 수 있다",
-            tags = "products",
-            description = "사용자는 특정 상품의 상태를 변경할 수 있다"
-    )
-    @LoginCheck
-    @PatchMapping("/{productId}")
-    public BasicResponse checkStatus(@LoginValue long userId,
-                                     @PathVariable long productId,
-                                     @RequestBody UpdateProductStateRequest stateRequest) {
-
-        productService.updateStatus(userId, productId, stateRequest);
-
-        return BasicResponse.builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .build();
-    }
 
     @Operation(
             summary = "상품 디테일 페이지",
