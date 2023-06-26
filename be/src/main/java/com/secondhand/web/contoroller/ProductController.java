@@ -33,7 +33,7 @@ public class ProductController {
     @Operation(
             summary = "상품 10개씩 리스트",
             tags = "products",
-            description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다.."
+            description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다(지역 과 카테고리) 좋아요유무.."
     )
     @LoginCheck
     @GetMapping
@@ -55,16 +55,15 @@ public class ProductController {
             tags = "products",
             description = "사용자는 자시의 관심 목록을 카테고리 뱔로 확인 가능."
     )
+    @LoginCheck
     @GetMapping("/like")
-    public ResponseEntity<BasicResponse<List<ProductDTO>>> productLikeCategoryView() {
-        BasicResponse message = BasicResponse.builder()
+    public BasicResponse<MainPageResponse> productLikeCategoryView() {
+        return BasicResponse.<MainPageResponse>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .build();
-
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
     }
 
     @Operation(
@@ -72,6 +71,7 @@ public class ProductController {
             tags = "products",
             description = "사용자는 세일/판매 중인 상품을 볼수 있다."
     )
+    @LoginCheck
     @GetMapping("/sales")
     public ResponseEntity<BasicResponse<List<ProductDTO>>> productSalesView() {
         BasicResponse message = BasicResponse.builder()
@@ -130,6 +130,7 @@ public class ProductController {
             tags = "products",
             description = "사용자는상품을 과 관심상품 / 해제 할수 있다.."
     )
+    @LoginCheck
     @PatchMapping("/{productId}")
     public ResponseEntity<BasicResponse<ProductLikeResponse>> checkLike(@PathVariable long productId) {
         ProductLikeResponse dto = new ProductLikeResponse();

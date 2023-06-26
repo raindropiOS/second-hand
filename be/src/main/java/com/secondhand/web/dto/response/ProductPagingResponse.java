@@ -4,14 +4,18 @@ import com.querydsl.core.annotations.QueryProjection;
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.CountInfo;
+import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.Status;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
+@Builder
 @Setter
 @NoArgsConstructor
 public class ProductPagingResponse {
@@ -26,10 +30,10 @@ public class ProductPagingResponse {
     private Integer price;
     private CountInfo countInfo;
     private boolean isLiked;
-    private String[] imgUrls;
+    private List[] imgUrls;
 
     @QueryProjection
-    public ProductPagingResponse(boolean isMine, Member seller, Status status, String title, String content, LocalDateTime createdAt, Category category, Integer price, CountInfo countInfo, boolean isLiked, String[] imgUrls) {
+    public ProductPagingResponse(boolean isMine, Member seller, Status status, String title, String content, LocalDateTime createdAt, Category category, Integer price, CountInfo countInfo, boolean isLiked, List[] imgUrls) {
         this.isMine = isMine;
         this.seller = seller;
         this.status = status;
