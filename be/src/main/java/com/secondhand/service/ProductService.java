@@ -11,15 +11,12 @@ import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.response.MainPageResponse;
-import com.secondhand.web.dto.response.ProductPagingResponse;
 import com.secondhand.web.dto.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -78,13 +75,17 @@ public class ProductService {
         return ProductResponse.of(isMine, product);
     }
 
-    @Transactional(readOnly = true)
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
         townService.findById(productSearchCondition.getTownId());
-        List<Product> all = productRepository.findAll();
-
-        Page<ProductPagingResponse> page = productRepository.searchPage(productSearchCondition, pageable, userId);
+        //Count 에 대한 정보들
         CountInfo countInfo = new CountInfo();
+        //page
+        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
+
         return MainPageResponse.of(page, countInfo);
+    }
+
+    public void getMemberSalesProducts(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
+
     }
 }

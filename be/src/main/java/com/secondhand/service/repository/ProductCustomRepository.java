@@ -1,10 +1,10 @@
 package com.secondhand.service.repository;
 
+import com.secondhand.domain.product.Product;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
-import com.secondhand.web.dto.response.ProductPagingResponse;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 public interface ProductCustomRepository {
-    Page<ProductPagingResponse> searchPage(ProductSearchCondition condition, Pageable pageable, long userId);
+    Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable, long userId);
 }

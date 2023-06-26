@@ -5,6 +5,7 @@ import com.secondhand.domain.product.Product;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -14,10 +15,10 @@ import java.util.List;
 public class MainPageResponse {
 
 
-    private Page<ProductPagingResponse> products;
+    private Slice<Product> products;
     private CountInfo countInfo;
 
-    public static MainPageResponse of(Page<ProductPagingResponse> page, CountInfo countInfo) {
+    public static MainPageResponse of(Slice<Product> page, CountInfo countInfo) {
         return MainPageResponse.builder()
                 .products(page)
                 .countInfo(countInfo)
