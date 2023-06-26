@@ -1,6 +1,7 @@
 package com.secondhand.domain.product;
 
 import com.secondhand.domain.categorie.Category;
+import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
 import com.secondhand.util.BaseTimeEntity;
@@ -73,5 +74,15 @@ public class Product extends BaseTimeEntity {
         this.thumbnailUrl = updateRequest.getProductImages();
         this.category = category;
         this.towns = town;
+    }
+
+    //연관 관계 메서드
+    public void updateInterested(Interested interested) {
+        this.interesteds.add(interested);
+        interested.setProduct(this);
+    }
+
+    public void updateStatus(Status status) {
+        this.status = status;
     }
 }

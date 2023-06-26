@@ -21,10 +21,8 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @Column
     private String loginName;
     private String memberToken;
-    @Column
     private String imgUrl;
 
     @ManyToOne
@@ -34,6 +32,10 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "sub_town_id")
     private Town subTown;
+
+//    @OneToMany(mappedBy = "member")
+//    private List<Interested> members = new ArrayList<>();
+
 
     public static Member create(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
         return Member.builder()
@@ -52,5 +54,25 @@ public class Member {
 
     public void removeToken() {
         this.memberToken = null;
+    }
+
+    public void changeTown(Town town) {
+        this.mainTown = town;
+    }
+
+    public void updateTowns(Town mainTown, Town subTown) {
+        this.mainTown = mainTown;
+        this.subTown = subTown;
+    }
+
+    public void updateMainTowns(Town mainTown) {
+        this.mainTown = mainTown;
+    }
+
+    public boolean checkProductIsMine(long id) {
+        if (this.getId() == id) {
+            return true;
+        }
+        return false;
     }
 }
