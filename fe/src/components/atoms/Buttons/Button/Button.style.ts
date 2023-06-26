@@ -60,7 +60,12 @@ const statusStyles = {
   `,
 };
 
-const $Button = styled.button<{ size: ButtonSize; status: ButtonStatus; justifyContent: ButtonJustifyContent }>`
+const $Button = styled.button<{
+  size: ButtonSize;
+  type: 'submit' | 'button' | 'reset';
+  status: ButtonStatus;
+  justifyContent: ButtonJustifyContent;
+}>`
   display: flex;
   flex-direction: row;
   align-items: center;

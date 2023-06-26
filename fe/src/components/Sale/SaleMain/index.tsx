@@ -10,6 +10,7 @@ import Chip from '@atoms/Chip';
 import ImagePreviews from '@components/molecules/ImagePreviews';
 import {
   $SaleMain,
+  $SaleForm,
   $CategoriesLayout,
   $RecommendCategories,
   $SelectCategoryButton,
@@ -22,6 +23,9 @@ interface SaleHeaderProps {
   productInfo: ProductInfo;
   onChange: React.Dispatch<React.SetStateAction<ProductInfo>>;
   currentCategory: { id: number; category: string; url: string };
+  imgFiles: { file: File; url: string }[];
+  handleAddImg: (newImage: File, url: string) => void;
+  handleDeleteImg: (idx: number) => void;
 }
 
 const choiceCategories = (() => {
@@ -35,7 +39,14 @@ const choiceCategories = (() => {
   return categories;
 })();
 
-const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) => {
+const SaleMain = ({
+  imgFiles,
+  onChange,
+  productInfo,
+  currentCategory,
+  handleAddImg,
+  handleDeleteImg,
+}: SaleHeaderProps) => {
   const recommendCategory =
     currentCategory.id === 0 || choiceCategories.map(({ id }) => id).includes(currentCategory.id)
       ? choiceCategories
@@ -91,11 +102,11 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
     return CATEGORIES.filter(({ id }) => id === selectedCategory.id)[0].placeholder;
   })();
 
+  // TODO(hoonding): onSubmit 넣어줘야함.
   return (
     <$SaleMain>
-      <ImagePreviews />
+      <ImagePreviews imgFiles={imgFiles} handleAddImg={handleAddImg} handleDeleteImg={handleDeleteImg} />
       <TextInput onChange={onTitleChange} value={productInfo.title} placeholder="글제목" />
-
       {productInfo.title.length !== 0 && (
         <$CategoriesLayout>
           <$RecommendCategories>

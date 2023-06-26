@@ -4,10 +4,16 @@ import ImageInput from '@atoms/Inputs/ImageInput';
 import { $ImagePreviews, $FirstImage, $Image, $CancelButton } from './ImagePreviews.style';
 import Icon from '@atoms/Icon';
 
-const ImagePreviews = () => {
+interface ImagePreviewsProps {
+  imgFiles: { file: File; url: string }[];
+  handleAddImg: (newImage: File, url: string) => void;
+  handleDeleteImg: (idx: number) => void;
+}
+
+const ImagePreviews = ({ imgFiles, handleAddImg, handleDeleteImg }: ImagePreviewsProps) => {
   // File List Post 할때 필요..
   // TODO(hoonding): 부모에서 props로 imgFiles state 줘야할듯.
-  const [imgFiles, setImgFiles] = useState<{ file: File; url: string }[]>([]);
+  // const [imgFiles, setImgFiles] = useState<{ file: File; url: string }[]>([]);
   const imgRef = useRef<HTMLInputElement | null>(null);
 
   const saveImgFiles = () => {
@@ -21,7 +27,7 @@ const ImagePreviews = () => {
       }: any = endLoad;
 
       if (result && !imgFiles.map(({ url }) => url).includes(result as string)) {
-        setImgFiles(prev => [...prev, { file: newImage, url: result }]);
+        handleAddImg(newImage, result);
       }
     };
 
@@ -29,7 +35,7 @@ const ImagePreviews = () => {
   };
 
   const handleDelete = (idx: number) => {
-    setImgFiles(prev => prev.filter((_, index) => index !== idx));
+    handleDeleteImg(idx);
   };
 
   return (

@@ -34,6 +34,7 @@ const ImageInput = ({ count = 0, imgRef, onChange }: ImageInputProps) => {
         accept="image/jpg, image/jpeg, image/png"
         disabled={count >= MAX_IMAGE_COUNT}
         onChange={onChange}
+        multiple
         ref={imgRef}
       />
     </>
