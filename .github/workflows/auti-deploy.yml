@@ -7,13 +7,7 @@ env:
   working-directory: ./fe
   docker-container-name: second-hand-fe
   docker-image-name: ${{ secrets.DOCKER_REGISTRY }}/frontend
-  REACT_APP_KAKAO_BASE_API_URL: ${{ secrets.REACT_APP_KAKAO_BASE_API_URL}}
-  REACT_APP_KAKAO_REST_API_KEY: ${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}
-  REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
-  REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
-  REACT_APP_BASE_URL: http://43.200.247.94:8080
-  REACT_APP_MOCK_BASE_URL: http://52.79.112.253:8080/api
-  REACT_APP_KAKAO_MAP_APP_KEY: ${{ secrets.REACT_APP_KAKAO_MAP_APP_KEY }}
+
 
 jobs:
   deploy:
