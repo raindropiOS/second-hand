@@ -36,10 +36,8 @@ jobs:
       - name: Build
         run: |
           touch .env
-          echo "${{ secrets.ENV }}" > ./fe.env
+          echo "${{ secrets.ENV }}" > .env
           
-          export CI=false  # 경고를 오류로 처리하지 않도록 설정
-          env-cmd -f .env craco build
           npm run build
         working-directory: ${{ env.working-directory }}
 
