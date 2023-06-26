@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 import ImageInput from '@atoms/Inputs/ImageInput';
-import { $ImagePreviews, $FirstImage, $Image, $CancelButton } from './ImagePreviews.style';
+import { $ImagePreviews, $FirstImage, $Image, $CancelButton, $ImageLabel } from './ImagePreviews.style';
 import Icon from '@atoms/Icon';
 
 interface ImagePreviewsProps {
@@ -47,6 +47,7 @@ const ImagePreviews = ({ imgFiles, handleAddImg, handleDeleteImg }: ImagePreview
             <$CancelButton onClick={() => handleDelete(idx)}>
               <Icon name="cancel" fill="white" />
             </$CancelButton>
+            <$ImageLabel>대표 사진</$ImageLabel>
           </$FirstImage>
         ) : (
           <$Image key={file.name} imgUrl={url}>
