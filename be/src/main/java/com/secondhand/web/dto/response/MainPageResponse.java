@@ -1,9 +1,12 @@
 package com.secondhand.web.dto.response;
 
 import com.secondhand.domain.product.CountInfo;
+import com.secondhand.domain.product.Product;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 
 @Getter
