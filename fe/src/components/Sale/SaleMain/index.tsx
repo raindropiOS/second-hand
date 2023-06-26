@@ -43,7 +43,7 @@ const convertMoneyFormat = (price: string) => {
   if (price.length === 0) return '';
   let purePrice = price.replace(/[^0-9]/g, '');
 
-  if (Number(purePrice) > 99999999) purePrice = '99999999';
+  if (Number(purePrice) > 999999999) purePrice = '999999999';
   return `₩ ${purePrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 };
 
@@ -85,12 +85,6 @@ const SaleMain = ({
 
     const currentValue = target.value.replace(/[^0-9]/g, '');
 
-    if (currentValue.length === 0) {
-      onChange(prev => {
-        return { ...prev, price: currentValue };
-      });
-      return;
-    }
     onChange(prev => {
       return { ...prev, price: currentValue };
     });
