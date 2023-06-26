@@ -1,0 +1,63 @@
+name: Deploy
+on:
+  push:
+    branches: [ release-fe ]
+
+env:
+  working-directory: ./fe
+  docker-container-name: second-hand-fe
+  docker-image-name: ${{ secrets.DOCKER_REGISTRY }}/frontend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.2
+        with:
+          node-version: lts/Hydrogen
+
+      - name: Cache node modules
+        uses: actions/cache@v2.1.8
+        id: cache
+        with:
+          path: node_modules
+          key: npm-packages-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Dependencies
+        run: npm  install
+        working-directory: ${{ env.working-directory }}
+
+      - name: Build
+        run: npm run build
+        working-directory: ${{ env.working-directory }}
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker build -t $DOCKER_REGISTRY/second-hand .
+          docker push ${{ secrets.DOCKER_REGISTRY }}/frontend
+        working-directory: ${{ env.working-directory }}
+
+      - name: Pull and restart Docker Container
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          script: |
+            sudo docker stop ${{ env.docker-container-name }}
+            sudo docker rmi ${{ env.docker-image-name }}
+            sudo docker pull ${{ env.docker-image-name }}
+            sudo  docker-compose up -d
+            sudo  docker image prune -f
