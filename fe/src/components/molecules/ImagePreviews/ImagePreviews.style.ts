@@ -24,7 +24,7 @@ const $ImagePreviews = styled.ul`
   align-items: center;
   gap: 14px;
   width: 100%;
-  height: 115px;
+  height: 130px;
   margin-top: 10px;
   padding-bottom: 15px;
   overflow-x: auto;

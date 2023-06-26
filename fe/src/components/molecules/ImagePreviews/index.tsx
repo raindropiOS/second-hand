@@ -12,8 +12,6 @@ interface ImagePreviewsProps {
 
 const ImagePreviews = ({ imgFiles, handleAddImg, handleDeleteImg }: ImagePreviewsProps) => {
   // File List Post 할때 필요..
-  // TODO(hoonding): 부모에서 props로 imgFiles state 줘야할듯.
-  // const [imgFiles, setImgFiles] = useState<{ file: File; url: string }[]>([]);
   const imgRef = useRef<HTMLInputElement | null>(null);
 
   const saveImgFiles = () => {
@@ -26,6 +24,9 @@ const ImagePreviews = ({ imgFiles, handleAddImg, handleDeleteImg }: ImagePreview
         currentTarget: { result },
       }: any = endLoad;
 
+      if (imgFiles.map(({ url }) => url).includes(result as string)) {
+        alert('동일한 사진을 이미 업로드 하셨어요!');
+      }
       if (result && !imgFiles.map(({ url }) => url).includes(result as string)) {
         handleAddImg(newImage, result);
       }
