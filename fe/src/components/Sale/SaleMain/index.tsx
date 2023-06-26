@@ -39,6 +39,14 @@ const choiceCategories = (() => {
   return categories;
 })();
 
+const convertMoneyFormat = (price: string) => {
+  if (price.length === 0) return '';
+  let purePrice = price.replace(/[^0-9]/g, '');
+
+  if (Number(purePrice) > 99999999) purePrice = '99999999';
+  return `₩ ${purePrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+};
+
 const SaleMain = ({
   imgFiles,
   onChange,
@@ -72,8 +80,19 @@ const SaleMain = ({
   };
 
   const onPriceChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    // 문자를 입력받으면 그냥 전 데이터 그대로.
+    // 숫자를 입력받으면 전 데이터에 추가.
+
+    const currentValue = target.value.replace(/[^0-9]/g, '');
+
+    if (currentValue.length === 0) {
+      onChange(prev => {
+        return { ...prev, price: currentValue };
+      });
+      return;
+    }
     onChange(prev => {
-      return { ...prev, price: target.value };
+      return { ...prev, price: currentValue };
     });
   };
 
@@ -125,7 +144,11 @@ const SaleMain = ({
         </$CategoriesLayout>
       )}
 
-      <TextInput onChange={onPriceChange} value={productInfo.price} placeholder="₩ 가격(선택사항)" />
+      <TextInput
+        onChange={onPriceChange}
+        value={convertMoneyFormat(productInfo.price)}
+        placeholder="₩ 가격(선택사항)"
+      />
       <$ContentTextArea
         ref={textRef}
         onChange={onContentChange}
