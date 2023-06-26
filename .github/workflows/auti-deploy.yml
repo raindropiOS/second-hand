@@ -48,7 +48,7 @@ jobs:
       - name: Set up Docker Buildx
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker build -t $DOCKER_REGISTRY/second-hand .
+          docker build -t $DOCKER_REGISTRY/frontend
           docker push ${{ secrets.DOCKER_REGISTRY }}/frontend
         working-directory: ${{ env.working-directory }}
 
