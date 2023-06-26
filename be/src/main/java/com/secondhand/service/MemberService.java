@@ -54,7 +54,7 @@ public class MemberService {
     private boolean MemberExists(OAuthMemberInfoDTO userInfo) {
         //TODO : 토큰을 받은 후 깃허브로 부터 받은 정보가 DB에 저장하거나 있는 정보인지 체크한다.
         log.debug("userInfo = {}", userInfo.getLogin());
-        return memberRepository.findByMemberName(userInfo.getLogin()).isPresent();
+        return memberRepository.findByLoginName(userInfo.getLogin()).isPresent();
     }
 
     public void logout(long userId) {
@@ -73,6 +73,6 @@ public class MemberService {
     }
 
     public Member findMemberByMemberName(String memberName) {
-        return memberRepository.findByMemberName(memberName).orElseThrow(MemberNotFoundException::new);
+        return memberRepository.findByLoginName(memberName).orElseThrow(MemberNotFoundException::new);
     }
 }

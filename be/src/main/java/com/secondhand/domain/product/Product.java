@@ -13,7 +13,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Getter
 @Builder
@@ -51,6 +50,9 @@ public class Product extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product")
+    private List<Interested> interesteds = new ArrayList<>();
 
     public static Product create(ProductSaveRequest requestInfo, Member member, Category category, Town town) {
         return Product.builder()
