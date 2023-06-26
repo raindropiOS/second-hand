@@ -2,15 +2,19 @@ package com.secondhand.web.contoroller;
 
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
+import com.secondhand.service.CategoryService;
 import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
-import com.secondhand.web.dto.requset.FilterRequest;
+import com.secondhand.web.dto.requset.ProductSearchCondition;
 import com.secondhand.web.dto.requset.ProductLikeResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
+import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductDTO;
+import com.secondhand.web.dto.response.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,18 +28,24 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
     @Operation(
             summary = "상품 10개씩 리스트",
             tags = "products",
             description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다.."
     )
+    @LoginCheck
     @GetMapping
-    public BasicResponse<List<ProductDTO>> search(FilterRequest filterRequestDTO) {
-        return BasicResponse.<List<ProductDTO>>builder()
+    public BasicResponse<MainPageResponse> viewPage(ProductSearchCondition productSearchCondition, Pageable pageable, @LoginValue long userId) {
+
+        MainPageResponse mainPageResponse = productService.getProductList(productSearchCondition, pageable, userId);
+
+        return BasicResponse.<MainPageResponse>builder()
                 .success(true)
                 .message("")
                 .apiStatus(20000)
+                .data(mainPageResponse)
                 .httpStatus(HttpStatus.OK)
                 .build();
     }

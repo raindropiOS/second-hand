@@ -5,22 +5,27 @@ import com.secondhand.domain.exception.ProductNotFoundException;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
-import com.secondhand.domain.product.ProductRepository;
+import com.secondhand.domain.product.repository.ProductQueryRepository;
+import com.secondhand.domain.product.repository.ProductRepository;
 import com.secondhand.domain.town.Town;
-import com.secondhand.web.contoroller.ProductResponse;
+import com.secondhand.web.dto.requset.ProductSearchCondition;
+import com.secondhand.web.dto.response.MainPageResponse;
+import com.secondhand.web.dto.response.ProductPagingResponse;
+import com.secondhand.web.dto.response.ProductResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductQueryRepository productQueryRepository;
     private final CategoryService categoryService;
     private final TownService townService;
     private final MemberService memberService;
@@ -49,27 +54,9 @@ public class ProductService {
     //TODO 굳이 필요없어보임
     public ProductResponse updateResponse(long productId, long userId) {
         Product product = findById(productId);
-
-        return ProductResponse.builder()
-                .isMine(checkIsMine(userId, product))
-                .seller(product.getMember())
-                .status(product.getStatus())
-                .title(product.getTitle())
-                .content(product.getContent())
-                .createdAt(LocalDateTime.now())
-                .category(product.getCategory())
-                .price(product.getPrice())
-                .countInfo(
-                        CountInfo.builder()
-                                .chatCount(0)
-                                .likeCount(product.getCountLike())
-                                .viewCount(product.getCountView())
-                                .build()
-                )
-                .isLiked(true)
-                .build();
+        boolean isMine = checkIsMine(userId, product);
+        return ProductResponse.of(isMine, product);
     }
-
 
     public void delete(long userId, long productId) {
         Product product = findById(productId);
@@ -89,5 +76,14 @@ public class ProductService {
         Product product = findById(productId);
         boolean isMine = checkIsMine(userId, product);
         return ProductResponse.of(isMine, product);
+    }
+
+
+    @Transactional(readOnly = true)
+    public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
+        townService.findById(productSearchCondition.getTownId());
+        Page<ProductPagingResponse> page = productQueryRepository.searchPage(productSearchCondition, pageable, userId);
+        CountInfo countInfo = new CountInfo();
+        return MainPageResponse.of(page, countInfo);
     }
 }
