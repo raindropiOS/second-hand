@@ -1,7 +1,7 @@
 name: Deploy
 on:
   push:
-    branches: [ release-fe ]
+    branches: [ release-fe-test ]
 
 env:
   working-directory: ./fe
