@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 interface $NavbarLayoutProps {
   children: React.ReactNode;
+  isTransparent?: boolean;
 }
 
 const $NavbarLayout = styled.header<$NavbarLayoutProps>`
@@ -15,12 +16,14 @@ const $NavbarLayout = styled.header<$NavbarLayoutProps>`
   width: 100%;
   height: 50px;
   padding: 0 16px;
-  border-bottom: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.DEFAULT};
+  border-bottom: 1px solid
+    ${({ theme, isTransparent }) => (isTransparent ? 'transparent' : theme.COLORS.NEUTRAL.BORDER.DEFAULT)};
 
   font-weight: ${({ theme }) => theme.FONT_TOKEN.HEADLINE.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.HEADLINE.FONT_SIZE};
   line-height: ${({ theme }) => theme.FONT_TOKEN.HEADLINE.LINE_HEIGHT};
-  background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.DEFAULT};
+  background-color: ${({ theme, isTransparent }) =>
+    isTransparent ? 'transparent' : theme.COLORS.NEUTRAL.BACKGROUND.DEFAULT};
 `;
 
 export { $NavbarLayout };
