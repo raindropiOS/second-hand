@@ -1,17 +1,18 @@
 package com.secondhand.service;
 
+import com.secondhand.domain.exception.CategoryNotFoundException;
 import com.secondhand.domain.exception.TownNotFoundException;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
 import com.secondhand.domain.town.TownRepository;
 import com.secondhand.web.dto.requset.TownRequest;
 import com.secondhand.web.dto.response.TownResponse;
+import com.secondhand.web.dto.updatedto.TownDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,5 +69,10 @@ public class TownService {
 
     public Town findById(Long townId) {
         return townRepository.findById(townId).orElseThrow(TownNotFoundException::new);
+    }
+
+    public TownDTO findDtoById(Long townId) {
+        Town town = townRepository.findById(townId).orElseThrow(CategoryNotFoundException::new);
+        return TownDTO.from(town);
     }
 }

@@ -1,11 +1,15 @@
 package com.secondhand.domain.categorie;
 
-import lombok.Getter;
+import com.secondhand.web.dto.updatedto.CategoryDTO;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 public class Category {
     @Id
     @Column(name = "category_id")
@@ -20,4 +24,13 @@ public class Category {
 
     @Column(length = 300, nullable = false)
     private String placeholder;
+
+    public Category changeEntity(CategoryDTO categoryDTO) {
+        return Category.builder()
+                .id(categoryDTO.getId())
+                .name(categoryDTO.getName())
+                .imgUrl(categoryDTO.getImgUrl())
+                .placeholder(categoryDTO.getPlaceholder())
+                .build();
+    }
 }
