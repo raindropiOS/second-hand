@@ -8,16 +8,24 @@ import Button from '@atoms/Buttons/Button';
 import { $SubmitButton } from './SaleHeader.style';
 interface SaleHeaderProps {
   handleSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  saveTempNewProductData: () => void;
+  deleteTempNewProductData: () => void;
   canAllowSubmit: boolean;
 }
 
-const SaleHeader = ({ handleSubmit, canAllowSubmit }: SaleHeaderProps) => {
+const SaleHeader = ({
+  handleSubmit,
+  canAllowSubmit,
+  saveTempNewProductData,
+  deleteTempNewProductData,
+}: SaleHeaderProps) => {
   // TODO(hoonding): 완료 누르면 sessionStorage 비우기.
 
   const navigate = useNavigate();
 
   const handleBackButtonClick = () => {
     // TODO(hoonding): sessionStorage에 작성중이던 form 저장하기.
+    saveTempNewProductData();
     navigate(PATH.HOME.DEFAULT);
   };
 

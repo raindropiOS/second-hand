@@ -53,6 +53,16 @@ const Sale = () => {
   }, []);
 
   useEffect(() => {
+    if (!sessionStorage.getItem('imgFiles')) return;
+    setImgFiles(JSON.parse(sessionStorage.getItem('imgFiles') as string));
+  }, []);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('selectedCategory')) return;
+    setCategory(JSON.parse(sessionStorage.getItem('selectedCategory') as string));
+  }, []);
+
+  useEffect(() => {
     const tempRecommendCategories = JSON.parse(sessionStorage.getItem('recommendCategories') as string) as {
       id: number;
       category: string;
@@ -71,6 +81,7 @@ const Sale = () => {
   const handleAddImg = (newImage: File, url: string) => {
     setImgFiles(prev => [...prev, { file: newImage, url: url }]);
   };
+
   const handleDeleteImg = (idx: number) => {
     setImgFiles(prev => prev.filter((_, index) => index !== idx));
   };
@@ -107,14 +118,27 @@ const Sale = () => {
 
   const saveTempNewProductData = () => {
     // 뒤로 버튼 누르면 작성중이던 내용 저장.
-    sessionStorage.setItem('selectedCategory', JSON.stringify(category.id));
+    sessionStorage.setItem('selectedCategory', JSON.stringify(category));
     sessionStorage.setItem('productInfo', JSON.stringify(newProductInfo));
     sessionStorage.setItem('imgFiles', JSON.stringify(imgFiles));
+    sessionStorage.setItem('recommendCategories', JSON.stringify(recommendCategories));
+  };
+
+  const deleteTempNewProductData = () => {
+    sessionStorage.removeItem('selectedCategory');
+    sessionStorage.removeItem('productInfo');
+    sessionStorage.removeItem('imgFiles');
+    sessionStorage.removeItem('recommendCategories');
   };
 
   return (
     <$Template>
-      <SaleHeader handleSubmit={handleSubmit} canAllowSubmit={checkCanAllowSubmit()} />
+      <SaleHeader
+        handleSubmit={handleSubmit}
+        canAllowSubmit={checkCanAllowSubmit()}
+        saveTempNewProductData={saveTempNewProductData}
+        deleteTempNewProductData={deleteTempNewProductData}
+      />
       <SaleMain
         imgFiles={imgFiles}
         productInfo={newProductInfo}
@@ -124,6 +148,7 @@ const Sale = () => {
         handleCategory={handleCategory}
         handleAddImg={handleAddImg}
         handleDeleteImg={handleDeleteImg}
+        saveTempNewProductData={saveTempNewProductData}
       />
       <Outlet />
     </$Template>

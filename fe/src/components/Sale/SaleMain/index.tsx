@@ -27,6 +27,7 @@ interface SaleMainProps {
   handleCategory: (categoryId: number) => void;
   handleAddImg: (newImage: File, url: string) => void;
   handleDeleteImg: (idx: number) => void;
+  saveTempNewProductData: () => void;
 }
 
 const convertMoneyFormat = (price: string) => {
@@ -46,6 +47,7 @@ const SaleMain = ({
   handleCategory,
   handleAddImg,
   handleDeleteImg,
+  saveTempNewProductData,
 }: SaleMainProps) => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const navigate = useNavigate();
@@ -85,9 +87,7 @@ const SaleMain = ({
     // category state 전달!
     const currentCategoryId = currentCategory.id;
 
-    sessionStorage.setItem('selectedCategory', JSON.stringify(currentCategory));
-    sessionStorage.setItem('productInfo', JSON.stringify(productInfo));
-    sessionStorage.setItem('recommendCategories', JSON.stringify(recommendCategories));
+    saveTempNewProductData();
     navigate(PATH.SALE.CATEGORY, { state: { currentCategoryId } });
   };
 
