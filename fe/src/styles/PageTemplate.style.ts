@@ -45,13 +45,24 @@ const PageTemplateStyle = {
   `,
 };
 
-const $Template = styled.div`
+interface $TemplateProps {
+  isDetail?: boolean;
+}
+
+const $Template = styled.div<$TemplateProps>`
   position: relative;
   & > header {
     ${PageTemplateStyle.header}
   }
   & > main {
     ${PageTemplateStyle.main}
+    ${({ isDetail }) =>
+      isDetail &&
+      css`
+        height: calc(100vh - 518px);
+        top: 0;
+        padding: 16px;
+      `}
   }
   & > footer {
     ${PageTemplateStyle.footer}
