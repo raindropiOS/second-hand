@@ -16,7 +16,7 @@ public class CategoryDTO {
 
     public static CategoryDTO from(Category category) {
         return CategoryDTO.builder()
-                .id(category.getId())
+                .id(category.getCategoryId())
                 .name(category.getName())
                 .imgUrl(category.getImgUrl())
                 .placeholder(category.getPlaceholder())

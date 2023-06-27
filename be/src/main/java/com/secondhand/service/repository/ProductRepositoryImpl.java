@@ -13,49 +13,46 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.secondhand.domain.categorie.QCategory.category;
-import static com.secondhand.domain.interested.QInterested.interested;
 import static com.secondhand.domain.member.QMember.member;
 import static com.secondhand.domain.product.QProduct.product;
-import static com.secondhand.domain.product.QProductImage.productImage;
 import static com.secondhand.domain.town.QTown.town;
 
 
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class ProductQueryRepositoryImpl implements ProductCustomRepository {
+public class ProductRepositoryImpl implements ProductCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable) {
+    public Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable,long userId) {
 
-        log.debug("qurelydsl 실행 ={}", condition);
-        int pageSize = pageable.getPageSize();
-        List<Product> fetch = jpaQueryFactory.selectFrom(product)
+        log.debug("qurelydsl 실행 ========================");
+        List<Product> products = jpaQueryFactory.selectFrom(product)
                 .leftJoin(product.towns, town).fetchJoin()
                 .leftJoin(product.category, category).fetchJoin()
                 .leftJoin(product.member, member).fetchJoin()
-                .leftJoin(interested.member, member).fetchJoin()
-                .where(product.deleted.eq(false),
-                        locationEq(condition.getTownId()),
+//                .leftJoin(interested.member, member).fetchJoin()
+                .where(locationEq(condition.getTownId()),
                         categoryEq(condition.getCategoryId()),
-                        isLikedEq(condition.isLiked(), 1),
-                        isStatusEq(condition.getStatus()),
-                        isValidImg())
+                        isStatusEq(condition.getStatus())
+//                        isLikedEq(condition.isLiked(), 1),
+                )
                 .offset(pageable.getOffset())
                 .orderBy(product.createdAt.desc())
-                .limit(pageSize + 1)
+                .limit(pageable.getPageSize() + 1)
                 .fetch();
+        log.debug("qurelydsl 종료 =================");
 
-        return new SliceImpl<>(getContents(fetch, pageSize), pageable, hasNext(fetch, pageSize));
+        return new SliceImpl<>(products, pageable, hasNext(products, pageable.getPageSize()));
     }
 
-    private BooleanExpression isStatusEq(Status status) {
+    private BooleanExpression isStatusEq(String status) {
         if (status == null) {
             return null;
         }
-        return product.status.in(status);
+        return product.status.in(Status.valueOf(status));
     }
 
     private List<Product> getContents(List<Product> fetch, int pageSize) {
@@ -66,29 +63,25 @@ public class ProductQueryRepositoryImpl implements ProductCustomRepository {
         return fetch.size() > pageSize;
     }
 
-    private BooleanExpression isLikedEq(boolean liked, long userId) {
-        if (liked) {
-            return interested.member.id.eq(userId);
-        } else {
-            return null;
-        }
-    }
+//    private BooleanExpression isLikedEq(boolean liked) {
+//        if (categoryId == null) {
+//            return null;
+//        }
+//        return product.category.id.eq(categoryId);
+//    }
 
-    private BooleanExpression isValidImg() {
-        return product.id.eq(productImage.product.id);
-    }
 
     private BooleanExpression locationEq(Long locationId) {
         if (locationId == null) {
             return null;
         }
-        return product.towns.id.eq(locationId);
+        return product.towns.townId.eq(locationId);
     }
 
     private BooleanExpression categoryEq(Long categoryId) {
         if (categoryId == null) {
             return null;
         }
-        return product.category.id.eq(categoryId);
+        return product.category.categoryId.eq(categoryId);
     }
 }

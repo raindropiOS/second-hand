@@ -19,6 +19,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -77,11 +79,11 @@ public class ProductService {
     }
 
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
-        townService.findById(productSearchCondition.getTownId());
+        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
+        List<Product> products = page.getContent();
         //Count 에 대한 정보들
         CountInfo countInfo = new CountInfo();
         //page
-        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable);
         log.debug("page = {} ", page);
         return MainPageResponse.of(page, countInfo);
     }

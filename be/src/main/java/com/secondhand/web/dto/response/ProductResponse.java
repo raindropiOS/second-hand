@@ -35,7 +35,7 @@ public class ProductResponse {
                 .title(product.getTitle())
                 .content(product.getContent())
                 .createdAt(LocalDateTime.now())
-                .category(new ProductCategoryResponse(product.getCategory().getId(), product.getCategory().getName()))
+                .category(new ProductCategoryResponse(product.getCategory().getCategoryId(), product.getCategory().getName()))
                 .price(product.getPrice())
                 .countInfo(
                         CountInfo.builder()

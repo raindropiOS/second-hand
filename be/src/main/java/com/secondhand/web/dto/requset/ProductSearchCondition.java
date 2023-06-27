@@ -11,6 +11,5 @@ public class ProductSearchCondition {
     private final int pageNum;
     private Long townId;
     private Long categoryId;
-    private boolean isLiked;
-    private Status status;
+    private String status;
 }

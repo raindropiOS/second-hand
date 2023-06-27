@@ -39,7 +39,7 @@ public class ProductController {
 
         return BasicResponse.<MainPageResponse>builder()
                 .success(true)
-                .message("사용자는 상품을 10개씩 상품 리스프로 볼 수 있다(지역 과 카테고리) 좋아요유무")
+                .message("사용자는 상품을 10개씩 상품 리스프로 볼 수 있다(지역 과 카테고리) ")
                 .apiStatus(20000)
                 .data(mainPageResponse)
                 .httpStatus(HttpStatus.OK)
