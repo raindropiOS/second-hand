@@ -1,4 +1,4 @@
-package com.secondhand.web.contoroller;
+package com.secondhand.web.controller;
 
 import com.secondhand.service.ImageService;
 import com.secondhand.web.dto.response.ImageResponse;

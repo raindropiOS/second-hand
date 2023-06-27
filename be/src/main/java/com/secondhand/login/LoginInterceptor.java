@@ -32,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             String token = authExtractor.extract(request, BEARER);
 
             //헤더로 부터 토큰을 얻어온 후 유효한 토큰인지 검증한다. 요청에  디코딩한 값을 세팅
-            if (!StringUtils.isEmpty(token) && jwtService.validateToken(token)) {
+            if ((token != null && !token.equals("")) && jwtService.validateToken(token)) {
                 Long id = jwtService.getSubject(token);
                 log.debug("토큰으로 부터 받아온 userId", id);
                 request.setAttribute(USER_ID, id);

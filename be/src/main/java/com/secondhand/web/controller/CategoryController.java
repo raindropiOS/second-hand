@@ -1,4 +1,4 @@
-package com.secondhand.web.contoroller;
+package com.secondhand.web.controller;
 
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.service.CategoryService;

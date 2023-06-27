@@ -1,4 +1,4 @@
-package com.secondhand.web.contoroller;
+package com.secondhand.web.controller;
 
 
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.secondhand.web.contoroller;
+package com.secondhand.web.controller;
 
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;

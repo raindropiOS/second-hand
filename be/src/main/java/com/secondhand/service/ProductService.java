@@ -80,7 +80,7 @@ public class ProductService {
         //Count 에 대한 정보들
         CountInfo countInfo = new CountInfo();
         //page
-        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
+        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable);
 
         return MainPageResponse.of(page, countInfo);
     }

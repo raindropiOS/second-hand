@@ -1,11 +1,11 @@
 package com.secondhand.domain.image;
 
 import com.secondhand.domain.product.Product;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Entity
