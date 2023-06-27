@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, ChangeEvent } from 'react';
+import React, { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CATEGORIES } from '@constants/categories';
@@ -10,7 +10,6 @@ import Chip from '@atoms/Chip';
 import ImagePreviews from '@components/molecules/ImagePreviews';
 import {
   $SaleMain,
-  $SaleForm,
   $CategoriesLayout,
   $RecommendCategories,
   $SelectCategoryButton,
@@ -19,25 +18,16 @@ import {
 
 type ProductInfo = { title: string; price: string; content: string };
 
-interface SaleHeaderProps {
+interface SaleMainProps {
   productInfo: ProductInfo;
   onChange: React.Dispatch<React.SetStateAction<ProductInfo>>;
   currentCategory: { id: number; category: string; url: string };
   imgFiles: { file: File; url: string }[];
+  recommendCategories: { id: number; category: string; url: string }[];
+  handleCategory: (categoryId: number) => void;
   handleAddImg: (newImage: File, url: string) => void;
   handleDeleteImg: (idx: number) => void;
 }
-
-const choiceCategories = (() => {
-  const categories: { id: number; category: string; url: string }[] = [];
-
-  while (categories.length < 3) {
-    const random = Math.floor(Math.random() * CATEGORIES.length);
-
-    if (!categories.map(({ id }) => id).includes(CATEGORIES[random].id)) categories.push(CATEGORIES[random]);
-  }
-  return categories;
-})();
 
 const convertMoneyFormat = (price: string) => {
   if (price.length === 0) return '';
@@ -52,16 +42,11 @@ const SaleMain = ({
   onChange,
   productInfo,
   currentCategory,
+  recommendCategories,
+  handleCategory,
   handleAddImg,
   handleDeleteImg,
-}: SaleHeaderProps) => {
-  const recommendCategory =
-    currentCategory.id === 0 || choiceCategories.map(({ id }) => id).includes(currentCategory.id)
-      ? choiceCategories
-      : [currentCategory, ...choiceCategories];
-  const [selectedCategory, setSelectedCategory] = useState<{ id: number; category: string; url: string }>(
-    currentCategory
-  );
+}: SaleMainProps) => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const navigate = useNavigate();
 
@@ -98,24 +83,20 @@ const SaleMain = ({
 
   const handleCategoryButtonClick = () => {
     // category state 전달!
-    const currentCategoryId = selectedCategory.id;
+    const currentCategoryId = currentCategory.id;
 
-    sessionStorage.setItem('selectedCategory', JSON.stringify(selectedCategory));
+    sessionStorage.setItem('selectedCategory', JSON.stringify(currentCategory));
     sessionStorage.setItem('productInfo', JSON.stringify(productInfo));
+    sessionStorage.setItem('recommendCategories', JSON.stringify(recommendCategories));
     navigate(PATH.SALE.CATEGORY, { state: { currentCategoryId } });
   };
 
-  const handleRecommendCategoryClick = (id: number) => {
-    setSelectedCategory(CATEGORIES.filter(category => category.id === id)[0]);
-  };
-
   const getPlaceholder = (() => {
-    if (selectedCategory.id === 0)
+    if (currentCategory.id === 0)
       return '역삼1동에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)';
-    return CATEGORIES.filter(({ id }) => id === selectedCategory.id)[0].placeholder;
+    return CATEGORIES.filter(({ id }) => id === currentCategory.id)[0].placeholder;
   })();
 
-  // TODO(hoonding): onSubmit 넣어줘야함.
   return (
     <$SaleMain>
       <ImagePreviews imgFiles={imgFiles} handleAddImg={handleAddImg} handleDeleteImg={handleDeleteImg} />
@@ -123,12 +104,12 @@ const SaleMain = ({
       {productInfo.title.length !== 0 && (
         <$CategoriesLayout>
           <$RecommendCategories>
-            {recommendCategory.map(category => (
+            {recommendCategories.map(category => (
               <Chip
                 key={category.id}
                 content={category.category}
-                active={category.id === selectedCategory.id}
-                onClick={() => handleRecommendCategoryClick(category.id)}
+                active={category.id === currentCategory.id}
+                onClick={() => handleCategory(category.id)}
               />
             ))}
           </$RecommendCategories>
