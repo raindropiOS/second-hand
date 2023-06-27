@@ -48,18 +48,15 @@ const Sale = () => {
   const { mutate: addNewProduct, isLoading, isError, isSuccess } = usePostNewProduct();
 
   useEffect(() => {
-    if (!sessionStorage.getItem('productInfo')) return;
-    setNewProductInfo(JSON.parse(sessionStorage.getItem('productInfo') as string));
-  }, []);
+    if (sessionStorage.getItem('productInfo'))
+      setNewProductInfo(JSON.parse(sessionStorage.getItem('productInfo') as string));
+    if (sessionStorage.getItem('imgFiles')) setImgFiles(JSON.parse(sessionStorage.getItem('imgFiles') as string));
+    if (location.state) return;
 
-  useEffect(() => {
-    if (!sessionStorage.getItem('imgFiles')) return;
-    setImgFiles(JSON.parse(sessionStorage.getItem('imgFiles') as string));
-  }, []);
+    if (sessionStorage.getItem('selectedCategory'))
+      setCategory(JSON.parse(sessionStorage.getItem('selectedCategory') as string));
 
-  useEffect(() => {
-    if (!sessionStorage.getItem('selectedCategory')) return;
-    setCategory(JSON.parse(sessionStorage.getItem('selectedCategory') as string));
+    deleteTempNewProductData();
   }, []);
 
   useEffect(() => {
