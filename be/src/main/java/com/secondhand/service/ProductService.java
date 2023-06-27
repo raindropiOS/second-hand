@@ -10,11 +10,8 @@ import com.secondhand.domain.town.Town;
 import com.secondhand.service.repository.ProductRepository;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
-import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductResponse;
-import com.secondhand.web.dto.updatedto.CategoryDTO;
-import com.secondhand.web.dto.updatedto.TownDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -48,15 +45,6 @@ public class ProductService {
         Town town = townService.findById(updateRequest.getTownId());
         Product product = findById(productId);
         checkIsMine(userId, product);
-
-
-//        CategoryDTO categoryDTO = categoryService.findDtoById(updateRequest.getCategoryId());
-//        Category category = categoryService.findById(updateRequest.getCategoryId());
-//        category = category.changeEntity(categoryDTO);
-//        TownDTO townDTO = townService.findDtoById(updateRequest.getTownId());
-//        Town town = townService.findById(updateRequest.getTownId());
-//        town = town.changeEntity(townDTO);
-
         product.update(updateRequest, category, town);
         log.debug("product = {}", product);
     }
@@ -66,9 +54,11 @@ public class ProductService {
     }
 
     //TODO 굳이 필요없어보임
-    public ProductResponse updateResponse(long productId, long userId) {
+    @Transactional
+    public ProductResponse getDetailPage(long productId, long userId) {
         Product product = findById(productId);
         boolean isMine = checkIsMine(userId, product);
+        productRepository.countViews(productId);
         return ProductResponse.of(isMine, product);
     }
 
@@ -86,12 +76,6 @@ public class ProductService {
         throw new NotUserMineProductException();
     }
 
-    public ProductResponse getDetailPage(long userId, long productId) {
-        Product product = findById(productId);
-        boolean isMine = checkIsMine(userId, product);
-        return ProductResponse.of(isMine, product);
-    }
-
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
         townService.findById(productSearchCondition.getTownId());
         //Count 에 대한 정보들
@@ -103,6 +87,5 @@ public class ProductService {
     }
 
     public void getMemberSalesProducts(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
-
     }
 }

@@ -112,7 +112,7 @@ public class ProductController {
                                                  @PathVariable long productId,
                                                  @RequestBody ProductSaveRequest updateRequest) {
         productService.update(productId, updateRequest, userId);
-        ProductResponse productUpdateResponse = productService.updateResponse(productId, userId);
+        ProductResponse productUpdateResponse = productService.getDetailPage(productId, userId);
 
         return BasicResponse.<ProductResponse>builder()
                 .success(true)
@@ -153,7 +153,7 @@ public class ProductController {
     @GetMapping("/{productId}")
     public BasicResponse<ProductResponse> readDetail(@LoginValue long userId, @PathVariable long productId) {
 
-        ProductResponse detailPage = productService.getDetailPage(userId, productId);
+        ProductResponse detailPage = productService.getDetailPage(productId, userId);
 
         return BasicResponse.<ProductResponse>builder()
                 .success(true)

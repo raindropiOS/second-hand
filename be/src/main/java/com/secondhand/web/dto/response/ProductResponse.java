@@ -1,17 +1,13 @@
 package com.secondhand.web.dto.response;
 
-import com.secondhand.domain.categorie.Category;
-import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
-import com.secondhand.domain.product.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Builder
@@ -24,7 +20,7 @@ public class ProductResponse {
     private String title;
     private String content;
     private LocalDateTime createdAt;
-    private Category category;
+    private ProductCategoryResponse category;
     private Integer price;
     private CountInfo countInfo;
     private boolean isLiked;
@@ -39,7 +35,7 @@ public class ProductResponse {
                 .title(product.getTitle())
                 .content(product.getContent())
                 .createdAt(LocalDateTime.now())
-                .category(product.getCategory())
+                .category(new ProductCategoryResponse(product.getCategory().getId(), product.getCategory().getName()))
                 .price(product.getPrice())
                 .countInfo(
                         CountInfo.builder()
