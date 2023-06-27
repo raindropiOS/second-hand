@@ -6,7 +6,6 @@ import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
-import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductLikeResponse;
 import com.secondhand.web.dto.response.ProductResponse;
@@ -92,12 +91,12 @@ public class ProductController {
     @PostMapping
     public BasicResponse<Long> save(@LoginValue long userId,
                                     @RequestBody ProductSaveRequest productSaveRequest) {
-
+        Long save = productService.save(userId, productSaveRequest);
         return BasicResponse.<Long>builder()
                 .success(true)
                 .message("상품 수정")
                 .apiStatus(20000)
-                //.data(productService.save(userId, productSaveRequest))
+                .data(save)
                 .httpStatus(HttpStatus.CREATED)
                 .build();
     }
@@ -111,7 +110,7 @@ public class ProductController {
     @PutMapping("/{productId}")
     public BasicResponse<ProductResponse> update(@LoginValue long userId,
                                                  @PathVariable long productId,
-                                                 @RequestBody ProductUpdateRequest updateRequest) {
+                                                 @RequestBody ProductSaveRequest updateRequest) {
         productService.update(productId, updateRequest, userId);
         ProductResponse productUpdateResponse = productService.updateResponse(productId, userId);
 

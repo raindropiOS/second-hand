@@ -33,27 +33,29 @@ public class ProductService {
     private final MemberService memberService;
 
     @Transactional
-    public void save(long userId, ProductSaveRequest requestInfo) {
-        CategoryDTO dto = categoryService.findDtoById(requestInfo.getCategoryId());
+    public Long save(long userId, ProductSaveRequest requestInfo) {
+        Category category = categoryService.findById(requestInfo.getCategoryId());
         Town town = townService.findById(requestInfo.getTownId());
         Member member = memberService.findMemberById(userId);
-        //   Product product = Product.create(requestInfo, member, category, town);
-        //    Product saveProduct = productRepository.save(product);
-        //  return saveProduct.getId();
+        Product product = Product.create(requestInfo, member, category, town);
+        Product saveProduct = productRepository.save(product);
+        return saveProduct.getId();
     }
 
     @Transactional
-    public void update(long productId, ProductUpdateRequest updateRequest, long userId) {
+    public void update(long productId, ProductSaveRequest updateRequest, long userId) {
+        Category category = categoryService.findById(updateRequest.getCategoryId());
+        Town town = townService.findById(updateRequest.getTownId());
         Product product = findById(productId);
         checkIsMine(userId, product);
 
-        CategoryDTO categoryDTO = categoryService.findDtoById(updateRequest.getCategoryId());
-        Category category = categoryService.findById(updateRequest.getCategoryId());
-        category = category.changeEntity(categoryDTO);
 
-        TownDTO townDTO = townService.findDtoById(updateRequest.getTownId());
-        Town town = townService.findById(updateRequest.getTownId());
-        town = town.changeEntity(townDTO);
+//        CategoryDTO categoryDTO = categoryService.findDtoById(updateRequest.getCategoryId());
+//        Category category = categoryService.findById(updateRequest.getCategoryId());
+//        category = category.changeEntity(categoryDTO);
+//        TownDTO townDTO = townService.findDtoById(updateRequest.getTownId());
+//        Town town = townService.findById(updateRequest.getTownId());
+//        town = town.changeEntity(townDTO);
 
         product.update(updateRequest, category, town);
         log.debug("product = {}", product);

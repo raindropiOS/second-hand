@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -18,8 +19,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ProductResponse {
     private boolean isMine;
-    private Member seller;
-    private Status status;
+    private Seller seller;
+    private Integer status;
     private String title;
     private String content;
     private LocalDateTime createdAt;
@@ -33,8 +34,8 @@ public class ProductResponse {
     public static ProductResponse of(boolean isMine, Product product) {
         return ProductResponse.builder()
                 .isMine(isMine)
-                .seller(product.getMember())
-                .status(product.getStatus())
+                .seller(new Seller(product.getMember().getLoginName(), product.getMember().getId()))
+                .status(product.getStatus().getValue())
                 .title(product.getTitle())
                 .content(product.getContent())
                 .createdAt(LocalDateTime.now())
@@ -48,6 +49,7 @@ public class ProductResponse {
                                 .build()
                 )
                 .isLiked(true)
+                .imgUrls(product.changeProductImages())
                 .build();
     }
 }
