@@ -8,5 +8,5 @@ spring:
     properties:
       hibernate:
         jdbc:
-        default_batch_fetch_size: 100
-
+        default_batch_fetch_size: 1000
+    open-in-view: true
