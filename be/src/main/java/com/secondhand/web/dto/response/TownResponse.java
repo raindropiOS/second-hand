@@ -14,3 +14,4 @@ public class TownResponse {
                 towns.getCity(), towns.getCounty(), towns.getDistrict());
     }
 }
+
