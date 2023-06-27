@@ -10,17 +10,16 @@ import com.secondhand.domain.town.Town;
 import com.secondhand.service.repository.ProductRepository;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
-import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductResponse;
-import com.secondhand.web.dto.updatedto.CategoryDTO;
-import com.secondhand.web.dto.updatedto.TownDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -33,28 +32,21 @@ public class ProductService {
     private final MemberService memberService;
 
     @Transactional
-    public void save(long userId, ProductSaveRequest requestInfo) {
-        CategoryDTO dto = categoryService.findDtoById(requestInfo.getCategoryId());
+    public Long save(long userId, ProductSaveRequest requestInfo) {
+        Category category = categoryService.findById(requestInfo.getCategoryId());
         Town town = townService.findById(requestInfo.getTownId());
         Member member = memberService.findMemberById(userId);
-        //   Product product = Product.create(requestInfo, member, category, town);
-        //    Product saveProduct = productRepository.save(product);
-        //  return saveProduct.getId();
+        Product product = Product.create(requestInfo, member, category, town);
+        Product saveProduct = productRepository.save(product);
+        return saveProduct.getId();
     }
 
     @Transactional
-    public void update(long productId, ProductUpdateRequest updateRequest, long userId) {
+    public void update(long productId, ProductSaveRequest updateRequest, long userId) {
+        Category category = categoryService.findById(updateRequest.getCategoryId());
+        Town town = townService.findById(updateRequest.getTownId());
         Product product = findById(productId);
         checkIsMine(userId, product);
-
-        CategoryDTO categoryDTO = categoryService.findDtoById(updateRequest.getCategoryId());
-        Category category = categoryService.findById(updateRequest.getCategoryId());
-        category = category.changeEntity(categoryDTO);
-
-        TownDTO townDTO = townService.findDtoById(updateRequest.getTownId());
-        Town town = townService.findById(updateRequest.getTownId());
-        town = town.changeEntity(townDTO);
-
         product.update(updateRequest, category, town);
         log.debug("product = {}", product);
     }
@@ -64,9 +56,11 @@ public class ProductService {
     }
 
     //TODO 굳이 필요없어보임
-    public ProductResponse updateResponse(long productId, long userId) {
+    @Transactional
+    public ProductResponse getDetailPage(long productId, long userId) {
         Product product = findById(productId);
         boolean isMine = checkIsMine(userId, product);
+        productRepository.countViews(productId);
         return ProductResponse.of(isMine, product);
     }
 
@@ -84,23 +78,16 @@ public class ProductService {
         throw new NotUserMineProductException();
     }
 
-    public ProductResponse getDetailPage(long userId, long productId) {
-        Product product = findById(productId);
-        boolean isMine = checkIsMine(userId, product);
-        return ProductResponse.of(isMine, product);
-    }
-
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
-        townService.findById(productSearchCondition.getTownId());
+        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
+        List<Product> products = page.getContent();
         //Count 에 대한 정보들
         CountInfo countInfo = new CountInfo();
         //page
-        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable);
         log.debug("page = {} ", page);
         return MainPageResponse.of(page, countInfo);
     }
 
     public void getMemberSalesProducts(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
-
     }
 }

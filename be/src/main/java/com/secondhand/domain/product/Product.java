@@ -72,7 +72,7 @@ public class Product extends BaseTimeEntity {
                 .build();
     }
 
-    public void update(ProductUpdateRequest updateRequest, Category category, Town town) {
+    public void update(ProductSaveRequest updateRequest, Category category, Town town) {
         this.title = updateRequest.getTitle();
         this.content = updateRequest.getContent();
         this.price = updateRequest.getPrice();
@@ -80,8 +80,6 @@ public class Product extends BaseTimeEntity {
         this.category = category;
         this.towns = town;
     }
-
-
 
     //연관 관계 메서드
     public void updateInterested(Interested interested) {
@@ -91,5 +89,11 @@ public class Product extends BaseTimeEntity {
 
     public void updateStatus(Status status) {
         this.status = status;
+    }
+
+    public String[] changeProductImages() {
+        return productImages.stream()
+                .map(ProductImage::getImgUrl)
+                .toArray(String[]::new);
     }
 }

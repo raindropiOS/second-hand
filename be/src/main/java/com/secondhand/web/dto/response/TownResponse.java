@@ -9,7 +9,7 @@ public class TownResponse {
     private final String name;
 
     public TownResponse(Town towns) {
-        this.id = towns.getId();
+        this.id = towns.getTownId();
         this.name = String.format("%s %s %s",
                 towns.getCity(), towns.getCounty(), towns.getDistrict());
     }

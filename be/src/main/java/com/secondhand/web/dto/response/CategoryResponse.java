@@ -1,8 +1,11 @@
 package com.secondhand.web.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.secondhand.domain.categorie.Category;
 import lombok.Builder;
 import lombok.Getter;
+
+import javax.persistence.Entity;
 
 @Getter
 public class CategoryResponse {

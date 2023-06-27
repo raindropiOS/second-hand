@@ -15,7 +15,7 @@ public class TownDTO {
 
     public static TownDTO from(Town town) {
         return TownDTO.builder()
-                .id(town.getId())
+                .id(town.getTownId())
                 .city(town.getCity())
                 .county(town.getCounty())
                 .district(town.getDistrict())

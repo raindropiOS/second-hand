@@ -77,7 +77,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler(NotUserMineProductException.class)
-    public final ResponseEntity<Object> handleNotUserMineProductExceptions(CategoryNotFoundException e,
+    public final ResponseEntity<Object> handleNotUserMineProductExceptions(NotUserMineProductException e,
                                                                        WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(e.getMessage(), request.getDescription(false));

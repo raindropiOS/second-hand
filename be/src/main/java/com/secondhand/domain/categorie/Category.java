@@ -14,7 +14,7 @@ public class Category {
     @Id
     @Column(name = "category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long categoryId;
 
     @Column(length = 45, nullable = false)
     private String name;
@@ -27,7 +27,7 @@ public class Category {
 
     public Category changeEntity(CategoryDTO categoryDTO) {
         return Category.builder()
-                .id(categoryDTO.getId())
+                .categoryId(categoryDTO.getId())
                 .name(categoryDTO.getName())
                 .imgUrl(categoryDTO.getImgUrl())
                 .placeholder(categoryDTO.getPlaceholder())

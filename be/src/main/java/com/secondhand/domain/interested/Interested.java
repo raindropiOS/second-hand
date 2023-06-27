@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Interested {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RECRUIT_CATEGORY_ID")
+    @Column(name = "interested_id")
     private Long id;
 
     @ManyToOne

@@ -37,7 +37,7 @@ public class CategoryController {
         // Category 객체를 CategoryDTO로 변환
         for (Category category : categoryList) {
             CategoryResponse categoryResponse = CategoryResponse.builder()
-                    .categoryId(category.getId())
+                    .categoryId(category.getCategoryId())
                     .name(category.getName())
                     .imgUrl(category.getImgUrl())
                     .placeholder(category.getPlaceholder())
