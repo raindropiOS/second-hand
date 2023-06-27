@@ -1,4 +1,4 @@
-package com.secondhand.web.contoroller;
+package com.secondhand.web.controller;
 
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
@@ -86,18 +86,18 @@ public class ProductController {
     @Operation(
             summary = "상품 등록",
             tags = "products",
-            description = "사용자는 단일 상품을 등록할 수 있다."
+            description = "사용자는 단일 상품을 등록할 수 있다 저장된 product id반환."
     )
     @LoginCheck
     @PostMapping
-    public BasicResponse save(@LoginValue long userId,
-                              @RequestBody ProductSaveRequest productSaveRequest) {
+    public BasicResponse<Long> save(@LoginValue long userId,
+                                    @RequestBody ProductSaveRequest productSaveRequest) {
 
-        productService.save(userId, productSaveRequest);
-        return BasicResponse.builder()
+        return BasicResponse.<Long>builder()
                 .success(true)
-                .message("상품 등록")
+                .message("상품 수정")
                 .apiStatus(20000)
+                //.data(productService.save(userId, productSaveRequest))
                 .httpStatus(HttpStatus.CREATED)
                 .build();
     }
@@ -112,7 +112,7 @@ public class ProductController {
     public BasicResponse<ProductResponse> update(@LoginValue long userId,
                                                  @PathVariable long productId,
                                                  @RequestBody ProductUpdateRequest updateRequest) {
-        productService.update(productId, updateRequest);
+        productService.update(productId, updateRequest, userId);
         ProductResponse productUpdateResponse = productService.updateResponse(productId, userId);
 
         return BasicResponse.<ProductResponse>builder()

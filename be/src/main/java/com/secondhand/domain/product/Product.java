@@ -1,5 +1,6 @@
 package com.secondhand.domain.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
@@ -34,14 +35,16 @@ public class Product extends BaseTimeEntity {
     private Integer countView;
     private Integer countLike;
     private String thumbnailUrl;
-    private boolean deleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "town_id")
+    @JsonIgnore
     private Town towns;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnore
+
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -77,6 +80,8 @@ public class Product extends BaseTimeEntity {
         this.category = category;
         this.towns = town;
     }
+
+
 
     //연관 관계 메서드
     public void updateInterested(Interested interested) {
