@@ -4,11 +4,12 @@ import { $Button, ButtonSize, ButtonStatus, ButtonJustifyContent } from './Butto
 
 type ButtonProps = {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick: (() => void) | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
   size?: ButtonSize;
   status?: ButtonStatus;
   justifyContent?: ButtonJustifyContent;
   className?: string;
+  type?: 'submit' | 'button' | 'reset';
 };
 
 const Button = ({
@@ -18,9 +19,17 @@ const Button = ({
   size = 'small',
   status = 'default',
   justifyContent = 'center',
+  type = 'button',
 }: ButtonProps) => {
   return (
-    <$Button className={className} onClick={onClick} size={size} status={status} justifyContent={justifyContent}>
+    <$Button
+      className={className}
+      type={type}
+      onClick={onClick}
+      size={size}
+      status={status}
+      justifyContent={justifyContent}
+    >
       {children}
     </$Button>
   );

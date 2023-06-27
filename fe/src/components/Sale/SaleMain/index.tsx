@@ -10,6 +10,7 @@ import Chip from '@atoms/Chip';
 import ImagePreviews from '@components/molecules/ImagePreviews';
 import {
   $SaleMain,
+  $SaleForm,
   $CategoriesLayout,
   $RecommendCategories,
   $SelectCategoryButton,
@@ -22,6 +23,9 @@ interface SaleHeaderProps {
   productInfo: ProductInfo;
   onChange: React.Dispatch<React.SetStateAction<ProductInfo>>;
   currentCategory: { id: number; category: string; url: string };
+  imgFiles: { file: File; url: string }[];
+  handleAddImg: (newImage: File, url: string) => void;
+  handleDeleteImg: (idx: number) => void;
 }
 
 const choiceCategories = (() => {
@@ -35,7 +39,22 @@ const choiceCategories = (() => {
   return categories;
 })();
 
-const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) => {
+const convertMoneyFormat = (price: string) => {
+  if (price.length === 0) return '';
+  let purePrice = price.replace(/[^0-9]/g, '');
+
+  if (Number(purePrice) > 999999999) purePrice = '999999999';
+  return `₩ ${purePrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+};
+
+const SaleMain = ({
+  imgFiles,
+  onChange,
+  productInfo,
+  currentCategory,
+  handleAddImg,
+  handleDeleteImg,
+}: SaleHeaderProps) => {
   const recommendCategory =
     currentCategory.id === 0 || choiceCategories.map(({ id }) => id).includes(currentCategory.id)
       ? choiceCategories
@@ -61,8 +80,13 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
   };
 
   const onPriceChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    // 문자를 입력받으면 그냥 전 데이터 그대로.
+    // 숫자를 입력받으면 전 데이터에 추가.
+
+    const currentValue = target.value.replace(/[^0-9]/g, '');
+
     onChange(prev => {
-      return { ...prev, price: target.value };
+      return { ...prev, price: currentValue };
     });
   };
 
@@ -91,11 +115,11 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
     return CATEGORIES.filter(({ id }) => id === selectedCategory.id)[0].placeholder;
   })();
 
+  // TODO(hoonding): onSubmit 넣어줘야함.
   return (
     <$SaleMain>
-      <ImagePreviews />
+      <ImagePreviews imgFiles={imgFiles} handleAddImg={handleAddImg} handleDeleteImg={handleDeleteImg} />
       <TextInput onChange={onTitleChange} value={productInfo.title} placeholder="글제목" />
-
       {productInfo.title.length !== 0 && (
         <$CategoriesLayout>
           <$RecommendCategories>
@@ -114,7 +138,11 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
         </$CategoriesLayout>
       )}
 
-      <TextInput onChange={onPriceChange} value={productInfo.price} placeholder="₩ 가격(선택사항)" />
+      <TextInput
+        onChange={onPriceChange}
+        value={convertMoneyFormat(productInfo.price)}
+        placeholder="₩ 가격(선택사항)"
+      />
       <$ContentTextArea
         ref={textRef}
         onChange={onContentChange}
