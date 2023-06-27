@@ -3,13 +3,19 @@ import React from 'react';
 import Navbar from '@molecules/Navbar';
 import Icon from '@atoms/Icon';
 import Carousel from '@molecules/Carousel';
+import { Link } from 'react-router-dom';
+import Button from '@atoms/Buttons/Button';
 
 const DetailHeader = () => {
   return (
     <>
       <Navbar isTransparent={true}>
-        <Icon name="chevronLeft" />
-        <Icon name="more" />
+        <Link to="/home">
+          <Icon name="chevronLeft" />
+        </Link>
+        <Button onClick={() => console.log('modal page')} status="ghost">
+          <Icon name="more" />
+        </Button>
       </Navbar>
       <Carousel>
         <Carousel.Slide>
