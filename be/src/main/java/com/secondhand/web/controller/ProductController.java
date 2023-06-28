@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -127,16 +126,16 @@ public class ProductController {
     }
 
     @Operation(
-            summary = "상품 관심 상품 등록/해제",
+            summary = "상품 관심 상품 등록/해제  상품의 상태를 변경할 수 있다",
             tags = "products",
-            description = "사용자는상품을 과 관심상품 / 해제 할수 있다.."
+            description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
     )
     @LoginCheck
-    @PatchMapping("/{productId}")
-    public BasicResponse<ProductLikeResponse> changeLike(@RequestBody LikeRequest likeRequest,
+    @PatchMapping("{productId}")
+    public BasicResponse<ProductLikeResponse> changeLike(@RequestBody StatusOrLikeRequest request,
                                                          @PathVariable long productId,
                                                          @LoginValue long userId) {
-        productService.changeLike(productId, userId, likeRequest);
+        productService.changeLike(productId, userId, request);
 
         return BasicResponse.<ProductLikeResponse>builder()
                 .success(true)
@@ -146,25 +145,25 @@ public class ProductController {
                 .build();
     }
 
-    @Operation(
-            summary = "사용자는 특정 상품의 상태를 변경할 수 있다",
-            tags = "products",
-            description = "사용자는상품을 사용자는 특정 상품의 상태를 변경할 수 있다."
-    )
-    @LoginCheck
-    @PatchMapping("/{productId}")
-    public BasicResponse<ProductStatusResponse> changeStatus(@RequestBody StatusRequest statusRequest,
-                                                             @PathVariable long productId,
-                                                             @LoginValue long userId) {
-        productService.changeStatus(productId, userId, statusRequest);
-
-        return BasicResponse.<ProductStatusResponse>builder()
-                .success(true)
-                .message("사용자는상품을 사용자는 특정 상품의 상태를 변경할 수 있다")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .build();
-    }
+//    @Operation(
+//            summary = "사용자는 특정 상품의 상태를 변경할 수 있다",
+//            tags = "products",
+//            description = "사용자는상품을 사용자는 특정 상품의 상태를 변경할 수 있다."
+//    )
+//    @LoginCheck
+//    @PatchMapping("/status/{productId}")
+//    public BasicResponse<ProductStatusResponse> changeStatus(@RequestBody StatusRequest statusRequest,
+//                                                             @PathVariable long productId,
+//                                                             @LoginValue long userId) {
+//        productService.changeStatus(productId, userId, statusRequest);
+//
+//        return BasicResponse.<ProductStatusResponse>builder()
+//                .success(true)
+//                .message("사용자는상품을 사용자는 특정 상품의 상태를 변경할 수 있다")
+//                .apiStatus(20000)
+//                .httpStatus(HttpStatus.OK)
+//                .build();
+//    }
 
 
     @Operation(

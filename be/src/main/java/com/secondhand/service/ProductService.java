@@ -9,8 +9,7 @@ import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.town.Town;
 import com.secondhand.service.repository.ProductRepository;
-import com.secondhand.web.controller.LikeRequest;
-import com.secondhand.web.controller.StatusRequest;
+import com.secondhand.web.controller.StatusOrLikeRequest;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
 import com.secondhand.web.dto.response.MainPageResponse;
@@ -55,18 +54,23 @@ public class ProductService {
         log.debug("product = {}", product);
     }
 
-    public void changeLike(long productId, long userId, LikeRequest likeRequest) {
-        Interested interested = interestedRepository.findByProductId(productId);
-        interested.setLiked(likeRequest.isLiked());
-        Product product = findById(productId);
-        checkIsMine(userId, product);
-        product.updateInterested(interested);
+    //  status 가 null이 아니면 상태변경 아니면 좋아요변경
+    public void changeLike(long productId, long userId, StatusOrLikeRequest likeRequest) {
+        if (likeRequest.getStatus() != null) {
+            Interested interested = interestedRepository.findByProductId(productId);
+            interested.setLiked(likeRequest.isLiked());
+            Product product = findById(productId);
+            checkIsMine(userId, product);
+            product.updateInterested(interested);
+            return;
+        }
+        changeStatus(productId, userId, likeRequest.getStatus());
     }
 
-    public void changeStatus(long productId, long userId, StatusRequest statusRequest) {
+    public void changeStatus(long productId, long userId, Integer statusRequest) {
         Product product = findById(productId);
         checkIsMine(userId, product);
-        product.updateStatus(statusRequest.getStatus());
+        product.updateStatus(statusRequest);
     }
 
     public Product findById(long productId) {
@@ -91,6 +95,7 @@ public class ProductService {
 
     public void delete(long userId, long productId) {
         Product product = findById(productId);
+        checkIsMine(userId, product);
         if (product.getMember().getId() == userId) {
             productRepository.delete(product);
         }
@@ -106,6 +111,7 @@ public class ProductService {
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
         Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
         List<Product> products = page.getContent();
+        log.debug("products = {}", products);
         return MainPageResponse.of(products);
     }
 
