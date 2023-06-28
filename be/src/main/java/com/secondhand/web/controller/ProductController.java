@@ -4,6 +4,7 @@ import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
+import com.secondhand.web.dto.requset.ProductCategorySearchCondition;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
 import com.secondhand.web.dto.requset.StatusOrLikeRequest;
@@ -13,6 +14,7 @@ import com.secondhand.web.dto.response.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,9 +54,11 @@ public class ProductController {
     )
     @LoginCheck
     @GetMapping("/like")
-    public BasicResponse<MainPageResponse> productLikeCategoryView(@LoginValue long userId) {
+    public BasicResponse<MainPageResponse> productLikeCategoryView(ProductCategorySearchCondition condition,
+                                                                   Pageable pageable,
+                                                                   @LoginValue long userId) {
 
-        //   productService.getLikeProductList(userId);
+        productService.getLikeProductList(condition, pageable, userId);
 
         return BasicResponse.<MainPageResponse>builder()
                 .success(true)
