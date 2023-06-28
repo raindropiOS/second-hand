@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.secondhand.domain.categorie.QCategory.category;
+import static com.secondhand.domain.interested.QInterested.interested;
 import static com.secondhand.domain.member.QMember.member;
 import static com.secondhand.domain.product.QProduct.product;
 import static com.secondhand.domain.town.QTown.town;
@@ -26,31 +27,30 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable,long userId) {
+    public Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable, long userId) {
 
         log.debug("qurelydsl 실행 ========================");
         List<Product> products = jpaQueryFactory.selectFrom(product)
                 .leftJoin(product.towns, town).fetchJoin()
                 .leftJoin(product.category, category).fetchJoin()
                 .leftJoin(product.member, member).fetchJoin()
-//                .leftJoin(interested.member, member).fetchJoin()
                 .where(locationEq(condition.getTownId()),
                         categoryEq(condition.getCategoryId()),
                         isStatusEq(condition.getStatus())
-//                        isLikedEq(condition.isLiked(), 1),
                 )
                 .offset(pageable.getOffset())
                 .orderBy(product.createdAt.desc())
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
+        log.debug("condition.getStatus() = {}", condition.getStatus());
         log.debug("qurelydsl 종료 =================");
 
         return new SliceImpl<>(products, pageable, hasNext(products, pageable.getPageSize()));
     }
 
     private BooleanExpression isStatusEq(String status) {
-        if (status == null) {
-            return null;
+        if (status == null || status.isEmpty()) {
+            return null;  // status가 null 또는 비어있는 경우 조건을 적용하지 않음
         }
         return product.status.in(Status.valueOf(status));
     }
@@ -67,7 +67,7 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
 //        if (categoryId == null) {
 //            return null;
 //        }
-//        return product.category.id.eq(categoryId);
+//        return product.interesteds.id.eq(categoryId);
 //    }
 
 

@@ -87,8 +87,8 @@ public class Product extends BaseTimeEntity {
         interested.setProduct(this);
     }
 
-    public void updateStatus(Status status) {
-        this.status = status;
+    public void updateStatus(Integer status) {
+        this.status = Status.getStatusByValue(status);
     }
 
     public String[] changeProductImages() {

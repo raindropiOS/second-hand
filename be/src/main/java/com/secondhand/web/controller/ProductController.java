@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/products")
@@ -53,7 +52,10 @@ public class ProductController {
     )
     @LoginCheck
     @GetMapping("/like")
-    public BasicResponse<MainPageResponse> productLikeCategoryView() {
+    public BasicResponse<MainPageResponse> productLikeCategoryView(@LoginValue long userId) {
+
+        //   productService.getLikeProductList(userId);
+
         return BasicResponse.<MainPageResponse>builder()
                 .success(true)
                 .message("")
@@ -74,6 +76,7 @@ public class ProductController {
                                                             @LoginValue long userId) {
 
         productService.getMemberSalesProducts(productSearchCondition, pageable, userId);
+
         return BasicResponse.<MainPageResponse>builder()
                 .success(true)
                 .message("판매/세일 중인 상품")
@@ -94,7 +97,7 @@ public class ProductController {
         Long save = productService.save(userId, productSaveRequest);
         return BasicResponse.<Long>builder()
                 .success(true)
-                .message("상품 수정")
+                .message("상품 등록")
                 .apiStatus(20000)
                 .data(save)
                 .httpStatus(HttpStatus.CREATED)
@@ -112,7 +115,7 @@ public class ProductController {
                                                  @PathVariable long productId,
                                                  @RequestBody ProductSaveRequest updateRequest) {
         productService.update(productId, updateRequest, userId);
-        ProductResponse productUpdateResponse = productService.getDetailPage(productId, userId);
+        ProductResponse productUpdateResponse = productService.getPage(productId, userId);
 
         return BasicResponse.<ProductResponse>builder()
                 .success(true)
@@ -130,17 +133,37 @@ public class ProductController {
     )
     @LoginCheck
     @PatchMapping("/{productId}")
-    public ResponseEntity<BasicResponse<ProductLikeResponse>> checkLike(@PathVariable long productId) {
-        ProductLikeResponse dto = new ProductLikeResponse();
-        BasicResponse message = BasicResponse.builder()
+    public BasicResponse<ProductLikeResponse> changeLike(@RequestBody LikeRequest likeRequest,
+                                                         @PathVariable long productId,
+                                                         @LoginValue long userId) {
+        productService.changeLike(productId, userId, likeRequest);
+
+        return BasicResponse.<ProductLikeResponse>builder()
                 .success(true)
-                .message("")
+                .message("사용자는상품을 과 관심상품 / 해제 할수 있다.")
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
-                .data(dto)
                 .build();
+    }
 
-        return new ResponseEntity<>(message, null, HttpStatus.OK);
+    @Operation(
+            summary = "사용자는 특정 상품의 상태를 변경할 수 있다",
+            tags = "products",
+            description = "사용자는상품을 사용자는 특정 상품의 상태를 변경할 수 있다."
+    )
+    @LoginCheck
+    @PatchMapping("/{productId}")
+    public BasicResponse<ProductStatusResponse> changeStatus(@RequestBody StatusRequest statusRequest,
+                                                             @PathVariable long productId,
+                                                             @LoginValue long userId) {
+        productService.changeStatus(productId, userId, statusRequest);
+
+        return BasicResponse.<ProductStatusResponse>builder()
+                .success(true)
+                .message("사용자는상품을 사용자는 특정 상품의 상태를 변경할 수 있다")
+                .apiStatus(20000)
+                .httpStatus(HttpStatus.OK)
+                .build();
     }
 
 
@@ -151,9 +174,9 @@ public class ProductController {
     )
     @LoginCheck
     @GetMapping("/{productId}")
-    public BasicResponse<ProductResponse> readDetail(@LoginValue long userId, @PathVariable long productId) {
+    public BasicResponse<ProductResponse> readDetail(@PathVariable long productId) {
 
-        ProductResponse detailPage = productService.getDetailPage(productId, userId);
+        ProductResponse detailPage = productService.getDetailPage(productId);
 
         return BasicResponse.<ProductResponse>builder()
                 .success(true)

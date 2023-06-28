@@ -3,11 +3,14 @@ package com.secondhand.service;
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.exception.NotUserMineProductException;
 import com.secondhand.domain.exception.ProductNotFoundException;
+import com.secondhand.domain.interested.Interested;
+import com.secondhand.domain.interested.InterestedRepository;
 import com.secondhand.domain.member.Member;
-import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.town.Town;
 import com.secondhand.service.repository.ProductRepository;
+import com.secondhand.web.controller.LikeRequest;
+import com.secondhand.web.controller.StatusRequest;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
 import com.secondhand.web.dto.response.MainPageResponse;
@@ -27,6 +30,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final InterestedRepository interestedRepository;
     private final CategoryService categoryService;
     private final TownService townService;
     private final MemberService memberService;
@@ -51,17 +55,38 @@ public class ProductService {
         log.debug("product = {}", product);
     }
 
+    public void changeLike(long productId, long userId, LikeRequest likeRequest) {
+        Interested interested = interestedRepository.findByProductId(productId);
+        interested.setLiked(likeRequest.isLiked());
+        Product product = findById(productId);
+        checkIsMine(userId, product);
+        product.updateInterested(interested);
+    }
+
+    public void changeStatus(long productId, long userId, StatusRequest statusRequest) {
+        Product product = findById(productId);
+        checkIsMine(userId, product);
+        product.updateStatus(statusRequest.getStatus());
+    }
+
     public Product findById(long productId) {
         return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
 
     //TODO 굳이 필요없어보임
     @Transactional
-    public ProductResponse getDetailPage(long productId, long userId) {
+    public ProductResponse getPage(long productId, long userId) {
         Product product = findById(productId);
         boolean isMine = checkIsMine(userId, product);
         productRepository.countViews(productId);
         return ProductResponse.of(isMine, product);
+    }
+
+
+    public ProductResponse getDetailPage(long productId) {
+        Product product = findById(productId);
+        productRepository.countViews(productId);
+        return ProductResponse.of(product);
     }
 
     public void delete(long userId, long productId) {
@@ -81,11 +106,18 @@ public class ProductService {
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
         Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
         List<Product> products = page.getContent();
-        //page
-        log.debug("page = {} ", page);
         return MainPageResponse.of(products);
     }
 
     public void getMemberSalesProducts(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
     }
+
+
+//    public MainPageCategoryResponse getLikeProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId {
+//        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
+//
+////        List<Product> products = productRepository.findAllByInteresteds(userId);
+////        List<Integer> categoryIds =  products.stream().filter(product -> product.getCategory()).
+//      //  return MainPageCategoryResponse.of(products);
+//    }
 }

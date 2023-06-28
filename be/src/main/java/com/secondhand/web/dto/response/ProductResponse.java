@@ -48,4 +48,25 @@ public class ProductResponse {
                 .imgUrls(product.changeProductImages())
                 .build();
     }
+
+    public static ProductResponse of(Product product) {
+        return ProductResponse.builder()
+                .seller(new Seller(product.getMember().getLoginName(), product.getMember().getId()))
+                .status(product.getStatus().getValue())
+                .title(product.getTitle())
+                .content(product.getContent())
+                .createdAt(LocalDateTime.now())
+                .category(new ProductCategoryResponse(product.getCategory().getCategoryId(), product.getCategory().getName()))
+                .price(product.getPrice())
+                .countInfo(
+                        CountInfo.builder()
+                                .chatCount(0)
+                                .likeCount(product.getCountLike())
+                                .viewCount(product.getCountView())
+                                .build()
+                )
+                .isLiked(true)
+                .imgUrls(product.changeProductImages())
+                .build();
+    }
 }

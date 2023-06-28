@@ -1,6 +1,5 @@
 package com.secondhand.web.dto.requset;
 
-import com.secondhand.domain.product.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
