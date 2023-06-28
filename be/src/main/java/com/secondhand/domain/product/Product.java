@@ -84,7 +84,7 @@ public class Product extends BaseTimeEntity {
     //연관 관계 메서드
     public void updateInterested(Interested interested) {
         this.interesteds.add(interested);
-        interested.setProduct(this);
+      //  interested.setProduct(this);
     }
 
     public void updateStatus(Integer status) {

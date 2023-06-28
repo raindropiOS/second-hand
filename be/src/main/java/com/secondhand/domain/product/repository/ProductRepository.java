@@ -1,7 +1,6 @@
-package com.secondhand.service.repository;
+package com.secondhand.domain.product.repository;
 
 import com.secondhand.domain.product.Product;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

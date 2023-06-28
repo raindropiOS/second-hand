@@ -29,6 +29,7 @@ public class Interested {
 
     private boolean isLiked;
 
+
     public static Interested create(Member member, Product product, boolean liked) {
         return Interested.builder()
                 .product(product)

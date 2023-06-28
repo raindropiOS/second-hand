@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class StatusOrLikeRequest {
-    private boolean isLiked;
+    private Boolean isLiked;
     private Integer status;
 }

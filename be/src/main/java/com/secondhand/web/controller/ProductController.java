@@ -135,7 +135,12 @@ public class ProductController {
     public BasicResponse<ProductLikeResponse> changeLike(@RequestBody StatusOrLikeRequest request,
                                                          @PathVariable long productId,
                                                          @LoginValue long userId) {
-        productService.changeLike(productId, userId, request);
+
+        if (request.getStatus() == null) {  //like
+            productService.changeLike(productId, userId, request.getIsLiked());
+        } else {
+            productService.changeStatus(productId, userId, request.getStatus());
+        }
 
         return BasicResponse.<ProductLikeResponse>builder()
                 .success(true)
