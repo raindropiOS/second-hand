@@ -4,10 +4,11 @@ import com.secondhand.domain.exception.NotUserMineProductException;
 import com.secondhand.domain.exception.ProductNotFoundException;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.repository.ProductRepository;
-import com.secondhand.web.dto.requset.ProductCategorySearchCondition;
-import com.secondhand.web.dto.requset.ProductSearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
 import com.secondhand.web.dto.response.MainPageCategoryResponse;
 import com.secondhand.web.dto.response.MainPageResponse;
+import com.secondhand.web.dto.response.ProductListResponse;
 import com.secondhand.web.dto.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,11 @@ public class ProductQueryService {
         return MainPageResponse.of(products);
     }
 
-    public void getMemberSalesProducts(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
+    public List<ProductListResponse> getMemberSalesProducts(ProductSalesSearchCondition condition, Pageable pageable, long userId) {
+        Slice<Product> page = productRepository.findAllByStatus(condition, pageable, userId);
+        List<Product> products = page.getContent();
+        log.debug("products = {}", products);
+        return ProductListResponse.fromList(products);
     }
 
 

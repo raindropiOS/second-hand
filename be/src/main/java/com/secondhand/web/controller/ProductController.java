@@ -3,16 +3,14 @@ package com.secondhand.web.controller;
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductQueryService;
+import com.secondhand.service.ProductSalesSearchCondition;
 import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
-import com.secondhand.web.dto.requset.ProductCategorySearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
-import com.secondhand.web.dto.requset.ProductSearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
 import com.secondhand.web.dto.requset.StatusOrLikeRequest;
-import com.secondhand.web.dto.response.MainPageCategoryResponse;
-import com.secondhand.web.dto.response.MainPageResponse;
-import com.secondhand.web.dto.response.ProductLikeResponse;
-import com.secondhand.web.dto.response.ProductResponse;
+import com.secondhand.web.dto.response.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -59,8 +58,8 @@ public class ProductController {
     @LoginCheck
     @GetMapping("/like")
     public BasicResponse<MainPageCategoryResponse> productLikeCategoryView(ProductCategorySearchCondition condition,
-                                                                   Pageable pageable,
-                                                                   @LoginValue long userId) {
+                                                                           Pageable pageable,
+                                                                           @LoginValue long userId) {
 
         MainPageCategoryResponse likeProductList = productQueryService.getLikeProductList(condition, pageable, userId);
 
@@ -80,16 +79,17 @@ public class ProductController {
     )
     @LoginCheck
     @GetMapping("/sales")
-    public BasicResponse<MainPageResponse> productSalesView(ProductSearchCondition productSearchCondition,
-                                                            Pageable pageable,
-                                                            @LoginValue long userId) {
+    public BasicResponse<List<ProductListResponse>> productSalesView(@Valid ProductSalesSearchCondition productSearchCondition,
+                                                                     Pageable pageable,
+                                                                     @LoginValue long userId) {
 
-        productQueryService.getMemberSalesProducts(productSearchCondition, pageable, userId);
+        List<ProductListResponse> products = productQueryService.getMemberSalesProducts(productSearchCondition, pageable, userId);
 
-        return BasicResponse.<MainPageResponse>builder()
+        return BasicResponse.<List<ProductListResponse>>builder()
                 .success(true)
                 .message("판매/세일 중인 상품")
                 .apiStatus(20000)
+                .data(products)
                 .httpStatus(HttpStatus.OK)
                 .build();
     }

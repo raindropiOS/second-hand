@@ -5,13 +5,15 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.Status;
-import com.secondhand.web.dto.requset.ProductCategorySearchCondition;
-import com.secondhand.web.dto.requset.ProductSearchCondition;
+import com.secondhand.service.ProductSalesSearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.secondhand.domain.categorie.QCategory.category;
@@ -39,8 +41,7 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
                 .leftJoin(product.category, category).fetchJoin()
                 .leftJoin(product.member, member).fetchJoin()
                 .where(locationEq(condition.getTownId()),
-                        categoryEq(condition.getCategoryId()),
-                        isStatusEq(condition.getStatus())
+                        categoryEq(condition.getCategoryId())
                 )
                 .orderBy(product.id.desc());
 
@@ -61,13 +62,13 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
 
         log.debug("querydsl 실행 ========================");
         JPAQuery<Product> query = jpaQueryFactory.selectFrom(product)
-                .leftJoin(product.interesteds, interested).fetchJoin()
                 .leftJoin(product.towns, town).fetchJoin()
                 .leftJoin(product.category, category).fetchJoin()
                 .leftJoin(product.member, member).fetchJoin()
+                .leftJoin(product.interesteds, interested).fetchJoin()
                 .where(
                         categoryEq(condition.getCategoryId()),
-                        interested.member.id.eq(userId)
+                        interested.isNotNull().and(interested.member.id.eq(userId))
                 )
                 .orderBy(product.id.desc());
 
@@ -82,11 +83,35 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
         return new SliceImpl<>(products, pageable, hasNext(products, PAGE_SIZE + nextPageIndex));
     }
 
-    private BooleanExpression isStatusEq(String status) {
-        if (status == null || status.isEmpty()) {
+    @Override
+    public Slice<Product> findAllByStatus(ProductSalesSearchCondition condition, Pageable pageable, long userId) {
+        log.debug("querydsl 실행 ========================");
+        JPAQuery<Product> query = jpaQueryFactory.selectFrom(product)
+                .leftJoin(product.towns, town).fetchJoin()
+                .leftJoin(product.category, category).fetchJoin()
+                .leftJoin(product.member, member).fetchJoin()
+                .where(
+                        isStatusEq(condition.getStatus()),
+                        product.member.id.eq(userId)
+                )
+                .orderBy(product.id.desc());
+
+        log.debug("offset = {}", pageable.getPageNumber() * PAGE_SIZE);
+        log.debug("pageable.getPageNumber() = {}", pageable.getPageNumber());
+        List<Product> products = query.offset(pageable.getPageNumber() * PAGE_SIZE)
+                .limit(PAGE_SIZE)
+                .fetch();
+
+        log.debug("qurelydsl 종료 =================");
+        int nextPageIndex = pageable.getPageNumber() * PAGE_SIZE;
+        return new SliceImpl<>(products, pageable, hasNext(products, PAGE_SIZE + nextPageIndex));
+    }
+
+    private BooleanExpression isStatusEq(Integer status) {
+        if (status == null) {
             return null;  // status가 null 또는 비어있는 경우 조건을 적용하지 않음
         }
-        return product.status.in(Status.valueOf(status));
+        return product.status.in(Status.getStatusByValue(status));
     }
 
 

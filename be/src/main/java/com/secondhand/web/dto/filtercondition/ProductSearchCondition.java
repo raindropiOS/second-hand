@@ -1,4 +1,4 @@
-package com.secondhand.web.dto.requset;
+package com.secondhand.web.dto.filtercondition;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,5 +10,4 @@ public class ProductSearchCondition {
 //    private final int pageNum;
     private Long townId;
     private Long categoryId;
-    private String status;
 }
