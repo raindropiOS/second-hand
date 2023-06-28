@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { $ListItemContainer } from '@components/Home/HomeMain/HomeMainMain/HomeMainMain.style';
+import { $SalesHistoryMainContainer } from './SalesHistoryMain.style';
 
 import ListItem from '@molecules/ListItem';
 import ConvertPriceFormat from '@utils/convertPriceFormat';
-import { $SalesHistoryMainContainer } from './SalesHistoryMain.style';
-import getStatusWord from '@utils/getStatusWord';
+import PATH from '@constants/routerPath';
 
 interface Product {
   productId: number;
@@ -24,6 +26,8 @@ interface SalesHistoryMainProps {
 
 const SalesHistoryMain = ({ products, observerTarget }: SalesHistoryMainProps) => {
   // FIXME(jayden): strict 모드 꺼도 순간 두번씩 호출됨 => observerTarget관련인듯하다.
+  const navigate = useNavigate();
+
   return (
     <$SalesHistoryMainContainer>
       <$ListItemContainer>
@@ -33,7 +37,7 @@ const SalesHistoryMain = ({ products, observerTarget }: SalesHistoryMainProps) =
             key={product.productId}
             price={ConvertPriceFormat(product.price)}
             isCurrentUserItem={true}
-            onItemClick={() => console.log('onItemClick')}
+            onItemClick={() => navigate(`${PATH.PRODUCT.DETAIL(product.productId)}`)}
           />
         ))}
         <div ref={observerTarget} />
