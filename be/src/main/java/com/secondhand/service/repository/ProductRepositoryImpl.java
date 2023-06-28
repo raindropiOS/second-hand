@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.secondhand.domain.categorie.QCategory.category;
-import static com.secondhand.domain.interested.QInterested.interested;
 import static com.secondhand.domain.member.QMember.member;
 import static com.secondhand.domain.product.QProduct.product;
 import static com.secondhand.domain.town.QTown.town;
@@ -28,9 +27,10 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable, long userId) {
-
-        int pageSize = 10; // 페이지 크기를 10으로 설정
-        PageRequest pageRequest = PageRequest.of(0, pageSize); // 첫 번째 페이지, 페이지 크기 10
+        int pageSize = pageable.getPageSize();
+        int pageNumber = pageable.getPageNumber();
+        log.debug("pageSize = {}", pageSize);
+        log.debug("pageNumber = {}", pageNumber);
 
         log.debug("qurelydsl 실행 ========================");
         List<Product> products = jpaQueryFactory.selectFrom(product)
@@ -42,13 +42,14 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
                         isStatusEq(condition.getStatus())
                 )
                 .offset(pageable.getOffset())
+                .limit(pageSize)
                 .orderBy(product.id.desc())
-                .limit(pageable.getPageSize() + 1)
                 .fetch();
-        log.debug("condition.getStatus() = {}", condition.getStatus());
+        log.debug("products = {}", products);
+        log.debug("condition = {}", condition.toString());
         log.debug("qurelydsl 종료 =================");
 
-        return new SliceImpl<>(products, pageable, hasNext(products, pageRequest.getPageSize()));
+        return new SliceImpl<>(products, pageable, hasNext(products, pageSize));
     }
 
     private BooleanExpression isStatusEq(String status) {
