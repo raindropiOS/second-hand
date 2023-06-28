@@ -8,6 +8,5 @@ import org.springframework.data.domain.Slice;
 import java.util.List;
 
 public interface ProductCustomRepository {
-    Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable,long userId);
-
+    Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable, long userId);
 }
