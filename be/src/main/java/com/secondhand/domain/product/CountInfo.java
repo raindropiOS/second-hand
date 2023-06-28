@@ -10,4 +10,8 @@ public class CountInfo {
     private Integer chatCount;
     private Integer likeCount;
     private Integer viewCount;
+
+    public CountInfo(Integer countLike) {
+        this.likeCount = countLike;
+    }
 }

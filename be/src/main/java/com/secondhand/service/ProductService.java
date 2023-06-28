@@ -81,11 +81,9 @@ public class ProductService {
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
         Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
         List<Product> products = page.getContent();
-        //Count 에 대한 정보들
-        CountInfo countInfo = new CountInfo();
         //page
         log.debug("page = {} ", page);
-        return MainPageResponse.of(page, countInfo);
+        return MainPageResponse.of(products);
     }
 
     public void getMemberSalesProducts(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
