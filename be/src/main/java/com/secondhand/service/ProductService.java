@@ -7,20 +7,14 @@ import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.interested.InterestedRepository;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.Product;
-import com.secondhand.domain.town.Town;
 import com.secondhand.domain.product.repository.ProductRepository;
+import com.secondhand.domain.town.Town;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
-import com.secondhand.web.dto.requset.ProductSearchCondition;
-import com.secondhand.web.dto.response.MainPageResponse;
-import com.secondhand.web.dto.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -82,26 +76,9 @@ public class ProductService {
         throw new NotUserMineProductException();
     }
 
-    public Product findById(long productId) {
-        return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
-    }
 
     //TODO 굳이 필요없어보임
-    @Transactional
-    public ProductResponse getPage(long productId, long userId) {
-        Product product = findById(productId);
-        boolean isMine = checkIsMine(userId, product.getMember().getId());
-        productRepository.countViews(productId);
-        return ProductResponse.of(isMine, product);
-    }
 
-
-    @Transactional
-    public ProductResponse getDetailPage(long productId) {
-        Product product = findById(productId);
-        productRepository.countViews(productId);
-        return ProductResponse.of(product);
-    }
 
     @Transactional
     public void delete(long userId, long productId) {
@@ -119,23 +96,7 @@ public class ProductService {
         throw new NotUserMineProductException();
     }
 
-    @Transactional
-    public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
-        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
-        List<Product> products = page.getContent();
-        log.debug("products = {}", products);
-        return MainPageResponse.of(products);
+    public Product findById(long productId) {
+        return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
-
-    public void getMemberSalesProducts(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
-    }
-
-
-//    public MainPageCategoryResponse getLikeProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId {
-//        Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
-//
-////        List<Product> products = productRepository.findAllByInteresteds(userId);
-////        List<Integer> categoryIds =  products.stream().filter(product -> product.getCategory()).
-//      //  return MainPageCategoryResponse.of(products);
-//    }
 }
