@@ -3,6 +3,7 @@ package com.secondhand.web.controller;
 import lombok.Getter;
 
 @Getter
-public class LikeRequest {
+public class StatusOrLikeRequest {
     private boolean isLiked;
+    private Integer status;
 }

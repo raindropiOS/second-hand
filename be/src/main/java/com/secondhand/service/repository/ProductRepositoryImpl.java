@@ -29,6 +29,9 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
     @Override
     public Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable, long userId) {
 
+        int pageSize = 10; // 페이지 크기를 10으로 설정
+        PageRequest pageRequest = PageRequest.of(0, pageSize); // 첫 번째 페이지, 페이지 크기 10
+
         log.debug("qurelydsl 실행 ========================");
         List<Product> products = jpaQueryFactory.selectFrom(product)
                 .leftJoin(product.towns, town).fetchJoin()
@@ -39,13 +42,13 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
                         isStatusEq(condition.getStatus())
                 )
                 .offset(pageable.getOffset())
-                .orderBy(product.createdAt.desc())
+                .orderBy(product.id.desc())
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
         log.debug("condition.getStatus() = {}", condition.getStatus());
         log.debug("qurelydsl 종료 =================");
 
-        return new SliceImpl<>(products, pageable, hasNext(products, pageable.getPageSize()));
+        return new SliceImpl<>(products, pageable, hasNext(products, pageRequest.getPageSize()));
     }
 
     private BooleanExpression isStatusEq(String status) {
