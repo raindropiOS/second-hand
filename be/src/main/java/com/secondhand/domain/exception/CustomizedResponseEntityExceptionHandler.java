@@ -2,8 +2,11 @@ package com.secondhand.domain.exception;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +14,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @ControllerAdvice
@@ -22,6 +27,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 new ExceptionResponse(e.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status,
+                                                                  WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MissingTokenException.class)
@@ -68,7 +84,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler(StatusNotFoundException.class)
-    public final ResponseEntity<Object> handleStatusNotFoundExceptions(CategoryNotFoundException e,
+    public final ResponseEntity<Object> handleStatusNotFoundExceptions(StatusNotFoundException e,
                                                                        WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(e.getMessage(), request.getDescription(false));
@@ -78,7 +94,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     @ExceptionHandler(NotUserMineProductException.class)
     public final ResponseEntity<Object> handleNotUserMineProductExceptions(NotUserMineProductException e,
-                                                                       WebRequest request) {
+                                                                           WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(e.getMessage(), request.getDescription(false));
 

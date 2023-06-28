@@ -15,9 +15,10 @@ import com.secondhand.web.dto.response.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -139,7 +140,7 @@ public class ProductController {
     )
     @LoginCheck
     @PatchMapping("{productId}")
-    public BasicResponse<ProductLikeResponse> changeLike(@RequestBody StatusOrLikeRequest request,
+    public BasicResponse<ProductLikeResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
                                                          @PathVariable long productId,
                                                          @LoginValue long userId) {
 
