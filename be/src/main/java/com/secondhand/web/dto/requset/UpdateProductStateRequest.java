@@ -1,4 +1,4 @@
-package com.secondhand.web.controller;
+package com.secondhand.web.dto.requset;
 
 
 import lombok.AllArgsConstructor;

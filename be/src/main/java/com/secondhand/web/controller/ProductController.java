@@ -6,6 +6,7 @@ import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
+import com.secondhand.web.dto.requset.StatusOrLikeRequest;
 import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductLikeResponse;
 import com.secondhand.web.dto.response.ProductResponse;

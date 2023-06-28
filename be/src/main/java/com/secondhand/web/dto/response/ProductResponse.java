@@ -2,6 +2,7 @@ package com.secondhand.web.dto.response;
 
 import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
+import com.secondhand.web.dto.vo.Seller;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
