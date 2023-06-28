@@ -8,7 +8,6 @@ import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 
 import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
 import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
-import useProductDetailData from '@apis/api/productDetail';
 
 interface Product {
   productId: number;
@@ -36,7 +35,6 @@ const HomeMain = () => {
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
-  const { data } = useProductDetailData();
   const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
