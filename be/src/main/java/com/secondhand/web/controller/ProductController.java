@@ -9,6 +9,7 @@ import com.secondhand.web.dto.requset.ProductCategorySearchCondition;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
 import com.secondhand.web.dto.requset.StatusOrLikeRequest;
+import com.secondhand.web.dto.response.MainPageCategoryResponse;
 import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductLikeResponse;
 import com.secondhand.web.dto.response.ProductResponse;
@@ -57,16 +58,17 @@ public class ProductController {
     )
     @LoginCheck
     @GetMapping("/like")
-    public BasicResponse<MainPageResponse> productLikeCategoryView(ProductCategorySearchCondition condition,
+    public BasicResponse<MainPageCategoryResponse> productLikeCategoryView(ProductCategorySearchCondition condition,
                                                                    Pageable pageable,
                                                                    @LoginValue long userId) {
 
-        productQueryService.getLikeProductList(condition, pageable, userId);
+        MainPageCategoryResponse likeProductList = productQueryService.getLikeProductList(condition, pageable, userId);
 
-        return BasicResponse.<MainPageResponse>builder()
+        return BasicResponse.<MainPageCategoryResponse>builder()
                 .success(true)
-                .message("")
+                .message("사용자는 자시의 관심 목록을 카테고리 뱔로 확인 가능")
                 .apiStatus(20000)
+                .data(likeProductList)
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
@@ -158,27 +160,6 @@ public class ProductController {
                 .build();
     }
 
-//    @Operation(
-//            summary = "사용자는 특정 상품의 상태를 변경할 수 있다",
-//            tags = "products",
-//            description = "사용자는상품을 사용자는 특정 상품의 상태를 변경할 수 있다."
-//    )
-//    @LoginCheck
-//    @PatchMapping("/status/{productId}")
-//    public BasicResponse<ProductStatusResponse> changeStatus(@RequestBody StatusRequest statusRequest,
-//                                                             @PathVariable long productId,
-//                                                             @LoginValue long userId) {
-//        productService.changeStatus(productId, userId, statusRequest);
-//
-//        return BasicResponse.<ProductStatusResponse>builder()
-//                .success(true)
-//                .message("사용자는상품을 사용자는 특정 상품의 상태를 변경할 수 있다")
-//                .apiStatus(20000)
-//                .httpStatus(HttpStatus.OK)
-//                .build();
-//    }
-
-
     @Operation(
             summary = "상품 디테일 페이지",
             tags = "products",
@@ -186,9 +167,9 @@ public class ProductController {
     )
     @LoginCheck
     @GetMapping("/{productId}")
-    public BasicResponse<ProductResponse> readDetail(@PathVariable long productId) {
+    public BasicResponse<ProductResponse> readDetail(@LoginValue long userId, @PathVariable long productId) {
 
-        ProductResponse detailPage = productQueryService.getDetailPage(productId);
+        ProductResponse detailPage = productQueryService.getDetailPage(productId, userId);
 
         return BasicResponse.<ProductResponse>builder()
                 .success(true)

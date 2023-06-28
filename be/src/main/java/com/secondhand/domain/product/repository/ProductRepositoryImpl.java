@@ -9,13 +9,13 @@ import com.secondhand.web.dto.requset.ProductCategorySearchCondition;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 import static com.secondhand.domain.categorie.QCategory.category;
+import static com.secondhand.domain.interested.QInterested.interested;
 import static com.secondhand.domain.member.QMember.member;
 import static com.secondhand.domain.product.QProduct.product;
 import static com.secondhand.domain.town.QTown.town;
@@ -59,19 +59,27 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
     public Slice<Product> findAllByCategory(ProductCategorySearchCondition condition, Pageable pageable, long userId) {
         int pageSize = 10; // 페이지 크기를 10으로 고정
 
-        log.debug("qurelydsl 실행 ========================");
-        List<Product> products = jpaQueryFactory.selectFrom(product)
+        log.debug("querydsl 실행 ========================");
+        JPAQuery<Product> query = jpaQueryFactory.selectFrom(product)
+                .leftJoin(product.interesteds, interested).fetchJoin()
+                .leftJoin(product.towns, town).fetchJoin()
                 .leftJoin(product.category, category).fetchJoin()
-                .where(categoryEq(condition.getCategoryId())
+                .leftJoin(product.member, member).fetchJoin()
+                .where(
+                        categoryEq(condition.getCategoryId()),
+                        interested.member.id.eq(userId)
                 )
-                .offset(pageable.getOffset())
-                .limit(pageSize)
-                .orderBy(product.id.desc())
-                .fetch();
-        log.debug("products = {}", products);
-        log.debug("qurelydsl 종료 =================");
+                .orderBy(product.id.desc());
 
-        return new SliceImpl<>(products, pageable, hasNext(products, pageSize));
+        log.debug("offset = {}", pageable.getPageNumber() * PAGE_SIZE);
+        log.debug("pageable.getPageNumber() = {}", pageable.getPageNumber());
+        List<Product> products = query.offset(pageable.getPageNumber() * PAGE_SIZE)
+                .limit(PAGE_SIZE)
+                .fetch();
+
+        log.debug("qurelydsl 종료 =================");
+        int nextPageIndex = pageable.getPageNumber() * PAGE_SIZE;
+        return new SliceImpl<>(products, pageable, hasNext(products, PAGE_SIZE + nextPageIndex));
     }
 
     private BooleanExpression isStatusEq(String status) {
@@ -81,9 +89,6 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
         return product.status.in(Status.valueOf(status));
     }
 
-    private List<Product> getContents(List<Product> fetch, int pageSize) {
-        return fetch.subList(0, Math.min(fetch.size(), pageSize));
-    }
 
     private boolean hasNext(List<Product> fetch, int pageSize) {
         return fetch.size() > pageSize;

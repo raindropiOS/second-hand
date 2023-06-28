@@ -13,10 +13,11 @@ import java.util.List;
 public class MainPageCategoryResponse {
 
     private List<ProductListResponse> products;
-    private List<Integer> categoryIds;
+    private List<Long> categoryIds;
 
     public static MainPageCategoryResponse of(List<Product> page, List<Long> categoryIds) {
         return MainPageCategoryResponse.builder()
+                .categoryIds(categoryIds)
                 .products(ProductListResponse.fromList(page))
                 .build();
     }

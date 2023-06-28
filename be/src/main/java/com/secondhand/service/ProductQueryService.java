@@ -28,10 +28,11 @@ public class ProductQueryService {
 
 
     @Transactional
-    public ProductResponse getDetailPage(long productId) {
+    public ProductResponse getDetailPage(long productId, long userId) {
         Product product = findById(productId);
         productRepository.countViews(productId);
-        return ProductResponse.of(product);
+        boolean isMine = checkIsMine(userId, product.getMember().getId());
+        return ProductResponse.of(isMine, product);
     }
 
     @Transactional
@@ -55,8 +56,10 @@ public class ProductQueryService {
 
 
     public MainPageCategoryResponse getLikeProductList(ProductCategorySearchCondition productSearchCondition, Pageable pageable, long userId) {
-        List<Product> products = productRepository.findAllByInteresteds(userId);
+        //List<Product> products = productRepository.findAllByInteresteds(userId);
         Slice<Product> page = productRepository.findAllByCategory(productSearchCondition, pageable, userId);
+        List<Product> products = page.getContent();
+
         List<Long> categoryIds = products.stream()
                 .map(product -> product.getCategory().getCategoryId())
                 .collect(Collectors.toList());
