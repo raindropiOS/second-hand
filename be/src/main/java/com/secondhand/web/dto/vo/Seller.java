@@ -1,4 +1,4 @@
-package com.secondhand.web.dto.response;
+package com.secondhand.web.dto.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,9 +1,9 @@
-package com.secondhand.web.controller;
+package com.secondhand.web.dto.requset;
 
 import lombok.Getter;
 
 @Getter
 public class StatusOrLikeRequest {
-    private boolean isLiked;
+    private Boolean isLiked;
     private Integer status;
 }

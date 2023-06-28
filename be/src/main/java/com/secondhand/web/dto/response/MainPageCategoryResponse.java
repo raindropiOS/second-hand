@@ -1,4 +1,4 @@
-package com.secondhand.service;
+package com.secondhand.web.dto.response;
 
 import com.secondhand.domain.product.Product;
 import com.secondhand.web.dto.response.MainPageResponse;

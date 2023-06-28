@@ -1,4 +1,4 @@
-package com.secondhand.service.repository;
+package com.secondhand.domain.product.repository;
 
 import com.secondhand.domain.product.Product;
 import com.secondhand.web.dto.requset.ProductSearchCondition;

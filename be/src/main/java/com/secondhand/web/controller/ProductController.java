@@ -6,6 +6,7 @@ import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductSearchCondition;
+import com.secondhand.web.dto.requset.StatusOrLikeRequest;
 import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductLikeResponse;
 import com.secondhand.web.dto.response.ProductResponse;
@@ -135,7 +136,12 @@ public class ProductController {
     public BasicResponse<ProductLikeResponse> changeLike(@RequestBody StatusOrLikeRequest request,
                                                          @PathVariable long productId,
                                                          @LoginValue long userId) {
-        productService.changeLike(productId, userId, request);
+
+        if (request.getStatus() == null) {  //like
+            productService.changeLike(productId, userId, request.getIsLiked());
+        } else {
+            productService.changeStatus(productId, userId, request.getStatus());
+        }
 
         return BasicResponse.<ProductLikeResponse>builder()
                 .success(true)

@@ -1,4 +1,4 @@
-package com.secondhand.service.repository;
+package com.secondhand.domain.product.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -27,10 +27,7 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable, long userId) {
-        int pageSize = pageable.getPageSize();
-        int pageNumber = pageable.getPageNumber();
-        log.debug("pageSize = {}", pageSize);
-        log.debug("pageNumber = {}", pageNumber);
+        int pageSize = 10; // 페이지 크기를 10으로 고정
 
         log.debug("qurelydsl 실행 ========================");
         List<Product> products = jpaQueryFactory.selectFrom(product)
@@ -46,7 +43,6 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
                 .orderBy(product.id.desc())
                 .fetch();
         log.debug("products = {}", products);
-        log.debug("condition = {}", condition.toString());
         log.debug("qurelydsl 종료 =================");
 
         return new SliceImpl<>(products, pageable, hasNext(products, pageSize));
@@ -66,14 +62,6 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
     private boolean hasNext(List<Product> fetch, int pageSize) {
         return fetch.size() > pageSize;
     }
-
-//    private BooleanExpression isLikedEq(boolean liked) {
-//        if (categoryId == null) {
-//            return null;
-//        }
-//        return product.interesteds.id.eq(categoryId);
-//    }
-
 
     private BooleanExpression locationEq(Long locationId) {
         if (locationId == null) {
