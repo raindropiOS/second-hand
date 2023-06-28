@@ -120,7 +120,6 @@ public class ProductService {
     public ProductResponse getPage(long productId, long userId) {
         Product product = findById(productId);
         boolean isMine = checkIsMine(userId, product.getMember().getId());
-        productRepository.countViews(productId);
         return ProductResponse.of(isMine, product);
     }
 
