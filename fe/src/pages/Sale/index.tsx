@@ -37,6 +37,7 @@ const Sale = () => {
   const [category, setCategory] = useState(
     location.state ? location.state.currentCategory : { id: 0, category: '', url: '' }
   );
+
   const checkCanAllowSubmit = () => {
     if (newProductInfo.title.length === 0) return false;
     if (newProductInfo.content.length === 0) return false;
