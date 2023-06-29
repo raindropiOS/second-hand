@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductResponse {
-    private boolean isMine;
+    private Boolean isMine;
     private Seller seller;
     private Integer status;
     private String title;
@@ -24,7 +24,7 @@ public class ProductResponse {
     private ProductCategoryResponse category;
     private Integer price;
     private CountInfo countInfo;
-    private boolean isLiked;
+    private Boolean isLiked;
     private String[] imgUrls;
 
 

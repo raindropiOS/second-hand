@@ -38,20 +38,14 @@ public class ProductService {
         Category category = categoryService.findById(requestInfo.getCategoryId());
         Town town = townService.findById(requestInfo.getTownId());
         Member member = memberService.findMemberById(userId);
-        //imageService.getThumbnailUrl(requestInfo.getProductImages());
         Product product = Product.create(requestInfo, member, category, town);
         Product saveProduct = productRepository.save(product);
-        log.debug("saveProduct = {}", saveProduct.getImages());
-        log.debug("saveProduct = {}", saveProduct.getThumbnailUrl());
         List<String> imageUrls = imageService.uploadImageList(requestInfo.getProductImages()); //s3에 이미지 올라감
-        log.debug("imageUrls = {}", imageUrls);
 
         saveProduct.updateThumbnail(imageUrls.get(0));
-        log.debug("saveProduct = {}", saveProduct);
         for (String url : imageUrls) {
             Image image = new Image(url, saveProduct);
             imageRepository.save(image);
-            log.debug("images1 = {}", image.getProduct().getImages());
         }
         return saveProduct.getId();
     }
@@ -62,7 +56,12 @@ public class ProductService {
         Town town = townService.findById(updateRequest.getTownId());
         Product product = findById(productId);
         checkIsMine(userId, product.getMember().getId());
+        List<String> imageUrls = imageService.uploadImageList(updateRequest.getProductImages());
         product.update(updateRequest, category, town);
+
+        List<Image> images = product.getImages();
+
+
         log.debug("product = {}", product);
     }
 

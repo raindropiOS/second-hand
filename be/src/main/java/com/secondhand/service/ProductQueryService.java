@@ -37,7 +37,7 @@ public class ProductQueryService {
     }
 
     @Transactional
-    public ProductResponse getPage(long productId, long userId) {
+    public ProductResponse getDetailMinePage(long productId, long userId) {
         Product product = findById(productId);
         boolean isMine = checkIsMine(userId, product.getMember().getId());
         return ProductResponse.of(isMine, product);

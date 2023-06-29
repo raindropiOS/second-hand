@@ -105,7 +105,7 @@ public class ProductController {
     @LoginCheck
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public BasicResponse<Long> save(@LoginValue long userId,
-                                    @Valid  ProductSaveRequest productSaveRequest) {
+                                    @Valid ProductSaveRequest productSaveRequest) {
         log.debug("bdoy  ========================================================== {}", productSaveRequest);
         Long save = productService.save(userId, productSaveRequest);
         return BasicResponse.<Long>builder()
@@ -123,12 +123,12 @@ public class ProductController {
             description = "사용자는 단일 상품을 수정할 수 있다."
     )
     @LoginCheck
-    @PutMapping("/{productId}")
+    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public BasicResponse<ProductResponse> update(@LoginValue long userId,
                                                  @PathVariable long productId,
-                                                 @RequestBody ProductSaveRequest updateRequest) {
+                                                 @Valid ProductSaveRequest updateRequest) {
         productService.update(productId, updateRequest, userId);
-        ProductResponse productUpdateResponse = productQueryService.getPage(productId, userId);
+        ProductResponse productUpdateResponse = productQueryService.getDetailMinePage(productId, userId);
 
         return BasicResponse.<ProductResponse>builder()
                 .success(true)
