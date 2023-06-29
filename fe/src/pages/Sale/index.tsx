@@ -90,13 +90,6 @@ const Sale = () => {
     // 값이 바뀌어도 렌더링이 안되는데, 이걸로 렌더링을 하고싶으면 state로 관리해야함.
     event.preventDefault();
     const formData = new FormData();
-    const contentsData = {
-      title: newProductInfo.title,
-      price: newProductInfo.price,
-      content: newProductInfo.content,
-      categoryId: category.id,
-      townId: 1,
-    };
 
     imgFiles.forEach(({ file }) => {
       formData.append('productImages', file);
