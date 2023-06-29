@@ -66,22 +66,23 @@ const HomeMain = () => {
   // FIXME(jayden): 데이터 필터링 로직 수정하기
   useEffect(() => {
     const getProducts = async () => {
-      const response = filterCategoryId
-        ? await axiosFetch('/products', {
-            method: 'GET',
-            params: {
-              page,
-              categoryId: filterCategoryId,
-              townId: selectedTownId,
-            },
-          })
-        : await axiosFetch('/products', {
-            method: 'GET',
-            params: {
-              page,
-              townId: selectedTownId,
-            },
-          });
+      const response =
+        filterCategoryId !== 0
+          ? await axiosFetch('/products', {
+              method: 'GET',
+              params: {
+                page,
+                categoryId: filterCategoryId,
+                townId: selectedTownId,
+              },
+            })
+          : await axiosFetch('/products', {
+              method: 'GET',
+              params: {
+                page,
+                townId: selectedTownId,
+              },
+            });
 
       const data = await response.data;
       const isSuccess = data.success;
@@ -89,6 +90,8 @@ const HomeMain = () => {
 
       // FIXME(jayden): error handling 수정하기
       if (!isSuccess) throw new Error('Failed to fetch products');
+      // 여기가 문제.
+
       setProducts(prevProducts => [...prevProducts, ...newProducts]);
     };
 
