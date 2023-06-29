@@ -51,8 +51,8 @@ const HomeMainMain = ({ products, observerTarget, currentCategoryId, handleCance
           <ListItem
             {...product}
             key={product.productId}
-            price={ConvertPriceFormat(product.price)}
-            isCurrentUserItem={true}
+            price={product.price === null ? '가격없음' : ConvertPriceFormat(product.price)}
+            isCurrentUserItem={false}
             onItemClick={() => navigate(`${PATH.PRODUCT.DETAIL(product.productId)}`)}
           />
         ))}

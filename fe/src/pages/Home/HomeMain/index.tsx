@@ -4,7 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
 
 import { $Template } from '@styles/PageTemplate.style';
-import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
+import axiosFetch from '@apis/instances/axiosFetch';
 
 import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
 import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
@@ -21,7 +21,7 @@ interface Product {
 }
 
 interface Town {
-  townId: number;
+  id: number;
   name: string;
 }
 
@@ -33,26 +33,56 @@ const HomeMain = () => {
   const [filterCategoryId, setFilterCategoryId] = useState(currentCategoryId);
   const [products, setProducts] = useState<Product[]>([]);
   const [towns, setTowns] = useState<Town[]>([]);
-  const [pageNum, setPageNum] = useState(1);
+  const [page, setPage] = useState(0);
+  const [selectedTownId, setSelectedTownId] = useState(0);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
   const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
     if (!entry.isIntersecting || isPageUpdated) return;
-    if (entry.isIntersecting) setPageNum(prevPageNum => prevPageNum + 1);
+    if (entry.isIntersecting) setPage(prevPageNum => prevPageNum + 1);
     setIsPageUpdated(true);
   };
 
   const observerTarget = useIntersectionObserver(intersectionObserverCallback);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const response = await mockAxiosFetch('/products', {
+    const getTowns = async () => {
+      const response = await axiosFetch('/towns/member', {
         method: 'GET',
-        params: {
-          pageNum, // 현재 페이지를 API로 전달
-        },
       });
+      const data = await response.data;
+      const isSuccess = data.success;
+      const towns = data.data;
+
+      if (!isSuccess) throw new Error('Failed to fetch towns');
+      setTowns(towns);
+      setSelectedTownId(towns[0].id);
+    };
+
+    getTowns();
+  }, []);
+
+  // FIXME(jayden): 데이터 필터링 로직 수정하기
+  useEffect(() => {
+    const getProducts = async () => {
+      const response = filterCategoryId
+        ? await axiosFetch('/products', {
+            method: 'GET',
+            params: {
+              page,
+              categoryId: filterCategoryId,
+              townId: selectedTownId,
+            },
+          })
+        : await axiosFetch('/products', {
+            method: 'GET',
+            params: {
+              page,
+              townId: selectedTownId,
+            },
+          });
+
       const data = await response.data;
       const isSuccess = data.success;
       const newProducts = data.data.products;
@@ -64,39 +94,31 @@ const HomeMain = () => {
 
     // NOTE(jayden): strict mode로 인해 두번씩 호출됨
     getProducts();
-  }, [pageNum]);
-
-  useEffect(() => {
-    const getTowns = async () => {
-      const response = await mockAxiosFetch('/towns/member', {
-        method: 'GET',
-      });
-      const data = await response.data;
-      const isSuccess = data.success;
-      const towns = data.data.town;
-
-      if (!isSuccess) throw new Error('Failed to fetch towns');
-      setTowns(towns);
-    };
-
-    getTowns();
-  }, []);
+  }, [page, selectedTownId, filterCategoryId]);
 
   const handleCancelFilter = () => {
     setFilterCategoryId(0);
   };
 
+  const handleFilterTownId = (townId: number) => {
+    setSelectedTownId(townId);
+  };
+
   return (
     <$Template>
-      {!!products.length && !!towns.length && (
+      {!!towns.length && (
         <>
-          <HomeMainHeader towns={towns} currentCategoryId={filterCategoryId} />
-          <HomeMainMain
-            products={products}
-            observerTarget={observerTarget}
-            currentCategoryId={filterCategoryId}
-            handleCancelFilter={handleCancelFilter}
-          />
+          <HomeMainHeader towns={towns} currentCategoryId={filterCategoryId} handleFilterTownId={handleFilterTownId} />
+          {products.length ? (
+            <HomeMainMain
+              products={products}
+              observerTarget={observerTarget}
+              currentCategoryId={filterCategoryId}
+              handleCancelFilter={handleCancelFilter}
+            />
+          ) : (
+            <main>상품이 없습니다.</main>
+          )}
         </>
       )}
       <Outlet />
