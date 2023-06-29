@@ -55,6 +55,9 @@ public class ProductQueryService {
     public List<ProductListResponse> getMemberSalesProducts(ProductSalesSearchCondition condition, Pageable pageable, long userId) {
         Slice<Product> page = productRepository.findAllByStatus(condition, pageable, userId);
         List<Product> products = page.getContent();
+        for (Product product : products) {
+            System.out.println("product = " + product.getStatus().getValue());
+        }
         log.debug("products = {}", products);
         return ProductListResponse.fromList(products);
     }
