@@ -62,7 +62,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void changeLike(long productId, long userId, boolean likeRequest) {
+    public void changeLike(long productId, long userId) {
         Member member = memberService.findMemberById(userId);
         Product product = findById(productId);
         Optional<Interested> interested = interestedRepository.findByMemberAndProduct(member, product);

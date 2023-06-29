@@ -153,13 +153,13 @@ public class ProductController {
                                                      @LoginValue long userId) {
 
         if (request.getStatus() == null) {  //like
-            productService.changeLike(productId, userId, request.getIsLiked());
+            productService.changeLike(productId, userId);
         } else {
             productService.changeStatus(productId, userId, request.getStatus());
         }
 
         Product product = productService.findById(productId);
-        ProductResponse response = ProductResponse.of(product);
+        ProductResponse response = ProductResponse.of(true, product);
         return BasicResponse.<ProductResponse>builder()
                 .success(true)
                 .message("사용자는상품을 과 관심상품 / 해제 할수 있다.")
