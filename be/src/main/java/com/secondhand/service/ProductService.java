@@ -38,7 +38,7 @@ public class ProductService {
         Product product = Product.create(requestInfo, member, category, town);
         Product saveProduct = productRepository.save(product);
         ProductImage productImage = new ProductImage();
-       // imageService.upload(requestInfo.getProductImages());
+        // imageService.upload(requestInfo.getProductImages());
         return saveProduct.getId();
     }
 
@@ -56,8 +56,9 @@ public class ProductService {
     public void changeLike(long productId, long userId, boolean likeRequest) {
         Member member = memberService.findMemberById(userId);
         Product product = findById(productId);
-        checkIsMine(member.getId(), product.getMember().getId());
+        //   checkIsMine(member.getId(), product.getMember().getId());
         Optional<Interested> findInterested = interestedRepository.findByProductIdAndMemberId(productId, member.getId());
+        log.debug("좋아요 = {}", findInterested);
         if (findInterested.isPresent()) {
             interestedRepository.delete(findInterested.get());
             log.debug("product.getInteresteds() = {}", product.getInteresteds());
@@ -65,6 +66,8 @@ public class ProductService {
         }
         Interested interested = Interested.create(member, product, likeRequest);
         Interested save = interestedRepository.save(interested);
+        log.debug("만들어진 좋아요 상품 번호 = {}", save.getProduct().getId());
+        log.debug("만들어진 좋아요 회원 번호 = {}", save.getMember().getId());
         product.updateInterested(save);
     }
 

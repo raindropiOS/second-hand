@@ -62,7 +62,7 @@ public class Product extends BaseTimeEntity {
                 .title(requestInfo.getTitle())
                 .content(requestInfo.getContent())
                 .price(requestInfo.getPrice())
-                .thumbnailUrl(requestInfo.getProductImages())
+                .thumbnailUrl(requestInfo.getProductImages().get(0).getName())
                 .towns(town)
                 .category(category)
                 .countLike(0)
@@ -76,7 +76,7 @@ public class Product extends BaseTimeEntity {
         this.title = updateRequest.getTitle();
         this.content = updateRequest.getContent();
         this.price = updateRequest.getPrice();
-        this.thumbnailUrl = updateRequest.getProductImages();
+        this.thumbnailUrl = updateRequest.getProductImages().get(0).getName();
         this.category = category;
         this.towns = town;
     }
@@ -84,7 +84,7 @@ public class Product extends BaseTimeEntity {
     //연관 관계 메서드
     public void updateInterested(Interested interested) {
         this.interesteds.add(interested);
-      //  interested.setProduct(this);
+        //  interested.setProduct(this);
     }
 
     public void updateStatus(Integer status) {
