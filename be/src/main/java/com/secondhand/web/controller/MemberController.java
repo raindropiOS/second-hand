@@ -2,7 +2,7 @@ package com.secondhand.web.controller;
 
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
-import com.secondhand.service.MemberResponse;
+import com.secondhand.web.dto.response.MemberResponse;
 import com.secondhand.service.MemberService;
 import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;

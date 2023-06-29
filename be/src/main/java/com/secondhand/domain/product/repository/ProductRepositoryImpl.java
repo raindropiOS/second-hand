@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.Status;
-import com.secondhand.service.ProductSalesSearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static com.secondhand.domain.categorie.QCategory.category;

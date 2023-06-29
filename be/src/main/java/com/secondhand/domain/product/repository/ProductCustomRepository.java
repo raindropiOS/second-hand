@@ -1,7 +1,7 @@
 package com.secondhand.domain.product.repository;
 
 import com.secondhand.domain.product.Product;
-import com.secondhand.service.ProductSalesSearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
 import org.springframework.data.domain.Pageable;

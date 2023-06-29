@@ -1,4 +1,4 @@
-package com.secondhand.service;
+package com.secondhand.web.dto.filtercondition;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

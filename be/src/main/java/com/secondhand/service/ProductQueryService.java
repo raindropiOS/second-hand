@@ -5,6 +5,7 @@ import com.secondhand.domain.exception.ProductNotFoundException;
 import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.repository.ProductRepository;
 import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
+import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
 import com.secondhand.web.dto.response.MainPageCategoryResponse;
 import com.secondhand.web.dto.response.MainPageResponse;
@@ -32,8 +33,7 @@ public class ProductQueryService {
     public ProductResponse getDetailPage(long productId, long userId) {
         Product product = findById(productId);
         productRepository.countViews(productId);
-        boolean isMine = checkIsMine(userId, product.getMember().getId());
-        return ProductResponse.of(isMine, product);
+        return ProductResponse.of(userId == product.getMember().getId(), product);
     }
 
     @Transactional
