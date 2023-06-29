@@ -29,6 +29,13 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(ImageUploadFailException.class)
+    public final ResponseEntity<Object> handleAllRuntimeExceptions(ImageUploadFailException e, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

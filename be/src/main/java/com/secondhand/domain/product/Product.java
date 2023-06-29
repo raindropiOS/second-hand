@@ -2,12 +2,12 @@ package com.secondhand.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.secondhand.domain.categorie.Category;
+import com.secondhand.domain.image.Image;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
 import com.secondhand.util.BaseTimeEntity;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
-import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,7 +52,7 @@ public class Product extends BaseTimeEntity {
     private Member member;
 
     @OneToMany(mappedBy = "product")
-    private List<ProductImage> productImages = new ArrayList<>();
+    private List<Image> productImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "product")
     private List<Interested> interesteds = new ArrayList<>();
@@ -93,7 +93,11 @@ public class Product extends BaseTimeEntity {
 
     public String[] changeProductImages() {
         return productImages.stream()
-                .map(ProductImage::getImgUrl)
+                .map(Image::getImgUrl)
                 .toArray(String[]::new);
+    }
+
+    public void updateThumbnail(String url) {
+        this.thumbnailUrl = url;
     }
 }
