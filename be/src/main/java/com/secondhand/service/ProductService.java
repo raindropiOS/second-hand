@@ -7,6 +7,7 @@ import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.interested.InterestedRepository;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.Product;
+import com.secondhand.domain.product.ProductImage;
 import com.secondhand.domain.product.repository.ProductRepository;
 import com.secondhand.domain.town.Town;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
@@ -27,6 +28,7 @@ public class ProductService {
     private final CategoryService categoryService;
     private final TownService townService;
     private final MemberService memberService;
+    private final ImageService imageService;
 
     @Transactional
     public Long save(long userId, ProductSaveRequest requestInfo) {
@@ -35,6 +37,8 @@ public class ProductService {
         Member member = memberService.findMemberById(userId);
         Product product = Product.create(requestInfo, member, category, town);
         Product saveProduct = productRepository.save(product);
+        ProductImage productImage = new ProductImage();
+       // imageService.upload(requestInfo.getProductImages());
         return saveProduct.getId();
     }
 
