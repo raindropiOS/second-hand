@@ -52,19 +52,19 @@ public class ProductQueryService {
         return MainPageResponse.of(products);
     }
 
-    public List<ProductListResponse> getMemberSalesProducts(ProductSalesSearchCondition condition, Pageable pageable, long userId) {
+    @Transactional
+    public MainPageResponse getMemberSalesProducts(ProductSalesSearchCondition condition, Pageable pageable, long userId) {
         Slice<Product> page = productRepository.findAllByStatus(condition, pageable, userId);
         List<Product> products = page.getContent();
         for (Product product : products) {
             System.out.println("product = " + product.getStatus().getValue());
         }
         log.debug("products = {}", products);
-        return ProductListResponse.fromList(products);
+        return MainPageResponse.of(products);
     }
 
 
     public MainPageCategoryResponse getLikeProductList(ProductCategorySearchCondition productSearchCondition, Pageable pageable, long userId) {
-        //List<Product> products = productRepository.findAllByInteresteds(userId);
         Slice<Product> page = productRepository.findAllByCategory(productSearchCondition, pageable, userId);
         List<Product> products = page.getContent();
 

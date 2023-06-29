@@ -83,13 +83,13 @@ public class ProductController {
     )
     @LoginCheck
     @GetMapping("/sales")
-    public BasicResponse<List<ProductListResponse>> productSalesView(@Valid ProductSalesSearchCondition productSearchCondition,
+    public BasicResponse<MainPageResponse>productSalesView(@Valid ProductSalesSearchCondition productSearchCondition,
                                                                      Pageable pageable,
                                                                      @LoginValue long userId) {
 
-        List<ProductListResponse> products = productQueryService.getMemberSalesProducts(productSearchCondition, pageable, userId);
+        MainPageResponse products = productQueryService.getMemberSalesProducts(productSearchCondition, pageable, userId);
 
-        return BasicResponse.<List<ProductListResponse>>builder()
+        return BasicResponse.<MainPageResponse>builder()
                 .success(true)
                 .message("판매/세일 중인 상품")
                 .apiStatus(20000)
