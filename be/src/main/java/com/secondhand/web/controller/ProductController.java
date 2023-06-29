@@ -13,6 +13,7 @@ import com.secondhand.web.dto.requset.StatusOrLikeRequest;
 import com.secondhand.web.dto.response.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/products")
@@ -104,6 +106,7 @@ public class ProductController {
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public BasicResponse<Long> save(@LoginValue long userId,
                                     @RequestBody ProductSaveRequest productSaveRequest) {
+        log.debug("bdoy  ========================================================== {}", productSaveRequest);
         Long save = productService.save(userId, productSaveRequest);
         return BasicResponse.<Long>builder()
                 .success(true)
