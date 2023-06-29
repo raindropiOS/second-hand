@@ -1,12 +1,11 @@
 package com.secondhand.web.dto.requset;
 
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
+import lombok.ToString;
 
 
 @Getter
+@ToString
 public class ProductSaveRequest {
     private String title;
     private String content;

@@ -90,14 +90,9 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
                 .leftJoin(product.category, category).fetchJoin()
                 .leftJoin(product.member, member).fetchJoin()
                 .where(
-//                        isStatusEq(condition.getStatus()),
                         isOnSales(condition),
                         product.member.id.eq(userId)
                 )
-//                .groupBy(product.status, product.id)
-//                .having(
-//
-//                )
                 .orderBy(product.id.desc());
 
         log.debug("status = {}} ", Status.getStatusByValue(1).toString());
