@@ -12,6 +12,7 @@ import com.secondhand.domain.product.Product;
 import com.secondhand.domain.product.repository.ProductRepository;
 import com.secondhand.domain.town.Town;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
+import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -51,17 +52,12 @@ public class ProductService {
     }
 
     @Transactional
-    public void update(long productId, ProductSaveRequest updateRequest, long userId) {
+    public void update(long productId, ProductUpdateRequest updateRequest, long userId) {
         Category category = categoryService.findById(updateRequest.getCategoryId());
         Town town = townService.findById(updateRequest.getTownId());
         Product product = findById(productId);
         checkIsMine(userId, product.getMember().getId());
-        List<String> imageUrls = imageService.uploadImageList(updateRequest.getProductImages());
         product.update(updateRequest, category, town);
-
-        List<Image> images = product.getImages();
-
-
         log.debug("product = {}", product);
     }
 

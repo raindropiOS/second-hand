@@ -8,6 +8,7 @@ import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
 import com.secondhand.util.BaseTimeEntity;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
+import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -74,11 +75,11 @@ public class Product extends BaseTimeEntity {
                 .build();
     }
 
-    public void update(ProductSaveRequest updateRequest, Category category, Town town) {
+    public void update(ProductUpdateRequest updateRequest, Category category, Town town) {
         this.title = updateRequest.getTitle();
         this.content = updateRequest.getContent();
         this.price = updateRequest.getPrice();
-        this.thumbnailUrl = updateRequest.getProductImages().get(0).getName();
+        //    this.thumbnailUrl = updateRequest.getProductImages().get(0).getName();
         this.category = category;
         this.towns = town;
     }

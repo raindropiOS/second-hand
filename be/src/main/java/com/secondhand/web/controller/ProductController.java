@@ -9,6 +9,7 @@ import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
+import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.requset.StatusOrLikeRequest;
 import com.secondhand.web.dto.response.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -123,10 +124,10 @@ public class ProductController {
             description = "사용자는 단일 상품을 수정할 수 있다."
     )
     @LoginCheck
-    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PutMapping("/{productId}")
     public BasicResponse<ProductResponse> update(@LoginValue long userId,
                                                  @PathVariable long productId,
-                                                 @Valid ProductSaveRequest updateRequest) {
+                                                 @Valid @RequestBody ProductUpdateRequest updateRequest) {
         productService.update(productId, updateRequest, userId);
         ProductResponse productUpdateResponse = productQueryService.getDetailMinePage(productId, userId);
 
@@ -145,7 +146,7 @@ public class ProductController {
             description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
     )
     @LoginCheck
-    @PatchMapping("{productId}")
+    @PatchMapping("/{productId}")
     public BasicResponse<ProductLikeResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
                                                          @PathVariable long productId,
                                                          @LoginValue long userId) {
