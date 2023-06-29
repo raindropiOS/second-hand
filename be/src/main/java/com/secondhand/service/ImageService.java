@@ -1,11 +1,13 @@
 package com.secondhand.service;
 
+import com.secondhand.domain.exception.ImageCountException;
+import com.secondhand.domain.exception.ImageUploadFailException;
 import com.secondhand.domain.image.Image;
 import com.secondhand.domain.image.ImageRepository;
+import com.secondhand.domain.product.Product;
 import com.secondhand.web.dto.response.ImageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Directory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -25,57 +27,57 @@ import java.util.UUID;
 @PropertySource("classpath:application-aws.yml")
 public class ImageService {
 
-    public static final String FILE_ROUTE = "images/test/";
+    public static final String FILE_ROUTE = "images/products/";
     private final S3Client s3Client;
     private final ImageRepository imageRepository;
 
     @Value("${aws.s3.bucket}")
     private String bucket;
 
-//    public List<ImageResponse> uploadImageList(List<MultipartFile> list) {
+    public List<String> uploadImageList(List<MultipartFile> list) {
+        if (list.size() < 1 || list.size() > 10) {
+            throw new ImageCountException("이미지 첨부는 1개 이상 10개 이하로 해야합니다.");
+        }
+
+        List<String> images = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            String uploadImage = upload(list.get(i));
+            images.add(uploadImage);
+        }
+        return images;
+    }
+
+//    public String getThumbnailUrl(List<MultipartFile> list) {
 //        if (list.size() < 1 || list.size() > 10) {
 //            throw new ImageCountException("이미지 첨부는 1개 이상 10개 이하로 해야합니다.");
 //        }
 //
-//        List<ImageResponse> images = new ArrayList<>();
-//
+//        String thumbnailUrl = new ArrayList<>();
 //        for (int i = 0; i < list.size(); i++) {
-//            String imageInfo = mulipartFileChageUrl(list.get(i));
-//            images.add(new ImageResponse());
+//            String uploadImage = upload(list.get(i));
+//            images.add(uploadImage);
 //        }
-//
-//        return images;
+//        return thumbnailUrl;
 //    }
 
-//    private String multipartFileChangeUrl(MultipartFile multipartFile) {
-//        String imageUrl = "";
-//
-//        try {
-//            imageUrl = upload(file, Directory.ITEM_DETAIL);
-//        } catch (IOException e) {
-//            throw new ImageHostException("물품 사진 업로드에 실패하였습니다.");
-//        }
-//
-//        return ImageInfo.create(imageUrl);
-//    }
-
-
-    public ImageResponse upload(MultipartFile multipartFile) throws IOException {
+    public String upload(MultipartFile multipartFile) {
         String imageName = getImageName(multipartFile);
         String fileName = FILE_ROUTE + multipartFile.getOriginalFilename();
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucket)
                 .key(fileName)
                 .build();
-        s3Client.putObject(putObjectRequest, RequestBody.fromBytes(multipartFile.getBytes()));
+        try {
+            s3Client.putObject(putObjectRequest, RequestBody.fromBytes(multipartFile.getBytes()));
+        } catch (IOException e) {
+            throw new ImageUploadFailException("물품 사진 업로드에 실패하였습니다.");
+        }
 
-        String imageUrl = s3Client.utilities().getUrl(GetUrlRequest.builder()
+        return s3Client.utilities().getUrl(GetUrlRequest.builder()
                         .bucket(bucket)
                         .key(fileName)
                         .build())
                 .toString();
-        Image image = imageRepository.save(new Image(imageUrl));
-        return new ImageResponse(image);
     }
 
     private String getImageName(MultipartFile multipartFile) {
@@ -84,4 +86,9 @@ public class ImageService {
         String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
         return newName + extension;
     }
+
+    public Image saveImage(Image image) {
+        return imageRepository.save(image);
+    }
+
 }

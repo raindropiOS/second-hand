@@ -3,11 +3,11 @@ package com.secondhand.service;
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.exception.NotUserMineProductException;
 import com.secondhand.domain.exception.ProductNotFoundException;
+import com.secondhand.domain.image.Image;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.interested.InterestedRepository;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.Product;
-import com.secondhand.domain.product.ProductImage;
 import com.secondhand.domain.product.repository.ProductRepository;
 import com.secondhand.domain.town.Town;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -35,10 +36,16 @@ public class ProductService {
         Category category = categoryService.findById(requestInfo.getCategoryId());
         Town town = townService.findById(requestInfo.getTownId());
         Member member = memberService.findMemberById(userId);
+        //imageService.getThumbnailUrl(requestInfo.getProductImages());
         Product product = Product.create(requestInfo, member, category, town);
         Product saveProduct = productRepository.save(product);
-        ProductImage productImage = new ProductImage();
-        // imageService.upload(requestInfo.getProductImages());
+        List<String> imageUrls = imageService.uploadImageList(requestInfo.getProductImages()); //s3에 이미지 올라감
+
+        imageUrls.stream()
+                .map(url -> new Image(url, saveProduct))
+                .forEach(imageService::saveImage);
+
+        saveProduct.updateThumbnail(imageUrls.get(0));
         return saveProduct.getId();
     }
 

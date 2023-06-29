@@ -2,6 +2,7 @@ package com.secondhand.domain.image;
 
 import com.secondhand.domain.product.Product;
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "PRODUCT_IMG")
+@AllArgsConstructor
 @NoArgsConstructor
 public class Image {
     @Id
@@ -24,7 +26,8 @@ public class Image {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public Image(String imageUrl) {
-        this.imgUrl = imageUrl;
+    public Image(String imgUrl, Product product) {
+        this.imgUrl = imgUrl;
+        this.product = product;
     }
 }
