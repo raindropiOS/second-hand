@@ -4,6 +4,7 @@ import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.exception.NotUserMineProductException;
 import com.secondhand.domain.exception.ProductNotFoundException;
 import com.secondhand.domain.image.Image;
+import com.secondhand.domain.image.ImageRepository;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.interested.InterestedRepository;
 import com.secondhand.domain.member.Member;
@@ -30,6 +31,7 @@ public class ProductService {
     private final TownService townService;
     private final MemberService memberService;
     private final ImageService imageService;
+    private final ImageRepository imageRepository;
 
     @Transactional
     public Long save(long userId, ProductSaveRequest requestInfo) {
@@ -39,13 +41,18 @@ public class ProductService {
         //imageService.getThumbnailUrl(requestInfo.getProductImages());
         Product product = Product.create(requestInfo, member, category, town);
         Product saveProduct = productRepository.save(product);
+        log.debug("saveProduct = {}", saveProduct.getImages());
+        log.debug("saveProduct = {}", saveProduct.getThumbnailUrl());
         List<String> imageUrls = imageService.uploadImageList(requestInfo.getProductImages()); //s3에 이미지 올라감
-
-        imageUrls.stream()
-                .map(url -> new Image(url, saveProduct))
-                .forEach(imageService::saveImage);
+        log.debug("imageUrls = {}", imageUrls);
 
         saveProduct.updateThumbnail(imageUrls.get(0));
+        log.debug("saveProduct = {}", saveProduct);
+        for (String url : imageUrls) {
+            Image image = new Image(url, saveProduct);
+            imageRepository.save(image);
+            log.debug("images1 = {}", image.getProduct().getImages());
+        }
         return saveProduct.getId();
     }
 

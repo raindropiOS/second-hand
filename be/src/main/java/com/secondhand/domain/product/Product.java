@@ -52,10 +52,10 @@ public class Product extends BaseTimeEntity {
     private Member member;
 
     @OneToMany(mappedBy = "product")
-    private List<Image> productImages = new ArrayList<>();
+    private List<Image> images;
 
     @OneToMany(mappedBy = "product")
-    private List<Interested> interesteds = new ArrayList<>();
+    private List<Interested> interesteds;
 
     public static Product create(ProductSaveRequest requestInfo, Member member, Category category, Town town) {
         return Product.builder()
@@ -69,6 +69,8 @@ public class Product extends BaseTimeEntity {
                 .countView(0)
                 .status(Status.SELLING)
                 .member(member)
+                .images(new ArrayList<>())
+                .interesteds(new ArrayList<>())
                 .build();
     }
 
@@ -92,7 +94,7 @@ public class Product extends BaseTimeEntity {
     }
 
     public String[] changeProductImages() {
-        return productImages.stream()
+        return images.stream()
                 .map(Image::getImgUrl)
                 .toArray(String[]::new);
     }
