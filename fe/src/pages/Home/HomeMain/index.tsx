@@ -36,7 +36,7 @@ const HomeMain = () => {
   const [towns, setTowns] = useState<Town[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
-  const { data } = useProductDetailData();
+  // const { data } = useProductDetailData();
   const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
