@@ -65,19 +65,20 @@ public class ProductService {
     public void changeLike(long productId, long userId, boolean likeRequest) {
         Member member = memberService.findMemberById(userId);
         Product product = findById(productId);
-        //   checkIsMine(member.getId(), product.getMember().getId());
-        Optional<Interested> findInterested = interestedRepository.findByProductIdAndMemberId(productId, member.getId());
-        log.debug("좋아요 = {}", findInterested);
-        if (findInterested.isPresent()) {
-            interestedRepository.delete(findInterested.get());
-            log.debug("product.getInteresteds() = {}", product.getInteresteds());
+        Optional<Interested> interested = interestedRepository.findByMemberAndProduct(member, product);
+        if (interested.isPresent()) {
+            log.debug("이미 좋아요 누른경우 ======================");
+            Interested existInterested = interested.get();
+            product.decreaseCountView();
+            interestedRepository.delete(existInterested);
             return;
         }
-        Interested interested = Interested.create(member, product, likeRequest);
-        Interested save = interestedRepository.save(interested);
-        log.debug("만들어진 좋아요 상품 번호 = {}", save.getProduct().getId());
-        log.debug("만들어진 좋아요 회원 번호 = {}", save.getMember().getId());
-        product.updateInterested(save);
+        log.debug("처음 좋아요  누른경우 ======================");
+        Interested newInterested = new Interested();
+        newInterested.changeInterested(newInterested, member, product);
+        interestedRepository.save(newInterested);
+        product.increaseCountView();
+        log.debug("상품 좋아요 수 = {}", product.getCountLike());
     }
 
 

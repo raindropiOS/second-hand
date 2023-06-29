@@ -1,5 +1,6 @@
 package com.secondhand.domain.member;
 
+import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.town.Town;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -33,8 +38,8 @@ public class Member {
     @JoinColumn(name = "sub_town_id")
     private Town subTown;
 
-//    @OneToMany(mappedBy = "member")
-//    private List<Interested> members = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private Set<Interested> interesteds = new HashSet<>();
 
 
     public static Member create(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
