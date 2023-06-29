@@ -2,11 +2,12 @@ import React from 'react';
 
 import convertPriceFormat from '@utils/convertPriceFormat';
 
-import { $DetailTabBar, $ChatButton, $LikeLayout } from './DetailTabBar.style';
+import { $DetailTabBar, $LikeLayout } from './DetailTabBar.style';
 import Icon from '@atoms/Icon';
+import Button from '@atoms/Buttons/Button';
 
 interface DetailTabBarProps {
-  price: number;
+  price?: number;
 }
 
 const DetailTabBar = ({ price }: DetailTabBarProps) => {
@@ -14,9 +15,11 @@ const DetailTabBar = ({ price }: DetailTabBarProps) => {
     <$DetailTabBar>
       <$LikeLayout>
         <Icon name="like" width={24} height={24} />
-        {convertPriceFormat(price)}
+        {convertPriceFormat(price || 0)}
       </$LikeLayout>
-      <$ChatButton />
+      <Button onClick={() => console.log('chat button')} status="active" size="small">
+        대화 중인 채팅방
+      </Button>
     </$DetailTabBar>
   );
 };

@@ -4,10 +4,11 @@ import { $NavbarLayout } from './Navbar.style';
 
 interface NavbarProps {
   children: React.ReactNode;
+  isTransparent?: boolean;
 }
 
-const Navbar = ({ children }: NavbarProps) => {
-  return <$NavbarLayout>{children}</$NavbarLayout>;
+const Navbar = ({ children, isTransparent = false }: NavbarProps) => {
+  return <$NavbarLayout isTransparent={isTransparent}>{children}</$NavbarLayout>;
 };
 
 export default Navbar;

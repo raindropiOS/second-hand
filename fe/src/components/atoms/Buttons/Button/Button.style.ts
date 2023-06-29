@@ -55,7 +55,7 @@ const statusStyles = {
   `,
   ghost: css`
     padding: 0;
-    background-color: ${({ theme }) => theme.COLORS.ACCENT.TEXT.DEFAULT};
+    background-color: transparent;
     color: ${({ theme }) => theme.COLORS.ACCENT.TEXT.WEAK};
   `,
 };
