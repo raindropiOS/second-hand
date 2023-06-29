@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
+import useSaleHistoryProductsData from '@apis/api/saleHistory';
+
 import SalesHistoryHeader from '@components/SalesHistory/SalesHistoryHeader';
 import SalesHistoryMain from '@components/SalesHistory/SalesHistoryMain';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
 import { $Template } from '@styles/PageTemplate.style';
 import { Outlet } from 'react-router-dom';
+import Skeleton from '@pages/Loading/Skeleton';
 
 interface Product {
   productId: number;
@@ -23,6 +26,7 @@ const SalesHistory = () => {
   const [pageNum, setPageNum] = useState(1);
   const [status, setStatus] = useState(0);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
+  const { data, isError, error } = useSaleHistoryProductsData(pageNum, status);
 
   const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
@@ -35,26 +39,13 @@ const SalesHistory = () => {
   const observerTarget = useIntersectionObserver(intersectionObserverCallback);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const response = await mockAxiosFetch('/products/sales', {
-        method: 'GET',
-        params: {
-          pageNum,
-          status,
-        },
-      });
-      const data = await response.data;
-      const isSuccess = data.success;
-      const newProducts = data.data.products;
+    if (!data) return;
+    const newProducts = data.products;
 
-      // FIXME(jayden): error handling 수정하기
-      if (!isSuccess) throw new Error('Failed to fetch products');
-      setProducts(prevProducts => [...prevProducts, ...newProducts]);
-    };
+    setProducts(prevProducts => [...prevProducts, ...newProducts]);
+  }, [data]);
 
-    // NOTE(jayden): strict mode로 인해 두번씩 호출됨
-    getProducts();
-  }, [pageNum, status]);
+  if (isError) return <div>에러가 발생했습니다.</div>;
 
   const handleSalesStatusClick = (status: number) => {
     setProducts([]);

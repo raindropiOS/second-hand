@@ -55,12 +55,17 @@ const statusStyles = {
   `,
   ghost: css`
     padding: 0;
-    background-color: ${({ theme }) => theme.COLORS.ACCENT.TEXT.DEFAULT};
+    background-color: transparent;
     color: ${({ theme }) => theme.COLORS.ACCENT.TEXT.WEAK};
   `,
 };
 
-const $Button = styled.button<{ size: ButtonSize; status: ButtonStatus; justifyContent: ButtonJustifyContent }>`
+const $Button = styled.button<{
+  size: ButtonSize;
+  type: 'submit' | 'button' | 'reset';
+  status: ButtonStatus;
+  justifyContent: ButtonJustifyContent;
+}>`
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -24,7 +24,7 @@ const $ImagePreviews = styled.ul`
   align-items: center;
   gap: 14px;
   width: 100%;
-  height: 115px;
+  height: 130px;
   margin-top: 10px;
   padding-bottom: 15px;
   overflow-x: auto;
@@ -34,6 +34,21 @@ const $ImagePreviews = styled.ul`
 const $FirstImage = styled.li<$ImageProps>`
   background: url(${({ imgUrl }) => imgUrl});
   ${imageStyles}
+`;
+
+const $ImageLabel = styled.div`
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.DEFAULT};
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+  font-size: 11px;
 `;
 
 const $Image = styled.li<$ImageProps>`
@@ -54,4 +69,4 @@ const $CancelButton = styled.button`
   background-color: black;
 `;
 
-export { $ImagePreviews, $FirstImage, $Image, $CancelButton };
+export { $ImagePreviews, $FirstImage, $Image, $CancelButton, $ImageLabel };

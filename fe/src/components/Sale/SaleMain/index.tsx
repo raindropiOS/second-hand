@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, ChangeEvent } from 'react';
+import React, { useState, useRef, useCallback, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CATEGORIES } from '@constants/categories';
@@ -18,31 +18,37 @@ import {
 
 type ProductInfo = { title: string; price: string; content: string };
 
-interface SaleHeaderProps {
+interface SaleMainProps {
   productInfo: ProductInfo;
   onChange: React.Dispatch<React.SetStateAction<ProductInfo>>;
   currentCategory: { id: number; category: string; url: string };
+  imgFiles: { file: File; url: string }[];
+  recommendCategories: { id: number; category: string; url: string }[];
+  handleCategory: (categoryId: number) => void;
+  handleAddImg: (newImage: File, url: string) => void;
+  handleDeleteImg: (idx: number) => void;
+  saveTempNewProductData: () => void;
 }
 
-const choiceCategories = (() => {
-  const categories: { id: number; category: string; url: string }[] = [];
+const convertMoneyFormat = (price: string) => {
+  if (price.length === 0) return '';
+  let purePrice = price.replace(/[^0-9]/g, '');
 
-  while (categories.length < 3) {
-    const random = Math.floor(Math.random() * CATEGORIES.length);
+  if (Number(purePrice) > 999999999) purePrice = '999999999';
+  return `₩ ${purePrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+};
 
-    if (!categories.map(({ id }) => id).includes(CATEGORIES[random].id)) categories.push(CATEGORIES[random]);
-  }
-  return categories;
-})();
-
-const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) => {
-  const recommendCategory =
-    currentCategory.id === 0 || choiceCategories.map(({ id }) => id).includes(currentCategory.id)
-      ? choiceCategories
-      : [currentCategory, ...choiceCategories];
-  const [selectedCategory, setSelectedCategory] = useState<{ id: number; category: string; url: string }>(
-    currentCategory
-  );
+const SaleMain = ({
+  imgFiles,
+  onChange,
+  productInfo,
+  currentCategory,
+  recommendCategories,
+  handleCategory,
+  handleAddImg,
+  handleDeleteImg,
+  saveTempNewProductData,
+}: SaleMainProps) => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const navigate = useNavigate();
 
@@ -61,8 +67,13 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
   };
 
   const onPriceChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    // 문자를 입력받으면 그냥 전 데이터 그대로.
+    // 숫자를 입력받으면 전 데이터에 추가.
+
+    const currentValue = target.value.replace(/[^0-9]/g, '');
+
     onChange(prev => {
-      return { ...prev, price: target.value };
+      return { ...prev, price: currentValue };
     });
   };
 
@@ -74,37 +85,31 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
 
   const handleCategoryButtonClick = () => {
     // category state 전달!
-    const currentCategoryId = selectedCategory.id;
+    const currentCategoryId = currentCategory.id;
 
-    sessionStorage.setItem('selectedCategory', JSON.stringify(selectedCategory));
-    sessionStorage.setItem('productInfo', JSON.stringify(productInfo));
+    saveTempNewProductData();
     navigate(PATH.SALE.CATEGORY, { state: { currentCategoryId } });
   };
 
-  const handleRecommendCategoryClick = (id: number) => {
-    setSelectedCategory(CATEGORIES.filter(category => category.id === id)[0]);
-  };
-
   const getPlaceholder = (() => {
-    if (selectedCategory.id === 0)
+    if (currentCategory.id === 0)
       return '역삼1동에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)';
-    return CATEGORIES.filter(({ id }) => id === selectedCategory.id)[0].placeholder;
+    return CATEGORIES.filter(({ id }) => id === currentCategory.id)[0].placeholder;
   })();
 
   return (
     <$SaleMain>
-      <ImagePreviews />
+      <ImagePreviews imgFiles={imgFiles} handleAddImg={handleAddImg} handleDeleteImg={handleDeleteImg} />
       <TextInput onChange={onTitleChange} value={productInfo.title} placeholder="글제목" />
-
       {productInfo.title.length !== 0 && (
         <$CategoriesLayout>
           <$RecommendCategories>
-            {recommendCategory.map(category => (
+            {recommendCategories.map(category => (
               <Chip
                 key={category.id}
                 content={category.category}
-                active={category.id === selectedCategory.id}
-                onClick={() => handleRecommendCategoryClick(category.id)}
+                active={category.id === currentCategory.id}
+                onClick={() => handleCategory(category.id)}
               />
             ))}
           </$RecommendCategories>
@@ -114,7 +119,11 @@ const SaleMain = ({ onChange, productInfo, currentCategory }: SaleHeaderProps) =
         </$CategoriesLayout>
       )}
 
-      <TextInput onChange={onPriceChange} value={productInfo.price} placeholder="₩ 가격(선택사항)" />
+      <TextInput
+        onChange={onPriceChange}
+        value={convertMoneyFormat(productInfo.price)}
+        placeholder="₩ 가격(선택사항)"
+      />
       <$ContentTextArea
         ref={textRef}
         onChange={onContentChange}

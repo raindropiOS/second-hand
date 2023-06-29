@@ -31,6 +31,7 @@ const CATEGORIES = Object.freeze({
 
 const PRODUCTS = Object.freeze({
   GET_PRODUCTS: (pageNum = null, townId = null, categoryId = null) => `/${API_TYPE.PRODUCTS}`,
+  POST_NEW_PRODUCT: `/${API_TYPE.PRODUCTS}`,
   GET_LIKE_PRODUCTS: `/${API_TYPE.PRODUCTS}/like`,
   GET_SALE_HISTORY_PRODUCTS: `/${API_TYPE.PRODUCTS}/sales`,
 });

@@ -1,4 +1,16 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const gradientAnimation = keyframes`
+  0% {
+    background-color: #f2f2f2;
+  }
+  50% {
+    background-color: #ddd;
+  }
+  100% {
+    background-color: #f2f2f2;
+  }
+`;
 
 const $ListItemLayout = styled.div`
   display: flex;
@@ -7,7 +19,7 @@ const $ListItemLayout = styled.div`
   align-items: center;
   gap: 15px;
   margin-left: 8px;
-  width: 100%;
+  width: 90%;
   height: 150px;
   padding: 15px 0;
   border-bottom: ${({ theme }) => `1px solid ${theme.COLORS.NEUTRAL.BORDER.DEFAULT}`};
@@ -18,7 +30,7 @@ const $Image = styled.div`
   height: 120px;
   border: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.DEFAULT};
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.BOLD};
+  animation: ${gradientAnimation} 0.8s ease-in-out infinite; /* 애니메이션을 적용 */
 `;
 
 const $TextInfoLayout = styled.div`
@@ -41,20 +53,21 @@ const $TitleLayout = styled.div`
 
   width: 100%;
   height: 20px;
+  animation: ${gradientAnimation} 0.8s ease-in-out infinite; /* 애니메이션을 적용 */
 `;
 
 const $Title = styled.div`
   width: 300px;
   height: 20px;
-  background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.BOLD};
   font-weight: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.FONT_WEIGHT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.FONT_SIZE};
   line-height: ${({ theme }) => theme.FONT_TOKEN.SUBHEAD.LINE_HEIGHT};
   color: ${({ theme }) => theme.COLORS.NEUTRAL.TEXT.DEFAULT};
+  animation: ${gradientAnimation} 0.8s ease-in-out infinite; /* 애니메이션을 적용 */
 `;
 
 const $LocationTimestamp = styled.div`
-  background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.BOLD};
+  animation: ${gradientAnimation} 0.8s ease-in-out infinite; /* 애니메이션을 적용 */
   width: 200px;
   height: 15px;
 `;
@@ -78,13 +91,13 @@ const $Status = styled.div`
   padding: 10px 8px;
   border-radius: 8px;
 
-  background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.BOLD};
+  animation: ${gradientAnimation} 0.8s ease-in-out infinite; /* 애니메이션을 적용 */
 `;
 
 const $Price = styled.div`
   height: 22px;
   width: 120px;
-  background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.BOLD};
+  animation: ${gradientAnimation} 0.8s ease-in-out infinite; /* 애니메이션을 적용 */
 `;
 
 const $ChatLikeLayout = styled.section`
@@ -101,7 +114,7 @@ const $ChatDiv = styled.div`
   height: 22px;
   width: 40px;
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.BOLD};
+  animation: ${gradientAnimation} 0.8s ease-in-out infinite; /* 애니메이션을 적용 */
 `;
 
 export {
