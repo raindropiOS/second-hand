@@ -4,7 +4,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
 
 import { $Template } from '@styles/PageTemplate.style';
-import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 import axiosFetch from '@apis/instances/axiosFetch';
 
 import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
@@ -22,7 +21,7 @@ interface Product {
 }
 
 interface Town {
-  townId: number;
+  id: number;
   name: string;
 }
 
@@ -69,12 +68,12 @@ const HomeMain = () => {
 
   useEffect(() => {
     const getTowns = async () => {
-      const response = await mockAxiosFetch('/towns/member', {
+      const response = await axiosFetch('/towns/member', {
         method: 'GET',
       });
       const data = await response.data;
       const isSuccess = data.success;
-      const towns = data.data.town;
+      const towns = data.data;
 
       if (!isSuccess) throw new Error('Failed to fetch towns');
       setTowns(towns);

@@ -7,7 +7,7 @@ import Navbar from '@molecules/Navbar';
 import PATH from '@constants/routerPath';
 
 interface HomeMainHeaderProps {
-  towns: { townId: number; name: string }[];
+  towns: { id: number; name: string }[];
   currentCategoryId: number;
 }
 
