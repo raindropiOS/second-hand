@@ -9,14 +9,15 @@ import PATH from '@constants/routerPath';
 interface HomeMainHeaderProps {
   towns: { id: number; name: string }[];
   currentCategoryId: number;
+  handleFilterTownId: (townId: number) => void;
 }
 
-const HomeMainHeader = ({ towns, currentCategoryId }: HomeMainHeaderProps) => {
+const HomeMainHeader = ({ towns, currentCategoryId, handleFilterTownId }: HomeMainHeaderProps) => {
   const navigate = useNavigate();
 
   return (
     <Navbar>
-      <Dropdown towns={towns} />
+      <Dropdown towns={towns} handleFilterTownId={handleFilterTownId} />
       <button
         onClick={() => {
           navigate(PATH.HOME.CATEGORY, { state: { currentCategoryId } });

@@ -34,6 +34,7 @@ const HomeMain = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [towns, setTowns] = useState<Town[]>([]);
   const [page, setPage] = useState(0);
+  const [selectedTownId, setSelectedTownId] = useState(0);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
   const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
@@ -46,13 +47,42 @@ const HomeMain = () => {
   const observerTarget = useIntersectionObserver(intersectionObserverCallback);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const response = await axiosFetch('/products', {
+    const getTowns = async () => {
+      const response = await axiosFetch('/towns/member', {
         method: 'GET',
-        params: {
-          page, // 현재 페이지를 API로 전달
-        },
       });
+      const data = await response.data;
+      const isSuccess = data.success;
+      const towns = data.data;
+
+      if (!isSuccess) throw new Error('Failed to fetch towns');
+      setTowns(towns);
+      setSelectedTownId(towns[0].id);
+    };
+
+    getTowns();
+  }, []);
+
+  // FIXME(jayden): 데이터 필터링 로직 수정하기
+  useEffect(() => {
+    const getProducts = async () => {
+      const response = filterCategoryId
+        ? await axiosFetch('/products', {
+            method: 'GET',
+            params: {
+              page,
+              categoryId: filterCategoryId,
+              townId: selectedTownId,
+            },
+          })
+        : await axiosFetch('/products', {
+            method: 'GET',
+            params: {
+              page,
+              townId: selectedTownId,
+            },
+          });
+
       const data = await response.data;
       const isSuccess = data.success;
       const newProducts = data.data.products;
@@ -64,39 +94,31 @@ const HomeMain = () => {
 
     // NOTE(jayden): strict mode로 인해 두번씩 호출됨
     getProducts();
-  }, [page]);
-
-  useEffect(() => {
-    const getTowns = async () => {
-      const response = await axiosFetch('/towns/member', {
-        method: 'GET',
-      });
-      const data = await response.data;
-      const isSuccess = data.success;
-      const towns = data.data;
-
-      if (!isSuccess) throw new Error('Failed to fetch towns');
-      setTowns(towns);
-    };
-
-    getTowns();
-  }, []);
+  }, [page, selectedTownId, filterCategoryId]);
 
   const handleCancelFilter = () => {
     setFilterCategoryId(0);
   };
 
+  const handleFilterTownId = (townId: number) => {
+    setSelectedTownId(townId);
+  };
+
   return (
     <$Template>
-      {!!products.length && !!towns.length && (
+      {!!towns.length && (
         <>
-          <HomeMainHeader towns={towns} currentCategoryId={filterCategoryId} />
-          <HomeMainMain
-            products={products}
-            observerTarget={observerTarget}
-            currentCategoryId={filterCategoryId}
-            handleCancelFilter={handleCancelFilter}
-          />
+          <HomeMainHeader towns={towns} currentCategoryId={filterCategoryId} handleFilterTownId={handleFilterTownId} />
+          {products.length ? (
+            <HomeMainMain
+              products={products}
+              observerTarget={observerTarget}
+              currentCategoryId={filterCategoryId}
+              handleCancelFilter={handleCancelFilter}
+            />
+          ) : (
+            <main>상품이 없습니다.</main>
+          )}
         </>
       )}
       <Outlet />
