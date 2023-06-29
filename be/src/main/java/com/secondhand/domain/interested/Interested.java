@@ -37,4 +37,10 @@ public class Interested {
                 .isLiked(liked)
                 .build();
     }
+
+    public void changeInterested(Interested newInterested, Member member, Product product) {
+        newInterested.setMember(member);
+        newInterested.setProduct(product);
+        newInterested.setLiked(true);
+    }
 }

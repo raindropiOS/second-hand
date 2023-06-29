@@ -1,5 +1,6 @@
 package com.secondhand.web.controller;
 
+import com.secondhand.domain.product.Product;
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductQueryService;
@@ -83,9 +84,9 @@ public class ProductController {
     )
     @LoginCheck
     @GetMapping("/sales")
-    public BasicResponse<MainPageResponse>productSalesView(@Valid ProductSalesSearchCondition productSearchCondition,
-                                                                     Pageable pageable,
-                                                                     @LoginValue long userId) {
+    public BasicResponse<MainPageResponse> productSalesView(@Valid ProductSalesSearchCondition productSearchCondition,
+                                                            Pageable pageable,
+                                                            @LoginValue long userId) {
 
         MainPageResponse products = productQueryService.getMemberSalesProducts(productSearchCondition, pageable, userId);
 
@@ -147,20 +148,23 @@ public class ProductController {
     )
     @LoginCheck
     @PatchMapping("/{productId}")
-    public BasicResponse<ProductLikeResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
-                                                         @PathVariable long productId,
-                                                         @LoginValue long userId) {
+    public BasicResponse<ProductResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
+                                                     @PathVariable long productId,
+                                                     @LoginValue long userId) {
 
         if (request.getStatus() == null) {  //like
-            productService.changeLike(productId, userId, request.getIsLiked());
+            productService.changeLike(productId, userId);
         } else {
             productService.changeStatus(productId, userId, request.getStatus());
         }
 
-        return BasicResponse.<ProductLikeResponse>builder()
+        Product product = productService.findById(productId);
+        ProductResponse response = ProductResponse.of(true, product);
+        return BasicResponse.<ProductResponse>builder()
                 .success(true)
                 .message("사용자는상품을 과 관심상품 / 해제 할수 있다.")
                 .apiStatus(20000)
+                .data(response)
                 .httpStatus(HttpStatus.OK)
                 .build();
     }

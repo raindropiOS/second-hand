@@ -13,7 +13,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -56,7 +58,7 @@ public class Product extends BaseTimeEntity {
     private List<Image> images;
 
     @OneToMany(mappedBy = "product")
-    private List<Interested> interesteds;
+    private Set<Interested> interesteds;
 
     public static Product create(ProductSaveRequest requestInfo, Member member, Category category, Town town) {
         return Product.builder()
@@ -71,7 +73,7 @@ public class Product extends BaseTimeEntity {
                 .status(Status.SELLING)
                 .member(member)
                 .images(new ArrayList<>())
-                .interesteds(new ArrayList<>())
+                .interesteds(new HashSet<>())
                 .build();
     }
 
@@ -82,12 +84,6 @@ public class Product extends BaseTimeEntity {
         //    this.thumbnailUrl = updateRequest.getProductImages().get(0).getName();
         this.category = category;
         this.towns = town;
-    }
-
-    //연관 관계 메서드
-    public void updateInterested(Interested interested) {
-        this.interesteds.add(interested);
-        //  interested.setProduct(this);
     }
 
     public void updateStatus(Integer status) {
@@ -102,5 +98,22 @@ public class Product extends BaseTimeEntity {
 
     public void updateThumbnail(String url) {
         this.thumbnailUrl = url;
+    }
+
+    public Boolean findLiked() {
+        for (Interested interested : interesteds) {
+            if (interested.getProduct().id == this.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void increaseCountView() {
+        this.countLike++;
+    }
+
+    public void decreaseCountView() {
+        this.countLike--;
     }
 }

@@ -45,7 +45,7 @@ public class ProductResponse {
                                 .viewCount(product.getCountView())
                                 .build()
                 )
-                .isLiked(true)
+                .isLiked(product.findLiked())
                 .imgUrls(product.changeProductImages())
                 .build();
     }
