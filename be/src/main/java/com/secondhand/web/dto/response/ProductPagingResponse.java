@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductPagingResponse {
 
-    private boolean isMine;
+    private Boolean isMine;
     private Member seller;
     private Status status;
     private String title;
@@ -29,7 +29,7 @@ public class ProductPagingResponse {
     private Category category;
     private Integer price;
     private CountInfo countInfo;
-    private boolean isLiked;
+    private Boolean isLiked;
     private List[] imgUrls;
 
     @QueryProjection

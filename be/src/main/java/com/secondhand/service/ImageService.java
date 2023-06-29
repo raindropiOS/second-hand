@@ -4,8 +4,6 @@ import com.secondhand.domain.exception.ImageCountException;
 import com.secondhand.domain.exception.ImageUploadFailException;
 import com.secondhand.domain.image.Image;
 import com.secondhand.domain.image.ImageRepository;
-import com.secondhand.domain.product.Product;
-import com.secondhand.web.dto.response.ImageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.*;
+import software.amazon.awssdk.services.s3.model.GetUrlRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,19 +46,6 @@ public class ImageService {
         return images;
     }
 
-//    public String getThumbnailUrl(List<MultipartFile> list) {
-//        if (list.size() < 1 || list.size() > 10) {
-//            throw new ImageCountException("이미지 첨부는 1개 이상 10개 이하로 해야합니다.");
-//        }
-//
-//        String thumbnailUrl = new ArrayList<>();
-//        for (int i = 0; i < list.size(); i++) {
-//            String uploadImage = upload(list.get(i));
-//            images.add(uploadImage);
-//        }
-//        return thumbnailUrl;
-//    }
-
     public String upload(MultipartFile multipartFile) {
         String imageName = getImageName(multipartFile);
         String fileName = FILE_ROUTE + multipartFile.getOriginalFilename();
@@ -85,10 +71,6 @@ public class ImageService {
         String originalFileName = multipartFile.getOriginalFilename();
         String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
         return newName + extension;
-    }
-
-    public Image saveImage(Image image) {
-        return imageRepository.save(image);
     }
 
 }

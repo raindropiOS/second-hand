@@ -9,6 +9,7 @@ import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
+import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.requset.StatusOrLikeRequest;
 import com.secondhand.web.dto.response.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -105,7 +106,7 @@ public class ProductController {
     @LoginCheck
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public BasicResponse<Long> save(@LoginValue long userId,
-                                    @Valid  ProductSaveRequest productSaveRequest) {
+                                    @Valid ProductSaveRequest productSaveRequest) {
         log.debug("bdoy  ========================================================== {}", productSaveRequest);
         Long save = productService.save(userId, productSaveRequest);
         return BasicResponse.<Long>builder()
@@ -126,9 +127,9 @@ public class ProductController {
     @PutMapping("/{productId}")
     public BasicResponse<ProductResponse> update(@LoginValue long userId,
                                                  @PathVariable long productId,
-                                                 @RequestBody ProductSaveRequest updateRequest) {
+                                                 @Valid @RequestBody ProductUpdateRequest updateRequest) {
         productService.update(productId, updateRequest, userId);
-        ProductResponse productUpdateResponse = productQueryService.getPage(productId, userId);
+        ProductResponse productUpdateResponse = productQueryService.getDetailMinePage(productId, userId);
 
         return BasicResponse.<ProductResponse>builder()
                 .success(true)
@@ -145,7 +146,7 @@ public class ProductController {
             description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
     )
     @LoginCheck
-    @PatchMapping("{productId}")
+    @PatchMapping("/{productId}")
     public BasicResponse<ProductLikeResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
                                                          @PathVariable long productId,
                                                          @LoginValue long userId) {

@@ -8,6 +8,7 @@ import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
 import com.secondhand.util.BaseTimeEntity;
 import com.secondhand.web.dto.requset.ProductSaveRequest;
+import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,10 +53,10 @@ public class Product extends BaseTimeEntity {
     private Member member;
 
     @OneToMany(mappedBy = "product")
-    private List<Image> productImages = new ArrayList<>();
+    private List<Image> images;
 
     @OneToMany(mappedBy = "product")
-    private List<Interested> interesteds = new ArrayList<>();
+    private List<Interested> interesteds;
 
     public static Product create(ProductSaveRequest requestInfo, Member member, Category category, Town town) {
         return Product.builder()
@@ -69,14 +70,16 @@ public class Product extends BaseTimeEntity {
                 .countView(0)
                 .status(Status.SELLING)
                 .member(member)
+                .images(new ArrayList<>())
+                .interesteds(new ArrayList<>())
                 .build();
     }
 
-    public void update(ProductSaveRequest updateRequest, Category category, Town town) {
+    public void update(ProductUpdateRequest updateRequest, Category category, Town town) {
         this.title = updateRequest.getTitle();
         this.content = updateRequest.getContent();
         this.price = updateRequest.getPrice();
-        this.thumbnailUrl = updateRequest.getProductImages().get(0).getName();
+        //    this.thumbnailUrl = updateRequest.getProductImages().get(0).getName();
         this.category = category;
         this.towns = town;
     }
@@ -92,7 +95,7 @@ public class Product extends BaseTimeEntity {
     }
 
     public String[] changeProductImages() {
-        return productImages.stream()
+        return images.stream()
                 .map(Image::getImgUrl)
                 .toArray(String[]::new);
     }
