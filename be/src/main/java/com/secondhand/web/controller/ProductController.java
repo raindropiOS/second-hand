@@ -105,7 +105,7 @@ public class ProductController {
     @LoginCheck
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public BasicResponse<Long> save(@LoginValue long userId,
-                                    @RequestBody ProductSaveRequest productSaveRequest) {
+                                    @Valid  ProductSaveRequest productSaveRequest) {
         log.debug("bdoy  ========================================================== {}", productSaveRequest);
         Long save = productService.save(userId, productSaveRequest);
         return BasicResponse.<Long>builder()
@@ -135,7 +135,7 @@ public class ProductController {
                 .message("상품 수정")
                 .apiStatus(20000)
                 .data(productUpdateResponse)
-                .httpStatus(HttpStatus.CREATED)
+                .httpStatus(HttpStatus.OK)
                 .build();
     }
 

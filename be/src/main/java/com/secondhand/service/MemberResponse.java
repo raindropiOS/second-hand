@@ -1,4 +1,4 @@
-package com.secondhand.web.dto.response;
+package com.secondhand.service;
 
 import com.secondhand.domain.member.Member;
 import lombok.Builder;
