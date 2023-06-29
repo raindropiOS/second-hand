@@ -15,7 +15,7 @@ public class ProductListResponse {
     private String title;
     private TownResponse town;
     private LocalDateTime createdAt;
-    private String status;
+    private Integer status;
     private Integer price;
     private CountInfoDTO countInfo;
     private String imgUrl;
@@ -25,7 +25,7 @@ public class ProductListResponse {
         this.title = product.getTitle();
         this.town = new TownResponse(product.getTowns());
         this.createdAt = product.getCreatedAt();
-        this.status = product.getStatus().name();
+        this.status = product.getStatus().getValue();
         this.price = product.getPrice();
         this.countInfo = new CountInfoDTO(0, product.getCountLike());
         this.imgUrl = product.getThumbnailUrl();

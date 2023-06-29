@@ -90,10 +90,19 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
                 .leftJoin(product.category, category).fetchJoin()
                 .leftJoin(product.member, member).fetchJoin()
                 .where(
-                        isStatusEq(condition.getStatus()),
+//                        isStatusEq(condition.getStatus()),
+                        isOnSales(condition),
                         product.member.id.eq(userId)
                 )
+//                .groupBy(product.status, product.id)
+//                .having(
+//
+//                )
                 .orderBy(product.id.desc());
+
+        log.debug("status = {}} ", Status.getStatusByValue(1).toString());
+        log.debug("status = {}} ", Status.getStatusByValue(0).toString());
+        log.debug("getStatus = {}} ", condition.getStatus());
 
         log.debug("offset = {}", pageable.getPageNumber() * PAGE_SIZE);
         log.debug("pageable.getPageNumber() = {}", pageable.getPageNumber());
@@ -106,10 +115,21 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
         return new SliceImpl<>(products, pageable, hasNext(products, PAGE_SIZE + nextPageIndex));
     }
 
+    private static BooleanExpression isOnSales(ProductSalesSearchCondition condition) {
+        if (condition.getStatus() == null) {
+            return null;
+        }
+        if (condition.getStatus() == 0) {
+            return product.status.in(Status.SELLING, Status.RESERVING);
+        }
+        return product.status.eq(Status.SOLD);
+    }
+
     private BooleanExpression isStatusEq(Integer status) {
         if (status == null) {
             return null;  // status가 null 또는 비어있는 경우 조건을 적용하지 않음
         }
+
         return product.status.in(Status.getStatusByValue(status));
     }
 

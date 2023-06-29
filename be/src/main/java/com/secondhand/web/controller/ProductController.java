@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -100,7 +101,7 @@ public class ProductController {
             description = "사용자는 단일 상품을 등록할 수 있다 저장된 product id반환."
     )
     @LoginCheck
-    @PostMapping
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public BasicResponse<Long> save(@LoginValue long userId,
                                     @RequestBody ProductSaveRequest productSaveRequest) {
         Long save = productService.save(userId, productSaveRequest);
