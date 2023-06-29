@@ -5,6 +5,7 @@ import useIntersectionObserver from '@hooks/useIntersectionObserver';
 
 import { $Template } from '@styles/PageTemplate.style';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
+import axiosFetch from '@apis/instances/axiosFetch';
 
 import HomeMainHeader from '@components/Home/HomeMain/HomeMainHeader';
 import HomeMainMain from '@components/Home/HomeMain/HomeMainMain';
@@ -33,13 +34,13 @@ const HomeMain = () => {
   const [filterCategoryId, setFilterCategoryId] = useState(currentCategoryId);
   const [products, setProducts] = useState<Product[]>([]);
   const [towns, setTowns] = useState<Town[]>([]);
-  const [pageNum, setPageNum] = useState(1);
+  const [page, setPage] = useState(0);
   const [isPageUpdated, setIsPageUpdated] = useState(false);
   const intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const entry = entries[0];
 
     if (!entry.isIntersecting || isPageUpdated) return;
-    if (entry.isIntersecting) setPageNum(prevPageNum => prevPageNum + 1);
+    if (entry.isIntersecting) setPage(prevPageNum => prevPageNum + 1);
     setIsPageUpdated(true);
   };
 
@@ -47,10 +48,10 @@ const HomeMain = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await mockAxiosFetch('/products', {
+      const response = await axiosFetch('/products', {
         method: 'GET',
         params: {
-          pageNum, // 현재 페이지를 API로 전달
+          page, // 현재 페이지를 API로 전달
         },
       });
       const data = await response.data;
@@ -64,7 +65,7 @@ const HomeMain = () => {
 
     // NOTE(jayden): strict mode로 인해 두번씩 호출됨
     getProducts();
-  }, [pageNum]);
+  }, [page]);
 
   useEffect(() => {
     const getTowns = async () => {
