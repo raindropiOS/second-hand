@@ -53,7 +53,7 @@ const HomeMainMain = ({ products, observerTarget, currentCategoryId, handleCance
             key={product.productId}
             price={ConvertPriceFormat(product.price)}
             isCurrentUserItem={true}
-            onItemClick={() => console.log('onItemClick')}
+            onItemClick={() => navigate(`${PATH.PRODUCT.DETAIL(product.productId)}`)}
           />
         ))}
         <div ref={observerTarget} />

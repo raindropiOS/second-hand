@@ -25,3 +25,28 @@ export interface APIDefaultResponseType<T> {
   code: number;
   data: T;
 }
+
+export interface DetailProductType {
+  isMine: boolean;
+  seller: {
+    name: string;
+    memberId: number;
+  };
+  status: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  category: {
+    categoryId: number;
+    name: string;
+  };
+  price: number;
+  countInfo: {
+    chatCount: number;
+    likeCount: number;
+    viewCount: number;
+  };
+  isLiked: boolean;
+  imgUrls: string[];
+  chatId: object;
+}
