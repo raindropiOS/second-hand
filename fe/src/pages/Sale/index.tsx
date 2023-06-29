@@ -101,11 +101,15 @@ const Sale = () => {
     imgFiles.forEach(({ file }) => {
       formData.append('productImages', file);
     });
-    formData.append('contents', new Blob([JSON.stringify(contentsData)], { type: 'application/json' }));
+    formData.append('title', newProductInfo.title);
+    formData.append('price', newProductInfo.price.toString());
+    formData.append('content', newProductInfo.content);
+    formData.append('categoryId', category.id.toString());
+    formData.append('townId', '1');
 
     addNewProduct(formData, {
       onSuccess: ({ data }) => {
-        navigate(PATH.PRODUCT.DETAIL(data.productId));
+        navigate(PATH.PRODUCT.DETAIL(data));
       },
     });
   };
