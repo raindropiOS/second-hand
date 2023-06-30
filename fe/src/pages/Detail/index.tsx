@@ -21,6 +21,10 @@ const Detail = () => {
     setProductDetail as React.Dispatch<React.SetStateAction<DetailProductType>>
   );
 
+  const handleRefreshData = (data: DetailProductType) => {
+    setProductDetail(data);
+  };
+
   if (isLoading) return <div>loading...</div>;
   if (error) return <div>error!</div>;
   else {
@@ -32,7 +36,7 @@ const Detail = () => {
           price={productDetail && productDetail.price}
           isLiked={productDetail && productDetail.isLiked}
           productId={productId as string}
-          refetch={refetch}
+          handleRefreshData={handleRefreshData}
         />
       </$Template>
     );

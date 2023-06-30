@@ -6,18 +6,20 @@ import convertPriceFormat from '@utils/convertPriceFormat';
 import { $DetailTabBar, $LikeLayout } from './DetailTabBar.style';
 import Icon from '@atoms/Icon';
 import Button from '@atoms/Buttons/Button';
+import { DetailProductType } from '@type/productsType';
 
 interface DetailTabBarProps {
   price?: number;
   isLiked: boolean | undefined;
   productId: string;
-  refetch: any;
+  handleRefreshData: (data: DetailProductType) => void;
 }
 
-const DetailTabBar = ({ price, isLiked, productId, refetch }: DetailTabBarProps) => {
+const DetailTabBar = ({ price, isLiked, productId, handleRefreshData }: DetailTabBarProps) => {
   const handleLikeClick = async (isLiked: boolean, productId: string) => {
-    changeLikeStatus(productId, isLiked);
-    await refetch();
+    const { data } = await changeLikeStatus(productId, isLiked);
+
+    handleRefreshData(data);
   };
 
   return (
