@@ -8,9 +8,10 @@ import Button from '@atoms/Buttons/Button';
 
 interface DetailHeaderProps {
   imgUrls?: string[];
+  isMine: boolean | undefined;
 }
 
-const DetailHeader = ({ imgUrls }: DetailHeaderProps) => {
+const DetailHeader = ({ imgUrls, isMine }: DetailHeaderProps) => {
   const navigate = useNavigate();
 
   return (
@@ -19,13 +20,15 @@ const DetailHeader = ({ imgUrls }: DetailHeaderProps) => {
         <Button onClick={() => navigate(-1)} status="ghost">
           <Icon name="chevronLeft" />
         </Button>
-        <Button onClick={() => console.log('modal page')} status="ghost">
-          <Icon name="more" />
-        </Button>
+        {isMine && (
+          <Button onClick={() => console.log('modal page')} status="ghost">
+            <Icon name="more" />
+          </Button>
+        )}
       </Navbar>
       <Carousel>
-        {imgUrls?.map((url, i) => (
-          <Carousel.Slide key={i}>
+        {imgUrls?.map((url, index) => (
+          <Carousel.Slide key={index}>
             <img src={url} alt="carousel" />
           </Carousel.Slide>
         ))}

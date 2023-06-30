@@ -13,6 +13,9 @@ const getLikeProducts = async (pageNum?: number, categoryId?: number) => {
       pageNum: pageNum,
       categoryId: categoryId,
     },
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   return response.data;

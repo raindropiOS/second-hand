@@ -29,10 +29,13 @@ const DetailMain = ({ productDetail }: DetailMainProps) => {
             <div>{`${productDetail?.seller.name}`}</div>
           </$SellerInfoWrapper>
           <$ProductInfoContainer>
-            <$ProductStatusButton>
-              <span>{`${GetStatusWord(productDetail?.status as number)}`}</span>
-              <Icon name="chevronDown" width={12} />
-            </$ProductStatusButton>
+            {productDetail.isMine && (
+              <$ProductStatusButton>
+                <span>{`${GetStatusWord(productDetail?.status as number)}`}</span>
+                <Icon name="chevronDown" width={12} />
+              </$ProductStatusButton>
+            )}
+
             <$ProductTitle>{`${productDetail?.title}`}</$ProductTitle>
             <$ProductPriceTimestamp>
               {`${productDetail?.category.name}`}•{`${productDetail?.createdAt}`}

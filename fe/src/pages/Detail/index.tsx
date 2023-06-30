@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import useProductDetailData from '@apis/api/productDetail';
+
 import { $Template } from '@styles/PageTemplate.style';
 import DetailHeader from '@components/Detail/DetailHeader';
 import DetailMain from '@components/Detail/DetailMain';
@@ -11,40 +13,34 @@ import { DetailProductType } from '@type/productsType';
 
 const Detail = () => {
   // TODO(jayden): productId 받아서 상품 상세 정보 가져오기
-  const [productDetail, setProductDetail] = useState<DetailProductType>();
   const params = useParams();
   const { productId } = params;
-
-  useEffect(() => {
-    let ignore = false;
-    const fetchProductDetail = async () => {
-      try {
-        const res = await mockAxiosFetch({
-          url: `/products/${productId}`,
-          method: 'GET',
-        });
-
-        if (ignore) {
-          setProductDetail(res.data.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchProductDetail();
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
-  return (
-    <$Template isDetail={true}>
-      <DetailHeader imgUrls={productDetail && productDetail.imgUrls} />
-      <DetailMain productDetail={productDetail} />
-      <DetailTabBar price={productDetail && productDetail.price} />
-    </$Template>
+  const [productDetail, setProductDetail] = useState<DetailProductType>();
+  const { error, isLoading, refetch } = useProductDetailData(
+    productId as string,
+    setProductDetail as React.Dispatch<React.SetStateAction<DetailProductType>>
   );
+
+  const handleRefreshData = (data: DetailProductType) => {
+    setProductDetail(data);
+  };
+
+  if (isLoading) return <div>loading...</div>;
+  if (error) return <div>error!</div>;
+  else {
+    return (
+      <$Template isDetail={true}>
+        <DetailHeader imgUrls={productDetail && productDetail.imgUrls} isMine={productDetail && productDetail.isMine} />
+        <DetailMain productDetail={productDetail} />
+        <DetailTabBar
+          price={productDetail && productDetail.price}
+          isLiked={productDetail && productDetail.isLiked}
+          productId={productId as string}
+          handleRefreshData={handleRefreshData}
+        />
+      </$Template>
+    );
+  }
 };
 
 export default Detail;

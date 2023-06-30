@@ -79,7 +79,7 @@ const ListItem = ({
           {town.name}•{getTimeAgo(createdAt)}
         </$LocationTimestamp>
         <$StatusPriceLayout>
-          <$Status>{getStatusWord(status)}</$Status>
+          {status === 1 && <$Status>{getStatusWord(status)}</$Status>}
           <$Price>{price}</$Price>
         </$StatusPriceLayout>
         <$ChatLikeLayout>

@@ -5,9 +5,10 @@ import { PRODUCTS } from '@constants/API';
 import { SaleHistoryProductsType, APIDefaultResponseType } from '@type/productsType';
 
 import mockAxiosFetch from '../instances/mockAxiosFetch';
+import axiosFetch from '@apis/instances/axiosFetch';
 
 const getSaleHistoryProducts = async (pageNum?: number, status?: number) => {
-  const response = await mockAxiosFetch.get(PRODUCTS.GET_SALE_HISTORY_PRODUCTS, {
+  const response = await axiosFetch.get(PRODUCTS.GET_SALE_HISTORY_PRODUCTS, {
     params: {
       pageNum: pageNum,
       status: status,
