@@ -71,6 +71,7 @@ public class ProductService {
             Interested existInterested = interested.get();
             product.decreaseCountView();
             interestedRepository.delete(existInterested);
+            existInterested.deleteInterested(existInterested, member, product);
             return;
         }
         log.debug("처음 좋아요  누른경우 ======================");

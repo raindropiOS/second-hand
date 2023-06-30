@@ -11,6 +11,7 @@ import java.util.List;
 
 @Getter
 public class ProductListResponse {
+
     private Long productId;
     private String title;
     private TownResponse town;
@@ -18,7 +19,9 @@ public class ProductListResponse {
     private Integer status;
     private Integer price;
     private CountInfoDTO countInfo;
+
     private String imgUrl;
+
 
     public ProductListResponse(Product product) {
         this.productId = product.getId();

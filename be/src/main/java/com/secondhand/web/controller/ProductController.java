@@ -78,6 +78,35 @@ public class ProductController {
     }
 
     @Operation(
+            summary = "상품 관심 상품 등록/해제  상품의 상태를 변경할 수 있다",
+            tags = "products",
+            description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
+    )
+    @LoginCheck
+    @PatchMapping("/{productId}")
+    public BasicResponse<ProductResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
+                                                     @PathVariable long productId,
+                                                     @LoginValue long userId) {
+
+        if (request.getStatus() == null) {  //like
+            productService.changeLike(productId, userId);
+        } else {
+            productService.changeStatus(productId, userId, request.getStatus());
+        }
+
+        Product product = productService.findById(productId);
+        ProductResponse response = ProductResponse.of(true, product);
+        return BasicResponse.<ProductResponse>builder()
+                .success(true)
+                .message("사용자는상품을 과 관심상품 / 해제 할수 있다.")
+                .apiStatus(20000)
+                .data(response)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
+
+    @Operation(
             summary = "판매/세일 중인 상품",
             tags = "products",
             description = "사용자는 세일/판매 중인 상품을 볼수 있다."
@@ -141,33 +170,6 @@ public class ProductController {
                 .build();
     }
 
-    @Operation(
-            summary = "상품 관심 상품 등록/해제  상품의 상태를 변경할 수 있다",
-            tags = "products",
-            description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
-    )
-    @LoginCheck
-    @PatchMapping("/{productId}")
-    public BasicResponse<ProductResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
-                                                     @PathVariable long productId,
-                                                     @LoginValue long userId) {
-
-        if (request.getStatus() == null) {  //like
-            productService.changeLike(productId, userId);
-        } else {
-            productService.changeStatus(productId, userId, request.getStatus());
-        }
-
-        Product product = productService.findById(productId);
-        ProductResponse response = ProductResponse.of(true, product);
-        return BasicResponse.<ProductResponse>builder()
-                .success(true)
-                .message("사용자는상품을 과 관심상품 / 해제 할수 있다.")
-                .apiStatus(20000)
-                .data(response)
-                .httpStatus(HttpStatus.OK)
-                .build();
-    }
 
     @Operation(
             summary = "상품 디테일 페이지",

@@ -3,8 +3,13 @@ package com.secondhand.domain.product.repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.secondhand.domain.interested.Interested;
+import com.secondhand.domain.interested.QInterested;
+import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.Product;
+import com.secondhand.domain.product.QProduct;
 import com.secondhand.domain.product.Status;
+import com.secondhand.service.MemberService;
 import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
@@ -14,6 +19,8 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.secondhand.domain.categorie.QCategory.category;
 import static com.secondhand.domain.interested.QInterested.interested;
@@ -30,6 +37,7 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
     // 페이지 크기를 10으로 고정
     public static final int PAGE_SIZE = 10;
     private final JPAQueryFactory jpaQueryFactory;
+    private final MemberService memberService;
 
     @Override
     public Slice<Product> findAllByTowns(ProductSearchCondition condition, Pageable pageable, long userId) {
@@ -57,18 +65,19 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public Slice<Product> findAllByCategory(ProductCategorySearchCondition condition, Pageable pageable, long userId) {
-        int pageSize = 10; // 페이지 크기를 10으로 고정
 
         log.debug("querydsl 실행 ========================");
         JPAQuery<Product> query = jpaQueryFactory.selectFrom(product)
                 .leftJoin(product.towns, town).fetchJoin()
                 .leftJoin(product.category, category).fetchJoin()
-                .leftJoin(product.member, member).fetchJoin()
+                .leftJoin(product.member).fetchJoin()
                 .leftJoin(product.interesteds, interested).fetchJoin()
                 .where(
                         categoryEq(condition.getCategoryId()),
-                        interested.isNotNull().and(interested.member.id.eq(userId))
-                )
+                        //      categoryListEq(condition.getCategoryId(), likedCategoryIds))
+                        interested.isNotNull().and(interested.member.id.eq(userId)),
+                        interested.member.id.eq(userId))
+                //interested.product.category.categoryId.in(likedCategoryIds))
                 .orderBy(product.id.desc());
 
         log.debug("offset = {}", pageable.getPageNumber() * PAGE_SIZE);
@@ -139,6 +148,14 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
         }
         return product.towns.townId.eq(locationId);
     }
+
+    private BooleanExpression categoryListEq(Long categoryId, List<Long> interesteds) {
+        if (categoryId == null) {
+            return null;
+        }
+        return product.category.categoryId.in(interesteds);
+    }
+
 
     private BooleanExpression categoryEq(Long categoryId) {
         if (categoryId == null) {
