@@ -72,7 +72,11 @@ public class ProductQueryService {
         //로그인한 유저가 좋아요 누른목록
         Member member = memberService.findMemberById(userId);
         Set<Interested> interesteds = member.getInteresteds();
-
+        for (Interested interested : interesteds) {
+            if (interested.getProduct().getCategory().getCategoryId() == 4) {
+                log.debug("interested = {}", interested.getProduct().getId());
+            }
+        }
         List<Long> likedCategoryIds = interesteds.stream()
                 .map(interested -> interested.getProduct().getCategory().getCategoryId())
                 .collect(Collectors.toList());

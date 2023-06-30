@@ -22,6 +22,8 @@ public class ProductListResponse {
 
     private String imgUrl;
 
+    private Boolean isLiked;
+    private Boolean isMine;
 
     public ProductListResponse(Product product) {
         this.productId = product.getId();
@@ -32,6 +34,7 @@ public class ProductListResponse {
         this.price = product.getPrice();
         this.countInfo = new CountInfoDTO(0, product.getCountLike());
         this.imgUrl = product.getThumbnailUrl();
+        this.isLiked = product.findLiked();
     }
 
     public static List<ProductListResponse> fromList(List<Product> page) {

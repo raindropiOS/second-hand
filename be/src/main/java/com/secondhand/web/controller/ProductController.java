@@ -4,15 +4,17 @@ import com.secondhand.domain.product.Product;
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductQueryService;
-import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
-import com.secondhand.web.dto.requset.ProductSaveRequest;
+import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
+import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.requset.StatusOrLikeRequest;
-import com.secondhand.web.dto.response.*;
+import com.secondhand.web.dto.response.MainPageCategoryResponse;
+import com.secondhand.web.dto.response.MainPageResponse;
+import com.secondhand.web.dto.response.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
