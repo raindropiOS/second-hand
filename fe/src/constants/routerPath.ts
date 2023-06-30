@@ -14,6 +14,7 @@ const PATH = Object.freeze({
     CHAT: '/product/:productId/chat/:chatId',
     SALES: '/product/sales',
     LIKE: '/product/like',
+    DETAIL: (productId: number) => `/product/${productId}`,
   },
   AUTH: {
     DEFAULT: '/auth',

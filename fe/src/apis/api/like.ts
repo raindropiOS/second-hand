@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import { PRODUCTS } from '@constants/API';
 import { LikeProductsType, APIDefaultResponseType } from '@type/productsType';
 // TODO(hoonding) : axiosFetch로 변경해야함
+import axiosFetch from '@apis/instances/axiosFetch';
 import mockAxiosFetch from '../instances/mockAxiosFetch';
 
 const getLikeProducts = async (pageNum?: number, categoryId?: number) => {
@@ -12,6 +13,9 @@ const getLikeProducts = async (pageNum?: number, categoryId?: number) => {
       pageNum: pageNum,
       categoryId: categoryId,
     },
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   return response.data;
@@ -19,7 +23,7 @@ const getLikeProducts = async (pageNum?: number, categoryId?: number) => {
 
 const useLikeProductsData = (pageNum?: number, categoryId?: number) => {
   if (categoryId === 0) categoryId = undefined;
-  return useQuery<APIDefaultResponseType, AxiosError, LikeProductsType>(
+  return useQuery<APIDefaultResponseType<LikeProductsType>, AxiosError, LikeProductsType>(
     ['likeProducts', pageNum, categoryId],
     () => getLikeProducts(pageNum, categoryId),
     { select: data => data.data }

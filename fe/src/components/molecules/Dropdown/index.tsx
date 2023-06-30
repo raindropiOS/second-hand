@@ -13,19 +13,20 @@ import PATH from '@constants/routerPath';
 import { useNavigate } from 'react-router-dom';
 
 type Town = {
-  townId: number;
+  id: number;
   name: string;
 };
 
 interface DropdownProps {
   towns: Town[];
+  handleFilterTownId: (townId: number) => void;
 }
 
 const MY_TOWN_SETTING_WORD = '내 동네 설정하기';
 
 // TODO(jayden): 각 드롭다운 버튼에 onClick 주입하여 데이터 fetch하도록 구현
 // TODO(jayden): 드롭다운 컴포넌트도 compound pattern으로 구현해보기
-const Dropdown = ({ towns }: DropdownProps) => {
+const Dropdown = ({ towns, handleFilterTownId }: DropdownProps) => {
   const [selectedTown, setSelectedTown] = React.useState(towns[0]);
   const [isDropdownOpen, setIsDropdownOpen, ref] = useOutsideClick(false);
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Dropdown = ({ towns }: DropdownProps) => {
 
   const handleSelectTown = (townId: number) => {
     // FIXME(jayden): type assertion 제거
-    setSelectedTown(towns.find(town => town.townId === townId) as Town);
+    setSelectedTown(towns.find(town => town.id === townId) as Town);
     setIsDropdownOpen(false);
   };
 
@@ -54,10 +55,16 @@ const Dropdown = ({ towns }: DropdownProps) => {
       </$DropdownButton>
       {isDropdownOpen && (
         <$DropdownLayout>
-          {towns.map(({ townId, name }, index, arr) => {
+          {towns.map(({ id, name }, index, arr) => {
             return (
               <>
-                <$MyTownButton key={townId} onClick={() => handleSelectTown(townId)}>
+                <$MyTownButton
+                  key={id}
+                  onClick={() => {
+                    handleSelectTown(id);
+                    handleFilterTownId(id);
+                  }}
+                >
                   {name.split(' ')[2]}
                 </$MyTownButton>
               </>

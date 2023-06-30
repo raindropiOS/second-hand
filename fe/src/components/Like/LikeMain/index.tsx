@@ -3,8 +3,10 @@ import React from 'react';
 import { ProductType } from '@type/productsType';
 
 import ConvertPriceFormat from '@utils/convertPriceFormat';
+import { useNavigate } from 'react-router-dom';
 
 import ListItem from '@molecules/ListItem';
+import PATH from '@constants/routerPath';
 import { $LikeItemLayout, $ProductLists } from './LikeMain.style';
 
 interface ListMainProps {
@@ -12,6 +14,8 @@ interface ListMainProps {
 }
 
 const ListMain = ({ products }: ListMainProps) => {
+  const navigate = useNavigate();
+
   return (
     <$LikeItemLayout>
       <$ProductLists>
@@ -21,7 +25,7 @@ const ListMain = ({ products }: ListMainProps) => {
             key={product.productId}
             price={ConvertPriceFormat(product.price)}
             isCurrentUserItem={false}
-            onItemClick={() => console.log('onItemClick')}
+            onItemClick={() => navigate(`${PATH.PRODUCT.DETAIL(product.productId)}`)}
           />
         ))}
       </$ProductLists>

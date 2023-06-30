@@ -12,6 +12,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    productId: '1',
+    isLiked: false,
     price: 169000,
   },
 };

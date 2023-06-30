@@ -14,11 +14,11 @@ export const First: Story = {
   args: {
     towns: [
       {
-        townId: 5,
+        id: 5,
         name: '서울 강남구 삼성1동',
       },
       {
-        townId: 14,
+        id: 14,
         name: '서울 강남구 역삼3동',
       },
     ],

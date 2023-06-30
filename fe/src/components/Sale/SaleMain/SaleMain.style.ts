@@ -8,6 +8,13 @@ const $SaleMain = styled.main`
   height: 100vh;
 `;
 
+const $SaleForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
 const $CategoriesLayout = styled.div`
   display: flex;
   justify-content: space-between;
@@ -50,4 +57,4 @@ const $ContentTextArea = styled.textarea`
   caret-color: ${({ theme }) => theme.COLORS.SYSTEM.DEFAULT};
 `;
 
-export { $SaleMain, $CategoriesLayout, $RecommendCategories, $SelectCategoryButton, $ContentTextArea };
+export { $SaleMain, $SaleForm, $CategoriesLayout, $RecommendCategories, $SelectCategoryButton, $ContentTextArea };

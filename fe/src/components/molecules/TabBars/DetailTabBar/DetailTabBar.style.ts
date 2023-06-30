@@ -12,7 +12,9 @@ const $DetailTabBar = styled.footer`
   background-color: ${({ theme }) => theme.COLORS.NEUTRAL.BACKGROUND.WEAK};
 `;
 
-const $LikeLayout = styled.button`
+const $LikeLayout = styled.button<{
+  onClick: any;
+}>`
   display: flex;
   align-items: center;
   height: max-content;

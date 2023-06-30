@@ -15,7 +15,6 @@ const Like = () => {
   });
   const { data, isLoading, isError, error } = useLikeProductsData(fetchOptions.pageNum, fetchOptions.categoryId);
 
-  if (isLoading) return <Skeleton />;
   if (isError) return <div>에러가 발생했습니다.</div>;
 
   const handleChangeCategory = (categoryId: number) => {
@@ -26,12 +25,18 @@ const Like = () => {
 
   return (
     <$Template>
-      <LikeHeader
-        categoryIds={data.categoryIds}
-        handleChangeCategory={handleChangeCategory}
-        currentCategory={fetchOptions.categoryId}
-      />
-      {data && <ListMain products={data.products} />}
+      {isLoading ? (
+        <Skeleton />
+      ) : (
+        <>
+          <LikeHeader
+            categoryIds={data.categoryIds}
+            handleChangeCategory={handleChangeCategory}
+            currentCategory={fetchOptions.categoryId}
+          />
+          {data && <ListMain products={data.products} />}
+        </>
+      )}
       <Outlet />
     </$Template>
   );

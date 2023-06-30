@@ -59,7 +59,6 @@ const ListItem = ({
   const theme = useTheme();
 
   return (
-    // NOTE(jayden): onClick 이벤트를 Touch 관련 이벤트로 대체해야할지 고민해보자!
     <$ListItemLayout onClick={onItemClick}>
       <$Image src={imgUrl} alt="상품 이미지" />
       <$TextInfoLayout>
@@ -80,7 +79,7 @@ const ListItem = ({
           {town.name}•{getTimeAgo(createdAt)}
         </$LocationTimestamp>
         <$StatusPriceLayout>
-          <$Status>{getStatusWord(status)}</$Status>
+          {status === 1 && <$Status>{getStatusWord(status)}</$Status>}
           <$Price>{price}</$Price>
         </$StatusPriceLayout>
         <$ChatLikeLayout>
