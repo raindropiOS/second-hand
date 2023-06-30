@@ -4,15 +4,17 @@ import com.secondhand.domain.product.Product;
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.service.ProductQueryService;
-import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.filtercondition.ProductCategorySearchCondition;
-import com.secondhand.web.dto.requset.ProductSaveRequest;
+import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
+import com.secondhand.web.dto.requset.ProductSaveRequest;
 import com.secondhand.web.dto.requset.ProductUpdateRequest;
 import com.secondhand.web.dto.requset.StatusOrLikeRequest;
-import com.secondhand.web.dto.response.*;
+import com.secondhand.web.dto.response.MainPageCategoryResponse;
+import com.secondhand.web.dto.response.MainPageResponse;
+import com.secondhand.web.dto.response.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -76,6 +77,35 @@ public class ProductController {
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
+
+    @Operation(
+            summary = "상품 관심 상품 등록/해제  상품의 상태를 변경할 수 있다",
+            tags = "products",
+            description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
+    )
+    @LoginCheck
+    @PatchMapping("/{productId}")
+    public BasicResponse<ProductResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
+                                                     @PathVariable long productId,
+                                                     @LoginValue long userId) {
+
+        if (request.getStatus() == null) {  //like
+            productService.changeLike(productId, userId);
+        } else {
+            productService.changeStatus(productId, userId, request.getStatus());
+        }
+
+        Product product = productService.findById(productId);
+        ProductResponse response = ProductResponse.of(true, product);
+        return BasicResponse.<ProductResponse>builder()
+                .success(true)
+                .message("사용자는상품을 과 관심상품 / 해제 할수 있다.")
+                .apiStatus(20000)
+                .data(response)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
 
     @Operation(
             summary = "판매/세일 중인 상품",
@@ -141,33 +171,6 @@ public class ProductController {
                 .build();
     }
 
-    @Operation(
-            summary = "상품 관심 상품 등록/해제  상품의 상태를 변경할 수 있다",
-            tags = "products",
-            description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
-    )
-    @LoginCheck
-    @PatchMapping("/{productId}")
-    public BasicResponse<ProductResponse> changeLike(final @Valid @RequestBody StatusOrLikeRequest request,
-                                                     @PathVariable long productId,
-                                                     @LoginValue long userId) {
-
-        if (request.getStatus() == null) {  //like
-            productService.changeLike(productId, userId);
-        } else {
-            productService.changeStatus(productId, userId, request.getStatus());
-        }
-
-        Product product = productService.findById(productId);
-        ProductResponse response = ProductResponse.of(true, product);
-        return BasicResponse.<ProductResponse>builder()
-                .success(true)
-                .message("사용자는상품을 과 관심상품 / 해제 할수 있다.")
-                .apiStatus(20000)
-                .data(response)
-                .httpStatus(HttpStatus.OK)
-                .build();
-    }
 
     @Operation(
             summary = "상품 디테일 페이지",

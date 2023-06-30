@@ -41,6 +41,13 @@ public class Interested {
     public void changeInterested(Interested newInterested, Member member, Product product) {
         newInterested.setMember(member);
         newInterested.setProduct(product);
+        member.getInteresteds().add(newInterested);
+        product.getInteresteds().add(newInterested);
         newInterested.setLiked(true);
+    }
+
+    public void deleteInterested(Interested existInterested, Member member, Product product) {
+        member.getInteresteds().remove(existInterested);
+        product.getInteresteds().remove(existInterested);
     }
 }

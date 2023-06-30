@@ -23,7 +23,6 @@ import java.io.IOException;
 public class MemberController {
 
     private final MemberService memberService;
-    private final TownService townService;
 
     @Operation(
             summary = "깃허브 로그인",
@@ -35,13 +34,7 @@ public class MemberController {
         log.debug("프론트로 부터 받은 코드 = {}", code);
         MemberLoginResponse memberResponseDTO = memberService.login(code.getAuthorizationCode());
 
-        return BasicResponse.<MemberLoginResponse>builder()
-                .success(true)
-                .message("로그인")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .data(memberResponseDTO)
-                .build();
+        return BasicResponse.send("로그인", memberResponseDTO);
     }
 
     @Operation(
@@ -74,12 +67,6 @@ public class MemberController {
         log.debug("사용자 id = {} ", userId);
         MemberResponse userInfo = memberService.getUserInfo(userId);
 
-        return BasicResponse.<MemberResponse>builder()
-                .success(true)
-                .message("사용자 정보를 가져온다")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .data(userInfo)
-                .build();
+        return BasicResponse.send("사용자 정보를 가져온다", userInfo);
     }
 }
