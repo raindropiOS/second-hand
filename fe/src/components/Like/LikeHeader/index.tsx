@@ -16,7 +16,9 @@ interface LikeHeaderProps {
 
 const LikeHeader = ({ categoryIds, handleChangeCategory, currentCategory }: LikeHeaderProps) => {
   const createCategoryList = (() => {
-    return categoryIds.map(categoryId => {
+    const newCategoryIds = Array.from(new Set(categoryIds));
+
+    return newCategoryIds.map(categoryId => {
       const category = CATEGORIES.find(category => category.id === categoryId) as { id: number; category: string };
 
       return { id: category.id, category: category.category };
