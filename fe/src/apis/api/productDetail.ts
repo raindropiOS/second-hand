@@ -16,6 +16,8 @@ export const changeLikeStatus = async (productId: string, isLiked: boolean) => {
   const response = await axiosFetch.patch(`/products/${productId}`, {
     isLiked,
   });
+
+  return response.data;
 };
 const useProductDetailData = (
   productId: string,
