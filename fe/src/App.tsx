@@ -22,6 +22,7 @@ import SalesHistory from '@pages/SalesHistory';
 import MainTabBar from '@molecules/TabBars/MainTabBar';
 import SaleTabBar from '@molecules/TabBars/SaleTabBar';
 import Detail from '@pages/Detail';
+import Ready from '@pages/Ready';
 
 const queryClient = new QueryClient(); // options 넣어주기.
 
@@ -46,7 +47,7 @@ const App = () => {
             <Route path={PATH.SALE.CATEGORY} element={<SaleCategory />} />
 
             <Route path={PATH.PRODUCT.DEFAULT} element={<Detail />} />
-            <Route path={PATH.PRODUCT.CHAT} />
+            <Route path={PATH.PRODUCT.CHAT} element={<Ready />} />
             <Route path={PATH.PRODUCT.SALES} element={<SalesHistory />}>
               <Route path={PATH.PRODUCT.SALES} element={<MainTabBar isClickedId={PATH.IS_CLICKED_ID.SALES} />} />
             </Route>
@@ -62,7 +63,7 @@ const App = () => {
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 };

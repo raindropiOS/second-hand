@@ -99,6 +99,12 @@ const HomeMain = () => {
     getProducts();
   }, [page, selectedTownId, filterCategoryId]);
 
+  useEffect(() => {
+    setProducts([]);
+    setPage(0);
+    setIsPageUpdated(false);
+  }, [selectedTownId, filterCategoryId]);
+
   const handleCancelFilter = () => {
     setFilterCategoryId(0);
   };
