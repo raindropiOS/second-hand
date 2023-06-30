@@ -8,7 +8,7 @@ import axiosFetch from '@apis/instances/axiosFetch';
 import mockAxiosFetch from '../instances/mockAxiosFetch';
 
 const getLikeProducts = async (pageNum?: number, categoryId?: number) => {
-  const response = await mockAxiosFetch.get(PRODUCTS.GET_LIKE_PRODUCTS, {
+  const response = await axiosFetch.get(PRODUCTS.GET_LIKE_PRODUCTS, {
     params: {
       pageNum: pageNum,
       categoryId: categoryId,
