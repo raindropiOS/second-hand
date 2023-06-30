@@ -22,6 +22,7 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
     }
     // TODO(jayden): 추후 모달창 직접 만들어서 띄우기
     // FIXME(jayden): 로직 깔끔하게 정리하기
+
     if (confirm(`'${towns.find(town => town.townId === id)?.name.split(' ')[2]}'을 삭제하시겠어요?`)) {
       setSelectedTowns(towns.filter(town => town.townId !== id));
     }
