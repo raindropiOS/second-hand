@@ -21,7 +21,7 @@ const $ImageWrapper = styled.section`
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin infinite 10s linear;
   }
 `;
 

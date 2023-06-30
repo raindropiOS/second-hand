@@ -47,7 +47,9 @@ const App = () => {
             <Route path={PATH.SALE.CATEGORY} element={<SaleCategory />} />
 
             <Route path={PATH.PRODUCT.DEFAULT} element={<Detail />} />
-            <Route path={PATH.PRODUCT.CHAT} element={<Ready />} />
+            <Route path={PATH.PRODUCT.CHAT} element={<Ready />}>
+              <Route path={PATH.PRODUCT.CHAT} element={<MainTabBar isClickedId={PATH.IS_CLICKED_ID.CHAT} />} />
+            </Route>
             <Route path={PATH.PRODUCT.SALES} element={<SalesHistory />}>
               <Route path={PATH.PRODUCT.SALES} element={<MainTabBar isClickedId={PATH.IS_CLICKED_ID.SALES} />} />
             </Route>
