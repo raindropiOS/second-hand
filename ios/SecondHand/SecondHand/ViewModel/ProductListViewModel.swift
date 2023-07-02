@@ -55,5 +55,6 @@ class ProductListViewModel: ProductListRepresentable {
 }
 
 protocol ProductListRepresentable {
-    var products: [Product] { get set }
+    func readProductList() -> [Product]
+    func loadProductList(query: [String: String], completion: @escaping () -> Void) async
 }
