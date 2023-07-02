@@ -9,12 +9,12 @@ import Combine
 import Foundation
 
 /// 상품 목록을 나타내는 뷰에 필요한 정보만을 담은 ProductViewModel을 배열로 가질 객체
-class ProductListViewModel {
+class ProductListViewModel: ProductListRepresentable {
     private var productRepository: ProductRepository
     /// ProductListViewModel가 할당해제 될 때 자동적으로 이 프라퍼티가 할당해제 되고, 구독 해제됨.
     private var subscriptions = Set<AnyCancellable>()
     @Published var productViewModels: [ProductViewModel] = []
-    @Published private var products: [Product] {
+    @Published var products: [Product] {
         didSet {
             let productViewModels = convertProductToProductViewModel(self.products)
             self.productViewModels = productViewModels
@@ -43,4 +43,8 @@ class ProductListViewModel {
     private func updateView() {
         
     }
+}
+
+protocol ProductListRepresentable {
+    var products: [Product] { get set }
 }
