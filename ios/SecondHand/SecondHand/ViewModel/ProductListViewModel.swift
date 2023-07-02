@@ -35,6 +35,15 @@ class ProductListViewModel: ProductListRepresentable {
             .store(in: &subscriptions)
     }
     
+    func readProductList() -> [Product] {
+        self.productRepository.readAll()
+    }
+    
+    func loadProductList(query: [String: String], completion: @escaping () -> Void) async {
+        await self.productRepository.loadProducts(query: query)
+        completion()
+    }
+    
     /// DTO이자 모델에 해당하는 Product를 ViewModel로 변경하는 메소드
     private func convertProductToProductViewModel(_ products: [Product]) -> [ProductViewModel] {
         self.products.map { product in ProductViewModel(product: product) }
