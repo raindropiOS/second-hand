@@ -7,26 +7,34 @@
 
 import Foundation
 
-class ProductViewModel: ObservableObject {
-    /// UIKit을 import하지 않기 위해,
-    /// NSCache로 이미지를 Network Layer에어 저장하고 key(string)으로 저장하는 방향으로 할 예정
+struct ProductViewModel {
     let imageKey: String?
     let name: String
     let townName: String
     let hoursPast: String
     let isReserved: Bool
     let price: String
-    let chatCount: Int
-    let likedCount: Int
+    let chatCount: String
+    let likedCount: String
     
-    init(imageKey: String? = nil, name: String, townName: String, hoursPast: String, isReserved: Bool, price: String, chatCount: Int, likedCount: Int) {
-        self.imageKey = imageKey
-        self.name = name
-        self.townName = townName
-        self.hoursPast = hoursPast
-        self.isReserved = isReserved
-        self.price = price
-        self.chatCount = chatCount
-        self.likedCount = likedCount
+    init(product: Product) {
+        self.imageKey = product.imgUrl
+        self.name = product.title
+        self.townName = product.town.name
+        // 시간 수정 메소드 필요
+        self.hoursPast = product.createdAt
+        // String -> Bool 변환 필요
+        //  self.isReserved = product.status
+        self.isReserved = true
+
+        // 29000 -> 29,000 메소드 필요
+        //  self.price = product.price
+        self.price = "9900"
+        self.chatCount = String(product.countInfo.chatCount)
+        self.likedCount = String(product.countInfo.likeCount)
+    }
+    
+    private func calculateHoursPast() {
+        
     }
 }
