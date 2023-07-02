@@ -16,6 +16,11 @@ class ProductRepository: Repository, ObservableObject {
     
     @Published private var products: [Product] = []
     
+    func loadProducts(query: [String: String]) async {
+        let products = await networkManagerDelegate.fetchProducts(query: query)
+        self.products = products
+    }
+    
     func readAll() -> [Product] {
         self.products
     }
