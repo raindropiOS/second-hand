@@ -47,7 +47,12 @@ class HomeViewController: UIViewController {
         
         self.tableView.register(ProductTableViewCell.self, forCellReuseIdentifier: ProductTableViewCell.identifier)
     }
-
+    
+    private func representProductList(query: [String: String]) async {
+        await self.productListViewModel.loadProductList(query: query) { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
 }
 
 // MARK: UITableViewDataSource
