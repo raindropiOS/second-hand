@@ -6,9 +6,19 @@
 //
 
 import UIKit
-
+/// 상품 목록 화면
 class HomeViewController: UIViewController {
     let tableView = UITableView()
+    let productListViewModel: ProductListRepresentable
+    
+    init(productListViewModel: ProductListRepresentable) {
+            self.productListViewModel = productListViewModel
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
