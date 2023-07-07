@@ -20,12 +20,14 @@ class ProductListViewModel: ProductListRepresentable {
             self.productViewModels = productViewModels
         }
     }
+    private let pastTimeCalculator: PastTimeCalculable
     
-    init(productRepository: ProductRepository) {
+    init(productRepository: ProductRepository, pastTimeCalculator: PastTimeCalculable) {
         let products = productRepository.readAll()
         
         self.products = products
         self.productRepository = productRepository
+        self.pastTimeCalculator = pastTimeCalculator
         
         self.productRepository.objectWillChange
             .sink { [weak self] _ in
@@ -46,7 +48,8 @@ class ProductListViewModel: ProductListRepresentable {
     
     /// DTO이자 모델에 해당하는 Product를 ViewModel로 변경하는 메소드
     private func convertProductToProductViewModel(_ products: [Product]) -> [ProductViewModel] {
-        self.products.map { product in ProductViewModel(product: product) }
+        
+        return self.products.map { product in ProductViewModel(product: product, pastTimeCalculator: self.pastTimeCalculator) }
     }
     
     private func updateView() {
