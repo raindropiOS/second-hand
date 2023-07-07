@@ -38,7 +38,7 @@ class ProductTableViewCell: UITableViewCell {
         label.font = FontStyle.headline
         return label
     }()
-    // TODO: chattingAndLikedStackView 작성 예정
+    
     private let chattingAndLikedStackView = UIStackView()
     private let likedCountView: ImageLabelStackView = {
         let stack = ImageLabelStackView()
@@ -76,10 +76,10 @@ class ProductTableViewCell: UITableViewCell {
         self.setup()
     }
     
-    func configure(productName: String, townName: String, hoursPast: String, image: UIImage? = nil) {
-        self.productNameLabel.text = productName
-        self.productImageView.image = image
-        self.productImageView.image = image
+    func configure(_ productViewModel: ProductCellRepresentable) {
+        // self.productImageView.image = product.imgUrl
+        self.productNameLabel.text = productViewModel.name
+        self.townNameHoursAgoLabel.text = productViewModel.townNameHoursAgo
     }
     
     func toggleReservationLabel() {
@@ -199,4 +199,14 @@ class RoundedLabel: UILabel {
         let size = super.intrinsicContentSize
         return CGSize(width: size.width + edgeInset.left + edgeInset.right, height: size.height + edgeInset.top + edgeInset.bottom)
     }
+}
+
+protocol ProductCellRepresentable {
+    var imageKey: String? { get }
+    var name: String { get }
+    var townNameHoursAgo: String { get }
+    var isReserved: Bool { get }
+    var price: String { get }
+    var chatCount: String { get }
+    var likedCount: String { get }
 }
