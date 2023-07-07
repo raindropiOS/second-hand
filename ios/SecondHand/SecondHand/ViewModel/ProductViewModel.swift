@@ -24,7 +24,7 @@ struct ProductViewModel: ProductCellRepresentable {
         
         self.imageKey = product.imgUrl
         self.name = product.title
-        self.isReserved = true
+        self.isReserved = product.isReserved
         
         // 29000 -> 29,000 메소드 필요
         self.price = String(product.price)
