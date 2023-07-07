@@ -15,7 +15,8 @@ struct ProductViewModel: ProductCellRepresentable {
     /// 내용이 없으면 레이아웃이 깨지기 때문에 빈 공백 추가
     var townNameHoursAgo: String = " "
     let isReserved: Bool
-    let price: String
+    /// 메소드를 사용하기 위해 초기값 설정
+    var price: String = ""
     let chatCount: String
     let likedCount: String
     
@@ -25,14 +26,12 @@ struct ProductViewModel: ProductCellRepresentable {
         self.imageKey = product.imgUrl
         self.name = product.title
         self.isReserved = product.isReserved
-        
-        // 29000 -> 29,000 메소드 필요
-        self.price = String(product.price)
         self.chatCount = String(product.countInfo.chatCount)
         self.likedCount = String(product.countInfo.likeCount)
         
         let hoursPast = self.makeTimePastString(after: product.createdAt)
         self.townNameHoursAgo = product.town.name + hoursPast
+        self.price = self.convertToWon(product.price)
         // String -> Bool 변환 필요
         //  self.isReserved = product.status
         
@@ -79,6 +78,18 @@ extension ProductViewModel {
             }
         }
         throw PastTimeRepresentationError.noValuesToPresent
+    }
+    
+    /// '230000 -> 230,000원'
+    private func convertToWon(_ number: Int) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.groupingSeparator = ","
+        numberFormatter.groupingSize = 3
+
+        let formattedNumber = numberFormatter.string(from: NSNumber(value: number))
+        let currencyString = "\(formattedNumber ?? "")원"
+        return currencyString
     }
 }
 
