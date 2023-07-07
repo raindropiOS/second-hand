@@ -82,6 +82,8 @@ class ProductTableViewCell: UITableViewCell {
         self.townNameHoursAgoLabel.text = productViewModel.townNameHoursAgo
         self.reservationLabel.isHidden = productViewModel.isReserved
         self.priceLabel.text = productViewModel.price
+        self.chattingCountView.setText(with: productViewModel.chatCount)
+        self.likedCountView.setText(with: productViewModel.likedCount)
     }
     
     private func setup() {
