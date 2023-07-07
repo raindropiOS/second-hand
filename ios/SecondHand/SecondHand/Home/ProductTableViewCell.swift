@@ -80,10 +80,7 @@ class ProductTableViewCell: UITableViewCell {
         // self.productImageView.image = product.imgUrl
         self.productNameLabel.text = productViewModel.name
         self.townNameHoursAgoLabel.text = productViewModel.townNameHoursAgo
-    }
-    
-    func toggleReservationLabel() {
-        self.reservationLabel.isHidden.toggle()
+        self.reservationLabel.isHidden = productViewModel.isReserved
     }
     
     private func setup() {
