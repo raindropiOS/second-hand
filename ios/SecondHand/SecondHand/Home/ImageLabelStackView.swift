@@ -32,6 +32,10 @@ class ImageLabelStackView: UIStackView {
         self.label.text = text
     }
     
+    func setText(with text: String) {
+        self.label.text = text
+    }
+    
     private func setup() {
         self.addViews()
         self.spacing = spacingValue
