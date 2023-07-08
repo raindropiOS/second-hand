@@ -29,6 +29,14 @@ class HomeViewController: UIViewController {
         self.configureNavigationBar()
         self.configureTableView()
         self.setTableViewLayout()
+        
+        Task {
+            await self.productListViewModel.loadProductList(query: [:]) {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
     private func setTableViewLayout() {
@@ -58,17 +66,16 @@ class HomeViewController: UIViewController {
 // MARK: UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        self.productListViewModel.productViewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductTableViewCell.identifier, for: indexPath) as? ProductTableViewCell else { return UITableViewCell() }
         
-        let tempProduct = Product(productId: 1, title: "갤럭시워치 pro", town: Town(townId: 4, name: "강남구 역삼3동"), createdAt: "2023-05-10T10:10:00", status: "예약중", price: 230000, countInfo: CountInfo(chatCount: 0, likeCount: 4), imgUrl: "https://avatars.githubusercontent.com/u/70703326?v=4")
-        let pastTimeCalculator = PastTimeCalculator()
-        let tempProductViewModel = ProductViewModel(product: tempProduct, pastTimeCalculator: pastTimeCalculator)
-        cell.configure(tempProductViewModel)
-                return cell
+        let productViewModel = productListViewModel.productViewModels[indexPath.row]
+        cell.configure(productViewModel)
+        
+        return cell
     }
 }
 
