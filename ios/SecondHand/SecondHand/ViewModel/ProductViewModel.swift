@@ -32,10 +32,6 @@ struct ProductViewModel: ProductCellRepresentable {
         let hoursPast = self.makeTimePastString(after: product.createdAt)
         self.townNameHoursAgo = product.town.name + hoursPast
         self.price = self.convertToWon(product.price)
-        // String -> Bool 변환 필요
-        //  self.isReserved = product.status
-        
-        
     }
     
     private func makeTimePastString(after postedDateString: String) -> String {
