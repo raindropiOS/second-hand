@@ -77,7 +77,9 @@ class ProductTableViewCell: UITableViewCell {
     }
     
     func configure(_ productViewModel: ProductCellRepresentable) {
-        // self.productImageView.image = product.imgUrl
+        if let imageKey = productViewModel.imageKey {
+            self.productImageView.loadImage(imageKey)
+        }
         self.productNameLabel.text = productViewModel.name
         self.townNameHoursAgoLabel.text = productViewModel.townNameHoursAgo
         self.reservationLabel.isHidden = productViewModel.isReserved
