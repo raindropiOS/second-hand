@@ -21,4 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = window
     }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+            if let url = URLContexts.first?.url {
+                // TODO: url로 받은 인증 코드를 전달하기(?)
+                print(url)
+//                NetworkManager.shared.
+            }
+        }
 }

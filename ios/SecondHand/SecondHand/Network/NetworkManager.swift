@@ -101,6 +101,11 @@ class NetworkManager: NetworkManageable {
     
 }
 
+// TODO: GitHub OAuth 관련
+extension NetworkManager {
+    
+}
+
 protocol NetworkManageable {
     func fetchProducts(query: [String: String]) async -> [Product]
 }
