@@ -109,9 +109,30 @@ extension NetworkManager {
         guard let url = URL(string: urlStr) else { return }
         UIApplication.shared.open(url)
     }
+    
+    func sendAuthorizationCode(_ code: String) async throws -> Decodable {
+            let oauthLoginDirectory = Bundle.main.object(forInfoDictionaryKey: "OAuth Login URL Directory") as? String ?? ""
+            let entireLoginUrl = self.baseUrlString + oauthLoginDirectory
+            
+            // TODO: iOS, FE 구분을 위한 헤더 작성 예정
+        
+        do {
+            let urlRequest = try self.urlRequestFactory.makeUrlRequest(entireLoginUrl, query: [:], header: [:], body: "", httpMethod: .post)
+            let data = try await self.fetchData(with: urlRequest)
+            let reponseData = try self.dataDecoder.decodeJSON(data, DTO: OAuthLoginResponseDTO.self)
+            return reponseData
+        } catch {
+            print("error : \(error)")
+            throw NetworkingError.failedToSendAuthorizationCode
+        }
+    }
 }
 
 protocol NetworkManageable {
     func fetchProducts(query: [String: String]) async -> [Product]
     func presentGithubOAuthLoginScreen()
+}
+
+enum NetworkingError: Error {
+    case failedToSendAuthorizationCode
 }
