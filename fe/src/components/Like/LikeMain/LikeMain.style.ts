@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
 const $LikeItemLayout = styled.main`
+  position: relative;
   display: flex;
-  margin-top: -63px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-top: -60px;
+  padding-bottom: 100px;
+  max-height: 76vh;
 `;
 
 const $ProductLists = styled.div`

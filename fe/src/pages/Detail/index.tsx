@@ -10,6 +10,7 @@ import DetailTabBar from '@molecules/TabBars/DetailTabBar';
 import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 
 import { DetailProductType } from '@type/productsType';
+import Ready from '@pages/Ready';
 
 const Detail = () => {
   // TODO(jayden): productId 받아서 상품 상세 정보 가져오기
@@ -25,7 +26,7 @@ const Detail = () => {
     setProductDetail(data);
   };
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Ready isLoading={true} />;
   if (error) return <div>error!</div>;
   else {
     return (
