@@ -101,11 +101,17 @@ class NetworkManager: NetworkManageable {
     
 }
 
-// TODO: GitHub OAuth 관련
+// TODO: GitHub OAuth
 extension NetworkManager {
-    
+    func presentGithubOAuthLoginScreen() {
+        let clientId: String = Bundle.main.object(forInfoDictionaryKey: "githubClientId") as? String ?? ""
+        let urlStr = "https://github.com/login/oauth/authorize?client_id=\(clientId)"
+        guard let url = URL(string: urlStr) else { return }
+        UIApplication.shared.open(url)
+    }
 }
 
 protocol NetworkManageable {
     func fetchProducts(query: [String: String]) async -> [Product]
+    func presentGithubOAuthLoginScreen()
 }
