@@ -8,6 +8,7 @@
 import UIKit
 
 class SignInViewController: UIViewController {
+    let networkManager: NetworkManageable
     let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     let idInputView: InputView = InputView()
     let separatorView: SeparatorView = SeparatorView()
@@ -20,6 +21,15 @@ class SignInViewController: UIViewController {
     }()
     let loginButton: OrangeButton = OrangeButton()
     let signUpButton: UIButton = UIButton()
+    
+    init(networkManager: NetworkManageable) {
+        self.networkManager = networkManager
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
