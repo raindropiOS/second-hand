@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>OAuth Login URL Directory</key>
+	<string>$(AUTH_LOGIN_URL_Directory)</string>
 	<key>githubClientId</key>
 	<string>$(githubClientId)</string>
 	<key>baseUrl</key>
