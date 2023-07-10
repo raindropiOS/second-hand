@@ -72,7 +72,7 @@ class NetworkManager: NetworkManageable {
     }
 }
 
-// TODO: GitHub OAuth
+// GitHub OAuth
 extension NetworkManager {
     func presentGithubOAuthLoginScreen() {
         let clientId: String = Bundle.main.object(forInfoDictionaryKey: "githubClientId") as? String ?? ""
