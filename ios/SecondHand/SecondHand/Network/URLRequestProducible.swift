@@ -7,7 +7,13 @@
 
 import Foundation
 
-class URLRequestFactory: URLRequestProducible {
+protocol URLRequestProducible {
+    func makeUrlRequest(_ urlString: String, query: [String: String], httpMethod: HttpMethod) throws -> URLRequest
+    
+    func makeUrlRequest(_ urlString: String, query: [String: String], header: [String: String], body: String, httpMethod: HttpMethod) throws -> URLRequest
+}
+
+extension URLRequestProducible {
     func makeUrlRequest(_ urlString: String, query: [String: String], httpMethod: HttpMethod) throws -> URLRequest {
         guard var urlComponents = URLComponents(string: urlString) else { throw URLRequestError.badUrlComponents  }
         let queryItems = query.map { URLQueryItem(name: $0.key, value: $0.value) }
@@ -38,12 +44,6 @@ class URLRequestFactory: URLRequestProducible {
         request.httpMethod = httpMethod.rawValue
         return request
     }
-}
-
-protocol URLRequestProducible {
-    func makeUrlRequest(_ urlString: String, query: [String: String], httpMethod: HttpMethod) throws -> URLRequest
-    
-    func makeUrlRequest(_ urlString: String, query: [String: String], header: [String: String], body: String, httpMethod: HttpMethod) throws -> URLRequest
 }
 
 enum URLRequestError: Error {
