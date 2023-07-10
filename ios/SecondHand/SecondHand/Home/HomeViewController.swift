@@ -6,19 +6,9 @@
 //
 
 import UIKit
-/// 상품 목록 화면
+
 class HomeViewController: UIViewController {
     let tableView = UITableView()
-    let productListViewModel: ProductListRepresentable
-    
-    init(productListViewModel: ProductListRepresentable) {
-            self.productListViewModel = productListViewModel
-            super.init(nibName: nil, bundle: nil)
-        }
-        
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +19,6 @@ class HomeViewController: UIViewController {
         self.configureNavigationBar()
         self.configureTableView()
         self.setTableViewLayout()
-        
-        Task {
-            await self.productListViewModel.loadProductList(query: [:]) {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
     }
     
     private func setTableViewLayout() {
@@ -55,27 +37,18 @@ class HomeViewController: UIViewController {
         
         self.tableView.register(ProductTableViewCell.self, forCellReuseIdentifier: ProductTableViewCell.identifier)
     }
-    
-    private func representProductList(query: [String: String]) async {
-        await self.productListViewModel.loadProductList(query: query) { [weak self] in
-            self?.tableView.reloadData()
-        }
-    }
+
 }
 
 // MARK: UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.productListViewModel.productViewModels.count
+        1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductTableViewCell.identifier, for: indexPath) as? ProductTableViewCell else { return UITableViewCell() }
-        
-        let productViewModel = productListViewModel.productViewModels[indexPath.row]
-        cell.configure(productViewModel)
-        
-        return cell
+                return cell
     }
 }
 
