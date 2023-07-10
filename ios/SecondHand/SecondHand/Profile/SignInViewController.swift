@@ -48,10 +48,7 @@ class SignInViewController: UIViewController {
     }
     
     @objc func loginButtonAction() {
-        let clientId: String = Bundle.main.object(forInfoDictionaryKey: "githubClientId") as? String ?? ""
-        let urlStr = "https://github.com/login/oauth/authorize?client_id=\(clientId)"
-        guard let url = URL(string: urlStr) else { return }
-        UIApplication.shared.open(url)
+        self.networkManager.presentGithubOAuthLoginScreen()
     }
     
     @objc func signUpButtonTouched() {
