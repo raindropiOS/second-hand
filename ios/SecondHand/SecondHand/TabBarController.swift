@@ -23,7 +23,7 @@ class TabBarController: UITabBarController {
         let salesLogViewController = SalesLogViewController()
         let likeListViewController = LikeListViewController()
         let chattingViewController = ChattingViewController()
-        let signInViewController = UINavigationController(rootViewController: SignInViewController())
+        let signInViewController = UINavigationController(rootViewController: SignInViewController(networkManager: NetworkManager()))
         
         let viewControllers = [
             homeViewController,
