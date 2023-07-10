@@ -38,24 +38,19 @@ class ProductTableViewCell: UITableViewCell {
         label.font = FontStyle.headline
         return label
     }()
-    
+    // TODO: chattingAndLikedStackView 작성 예정
     private let chattingAndLikedStackView = UIStackView()
     private let likedCountView: ImageLabelStackView = {
         let stack = ImageLabelStackView()
         if let chatImage = UIImage(systemName: "message") {
-            let color = UIColor(named: "gray400") ?? .black
-            let coloredImage = chatImage.withTintColor(color, renderingMode: .alwaysOriginal)
-            stack.configure(image: coloredImage, text: "1")
+            stack.configure(image: chatImage, text: "1")
         }
         return stack
     }()
     private let chattingCountView: ImageLabelStackView = {
         let stack = ImageLabelStackView()
-        
         if let heartImage = UIImage(systemName: "heart") {
-            let color = UIColor(named: "gray400") ?? .black
-            let coloredImage = heartImage.withTintColor(color, renderingMode: .alwaysOriginal)
-            stack.configure(image: coloredImage, text: "2")
+            stack.configure(image: heartImage, text: "2")
         }
         return stack
     }()
@@ -81,16 +76,14 @@ class ProductTableViewCell: UITableViewCell {
         self.setup()
     }
     
-    func configure(_ productViewModel: ProductCellRepresentable) {
-        if let imageKey = productViewModel.imageKey {
-            self.productImageView.loadImage(imageKey)
-        }
-        self.productNameLabel.text = productViewModel.name
-        self.townNameHoursAgoLabel.text = productViewModel.townNameHoursAgo
-        self.reservationLabel.isHidden = productViewModel.isReserved
-        self.priceLabel.text = productViewModel.price
-        self.chattingCountView.setText(with: productViewModel.chatCount)
-        self.likedCountView.setText(with: productViewModel.likedCount)
+    func configure(productName: String, townName: String, hoursPast: String, image: UIImage? = nil) {
+        self.productNameLabel.text = productName
+        self.productImageView.image = image
+        self.productImageView.image = image
+    }
+    
+    func toggleReservationLabel() {
+        self.reservationLabel.isHidden.toggle()
     }
     
     private func setup() {
@@ -206,14 +199,4 @@ class RoundedLabel: UILabel {
         let size = super.intrinsicContentSize
         return CGSize(width: size.width + edgeInset.left + edgeInset.right, height: size.height + edgeInset.top + edgeInset.bottom)
     }
-}
-
-protocol ProductCellRepresentable {
-    var imageKey: String? { get }
-    var name: String { get }
-    var townNameHoursAgo: String { get }
-    var isReserved: Bool { get }
-    var price: String { get }
-    var chatCount: String { get }
-    var likedCount: String { get }
 }

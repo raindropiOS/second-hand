@@ -17,9 +17,3 @@ struct Product: Decodable {
     let countInfo: CountInfo
     let imgUrl: String
 }
-
-extension Product {
-    var isReserved: Bool {
-        self.status == "예약중"
-    }
-}
