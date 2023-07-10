@@ -8,15 +8,14 @@
 import Foundation
 import UIKit.UIImage
 
-class NetworkManager: NetworkManageable {
+class NetworkManager: NetworkManageable, URLRequestProducible {
     static let shared = NetworkManager()
     private let baseUrlString = Bundle.main.object(forInfoDictionaryKey: "baseUrl") as? String ?? ""
-    private let urlRequestFactory: URLRequestProducible = URLRequestFactory()
     private let dataDecoder: DataDecodable = DataDecoder()
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
-            let urlRequest = try urlRequestFactory.makeUrlRequest(baseUrlString, query: query, httpMethod: .get)
+            let urlRequest = try self.makeUrlRequest(baseUrlString, query: query, httpMethod: .get)
             let data = try await fetchData(with: urlRequest)
             let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self) as? Form
             let products: [Product]? = productsForm?.data
@@ -43,7 +42,7 @@ class NetworkManager: NetworkManageable {
     
     func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         do {
-            let urlRequest = try urlRequestFactory.makeUrlRequest(urlString, query: [:], httpMethod: .get)
+            let urlRequest = try self.makeUrlRequest(urlString, query: [:], httpMethod: .get)
             URLSession.shared.downloadTask(with: urlRequest) { (location, _, error) in
                 if let error = error {
                     print("Error downloading image: \(error)")
@@ -88,7 +87,7 @@ extension NetworkManager {
             // TODO: iOS, FE 구분을 위한 헤더 작성 예정
         
         do {
-            let urlRequest = try self.urlRequestFactory.makeUrlRequest(entireLoginUrl, query: [:], header: [:], body: "", httpMethod: .post)
+            let urlRequest = try self.makeUrlRequest(entireLoginUrl, query: [:], header: [:], body: "", httpMethod: .post)
             let data = try await self.fetchData(with: urlRequest)
             let reponseData = try self.dataDecoder.decodeJSON(data, DTO: OAuthLoginResponseDTO.self)
             return reponseData
