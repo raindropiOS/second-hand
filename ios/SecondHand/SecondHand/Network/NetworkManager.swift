@@ -18,7 +18,7 @@ class NetworkManager: NetworkManageable {
         do {
             let urlRequest = try urlRequestFactory.makeUrlRequest(baseUrlString, query: query, httpMethod: .get)
             let data = try await fetchData(with: urlRequest)
-            let productsForm = dataDecoder.decodeJSON(data, DTO: Form.self) as? Form
+            let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self) as? Form
             let products: [Product]? = productsForm?.data
             return products ?? []
         } catch {
