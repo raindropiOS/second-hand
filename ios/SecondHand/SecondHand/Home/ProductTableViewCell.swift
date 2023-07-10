@@ -43,14 +43,19 @@ class ProductTableViewCell: UITableViewCell {
     private let likedCountView: ImageLabelStackView = {
         let stack = ImageLabelStackView()
         if let chatImage = UIImage(systemName: "message") {
-            stack.configure(image: chatImage, text: "1")
+            let color = UIColor(named: "gray400") ?? .black
+            let coloredImage = chatImage.withTintColor(color, renderingMode: .alwaysOriginal)
+            stack.configure(image: coloredImage, text: "1")
         }
         return stack
     }()
     private let chattingCountView: ImageLabelStackView = {
         let stack = ImageLabelStackView()
+        
         if let heartImage = UIImage(systemName: "heart") {
-            stack.configure(image: heartImage, text: "2")
+            let color = UIColor(named: "gray400") ?? .black
+            let coloredImage = heartImage.withTintColor(color, renderingMode: .alwaysOriginal)
+            stack.configure(image: coloredImage, text: "2")
         }
         return stack
     }()
