@@ -7,14 +7,19 @@
 
 import Foundation
 
-class ProductRepository: Repository {
+class ProductRepository: Repository, ObservableObject {
     typealias SomeDatum = Product
     typealias SomeId = Int
     
     /// Repository Layer와 Network Layer 분리를 위한 delegate 및 extension으로 network 메소드 선언하였습니다.
     private let networkManagerDelegate: NetworkManageable = NetworkManager()
     
-    private var products: [Product] = []
+    @Published private var products: [Product] = []
+    
+    func loadProducts(query: [String: String]) async {
+        let products = await networkManagerDelegate.fetchProducts(query: query)
+        self.products = products
+    }
     
     func readAll() -> [Product] {
         self.products

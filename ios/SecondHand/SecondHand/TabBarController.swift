@@ -16,7 +16,10 @@ class TabBarController: UITabBarController {
     }
     
     private func setTabViewControllers() {
-        let homeViewController = UINavigationController(rootViewController: HomeViewController())
+        let pastTimeCalculator: PastTimeCalculable = PastTimeCalculator()
+        let productListViewModel = ProductListViewModel(productRepository: ProductRepository(), pastTimeCalculator: pastTimeCalculator)
+        
+        let homeViewController = UINavigationController(rootViewController: HomeViewController(productListViewModel: productListViewModel))
         let salesLogViewController = SalesLogViewController()
         let likeListViewController = LikeListViewController()
         let chattingViewController = ChattingViewController()
