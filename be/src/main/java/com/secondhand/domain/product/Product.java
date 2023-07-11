@@ -55,7 +55,7 @@ public class Product extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Image> images;
 
     @OneToMany(mappedBy = "product")
@@ -119,6 +119,13 @@ public class Product extends BaseTimeEntity {
     }
 
     public boolean checkIsMine(long userId) {
+        if (member.getId() == userId) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkIsDetailPageMine(long userId) {
         if (member.getId() == userId) {
             return true;
         }

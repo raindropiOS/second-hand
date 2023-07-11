@@ -44,7 +44,7 @@ public class MemberController {
             description = "사용자 카카오를 통한 로그인"
     )
     @PostMapping("/auth/kakao/login")
-    public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestBody RequestCode code) throws IOException, InterruptedException {
+    public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestBody RequestCode code) {
         log.debug("프론트로 부터 받은 코드 = {}", code);
         MemberLoginResponse memberResponseDTO = memberService.login(code.getAuthorizationCode());
 

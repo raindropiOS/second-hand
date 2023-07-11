@@ -94,15 +94,11 @@ public class ProductService {
         throw new NotUserMineProductException();
     }
 
-
-    //TODO 굳이 필요없어보임
-
-
     @Transactional
     public void delete(long userId, long productId) {
         Product product = findById(productId);
-        checkIsMine(userId, product.getMember().getId());
-        if (product.getMember().getId() == userId) {
+        product.checkIsDetailPageMine(userId);
+        if (product.checkIsMine(userId)) {
             productRepository.delete(product);
         }
     }

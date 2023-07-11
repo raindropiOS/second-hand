@@ -136,7 +136,7 @@ public class ProductController {
                                                  @PathVariable long productId,
                                                  @Valid @RequestBody ProductUpdateRequest updateRequest) {
         productService.update(productId, updateRequest, userId);
-        ProductResponse productUpdateResponse = productQueryService.getDetailMinePage(productId, userId);
+        ProductResponse productUpdateResponse = productQueryService.isValidMinePage(productId, userId);
 
         return BasicResponse.send("상품 수정.", productUpdateResponse);
     }
