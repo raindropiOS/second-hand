@@ -1,6 +1,5 @@
 package com.secondhand.service;
 
-import com.secondhand.domain.exception.NotUserMineProductException;
 import com.secondhand.domain.exception.ProductNotFoundException;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
@@ -11,7 +10,6 @@ import com.secondhand.web.dto.filtercondition.ProductSalesSearchCondition;
 import com.secondhand.web.dto.filtercondition.ProductSearchCondition;
 import com.secondhand.web.dto.response.MainPageCategoryResponse;
 import com.secondhand.web.dto.response.MainPageResponse;
-import com.secondhand.web.dto.response.ProductListResponse;
 import com.secondhand.web.dto.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,23 +35,21 @@ public class ProductQueryService {
     public ProductResponse getDetailPage(long productId, long userId) {
         Product product = findById(productId);
         productRepository.countViews(productId);
-        return ProductResponse.of(userId == product.getMember().getId(), product);
+        return ProductResponse.of(product.checkIsMine(userId), product);
     }
 
     @Transactional
-    public ProductResponse getDetailMinePage(long productId, long userId) {
+    public ProductResponse isValidMinePage(long productId, long userId) {
         Product product = findById(productId);
-        boolean isMine = checkIsMine(userId, product.getMember().getId());
-        return ProductResponse.of(isMine, product);
+        return ProductResponse.of(product.checkIsDetailPageMine(userId), product);
     }
-
 
     @Transactional
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
         Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
         List<Product> products = page.getContent();
         log.debug("products = {}", products);
-        return MainPageResponse.of(products);
+        return MainPageResponse.of(products, userId);
     }
 
     @Transactional
@@ -64,7 +60,7 @@ public class ProductQueryService {
             System.out.println("product = " + product.getStatus().getValue());
         }
         log.debug("products = {}", products);
-        return MainPageResponse.of(products);
+        return MainPageResponse.of(products, userId);
     }
 
 
@@ -90,14 +86,7 @@ public class ProductQueryService {
                 .collect(Collectors.toList());
 
         log.debug("categoryIds = {}", categoryIds);
-        return MainPageCategoryResponse.of(products, likedCategoryIds);
-    }
-
-    private boolean checkIsMine(long userId, long product) {
-        if (product == userId) {
-            return true;
-        }
-        throw new NotUserMineProductException();
+        return MainPageCategoryResponse.of(products, likedCategoryIds, userId);
     }
 
     public Product findById(long productId) {

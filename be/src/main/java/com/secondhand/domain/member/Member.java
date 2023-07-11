@@ -27,6 +27,7 @@ public class Member {
     private Long id;
 
     private String loginName;
+    private String memberEmail;
     private String memberToken;
     private String imgUrl;
 
@@ -47,6 +48,7 @@ public class Member {
                 .loginName(memberInfo.getLogin())
                 .memberToken(jwtToken)
                 .imgUrl(memberInfo.getAvatarUrl())
+                .memberEmail("aaa@naver.com")
                 .build();
     }
 

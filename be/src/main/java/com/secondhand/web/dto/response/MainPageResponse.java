@@ -1,6 +1,5 @@
 package com.secondhand.web.dto.response;
 
-import com.secondhand.domain.product.CountInfo;
 import com.secondhand.domain.product.Product;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,9 +14,9 @@ public class MainPageResponse {
 
     private List<ProductListResponse> products;
 
-    public static MainPageResponse of(List<Product> page) {
+    public static MainPageResponse of(List<Product> page, long userId) {
         return MainPageResponse.builder()
-                .products(ProductListResponse.fromList(page))
+                .products(ProductListResponse.fromList(page, userId))
                 .build();
     }
 }

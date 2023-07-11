@@ -1,8 +1,6 @@
 package com.secondhand.web.dto.response;
 
 import com.secondhand.domain.product.Product;
-import com.secondhand.web.dto.response.MainPageResponse;
-import com.secondhand.web.dto.response.ProductListResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,10 +13,10 @@ public class MainPageCategoryResponse {
     private List<ProductListResponse> products;
     private List<Long> categoryIds;
 
-    public static MainPageCategoryResponse of(List<Product> page, List<Long> categoryIds) {
+    public static MainPageCategoryResponse of(List<Product> page, List<Long> categoryIds, long userId) {
         return MainPageCategoryResponse.builder()
                 .categoryIds(categoryIds)
-                .products(ProductListResponse.fromList(page))
+                .products(ProductListResponse.fromList(page, userId))
                 .build();
     }
 }

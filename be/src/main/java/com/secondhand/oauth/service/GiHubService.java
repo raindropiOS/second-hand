@@ -7,16 +7,22 @@ import org.springframework.stereotype.Service;
 public class GiHubService {
 
     @Value("${OAUTH_GITHUB_CLIENT_ID}")
-    private String clientId;
+    private String webClientId;
 
     @Value("${OAUTH_GITHUB_CLIENT_SECRET}")
-    private String clientSecret;
+    private String webClientSecret;
+
+    @Value("${OAUTH_GITHUB_IOS_CLIENT_ID}")
+    private String iOSClientId;
+
+    @Value("${OAUTH_GITHUB_IOS_CLIENT_SECRET}")
+    private String iOSClientSecret;
 
     public String getClientId() {
-        return clientId;
+        return webClientId;
     }
 
     public String getClientSecret() {
-        return clientSecret;
+        return webClientSecret;
     }
 }

@@ -21,6 +21,7 @@ create table member
     member_id    bigint auto_increment
         primary key,
     login_name   varchar(45) not null,
+    member_email varchar(45) not null unique,
     member_token varchar(500) null,
     img_url      varchar(200) null,
     main_town_id bigint null,
@@ -46,7 +47,7 @@ create table product
     town_id       bigint       not null,
     category_id   bigint       not null,
     member_id     bigint       not null,
-    deleted       tinyint(1) not null default 0
+    deleted       tinyint(1) not null default 0,
         constraint fk_product_category1
         foreign key (category_id) references category (category_id),
     constraint fk_product_member1
@@ -78,6 +79,7 @@ create table interested
     interested_id bigint auto_increment primary key,
     product_id    bigint not null,
     member_id     bigint not null,
+    is_liked tinyint(1) not null,
     constraint fk_interested_member1
         foreign key (member_id) references member (member_id),
     constraint fk_interested_product1
