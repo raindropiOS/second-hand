@@ -4,7 +4,6 @@ import { AxiosError } from 'axios';
 import { PRODUCTS } from '@constants/API';
 import { SaleHistoryProductsType, APIDefaultResponseType } from '@type/productsType';
 
-import mockAxiosFetch from '../instances/mockAxiosFetch';
 import axiosFetch from '@apis/instances/axiosFetch';
 
 const getSaleHistoryProducts = async (pageNum?: number, status?: number) => {
