@@ -10,6 +10,7 @@ import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +46,7 @@ public class MemberService {
         //TODO: db컬럼에 토큰을 저장해야하나?
         Member member = memberRepository.save(Member.create(memberInfo, token.getAccessToken()));
         String jwtToken = jwtService.createToken(member);
-        
+
         log.debug("jwt token = {}", jwtToken);
         log.debug("새로운 맴버 생성 = {}", member);
         return MemberLoginResponse.of(member, jwtToken);

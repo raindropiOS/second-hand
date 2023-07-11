@@ -24,6 +24,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    //TODO: 이 부분은 소셜 Oauth 방식의 로그인 , 기본 이메일, 비밀번호 방식의 회원가입 후 로그인이 필요해보인다.
     @Operation(
             summary = "깃허브 로그인",
             tags = "members",
@@ -36,6 +37,20 @@ public class MemberController {
 
         return BasicResponse.send("로그인", memberResponseDTO);
     }
+
+    @Operation(
+            summary = "카카오 로그인",
+            tags = "members",
+            description = "사용자 카카오를 통한 로그인"
+    )
+    @PostMapping("/auth/kakao/login")
+    public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestBody RequestCode code) throws IOException, InterruptedException {
+        log.debug("프론트로 부터 받은 코드 = {}", code);
+        MemberLoginResponse memberResponseDTO = memberService.login(code.getAuthorizationCode());
+
+        return BasicResponse.send("로그인", memberResponseDTO);
+    }
+
 
     @Operation(
             summary = "로그아웃",

@@ -2,6 +2,7 @@ package com.secondhand.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.secondhand.domain.categorie.Category;
+import com.secondhand.domain.exception.NotUserMineProductException;
 import com.secondhand.domain.image.Image;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
@@ -115,5 +116,12 @@ public class Product extends BaseTimeEntity {
 
     public void decreaseCountView() {
         this.countLike--;
+    }
+
+    public boolean checkIsMine(long userId) {
+        if (member.getId() == userId) {
+            return true;
+        }
+        throw new NotUserMineProductException();
     }
 }

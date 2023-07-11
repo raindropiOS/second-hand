@@ -43,10 +43,8 @@ public class ProductQueryService {
     @Transactional
     public ProductResponse getDetailMinePage(long productId, long userId) {
         Product product = findById(productId);
-        boolean isMine = checkIsMine(userId, product.getMember().getId());
-        return ProductResponse.of(isMine, product);
+        return ProductResponse.of(product.checkIsMine(userId), product);
     }
-
 
     @Transactional
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
@@ -91,13 +89,6 @@ public class ProductQueryService {
 
         log.debug("categoryIds = {}", categoryIds);
         return MainPageCategoryResponse.of(products, likedCategoryIds);
-    }
-
-    private boolean checkIsMine(long userId, long product) {
-        if (product == userId) {
-            return true;
-        }
-        throw new NotUserMineProductException();
     }
 
     public Product findById(long productId) {

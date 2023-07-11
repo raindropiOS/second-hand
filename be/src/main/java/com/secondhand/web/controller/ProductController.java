@@ -47,13 +47,8 @@ public class ProductController {
 
         MainPageResponse mainPageResponse = productQueryService.getProductList(productSearchCondition, pageable, userId);
 
-        return BasicResponse.<MainPageResponse>builder()
-                .success(true)
-                .message("사용자는 상품을 10개씩 상품 리스프로 볼 수 있다(지역 과 카테고리) ")
-                .apiStatus(20000)
-                .data(mainPageResponse)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return BasicResponse.send("사용자는 상품을 10개씩 상품 리스프로 볼 수 있다(지역 과 카테고리)", mainPageResponse);
+
     }
 
     @Operation(
@@ -69,13 +64,8 @@ public class ProductController {
 
         MainPageCategoryResponse likeProductList = productQueryService.getLikeProductList(condition, pageable, userId);
 
-        return BasicResponse.<MainPageCategoryResponse>builder()
-                .success(true)
-                .message("사용자는 자시의 관심 목록을 카테고리 뱔로 확인 가능")
-                .apiStatus(20000)
-                .data(likeProductList)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return BasicResponse.send("사용자는 자시의 관심 목록을 카테고리 뱔로 확인 가능", likeProductList);
+
     }
 
     @Operation(
@@ -97,13 +87,9 @@ public class ProductController {
 
         Product product = productService.findById(productId);
         ProductResponse response = ProductResponse.of(true, product);
-        return BasicResponse.<ProductResponse>builder()
-                .success(true)
-                .message("사용자는상품을 과 관심상품 / 해제 할수 있다.")
-                .apiStatus(20000)
-                .data(response)
-                .httpStatus(HttpStatus.OK)
-                .build();
+
+        return BasicResponse.send("사용자는상품을 과 관심상품 / 해제 할수 있다.", response);
+
     }
 
 
@@ -120,13 +106,8 @@ public class ProductController {
 
         MainPageResponse products = productQueryService.getMemberSalesProducts(productSearchCondition, pageable, userId);
 
-        return BasicResponse.<MainPageResponse>builder()
-                .success(true)
-                .message("판매/세일 중인 상품")
-                .apiStatus(20000)
-                .data(products)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return BasicResponse.send("판매/세일 중인 상품.", products);
+
     }
 
     @Operation(
@@ -140,13 +121,8 @@ public class ProductController {
                                     @Valid ProductSaveRequest productSaveRequest) {
         log.debug("bdoy  ========================================================== {}", productSaveRequest);
         Long save = productService.save(userId, productSaveRequest);
-        return BasicResponse.<Long>builder()
-                .success(true)
-                .message("상품 등록")
-                .apiStatus(20000)
-                .data(save)
-                .httpStatus(HttpStatus.CREATED)
-                .build();
+
+        return BasicResponse.send("상품 등록.", save);
     }
 
     @Operation(
@@ -162,13 +138,7 @@ public class ProductController {
         productService.update(productId, updateRequest, userId);
         ProductResponse productUpdateResponse = productQueryService.getDetailMinePage(productId, userId);
 
-        return BasicResponse.<ProductResponse>builder()
-                .success(true)
-                .message("상품 수정")
-                .apiStatus(20000)
-                .data(productUpdateResponse)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return BasicResponse.send("상품 수정.", productUpdateResponse);
     }
 
 
@@ -183,13 +153,7 @@ public class ProductController {
 
         ProductResponse detailPage = productQueryService.getDetailPage(productId, userId);
 
-        return BasicResponse.<ProductResponse>builder()
-                .success(true)
-                .message("상품 디테일 페이지")
-                .apiStatus(20000)
-                .data(detailPage)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return BasicResponse.send("상품 디테일 페이지.", detailPage);
     }
 
     @Operation(
@@ -208,6 +172,5 @@ public class ProductController {
                 .apiStatus(20000)
                 .httpStatus(HttpStatus.OK)
                 .build();
-
     }
 }
