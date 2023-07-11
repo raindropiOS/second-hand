@@ -14,8 +14,10 @@ const $ModalLayout = styled.section`
 `;
 
 const $ButtonsLayout = styled.div`
+  width: 95%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 8px;
 `;
 
@@ -25,7 +27,8 @@ const commonButtonStyle = css`
   align-items: center;
 
   // TODO(hoonding): width 바꿔야함.
-  width: 377px;
+  width: 100%;
+  max-width: 767px;
   height: 61px;
   background-color: transparent;
   color: ${({ theme }) => theme.COLORS.SYSTEM.DEFAULT};
@@ -47,7 +50,8 @@ const $ModalButtons = styled.div`
   display: flex;
   flex-direction: column-reverse;
   overflow: hidden;
-  width: 377px;
+  width: 100%;
+  max-width: 767px;
   border-radius: 13px;
   background-color: ${({ theme }) => theme.COLORS.SYSTEM.BACKGROUND.WEAK};
 `;
