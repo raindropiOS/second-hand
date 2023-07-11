@@ -207,6 +207,15 @@ const GlobalStyles = createGlobalStyle`
   a:hover {
     text-decoration: none;
   }
+  
+  #confirm-root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: fit-content;
+    height: fit-content;
+    z-index: 9999;
+  }
 `;
 
 export default GlobalStyles;
