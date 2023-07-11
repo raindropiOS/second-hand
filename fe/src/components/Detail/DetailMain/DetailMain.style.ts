@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const $DetailMainContainer = styled.main`
   display: flex;
@@ -38,7 +38,13 @@ const $ProductInfoContainer = styled.section`
   height: 200px;
 `;
 
-const $ProductStatusButton = styled.button`
+const isModalOpenStyle = css`
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+`;
+
+const $ProductStatusButton = styled.button<{ isStatusModalOpen: boolean }>`
+  position: relative;
   display: flex;
   width: 106px;
   height: 32px;
@@ -54,6 +60,7 @@ const $ProductStatusButton = styled.button`
 
   border: 1px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.DEFAULT};
   border-radius: 8px;
+  ${({ isStatusModalOpen }) => isStatusModalOpen && isModalOpenStyle};
 `;
 
 const $ProductTitle = styled.h1`

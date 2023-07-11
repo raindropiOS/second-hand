@@ -14,12 +14,20 @@ import {
 
 import { DetailProductType } from '@type/productsType';
 import GetStatusWord from '@utils/getStatusWord';
+import useOutsideClick from '@hooks/useOutsideClick';
+import StatusModal from '@components/molecules/StatusModal';
 
 interface DetailMainProps {
   productDetail?: DetailProductType;
 }
 
 const DetailMain = ({ productDetail }: DetailMainProps) => {
+  const [isStatusModalOpen, setIsStatusModalOpen, modalRef] = useOutsideClick(false);
+
+  const statusModalHandler = () => {
+    setIsStatusModalOpen(prev => !prev);
+  };
+
   return (
     <>
       {productDetail ? (
@@ -29,12 +37,11 @@ const DetailMain = ({ productDetail }: DetailMainProps) => {
             <div>{`${productDetail?.seller.name}`}</div>
           </$SellerInfoWrapper>
           <$ProductInfoContainer>
-            {productDetail.isMine && (
-              <$ProductStatusButton>
-                <span>{`${GetStatusWord(productDetail?.status as number)}`}</span>
-                <Icon name="chevronDown" width={12} />
-              </$ProductStatusButton>
-            )}
+            <$ProductStatusButton isStatusModalOpen={isStatusModalOpen} onClick={statusModalHandler}>
+              <span>{`${GetStatusWord(productDetail?.status as number)}`}</span>
+              {isStatusModalOpen ? <Icon name="chevronUp" width={12} /> : <Icon name="chevronDown" width={12} />}
+              {isStatusModalOpen && productDetail.isMine && <StatusModal currentStatus={productDetail.status} />}
+            </$ProductStatusButton>
 
             <$ProductTitle>{`${productDetail?.title}`}</$ProductTitle>
             <$ProductPriceTimestamp>
