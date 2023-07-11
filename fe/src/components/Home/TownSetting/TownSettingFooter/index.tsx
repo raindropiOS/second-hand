@@ -7,7 +7,7 @@ import Icon from '@atoms/Icon';
 import PATH from '@constants/routerPath';
 import { $FooterContainer, $ButtonContainer, $Button, $FooterName, $TownSettingInfo } from './TownSettingFooter.style';
 interface TownSettingFooterProps {
-  towns: { townId: number; name: string }[];
+  towns: { id: number; name: string }[];
 }
 const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
   const theme = useTheme();
@@ -22,9 +22,8 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
     }
     // TODO(jayden): 추후 모달창 직접 만들어서 띄우기
     // FIXME(jayden): 로직 깔끔하게 정리하기
-
-    if (confirm(`'${towns.find(town => town.townId === id)?.name.split(' ')[2]}'을 삭제하시겠어요?`)) {
-      setSelectedTowns(towns.filter(town => town.townId !== id));
+    if (confirm(`'${towns.find(town => town.id === id)?.name.split(' ')[2]}'을 삭제하시겠어요?`)) {
+      setSelectedTowns(towns.filter(town => town.id !== id));
     }
     // TODO(jayden): 해당 id의 town DELETE 요청 추가
   };
@@ -35,7 +34,7 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
 
       <$ButtonContainer>
         {selectedTowns.map(town => (
-          <$Button key={town.townId} onClick={() => handleTownButtonClick(town.townId)} size="large" status="active">
+          <$Button key={town.id} onClick={() => handleTownButtonClick(town.id)} size="large" status="active">
             {town.name.split(' ')[2]}
             <Icon name="cancel" fill={theme.COLORS.NEUTRAL.BACKGROUND.DEFAULT} />
           </$Button>
