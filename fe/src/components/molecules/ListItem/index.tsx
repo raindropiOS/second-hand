@@ -41,6 +41,7 @@ interface ListItemProps {
   isCurrentUserItem: boolean;
   onItemClick: () => void;
   onItemMoreClick?: () => void;
+  isMine?: boolean;
 }
 
 const ListItem = ({
@@ -55,6 +56,7 @@ const ListItem = ({
   isCurrentUserItem,
   onItemClick,
   onItemMoreClick,
+  isMine,
 }: ListItemProps) => {
   const theme = useTheme();
 
