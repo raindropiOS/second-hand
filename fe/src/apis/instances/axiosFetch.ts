@@ -13,7 +13,7 @@ axiosFetch.interceptors.request.use(
     if (accessToken) config.headers['Authorization'] = `Bearer ${accessToken}`;
     else
       config.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb2dpbl9tZW1iZXIiLCJtZW1iZXJJZCI6MTAxLCJleHAiOjE2ODg4ODAxOTZ9.4oB8T0_DRvsFqDihHMa6i_ujTtVKpMfL_jTigPf74Zg';
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb2dpbl9tZW1iZXIiLCJtZW1iZXJJZCI6MTAxLCJleHAiOjE2ODk4MjE3ODh9.Fy15EgI6b7TRtov_Sck6GSvkij6l-yC_uzCco0TDG5k';
     return config;
   },
   error => {
