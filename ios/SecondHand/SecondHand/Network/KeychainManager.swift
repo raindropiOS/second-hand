@@ -26,6 +26,24 @@ class KeychainManager {
             }
         }
     }
+    
+    private func findJWT(_ jwt: JWT) async -> Bool {
+        // 추가 쿼리 만들기
+        let token = jwt.token
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecValueData as String: token.data(using: .utf8) as Any,
+        ]
+        
+        let status = await self.findKeychainItem(attributes: query as CFDictionary)
+        if status != errSecSuccess {
+            print("failed to find item")
+            return false
+        } else {
+            print("found item")
+            return true
+        }
+    }
 }
 
 extension KeychainManager {
@@ -34,6 +52,17 @@ extension KeychainManager {
             var item: CFTypeRef?
             let result = SecItemAdd(attrs, &item)
             completion(result, item)
+        }
+    }
+    
+    private func findKeychainItem(attributes attrs: CFDictionary) async -> OSStatus {
+        return await withCheckedContinuation { continuation in
+            DispatchQueue.global().async {
+                var item: CFTypeRef?
+                let result = SecItemCopyMatching(attrs, &item)
+                
+                continuation.resume(returning: result)
+            }
         }
     }
 }
