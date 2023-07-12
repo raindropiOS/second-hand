@@ -44,6 +44,26 @@ class KeychainManager {
             return true
         }
     }
+    
+    func updateJWT(_ jwt: JWT) {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword
+        ]
+        
+        let newToken = jwt.token
+        let newAttrs: [String: Any] = [
+            kSecValueData as String: newToken.data(using: .utf8) as Any,
+        ]
+        
+        self.updateKeychainItem(searchAttributes: query as CFDictionary, update: newAttrs as CFDictionary) { status in
+            if status == errSecSuccess {
+                print("updated item")
+            } else {
+                print("failed to update item")
+                print("status : \(status)")
+            }
+        }
+    }
 }
 
 extension KeychainManager {
@@ -63,6 +83,13 @@ extension KeychainManager {
                 
                 continuation.resume(returning: result)
             }
+        }
+    }
+    
+    private func updateKeychainItem(searchAttributes attrs: CFDictionary, update updateAttrs: CFDictionary, _ completion: @escaping (OSStatus) -> Void) {
+        DispatchQueue.global().async {
+            let result = SecItemUpdate(attrs, updateAttrs)
+            completion(result)
         }
     }
 }
