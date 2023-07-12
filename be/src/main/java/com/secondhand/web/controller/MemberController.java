@@ -47,7 +47,8 @@ public class MemberController {
     )
     @PostMapping("/auth/kakao/login")
     public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestBody KakaoRequestCode params) {
-        log.debug("프론트로 부터 받은 코드 = {}", params);
+        log.debug("프론트로 부터 받은 코드 = {}", params.getAuthorizationCode());
+        log.debug("프론트로 부터 받은 코드 = {}", params.oAuthProvider().name());
         MemberLoginResponse memberResponseDTO = memberService.login(params);
 
         return BasicResponse.send("카카오 로그인", memberResponseDTO);

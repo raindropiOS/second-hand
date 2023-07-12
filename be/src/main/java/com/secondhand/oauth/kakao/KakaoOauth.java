@@ -17,6 +17,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -29,14 +31,14 @@ public class KakaoOauth implements Oauth {
     private final Logger logger = LoggerFactory.getLogger(KakaoOauth.class);
 
     @Value("${OAUTH_KAKAO_CLIENT_API_URL}")
-    private java.lang.String apiUrl;
+    private String apiUrl;
     @Value("${OAUTH_KAKAO_CLIENT_AUTH_URL}")
-    private java.lang.String authUrl;
+    private String authUrl;
 
     @Value("${OAUTH_KAKAO_REDIRECT_URL}")
-    private java.lang.String redirectUrl;
+    private String redirectUrl;
     @Value("${OAUTH_KAKAO_CLIENT_ID}")
-    private java.lang.String clientId;
+    private String clientId;
 
     @Override
     public OAuthProvider oAuthProvider() {
@@ -45,28 +47,29 @@ public class KakaoOauth implements Oauth {
 
     @Override
     public String getToken(OAuthLoginParams params) {
-        java.lang.String code = ((KakaoRequestCode) params).getAuthorizationCode();
-        KakaoRequestBody body = KakaoRequestBody.builder()
-                .grantType("authorization_code")
-                .clientId(clientId)
-                .redirectUri(redirectUrl)
-                .code(code)
-                .build();
-        logger.debug("requestBodyDTO = {}", body);
+        String code = ((KakaoRequestCode) params).getAuthorizationCode();
 
-        String accessToken = webClient.post()
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", clientId);
+        body.add("redirect_uri", redirectUrl);
+        body.add("code", code);
+
+        logger.debug("body = {}", body);
+
+        KakoTokens kakoTokens = webClient.post()
                 .uri(apiUrl)
-                .accept(MediaType.APPLICATION_FORM_URLENCODED)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .bodyValue(body)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(KakoRequestException::new))
-                .bodyToMono(String.class)
+                .bodyToMono(KakoTokens.class)
                 .blockOptional()
                 .orElseThrow(AccessTokenNotFoundException::new);
 
-        logger.debug("accessTokenResponseDTO = {}", accessToken);
+        logger.debug("accessTokenResponseDTO = {}", kakoTokens);
 
-        return accessToken;
+        return kakoTokens.getAccessToken();
     }
 
     @Override
