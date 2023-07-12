@@ -20,6 +20,7 @@
 		8F167CEE2A386237003805CE /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F167CED2A386237003805CE /* ProductTableViewCell.swift */; };
 		8F2CA02F2A5BD9F50011C337 /* OAuthLoginResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA02E2A5BD9F50011C337 /* OAuthLoginResponseDTO.swift */; };
 		8F2CA0882A5E85790011C337 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA0872A5E85790011C337 /* KeychainManager.swift */; };
+		8F2CA08A2A5E87C20011C337 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA0892A5E87C20011C337 /* JWT.swift */; };
 		8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71432A2DD79900C10206 /* AppDelegate.swift */; };
 		8F7C71462A2DD79900C10206 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71452A2DD79900C10206 /* SceneDelegate.swift */; };
 		8F7C714D2A2DD79B00C10206 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F7C714C2A2DD79B00C10206 /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 		8F167CED2A386237003805CE /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 		8F2CA02E2A5BD9F50011C337 /* OAuthLoginResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthLoginResponseDTO.swift; sourceTree = "<group>"; };
 		8F2CA0872A5E85790011C337 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		8F2CA0892A5E87C20011C337 /* JWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
 		8F7C71402A2DD79900C10206 /* SecondHand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondHand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7C71432A2DD79900C10206 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F7C71452A2DD79900C10206 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				8F0F6B5E2A42C7E900F8F1D5 /* DataDecoder.swift */,
 				8F0F6BD42A58401900F8F1D5 /* ImageCacheManager.swift */,
 				8F2CA0872A5E85790011C337 /* KeychainManager.swift */,
+				8F2CA0892A5E87C20011C337 /* JWT.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */,
 				8F7C71752A31A04D00C10206 /* ProfileViewController.swift in Sources */,
 				8FA8F3312A408BA2002C1828 /* Town.swift in Sources */,
+				8F2CA08A2A5E87C20011C337 /* JWT.swift in Sources */,
 				8F7C71732A31A01E00C10206 /* ChattingViewController.swift in Sources */,
 				8F7C71712A31A00400C10206 /* LikeListViewController.swift in Sources */,
 				8FCAA43F2A35D21D0015FE4D /* SeparatorView.swift in Sources */,
