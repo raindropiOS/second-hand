@@ -10,7 +10,7 @@ import lombok.ToString;
 
 @ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class KakaoInfoResponse {
+public class KakaoInfoResponse implements OAuthInfoResponse {
     private KakaoAccount kakaoAccount;
 
     @Getter
@@ -26,10 +26,6 @@ public class KakaoInfoResponse {
         private String nickname;
     }
 
-    public String getEmail() {
-        return kakaoAccount.email;
-    }
-
     public String getNickname() {
         return kakaoAccount.profile.nickname;
     }
@@ -37,4 +33,15 @@ public class KakaoInfoResponse {
     public OAuthProvider getOAuthProvider() {
         return OAuthProvider.KAKAO;
     }
+
+    @Override
+    public String getAvatarUrl() {
+        return null;
+    }
+
+    @Override
+    public String getEmail() {
+        return null;
+    }
+
 }

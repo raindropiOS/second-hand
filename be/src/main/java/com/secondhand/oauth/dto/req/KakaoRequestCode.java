@@ -16,11 +16,11 @@ public class KakaoRequestCode implements OAuthLoginParams {
         return OAuthProvider.KAKAO;
     }
 
-
-    @Override
-    public MultiValueMap<String, String> makeBody() {
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("code", authorizationCode);
-        return body;
-    }
+//
+//    @Override
+//    public MultiValueMap<String, String> makeBody() {
+//        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+//        body.add("code", authorizationCode);
+//        return body;
+//    }
 }

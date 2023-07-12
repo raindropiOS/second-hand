@@ -2,9 +2,11 @@ package com.secondhand.oauth.github;
 
 import com.secondhand.oauth.OAuthApiClient;
 import com.secondhand.oauth.OAuthProvider;
+import com.secondhand.oauth.Oauth;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
 import com.secondhand.oauth.dto.req.AccessTokenRequestBodyDTO;
+import com.secondhand.oauth.dto.req.GithubInfoResponse;
 import com.secondhand.oauth.dto.req.GithubRequestCode;
 import com.secondhand.oauth.dto.req.OAuthLoginParams;
 import com.secondhand.oauth.exception.AccessTokenNotFoundException;
@@ -23,7 +25,7 @@ import reactor.core.publisher.Mono;
 
 
 @Component
-public class GitHubOauth implements OAuthApiClient {
+public class GitHubOauth implements Oauth {
 
     private final GiHubService giHubService;
     private final WebClient webClient;
@@ -49,11 +51,11 @@ public class GitHubOauth implements OAuthApiClient {
 
     @Override
     public AccessTokenResponseDTO getToken(OAuthLoginParams params) {
-        GithubRequestCode code = (GithubRequestCode) params;
+        String code = ((GithubRequestCode) params).getAuthorizationCode();
         AccessTokenRequestBodyDTO requestBodyDTO = AccessTokenRequestBodyDTO.builder()
                 .clientId(giHubService.getClientId())
                 .clientSecret(giHubService.getClientSecret())
-                .code(code.getAuthorizationCode())
+                .code(code)
                 .build();
         logger.debug("requestBodyDTO = {}", requestBodyDTO);
 
@@ -81,7 +83,7 @@ public class GitHubOauth implements OAuthApiClient {
                 .header(HttpHeaders.AUTHORIZATION, "token" + " " + accessToken)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(GitHubRequestException::new))
-                .bodyToMono(OAuthInfoResponse.class)
+                .bodyToMono(GithubInfoResponse.class)
                 .blockOptional()
                 .orElseThrow(GitHubUserInfoNotFoundException::new);
     }

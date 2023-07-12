@@ -23,6 +23,6 @@ public class RequestOAuthInfoService {
     public OAuthInfoResponse request(OAuthLoginParams params) {
         Oauth client = clients.get(params.oAuthProvider());
         AccessTokenResponseDTO token = client.getToken(params);
-        return client.getUserInfo(String.valueOf(token));
+        return client.getUserInfo(token.getAccessToken());
     }
 }
