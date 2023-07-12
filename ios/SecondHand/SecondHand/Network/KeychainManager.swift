@@ -8,6 +8,23 @@
 import Foundation
 
 class KeychainManager {
+    func saveJWT(_ jwt: JWT) async {
+        /*
+         1. 기존에 저장된 JWT가 있는지 확인
+         2. 키체인 아이템 추가 또는 업데이트
+            a. 없는 경우) 키체인 아이템을 추가한다
+            b. 있는 경우) 기존 키체인 아이템을 업데이트
+         */
+        
+        let jwtIsAlreadyPresentInKeychain = await self.findJWT(jwt)
+        
+        if jwtIsAlreadyPresentInKeychain {
+            self.updateJWT(jwt)
+        } else {
+            self.addJWT(jwt)
+        }
+    }
+    
     private func addJWT(_ jwt: JWT) {
         // 추가 쿼리 만들기
         let token = jwt.token
