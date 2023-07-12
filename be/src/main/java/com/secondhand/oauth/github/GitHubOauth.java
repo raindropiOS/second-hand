@@ -1,12 +1,11 @@
 package com.secondhand.oauth.github;
 
-import com.secondhand.oauth.OAuthApiClient;
 import com.secondhand.oauth.OAuthProvider;
 import com.secondhand.oauth.Oauth;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
 import com.secondhand.oauth.dto.req.AccessTokenRequestBodyDTO;
-import com.secondhand.oauth.dto.req.GithubInfoResponse;
+import com.secondhand.oauth.dto.GithubInfoResponse;
 import com.secondhand.oauth.dto.req.GithubRequestCode;
 import com.secondhand.oauth.dto.req.OAuthLoginParams;
 import com.secondhand.oauth.exception.AccessTokenNotFoundException;
@@ -31,13 +30,13 @@ public class GitHubOauth implements Oauth {
     private final WebClient webClient;
     private final Logger logger = LoggerFactory.getLogger(GitHubOauth.class);
 
-    private final String url;
-    private final String redirectUrl;
+    private final java.lang.String url;
+    private final java.lang.String redirectUrl;
 
     public GitHubOauth(GiHubService giHubService,
                        WebClient webClient,
-                       @Value("${OAUTH_GITHUB_URL}") String url,
-                       @Value("${OAUTH_GITHUB_REDIRECT_URL}") String redirectUrl) {
+                       @Value("${OAUTH_GITHUB_URL}") java.lang.String url,
+                       @Value("${OAUTH_GITHUB_REDIRECT_URL}") java.lang.String redirectUrl) {
         this.giHubService = giHubService;
         this.webClient = webClient;
         this.url = url;
@@ -50,8 +49,8 @@ public class GitHubOauth implements Oauth {
     }
 
     @Override
-    public AccessTokenResponseDTO getToken(OAuthLoginParams params) {
-        String code = ((GithubRequestCode) params).getAuthorizationCode();
+    public String getToken(OAuthLoginParams params) {
+        java.lang.String code = ((GithubRequestCode) params).getAuthorizationCode();
         AccessTokenRequestBodyDTO requestBodyDTO = AccessTokenRequestBodyDTO.builder()
                 .clientId(giHubService.getClientId())
                 .clientSecret(giHubService.getClientSecret())
@@ -71,12 +70,11 @@ public class GitHubOauth implements Oauth {
                 .orElseThrow(AccessTokenNotFoundException::new);
 
         logger.debug("accessTokenResponseDTO = {}", accessTokenResponseDTO);
-
-        return accessTokenResponseDTO;
+        return accessTokenResponseDTO.getAccessToken();
     }
 
     @Override
-    public OAuthInfoResponse getUserInfo(String accessToken) {
+    public OAuthInfoResponse getUserInfo(java.lang.String accessToken) {
         return webClient.get()
                 .uri(redirectUrl)
                 .accept(MediaType.APPLICATION_JSON)

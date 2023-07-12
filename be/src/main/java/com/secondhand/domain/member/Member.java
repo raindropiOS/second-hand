@@ -3,7 +3,6 @@ package com.secondhand.domain.member;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.town.Town;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
-import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

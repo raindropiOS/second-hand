@@ -1,9 +1,8 @@
-package com.secondhand.oauth.dto.req;
+package com.secondhand.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.secondhand.oauth.OAuthProvider;
-import com.secondhand.oauth.dto.OAuthInfoResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,6 +1,5 @@
 package com.secondhand.oauth;
 
-import com.secondhand.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
 import com.secondhand.oauth.dto.req.OAuthLoginParams;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public class RequestOAuthInfoService {
 
     public OAuthInfoResponse request(OAuthLoginParams params) {
         Oauth client = clients.get(params.oAuthProvider());
-        AccessTokenResponseDTO token = client.getToken(params);
-        return client.getUserInfo(token.getAccessToken());
+        String token = client.getToken(params);
+        return client.getUserInfo(token);
     }
 }
