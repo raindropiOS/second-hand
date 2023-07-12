@@ -15,7 +15,7 @@ public class OAuthMemberInfoDTO {
     private String name;
     private String login;
     private String avatarUrl;
-//    private String email;
+    private String email;
 //
 //    @JsonProperty("email")
 //    public void setEmail(String email) {
