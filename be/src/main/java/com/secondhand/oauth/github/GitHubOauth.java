@@ -1,8 +1,12 @@
-package com.secondhand.oauth;
+package com.secondhand.oauth.github;
 
-import com.secondhand.oauth.dto.req.AccessTokenRequestBodyDTO;
+import com.secondhand.oauth.OAuthApiClient;
+import com.secondhand.oauth.OAuthProvider;
 import com.secondhand.oauth.dto.AccessTokenResponseDTO;
-import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
+import com.secondhand.oauth.dto.OAuthInfoResponse;
+import com.secondhand.oauth.dto.req.AccessTokenRequestBodyDTO;
+import com.secondhand.oauth.dto.req.GithubRequestCode;
+import com.secondhand.oauth.dto.req.OAuthLoginParams;
 import com.secondhand.oauth.exception.AccessTokenNotFoundException;
 import com.secondhand.oauth.exception.GitHubRequestException;
 import com.secondhand.oauth.exception.GitHubUserInfoNotFoundException;
@@ -19,7 +23,7 @@ import reactor.core.publisher.Mono;
 
 
 @Component
-public class GitHubOauth implements Oauth {
+public class GitHubOauth implements OAuthApiClient {
 
     private final GiHubService giHubService;
     private final WebClient webClient;
@@ -39,11 +43,17 @@ public class GitHubOauth implements Oauth {
     }
 
     @Override
-    public AccessTokenResponseDTO getToken(String code) {
+    public OAuthProvider oAuthProvider() {
+        return OAuthProvider.GITHUB;
+    }
+
+    @Override
+    public AccessTokenResponseDTO getToken(OAuthLoginParams params) {
+        GithubRequestCode code = (GithubRequestCode) params;
         AccessTokenRequestBodyDTO requestBodyDTO = AccessTokenRequestBodyDTO.builder()
                 .clientId(giHubService.getClientId())
                 .clientSecret(giHubService.getClientSecret())
-                .code(code)
+                .code(code.getAuthorizationCode())
                 .build();
         logger.debug("requestBodyDTO = {}", requestBodyDTO);
 
@@ -64,14 +74,14 @@ public class GitHubOauth implements Oauth {
     }
 
     @Override
-    public OAuthMemberInfoDTO getUserInfo(String accessToken) {
+    public OAuthInfoResponse getUserInfo(String accessToken) {
         return webClient.get()
                 .uri(redirectUrl)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "token" + " " + accessToken)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(GitHubRequestException::new))
-                .bodyToMono(OAuthMemberInfoDTO.class)
+                .bodyToMono(OAuthInfoResponse.class)
                 .blockOptional()
                 .orElseThrow(GitHubUserInfoNotFoundException::new);
     }

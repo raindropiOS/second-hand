@@ -2,9 +2,10 @@ package com.secondhand.web.controller;
 
 import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
+import com.secondhand.oauth.dto.req.GithubRequestCode;
+import com.secondhand.oauth.dto.req.KakaoRequestCode;
 import com.secondhand.service.MemberResponse;
 import com.secondhand.service.MemberService;
-import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.requset.RequestCode;
 import com.secondhand.web.dto.response.MemberLoginResponse;
@@ -31,11 +32,11 @@ public class MemberController {
             description = "사용자 깃허브를 통한 로그인"
     )
     @PostMapping("/auth/login")
-    public BasicResponse<MemberLoginResponse> login(@RequestBody RequestCode code) throws IOException, InterruptedException {
+    public BasicResponse<MemberLoginResponse> login(@RequestBody GithubRequestCode code) throws IOException, InterruptedException {
         log.debug("프론트로 부터 받은 코드 = {}", code);
-        MemberLoginResponse memberResponseDTO = memberService.login(code.getAuthorizationCode());
+        MemberLoginResponse memberResponseDTO = memberService.login(code);
 
-        return BasicResponse.send("로그인", memberResponseDTO);
+        return BasicResponse.send("깃허브 로그인", memberResponseDTO);
     }
 
     @Operation(
@@ -44,11 +45,11 @@ public class MemberController {
             description = "사용자 카카오를 통한 로그인"
     )
     @PostMapping("/auth/kakao/login")
-    public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestBody RequestCode code) {
-        log.debug("프론트로 부터 받은 코드 = {}", code);
-        MemberLoginResponse memberResponseDTO = memberService.login(code.getAuthorizationCode());
+    public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestBody KakaoRequestCode params) {
+        log.debug("프론트로 부터 받은 코드 = {}", params);
+        MemberLoginResponse memberResponseDTO = memberService.login(params);
 
-        return BasicResponse.send("로그인", memberResponseDTO);
+        return BasicResponse.send("카카오 로그인", memberResponseDTO);
     }
 
 

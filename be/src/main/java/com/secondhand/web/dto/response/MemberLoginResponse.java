@@ -1,6 +1,7 @@
 package com.secondhand.web.dto.response;
 
 import com.secondhand.domain.member.Member;
+import com.secondhand.service.Token;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +13,9 @@ public class MemberLoginResponse {
 
     private final String name;
     private final String imgUrl;
-    private final String jwtToken;
+    private final Token jwtToken;
 
-    public static MemberLoginResponse of(final Member member, final String jwtToken) {
+    public static MemberLoginResponse of(final Member member, final Token jwtToken) {
         return MemberLoginResponse.builder()
                 .name(member.getLoginName())
                 .imgUrl(member.getImgUrl())

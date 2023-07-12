@@ -2,6 +2,7 @@ package com.secondhand.domain.member;
 
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.town.Town;
+import com.secondhand.oauth.dto.OAuthInfoResponse;
 import com.secondhand.oauth.dto.OAuthMemberInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +29,7 @@ public class Member {
     private String memberEmail;
     private String memberToken;
     private String imgUrl;
+    private String oauthProvider;
 
     @ManyToOne
     @JoinColumn(name = "main_town_id")
@@ -43,17 +43,18 @@ public class Member {
     private Set<Interested> interesteds = new HashSet<>();
 
 
-    public static Member create(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
+    public static Member create(OAuthInfoResponse memberInfo, final String jwtToken) {
         return Member.builder()
-                .loginName(memberInfo.getLogin())
+                .loginName(memberInfo.getNickname())
                 .memberToken(jwtToken)
                 .imgUrl(memberInfo.getAvatarUrl())
-                .memberEmail("aaa@naver.com")
+                .memberEmail(memberInfo.getEmail())
+                .oauthProvider(memberInfo.getOAuthProvider().name())
                 .build();
     }
 
-    public Member update(OAuthMemberInfoDTO memberInfo, final String jwtToken) {
-        this.loginName = memberInfo.getLogin();
+    public Member update(OAuthInfoResponse memberInfo, final String jwtToken) {
+        this.loginName = memberInfo.getNickname();
         this.imgUrl = memberInfo.getAvatarUrl();
         this.memberToken = jwtToken;
         return this;
@@ -81,5 +82,9 @@ public class Member {
             return true;
         }
         return false;
+    }
+
+    public void createToken(String refreshToken) {
+        this.memberToken = refreshToken;
     }
 }

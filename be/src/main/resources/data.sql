@@ -26,6 +26,7 @@ create table member
     img_url      varchar(200) null,
     main_town_id bigint null,
     sub_town_id  bigint null,
+    oauth_provider varchar(45) not null,
     constraint fk_member_town1
         foreign key (main_town_id) references town (town_id),
     constraint fk_member_town2
