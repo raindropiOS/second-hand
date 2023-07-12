@@ -33,7 +33,8 @@ public class MemberController {
     )
     @PostMapping("/auth/login")
     public BasicResponse<MemberLoginResponse> login(@RequestBody GithubRequestCode code) throws IOException, InterruptedException {
-        log.debug("프론트로 부터 받은 코드 = {}", code);
+        log.debug("프론트로 부터 받은 코드 = {}", code.getAuthorizationCode());
+        log.debug("프론트로 부터 받은 코드 = {}", code.oAuthProvider().name());
         MemberLoginResponse memberResponseDTO = memberService.login(code);
 
         return BasicResponse.send("깃허브 로그인", memberResponseDTO);
