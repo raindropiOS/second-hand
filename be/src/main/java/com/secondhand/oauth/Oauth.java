@@ -8,5 +8,5 @@ public interface Oauth {
 
     String getToken(OAuthLoginParams params);
 
-    OAuthInfoResponse getUserInfo(java.lang.String accessToken);
+    OAuthInfoResponse getUserInfo(String accessToken);
 }

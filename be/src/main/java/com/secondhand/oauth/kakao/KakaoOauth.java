@@ -2,6 +2,7 @@ package com.secondhand.oauth.kakao;
 
 import com.secondhand.oauth.OAuthProvider;
 import com.secondhand.oauth.Oauth;
+import com.secondhand.oauth.dto.KakaoInfoResponse;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
 import com.secondhand.oauth.dto.req.KakaoRequestCode;
 import com.secondhand.oauth.dto.req.OAuthLoginParams;
@@ -73,14 +74,18 @@ public class KakaoOauth implements Oauth {
     }
 
     @Override
-    public OAuthInfoResponse getUserInfo(java.lang.String accessToken) {
-        return webClient.get()
+    public OAuthInfoResponse getUserInfo(String accessToken) {
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("property_keys", "[\"kakao_account.email\", \"kakao_account.profile\"]");
+
+        return webClient.post()
                 .uri(authUrl)
-                .accept(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, "token" + " " + accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer" + " " + accessToken)
+                .bodyValue(body)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(GitHubRequestException::new))
-                .bodyToMono(OAuthInfoResponse.class)
+                .bodyToMono(KakaoInfoResponse.class)
                 .blockOptional()
                 .orElseThrow(GitHubUserInfoNotFoundException::new);
     }
