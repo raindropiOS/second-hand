@@ -44,8 +44,6 @@ class SignInViewController: UIViewController {
         self.configureIdInputView()
         self.configureSeparatorView()
         self.configureSignInSignUpButton()
-        
-        self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
     }
     
     private func configureLoginButtonAction() {
@@ -106,11 +104,14 @@ extension SignInViewController {
         let height = self.view.frame.height
         let padding = self.topBottomPadding * height
         
-        self.signInButton.setTitle("로그인", for: .normal)
+        self.signInButton.setTitle("GitHub으로 로그인", for: .normal)
+        self.signInButton.setBackgroundColor(UIColor(named: "black"))
+        
         self.signUpButton.setTitle("회원가입", for: .normal)
         self.signUpButton.setTitleColor(.black, for: .normal)
         
         self.signInButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
+        self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
         
         self.view.addSubview(self.stackView)
         
