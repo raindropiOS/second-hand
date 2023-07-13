@@ -22,7 +22,6 @@ class SignInOutButton: UIButton {
     private func setup() {
         self.configureLayout()
         self.configureShape()
-        self.setBackgroundColor(UIColor(named: "orange"))
     }
     
     func setBackgroundColor(_ uiColor: UIColor?) {
