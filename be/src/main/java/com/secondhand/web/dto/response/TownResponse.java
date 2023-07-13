@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class TownResponse {
-    private final Long id;
+    private final Long townId;
     private final String name;
 
     public TownResponse(Town towns) {
-        this.id = towns.getTownId();
+        this.townId = towns.getTownId();
         this.name = String.format("%s %s %s",
                 towns.getCity(), towns.getCounty(), towns.getDistrict());
     }
