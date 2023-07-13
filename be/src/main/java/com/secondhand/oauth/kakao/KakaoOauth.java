@@ -1,10 +1,10 @@
 package com.secondhand.oauth.kakao;
 
-import com.secondhand.oauth.OAuthApiClient;
 import com.secondhand.oauth.OAuthProvider;
 import com.secondhand.oauth.Oauth;
-import com.secondhand.oauth.dto.AccessTokenResponseDTO;
+import com.secondhand.oauth.dto.KakaoInfoResponse;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
+import com.secondhand.oauth.dto.req.KakaoRequestCode;
 import com.secondhand.oauth.dto.req.OAuthLoginParams;
 import com.secondhand.oauth.exception.AccessTokenNotFoundException;
 import com.secondhand.oauth.exception.GitHubRequestException;
@@ -36,6 +36,8 @@ public class KakaoOauth implements Oauth {
     @Value("${OAUTH_KAKAO_CLIENT_AUTH_URL}")
     private String authUrl;
 
+    @Value("${OAUTH_KAKAO_REDIRECT_URL}")
+    private String redirectUrl;
     @Value("${OAUTH_KAKAO_CLIENT_ID}")
     private String clientId;
 
@@ -45,37 +47,45 @@ public class KakaoOauth implements Oauth {
     }
 
     @Override
-    public AccessTokenResponseDTO getToken(OAuthLoginParams params) {
+    public String getToken(OAuthLoginParams params) {
+        String code = ((KakaoRequestCode) params).getAuthorizationCode();
+
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", clientId);
+        body.add("redirect_uri", redirectUrl);
+        body.add("code", code);
+
         logger.debug("body = {}", body);
 
-
-        AccessTokenResponseDTO accessTokenResponseDTO = webClient.post()
+        KakoTokens kakoTokens = webClient.post()
                 .uri(apiUrl)
-                .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .bodyValue(body)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(KakoRequestException::new))
-                .bodyToMono(AccessTokenResponseDTO.class)
+                .bodyToMono(KakoTokens.class)
                 .blockOptional()
                 .orElseThrow(AccessTokenNotFoundException::new);
 
-        logger.debug("accessTokenResponseDTO = {}", accessTokenResponseDTO);
+        logger.debug("accessTokenResponseDTO = {}", kakoTokens);
 
-        return accessTokenResponseDTO;
+        return kakoTokens.getAccessToken();
     }
 
     @Override
     public OAuthInfoResponse getUserInfo(String accessToken) {
-        return webClient.get()
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("property_keys", "[\"kakao_account.email\", \"kakao_account.profile\"]");
+
+        return webClient.post()
                 .uri(authUrl)
-                .accept(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, "token" + " " + accessToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer" + " " + accessToken)
+                .bodyValue(body)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(GitHubRequestException::new))
-                .bodyToMono(OAuthInfoResponse.class)
+                .bodyToMono(KakaoInfoResponse.class)
                 .blockOptional()
                 .orElseThrow(GitHubUserInfoNotFoundException::new);
     }

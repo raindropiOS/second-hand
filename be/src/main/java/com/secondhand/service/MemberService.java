@@ -37,7 +37,7 @@ public class MemberService {
         }
 
         //TODO: db컬럼에 토큰을 저장해야하나?
-        Member member = memberRepository.save(Member.create(oAuthInfoResponse, "hello"));
+        Member member = memberRepository.save(Member.create(oAuthInfoResponse, ""));
         Token jwtToken = jwtService.createToken(member);
         member.createToken(jwtToken.getRefreshToken());
         log.debug("jwt token = {}", jwtToken);

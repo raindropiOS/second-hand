@@ -1,4 +1,5 @@
-package com.secondhand.oauth.dto.req;
+package com.secondhand.oauth.kakao;
+
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -7,12 +8,12 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@ToString
 @Builder
+@ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AccessTokenRequestBodyDTO {
-
-    private final String clientId;
-    private final String clientSecret;
-    private final String code;
+public class KakaoRequestBody {
+    private String grantType;
+    private String clientId;
+    private String redirectUri;
+    private String code;
 }

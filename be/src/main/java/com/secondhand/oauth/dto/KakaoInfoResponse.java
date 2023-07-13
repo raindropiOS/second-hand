@@ -2,15 +2,14 @@ package com.secondhand.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.secondhand.oauth.OAuthProvider;
 import lombok.Getter;
-import lombok.ToString;
 
-@ToString
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Getter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoInfoResponse implements OAuthInfoResponse {
+
+    @JsonProperty("kakao_account")
     private KakaoAccount kakaoAccount;
 
     @Getter
@@ -24,24 +23,29 @@ public class KakaoInfoResponse implements OAuthInfoResponse {
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class KakaoProfile {
         private String nickname;
+        @JsonProperty("profile_image_url")
+        private String profileImageUrl;
+        @JsonProperty("thumbnail_image_url")
+        private String thumbnailImageUrl;
     }
 
+    @Override
     public String getNickname() {
         return kakaoAccount.profile.nickname;
     }
 
+    @Override
     public OAuthProvider getOAuthProvider() {
         return OAuthProvider.KAKAO;
     }
 
     @Override
     public String getAvatarUrl() {
-        return null;
+        return kakaoAccount.profile.profileImageUrl;
     }
 
     @Override
     public String getEmail() {
-        return null;
+        return kakaoAccount.email;
     }
-
 }
