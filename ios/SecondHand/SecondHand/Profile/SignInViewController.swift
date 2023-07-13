@@ -19,7 +19,7 @@ class SignInViewController: UIViewController {
         stack.axis = .vertical
         return stack
     }()
-    let loginButton: OrangeButton = OrangeButton()
+    let signInButton: SignInOutButton = SignInOutButton()
     let signUpButton: UIButton = UIButton()
     
     init(networkManager: NetworkManageable) {
@@ -43,13 +43,13 @@ class SignInViewController: UIViewController {
         self.configureSeparatorViewUnderNavigationBar()
         self.configureIdInputView()
         self.configureSeparatorView()
-        self.configureLoginSignUpButton()
+        self.configureSignInSignUpButton()
         
         self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
     }
     
     private func configureLoginButtonAction() {
-        self.loginButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
+        self.signInButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
     }
     
     @objc func loginButtonAction() {
@@ -102,22 +102,22 @@ extension SignInViewController {
         self.separatorView.configure()
     }
     
-    private func configureLoginSignUpButton() {
+    private func configureSignInSignUpButton() {
         let height = self.view.frame.height
         let padding = self.topBottomPadding * height
         
-        self.loginButton.setTitle("로그인", for: .normal)
+        self.signInButton.setTitle("로그인", for: .normal)
         self.signUpButton.setTitle("회원가입", for: .normal)
         self.signUpButton.setTitleColor(.black, for: .normal)
         
-        self.loginButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
+        self.signInButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
         
         self.view.addSubview(self.stackView)
         
-        self.stackView.addArrangedSubview(loginButton)
+        self.stackView.addArrangedSubview(signInButton)
         self.stackView.addArrangedSubview(signUpButton)
         
-        self.loginButton.translatesAutoresizingMaskIntoConstraints = false
+        self.signInButton.translatesAutoresizingMaskIntoConstraints = false
         self.signUpButton.translatesAutoresizingMaskIntoConstraints = false
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

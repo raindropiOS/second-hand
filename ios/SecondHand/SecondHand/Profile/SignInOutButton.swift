@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OrangeButton: UIButton {
+class SignInOutButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,13 +20,13 @@ class OrangeButton: UIButton {
     }
     
     private func setup() {
-        self.setColor()
         self.configureLayout()
         self.configureShape()
+        self.setBackgroundColor(UIColor(named: "orange"))
     }
     
-    private func setColor() {
-        self.backgroundColor = UIColor(named: "orange")
+    func setBackgroundColor(_ uiColor: UIColor?) {
+        self.backgroundColor = uiColor
     }
     
     private func configureLayout() {
