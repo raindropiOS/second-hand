@@ -11,7 +11,7 @@ class ProfileViewController: UIViewController {
     let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     let profileImageView = ProfileImageView()
     let nameLabel = UILabel()
-    let signOutButton = OrangeButton()
+    let signOutButton = SignInOutButton()
     let profileImageViewSize: CGSize = CGSize(width: 100, height: 100)
     
     override func viewDidLoad() {
