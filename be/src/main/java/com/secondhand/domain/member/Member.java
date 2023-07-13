@@ -3,6 +3,7 @@ package com.secondhand.domain.member;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.town.Town;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
+import com.secondhand.web.dto.requset.JoinRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,21 +43,44 @@ public class Member {
     private Set<Interested> interesteds = new HashSet<>();
 
 
-    public static Member create(OAuthInfoResponse memberInfo, final String jwtToken) {
+    //Ouath로그인
+    public static Member create(OAuthInfoResponse memberInfo) {
         return Member.builder()
                 .loginName(memberInfo.getNickname())
-                .memberToken(jwtToken)
                 .imgUrl(memberInfo.getAvatarUrl())
                 .memberEmail(memberInfo.getEmail())
                 .oauthProvider(memberInfo.getOAuthProvider().name())
                 .build();
     }
 
+
+    //일반로그인
+//    public static Member create(JoinRequest joinRequest) {
+//        return Member.builder()
+//                .loginName(joinRequest.getNickName())
+//                .imgUrl("감자")
+//                .memberEmail(joinRequest.getMemberEmail())
+//                .oauthProvider("GENERAL")
+//                .build();
+//    }
+    public static Member create(String nickName, String memberEmail, String general) {
+        return Member.builder()
+                .loginName(nickName)
+                .memberEmail(memberEmail)
+                .oauthProvider(general)
+                .build();
+    }
+
+
     public Member update(OAuthInfoResponse memberInfo, final String jwtToken) {
         this.loginName = memberInfo.getNickname();
         this.imgUrl = memberInfo.getAvatarUrl();
         this.memberToken = jwtToken;
         return this;
+    }
+
+    public void updateTokens(String refreshToken) {
+        this.memberToken = refreshToken;
     }
 
     public void removeToken() {
@@ -76,6 +100,14 @@ public class Member {
         this.mainTown = mainTown;
     }
 
+    public void updateNickName(String nickName) {
+        this.loginName = nickName;
+    }
+
+    public void updateEmail(String email) {
+        this.memberEmail = email;
+    }
+
     public boolean checkProductIsMine(long id) {
         if (this.getId() == id) {
             return true;
@@ -83,7 +115,4 @@ public class Member {
         return false;
     }
 
-    public void createToken(String refreshToken) {
-        this.memberToken = refreshToken;
-    }
 }

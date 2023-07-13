@@ -26,4 +26,13 @@ public class BasicResponse<T> {
                 .data(memberResponseDTO)
                 .build();
     }
+
+    public static <T> BasicResponse send(String message) {
+        return BasicResponse.<T>builder()
+                .success(true)
+                .message(message)
+                .apiStatus(20000)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
 }

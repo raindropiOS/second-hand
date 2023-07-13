@@ -7,7 +7,9 @@ import com.secondhand.oauth.dto.req.KakaoRequestCode;
 import com.secondhand.service.MemberResponse;
 import com.secondhand.service.MemberService;
 import com.secondhand.util.BasicResponse;
-import com.secondhand.web.dto.requset.RequestCode;
+import com.secondhand.web.dto.requset.JoinRequest;
+import com.secondhand.web.dto.requset.SignupSocialRequest;
+import com.secondhand.web.dto.requset.UpdateNickNameRequest;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Slf4j
@@ -52,6 +55,45 @@ public class MemberController {
         MemberLoginResponse memberResponseDTO = memberService.login(params);
 
         return BasicResponse.send("카카오 로그인", memberResponseDTO);
+    }
+
+    @Operation(
+            summary = "일반 로그인",
+            tags = "members",
+            description = "사용자 카카오를 통한 로그인"
+    )
+    @PostMapping("/join")
+    public BasicResponse join(final @Valid @RequestBody JoinRequest joinRequest) {
+        MemberLoginResponse memberResponseDTO = memberService.join(joinRequest);
+
+        return BasicResponse.send("일반 회원가입 로그인", memberResponseDTO);
+    }
+
+    @Operation(
+            summary = "사용자 이메일 추가",
+            tags = "members",
+            description = "사용자 카카오를 통한 로그인"
+    )
+    @LoginCheck
+    @PostMapping("/members/signup")
+    public BasicResponse signupEmail(@LoginValue long userId, final @Valid @RequestBody SignupSocialRequest signupSocialRequest) {
+        memberService.signupEmail(userId, signupSocialRequest);
+
+        return BasicResponse.send("사용자 이메일 추가");
+    }
+
+
+    @Operation(
+            summary = "유저 닉네임 수정",
+            tags = "members",
+            description = "사용자 카카오를 통한 로그인"
+    )
+    @LoginCheck
+    @PatchMapping("/members")
+    public BasicResponse updateNickName(@LoginValue long userId, @RequestBody UpdateNickNameRequest nickNameRequest) {
+        memberService.updateNickName(userId, nickNameRequest);
+
+        return BasicResponse.send("카카오 로그인");
     }
 
 
