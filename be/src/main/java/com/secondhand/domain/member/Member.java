@@ -3,6 +3,7 @@ package com.secondhand.domain.member;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.town.Town;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
+import com.secondhand.web.dto.requset.JoinRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,6 +50,17 @@ public class Member {
                 .imgUrl(memberInfo.getAvatarUrl())
                 .memberEmail(memberInfo.getEmail())
                 .oauthProvider(memberInfo.getOAuthProvider().name())
+                .build();
+    }
+
+    public static Member create(JoinRequest joinRequest, final String jwtToken) {
+        return Member.builder()
+                //TODO 닉네임 필요없지않나?
+                .loginName("감자")
+                .memberToken(jwtToken)
+                .imgUrl("감자")
+                .memberEmail(joinRequest.getMemberEmail())
+                .oauthProvider("일반")
                 .build();
     }
 

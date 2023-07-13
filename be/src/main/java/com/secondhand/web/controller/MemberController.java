@@ -7,6 +7,7 @@ import com.secondhand.oauth.dto.req.KakaoRequestCode;
 import com.secondhand.service.MemberResponse;
 import com.secondhand.service.MemberService;
 import com.secondhand.util.BasicResponse;
+import com.secondhand.web.dto.requset.JoinRequest;
 import com.secondhand.web.dto.requset.RequestCode;
 import com.secondhand.web.dto.response.MemberLoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,6 +51,18 @@ public class MemberController {
         log.debug("프론트로 부터 받은 코드 = {}", params.getAuthorizationCode());
         log.debug("프론트로 부터 받은 코드 = {}", params.oAuthProvider().name());
         MemberLoginResponse memberResponseDTO = memberService.login(params);
+
+        return BasicResponse.send("카카오 로그인", memberResponseDTO);
+    }
+
+    @Operation(
+            summary = "카카오 로그인",
+            tags = "members",
+            description = "사용자 카카오를 통한 로그인"
+    )
+    @PostMapping("/join")
+    public BasicResponse join(@RequestBody JoinRequest joinRequest) {
+        MemberLoginResponse memberResponseDTO = memberService.join(joinRequest);
 
         return BasicResponse.send("카카오 로그인", memberResponseDTO);
     }
