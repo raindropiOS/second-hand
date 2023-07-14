@@ -1,5 +1,5 @@
 use
-second_hand;
+test2;
 create table category
 (
     category_id bigint auto_increment primary key,
@@ -18,11 +18,12 @@ create table town
 
 create table member
 (
-    member_id    bigint auto_increment
+    member_id      bigint auto_increment
         primary key,
-    login_name   varchar(45) not null,
-    main_town_id bigint null,
-    sub_town_id  bigint null,
+    login_name     varchar(45) not null,
+    oauth_provider varchar(45) not null,
+    main_town_id   bigint null,
+    sub_town_id    bigint null,
     constraint fk_member_town1
         foreign key (main_town_id) references town (town_id),
     constraint fk_member_town2
@@ -41,7 +42,7 @@ create table member_password
 (
     member_password_id bigint auto_increment
         primary key,
-    member_password  varchar(128) not null
+    member_password    varchar(128) not null
 );
 
 create table auth_social_login
