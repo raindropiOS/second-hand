@@ -6,7 +6,7 @@ import com.secondhand.oauth.dto.req.OAuthLoginParams;
 public interface Oauth {
     OAuthProvider oAuthProvider();
 
-    String getToken(OAuthLoginParams params);
+    String getToken(OAuthLoginParams params, String userAgent);
 
     OAuthInfoResponse getUserInfo(String accessToken);
 }

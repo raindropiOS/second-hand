@@ -26,9 +26,9 @@ public class MemberService {
     private final RequestOAuthInfoService requestOAuthInfoService;
 
     @Transactional
-    public MemberLoginResponse login(OAuthLoginParams params) {
+    public MemberLoginResponse login(OAuthLoginParams params, String userAgent) {
         //TODO  authorization code 를 받는다
-        OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
+        OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params, userAgent);
 
         // TODO: 이미 있는 멤버라면 토큰을 업데이트 해주고 아니라면 새로만든다
         if (MemberExists(oAuthInfoResponse.getEmail())) {
