@@ -12,13 +12,14 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
     static let shared = NetworkManager()
     private let dataDecoder: DataDecodable = DataDecoder()
     private let baseUrlString = Bundle.main.infoDictionary?["baseUrl"] as? String ?? ""
+    private let basePath = "/api"
     private let clientId = Bundle.main.infoDictionary?["githubClientId"] as? String ?? ""
     private let githubBaseUrl = "https://github.com"
     private lazy var githubOAuthParameters = ["client_id": self.clientId, "scope": "user public_repo"]
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
-            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: "/api", parameters: [:])
+            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, parameters: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: [:], body: [:], httpMethod: .get)
             let data = try await fetchData(with: urlRequest)
             let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self) as? Form
@@ -46,7 +47,8 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
     
     func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         do {
-            let urlRequest = try self.makeUrlRequest(urlString, query: [:], httpMethod: .get)
+            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, parameters: [:])
+            let urlRequest = try self.makeUrlRequest(urlComponents, header: [:], body: [:], httpMethod: .get)
             URLSession.shared.downloadTask(with: urlRequest) { (location, _, error) in
                 if let error = error {
                     print("Error downloading image: \(error)")
