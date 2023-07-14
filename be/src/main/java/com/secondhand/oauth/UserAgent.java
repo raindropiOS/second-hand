@@ -2,7 +2,7 @@ package com.secondhand.oauth;
 
 public enum UserAgent {
 
-    IOS("iOS"),
+    IOS("SecondHand"),
     WEB("Web"),
     OTHER("Other");
 
@@ -17,7 +17,7 @@ public enum UserAgent {
     }
 
     public static UserAgent fromUserAgentDtoValidationUserAgent(String userAgentString) {
-        if (userAgentString.contains("iPhone") || userAgentString.contains("iPad")) {
+        if (userAgentString.contains("iPhone") || userAgentString.contains("SecondHand")) {
             return IOS;
         } else if (userAgentString.contains("Windows") || userAgentString.contains("Macintosh")) {
             return WEB;
