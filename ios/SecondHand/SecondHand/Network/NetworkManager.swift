@@ -10,8 +10,11 @@ import UIKit.UIImage
 
 class NetworkManager: NetworkManageable, URLRequestProducible {
     static let shared = NetworkManager()
-    private let baseUrlString = Bundle.main.object(forInfoDictionaryKey: "baseUrl") as? String ?? ""
     private let dataDecoder: DataDecodable = DataDecoder()
+    private let baseUrlString = Bundle.main.object(forInfoDictionaryKey: "baseUrl") as? String ?? ""
+    private let clientId: String = Bundle.main.object(forInfoDictionaryKey: "githubClientId") as? String ?? ""
+    private let oauthLoginDirectory = Bundle.main.object(forInfoDictionaryKey: "OAuth Login URL Directory") as? String ?? ""
+    
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
@@ -74,15 +77,13 @@ class NetworkManager: NetworkManageable, URLRequestProducible {
 // GitHub OAuth
 extension NetworkManager {
     func presentGithubOAuthLoginScreen() {
-        let clientId: String = Bundle.main.object(forInfoDictionaryKey: "githubClientId") as? String ?? ""
-        let urlStr = "https://github.com/login/oauth/authorize?client_id=\(clientId)"
+        let urlStr = "https://github.com/login/oauth/authorize?client_id=\(self.clientId)"
         guard let url = URL(string: urlStr) else { return }
         UIApplication.shared.open(url)
     }
     
     func sendAuthorizationCode(_ code: String) async throws -> Decodable {
-            let oauthLoginDirectory = Bundle.main.object(forInfoDictionaryKey: "OAuth Login URL Directory") as? String ?? ""
-            let entireLoginUrl = self.baseUrlString + oauthLoginDirectory
+        let entireLoginUrl = self.baseUrlString + self.oauthLoginDirectory
             
             // TODO: iOS, FE 구분을 위한 헤더 작성 예정
         
