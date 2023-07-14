@@ -1,5 +1,5 @@
 use
-second_hand;
+test2;
 create table category
 (
     category_id bigint auto_increment primary key,
@@ -18,21 +18,40 @@ create table town
 
 create table member
 (
-    member_id    bigint auto_increment
+    member_id      bigint auto_increment
         primary key,
-    login_name   varchar(45) not null,
-    member_email varchar(45) not null unique,
-    member_token varchar(500) null,
-    img_url      varchar(200) null,
-    main_town_id bigint null,
-    sub_town_id  bigint null,
+    login_name     varchar(45) not null,
     oauth_provider varchar(45) not null,
+    main_town_id   bigint null,
+    sub_town_id    bigint null,
     constraint fk_member_town1
         foreign key (main_town_id) references town (town_id),
     constraint fk_member_town2
         foreign key (sub_town_id) references town (town_id)
 );
 
+create table member_profile
+(
+    member_profile_id bigint auto_increment
+        primary key,
+    img_url           varchar(200) not null,
+    member_email      varchar(45)  not null unique
+);
+
+create table member_password
+(
+    member_password_id bigint auto_increment
+        primary key,
+    member_password    varchar(128) not null
+);
+
+create table auth_social_login
+(
+    auth_social_login_id bigint auto_incremnet
+        prmairy key,
+    oauth_provider       varchar(45)  not null,
+    member_token         varchar(500) not null
+);
 
 create table product
 (
@@ -50,7 +69,7 @@ create table product
     category_id   bigint       not null,
     member_id     bigint       not null,
     deleted       tinyint(1) not null default 0,
-        constraint fk_product_category1
+    constraint fk_product_category1
         foreign key (category_id) references category (category_id),
     constraint fk_product_member1
         foreign key (member_id) references member (member_id),
@@ -81,7 +100,7 @@ create table interested
     interested_id bigint auto_increment primary key,
     product_id    bigint not null,
     member_id     bigint not null,
-    is_liked tinyint(1) not null,
+    is_liked      tinyint(1) not null,
     constraint fk_interested_member1
         foreign key (member_id) references member (member_id),
     constraint fk_interested_product1
