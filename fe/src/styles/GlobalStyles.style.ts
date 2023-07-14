@@ -208,7 +208,7 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
   
-  #confirm-root {
+  #dialog-root {
     position: fixed;
     top: 0;
     left: 0;
