@@ -99,12 +99,12 @@ extension NetworkManager {
     }
     
     func sendAuthorizationCode(_ code: String) async throws -> Decodable {
-        let entireLoginUrl = self.baseUrlString + self.oauthLoginDirectory
         let body = ["authorizationCode": "\(code)", "oAuthProvider": "GITHUB"]
         let header = ["Content-Type": "application/json"]
             
         do {
-            let urlRequest = try self.makeUrlRequest(entireLoginUrl, query: [:], header: header, body: body, httpMethod: .post)
+            let urlComponents = try self.makeUrlComponents(baseUrl: self.baseUrlString, path: "/auth/login", parameters: [:])
+            let urlRequest = try self.makeUrlRequest(urlComponents, header: header, body: body, httpMethod: .post)
             let data = try await self.fetchData(with: urlRequest)
             let reponseData = try self.dataDecoder.decodeJSON(data, DTO: OAuthLoginResponseDTO.self)
             return reponseData
