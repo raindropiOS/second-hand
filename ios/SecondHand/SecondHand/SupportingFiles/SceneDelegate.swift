@@ -24,11 +24,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
             if let url = URLContexts.first?.url {
-                let urlString = url.absoluteString
+                let networkManager = NetworkManager()
+                
                 Task {
                     do {
+                        let authorizationCode = try networkManager.getQueryItemValue(urlString: url.absoluteString, key: "code")
                         // TODO: 받은 데이터를 처리해야함.
-                        let responseData = try await NetworkManager.shared.sendAuthorizationCode(urlString)
+                        let responseData = try await networkManager.sendAuthorizationCode(authorizationCode)
                     } catch {
                         print("error : \(error)")
                     }
