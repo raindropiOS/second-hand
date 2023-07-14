@@ -36,6 +36,7 @@
 		8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71762A31C37000C10206 /* SignUpViewController.swift */; };
 		8F7C71792A31C37A00C10206 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71782A31C37A00C10206 /* SignInViewController.swift */; };
 		8F984BFF2A617B4000773DD4 /* URLComponentsProducible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F984BFE2A617B4000773DD4 /* URLComponentsProducible.swift */; };
+		8F984C012A6187F700773DD4 /* RoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F984C002A6187F700773DD4 /* RoundedLabel.swift */; };
 		8FA8F2E62A3DCC12002C1828 /* ImageLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8F2E52A3DCC12002C1828 /* ImageLabelStackView.swift */; };
 		8FA8F32E2A408B53002C1828 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8F32D2A408B53002C1828 /* Product.swift */; };
 		8FA8F3312A408BA2002C1828 /* Town.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8F3302A408BA2002C1828 /* Town.swift */; };
@@ -83,6 +84,7 @@
 		8F7C71762A31C37000C10206 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		8F7C71782A31C37A00C10206 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		8F984BFE2A617B4000773DD4 /* URLComponentsProducible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComponentsProducible.swift; sourceTree = "<group>"; };
+		8F984C002A6187F700773DD4 /* RoundedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedLabel.swift; sourceTree = "<group>"; };
 		8FA8F2E52A3DCC12002C1828 /* ImageLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabelStackView.swift; sourceTree = "<group>"; };
 		8FA8F32D2A408B53002C1828 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		8FA8F3302A408BA2002C1828 /* Town.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Town.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				8FA8F2E52A3DCC12002C1828 /* ImageLabelStackView.swift */,
 				CC208F452A42DBAF00C19467 /* TownSettingViewController.swift */,
 				CC208F472A42E8F700C19467 /* TownSearchViewController.swift */,
+				8F984C002A6187F700773DD4 /* RoundedLabel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				8F0F6B612A42E31100F8F1D5 /* Repository.swift in Sources */,
 				8F2CA02F2A5BD9F50011C337 /* OAuthLoginResponseDTO.swift in Sources */,
 				8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */,
+				8F984C012A6187F700773DD4 /* RoundedLabel.swift in Sources */,
 				8F167CEE2A386237003805CE /* ProductTableViewCell.swift in Sources */,
 				8F0F6B5D2A42C6F000F8F1D5 /* URLRequestProducible.swift in Sources */,
 				8F0F6B692A4D197C00F8F1D5 /* ProductListViewModel.swift in Sources */,
