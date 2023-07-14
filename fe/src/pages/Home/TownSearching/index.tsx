@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import TownSearchingHeader from '@components/Home/TownSearching/TownSearchingHeader';
 import TownSearchingMain from '@components/Home/TownSearching/TownSearchingMain';
 import TownSearchingFooter from '@components/Home/TownSearching/TownSearchingFooter';
-import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
+import axiosFetch from '@apis/instances/axiosFetch';
 
 interface Town {
   townId: number;
@@ -40,18 +40,19 @@ const TownSearching = () => {
   // 타운 전체 목록 가져오는 API 호출
   useEffect(() => {
     const getTotalTowns = async () => {
-      const response = await mockAxiosFetch('/towns', {
+      const response = await axiosFetch('/towns', {
         method: 'GET',
       });
       const data = await response.data;
       const isSuccess = data.success;
-      const towns = data.data.towns;
+      const towns = data.data;
 
       if (!isSuccess) throw new Error('Failed to fetch total towns');
       setTotalTowns(towns);
     };
 
     getTotalTowns();
+    console.log('totalTowns', totalTowns);
   }, []);
   return totalTowns.length ? (
     <>
