@@ -32,7 +32,7 @@ class KeychainManager {
             kSecClass as String: kSecClassGenericPassword,
             kSecValueData as String: token.data(using: .utf8) as Any,
         ]
-            
+        
         self.addKeychainItem(attributes: query as CFDictionary) { status, _ in
             // 이미 있는 아이템 추가 하면 fail, 항상 status 확인할 것
             if status != errSecSuccess {
