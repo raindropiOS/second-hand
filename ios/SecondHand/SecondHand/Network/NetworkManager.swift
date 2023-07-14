@@ -11,10 +11,10 @@ import UIKit.UIImage
 class NetworkManager: NetworkManageable, URLRequestProducible {
     static let shared = NetworkManager()
     private let dataDecoder: DataDecodable = DataDecoder()
-    private let baseUrlString = Bundle.main.object(forInfoDictionaryKey: "baseUrl") as? String ?? ""
-    private let clientId: String = Bundle.main.object(forInfoDictionaryKey: "githubClientId") as? String ?? ""
-    private let oauthLoginDirectory = Bundle.main.object(forInfoDictionaryKey: "OAuth Login URL Directory") as? String ?? ""
-    
+    private let baseUrlString = Bundle.main.infoDictionary?["baseUrl"] as? String ?? ""
+    private let clientId = Bundle.main.infoDictionary?["githubClientId"] as? String ?? ""
+    private let oauthLoginDirectory = Bundle.main.infoDictionary?["OAuth Login URL Directory"] as? String ?? ""
+    private let githubAuthorizationUrlString = "https://github.com/login/oauth/authorize"
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
@@ -77,18 +77,31 @@ class NetworkManager: NetworkManageable, URLRequestProducible {
 // GitHub OAuth
 extension NetworkManager {
     func presentGithubOAuthLoginScreen() {
-        let urlStr = "https://github.com/login/oauth/authorize?client_id=\(self.clientId)"
-        guard let url = URL(string: urlStr) else { return }
-        UIApplication.shared.open(url)
+        do {
+            let urlRequest = try self.makeUrlRequest(self.githubAuthorizationUrlString, query: ["client_id": self.clientId, "scope": "user public_repo"], httpMethod: .get)
+            if let url = urlRequest.url {
+                UIApplication.shared.open(url)
+            }
+        } catch {
+            print("error : \(error)")
+        }
+    }
+    
+    func getQueryItemValue(urlString: String, key: String) throws -> String {
+        let url = URLComponents(string: urlString)
+        let value = url?.queryItems?.first(where: { $0.name == key })?.value
+        
+        guard let value = value else { throw NetworkingError.failedToGetQueryItemValue }
+        return value
     }
     
     func sendAuthorizationCode(_ code: String) async throws -> Decodable {
         let entireLoginUrl = self.baseUrlString + self.oauthLoginDirectory
+        let body = ["authorizationCode": "\(code)", "oAuthProvider": "GITHUB"]
+        let header = ["Content-Type": "application/json"]
             
-            // TODO: iOS, FE 구분을 위한 헤더 작성 예정
-        
         do {
-            let urlRequest = try self.makeUrlRequest(entireLoginUrl, query: [:], header: [:], body: "", httpMethod: .post)
+            let urlRequest = try self.makeUrlRequest(entireLoginUrl, query: [:], header: header, body: body, httpMethod: .post)
             let data = try await self.fetchData(with: urlRequest)
             let reponseData = try self.dataDecoder.decodeJSON(data, DTO: OAuthLoginResponseDTO.self)
             return reponseData
@@ -105,5 +118,6 @@ protocol NetworkManageable {
 }
 
 enum NetworkingError: Error {
+    case failedToGetQueryItemValue
     case failedToSendAuthorizationCode
 }
