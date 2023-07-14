@@ -40,7 +40,7 @@ public class MemberService {
             log.debug("기존에 있던 회원 ==========================");
             return MemberLoginResponse.of(member, jwtToken);
         }
-
+        log.debug("깃허브로부터 받은 닉네임 = {}", oAuthInfoResponse.getNickname());
         //TODO: db컬럼에 토큰을 저장해야하나?
         Member member = memberRepository.save(Member.create(oAuthInfoResponse));
         Token jwtToken = jwtService.createToken(member);
