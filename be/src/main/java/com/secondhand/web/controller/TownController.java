@@ -34,13 +34,7 @@ public class TownController {
         List<TownResponse> townList = townService.findByAll();
         log.debug("전체 동네 목록을 가져온다 = {}", townList);
 
-        return BasicResponse.<List<TownResponse>>builder()
-                .message("성공")
-                .success(true)
-                .data(townList)
-                .httpStatus(HttpStatus.OK)
-                .apiStatus(20000)
-                .build();
+        return BasicResponse.send("성공", townList);
     }
 
     @Operation(
@@ -54,13 +48,7 @@ public class TownController {
         List<TownResponse> townDetail = townService.findTownDetail(userId);
         log.debug("사용자가 등록한 동네를 가져올수 있다  = {}", townDetail);
 
-        return BasicResponse.<List<TownResponse>>builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .data(townDetail)
-                .build();
+        return BasicResponse.send("사용자가 등록한 동네를 가져올수 있다", townDetail);
     }
 
     //TODO : 등록을 숫자로가지고한다? 수정필요
@@ -72,7 +60,7 @@ public class TownController {
     @LoginCheck
     @PostMapping
     public BasicResponse registerTown(@LoginValue long userId,
-                                      @RequestBody TownRegisterRequest request) {
+                                        @RequestBody TownRegisterRequest request) {
 
         if (request.getTownId() == null) {
             throw new IllegalArgumentException("필수 지역 정보 없음");
@@ -80,12 +68,7 @@ public class TownController {
 
         townService.save(userId, request.getTownId());
 
-        return BasicResponse.builder()
-                .success(true)
-                .message("사용자의 처음 동네 등록")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return BasicResponse.send("사용자의 처음 동네 등록");
     }
 
     @Operation(
@@ -96,7 +79,7 @@ public class TownController {
     @LoginCheck
     @PatchMapping
     public BasicResponse updateTown(@LoginValue long userId,
-                                    @RequestBody TownRequest townRequest) {
+                                      @RequestBody TownRequest townRequest) {
 
         if (townRequest.getMainTownId() == null) {
             throw new IllegalArgumentException("필수 지역 정보 없음");
@@ -104,11 +87,6 @@ public class TownController {
 
         townService.update(userId, townRequest);
 
-        return BasicResponse.builder()
-                .success(true)
-                .message("사용자의 동네 수정")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return BasicResponse.send("사용자의 동네 수정");
     }
 }

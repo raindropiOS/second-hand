@@ -49,11 +49,11 @@ public class GitHubOauth implements Oauth {
     }
 
     @Override
-    public String getToken(OAuthLoginParams params) {
+    public String getToken(OAuthLoginParams params, String userAgent) {
         java.lang.String code = ((GithubRequestCode) params).getAuthorizationCode();
         AccessTokenRequestBodyDTO requestBodyDTO = AccessTokenRequestBodyDTO.builder()
-                .clientId(giHubService.getClientId())
-                .clientSecret(giHubService.getClientSecret())
+                .clientId(giHubService.getClientId(userAgent))
+                .clientSecret(giHubService.getClientSecret(userAgent))
                 .code(code)
                 .build();
         logger.debug("requestBodyDTO = {}", requestBodyDTO);

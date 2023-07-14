@@ -47,7 +47,7 @@ public class KakaoOauth implements Oauth {
     }
 
     @Override
-    public String getToken(OAuthLoginParams params) {
+    public String getToken(OAuthLoginParams params, String userAgentDTO) {
         String code = ((KakaoRequestCode) params).getAuthorizationCode();
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();

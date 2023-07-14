@@ -4,6 +4,7 @@ import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.oauth.dto.req.GithubRequestCode;
 import com.secondhand.oauth.dto.req.KakaoRequestCode;
+import com.secondhand.oauth.dto.req.UserAgentDTO;
 import com.secondhand.service.MemberResponse;
 import com.secondhand.service.MemberService;
 import com.secondhand.util.BasicResponse;
@@ -35,10 +36,10 @@ public class MemberController {
             description = "사용자 깃허브를 통한 로그인"
     )
     @PostMapping("/auth/login")
-    public BasicResponse<MemberLoginResponse> login(@RequestBody GithubRequestCode code) throws IOException, InterruptedException {
+    public BasicResponse<MemberLoginResponse> login(@RequestHeader(name = "User-Agent") String userAgent, @RequestBody GithubRequestCode code) throws IOException, InterruptedException {
         log.debug("프론트로 부터 받은 코드 = {}", code.getAuthorizationCode());
         log.debug("프론트로 부터 받은 코드 = {}", code.oAuthProvider().name());
-        MemberLoginResponse memberResponseDTO = memberService.login(code);
+        MemberLoginResponse memberResponseDTO = memberService.login(code, userAgent);
 
         return BasicResponse.send("깃허브 로그인", memberResponseDTO);
     }
@@ -49,10 +50,10 @@ public class MemberController {
             description = "사용자 카카오를 통한 로그인"
     )
     @PostMapping("/auth/kakao/login")
-    public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestBody KakaoRequestCode params) {
+    public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestHeader(name = "User-Agent") String userAgent, @RequestBody KakaoRequestCode params) {
         log.debug("프론트로 부터 받은 코드 = {}", params.getAuthorizationCode());
         log.debug("프론트로 부터 받은 코드 = {}", params.oAuthProvider().name());
-        MemberLoginResponse memberResponseDTO = memberService.login(params);
+        MemberLoginResponse memberResponseDTO = memberService.login(params, userAgent);
 
         return BasicResponse.send("카카오 로그인", memberResponseDTO);
     }
