@@ -22,7 +22,7 @@ const TownSearching = () => {
     setInputTownName(e.target.value);
   };
 
-  const handleSeletedTownsClick = (townId: number) => {
+  const handleSelectedTownsClick = (townId: number) => {
     // TODO(jayden): 타운 선택할 때, 해당 타운 POST API 호출 및 성공 시, setSelectedTowns 실행
     setSelectedTowns(prev => {
       // 이미 선택된 타운이면 선택 해제
@@ -53,7 +53,6 @@ const TownSearching = () => {
 
     getTotalTowns();
   }, []);
-
   return totalTowns.length ? (
     <>
       <TownSearchingHeader selectedTowns={selectedTowns} />
@@ -62,7 +61,7 @@ const TownSearching = () => {
         totalTowns={totalTowns}
         inputTownName={inputTownName}
         selectedTowns={selectedTowns}
-        onItemClick={handleSeletedTownsClick}
+        onItemClick={handleSelectedTownsClick}
       />
     </>
   ) : (
