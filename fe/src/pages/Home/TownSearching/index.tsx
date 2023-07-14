@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import TownSearchingHeader from '@components/Home/TownSearching/TownSearchingHeader';
 import TownSearchingMain from '@components/Home/TownSearching/TownSearchingMain';
 import TownSearchingFooter from '@components/Home/TownSearching/TownSearchingFooter';
 import axiosFetch from '@apis/instances/axiosFetch';
+import DialogPortal from '@components/portals/DialogPortal';
+import Dialog from '@molecules/Dialog';
 
 interface Town {
   townId: number;
@@ -14,12 +16,18 @@ interface Town {
 const TownSearching = () => {
   const { state } = useLocation();
   const { towns } = state;
-  const [selectedTowns, setSelectedTowns] = React.useState<Town[]>(towns);
-  const [inputTownName, setInputTownName] = React.useState('');
-  const [totalTowns, setTotalTowns] = React.useState<Town[]>([]);
+  const [selectedTowns, setSelectedTowns] = useState<Town[]>(towns);
+  const [inputTownName, setInputTownName] = useState('');
+  const [totalTowns, setTotalTowns] = useState<Town[]>([]);
+  const [isAlertShown, setIsAlertShown] = useState(false);
 
   const handleInputTownNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputTownName(e.target.value);
+  };
+
+  const handleMoreTownClick = () => {
+    setIsAlertShown(true);
+    return;
   };
 
   const handleSelectedTownsClick = (townId: number) => {
@@ -30,7 +38,7 @@ const TownSearching = () => {
       // 선택된 타운이 2개 이상이면 선택 불가
       if (prev.length >= 2) {
         // NOTE(jayden): strict mode로 인해, alert가 처음만 두 번 실행됨
-        alert('최대 2개의 동네만 설정할 수 있어요!');
+        handleMoreTownClick();
         return prev;
       }
       return [...prev, totalTowns.find(town => town.townId === townId)] as Town[];
@@ -52,7 +60,6 @@ const TownSearching = () => {
     };
 
     getTotalTowns();
-    console.log('totalTowns', totalTowns);
   }, []);
   return totalTowns.length ? (
     <>
@@ -64,6 +71,18 @@ const TownSearching = () => {
         selectedTowns={selectedTowns}
         onItemClick={handleSelectedTownsClick}
       />
+      {isAlertShown && (
+        <DialogPortal>
+          <Dialog message={'최대 2개의 동네만 설정할 수 있어요!'}>
+            <Dialog.Button
+              title="확인"
+              onClick={() => {
+                setIsAlertShown(false);
+              }}
+            />
+          </Dialog>
+        </DialogPortal>
+      )}
     </>
   ) : (
     <>로딩중</>
