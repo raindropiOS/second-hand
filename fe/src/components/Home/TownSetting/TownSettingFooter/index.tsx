@@ -17,16 +17,16 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
   const navigate = useNavigate();
   const [selectedTowns, setSelectedTowns] = useState(towns);
   const [selectedTownId, setSelectedTownId] = useState<number>();
-  const [isDialogShown, setIsDialogShown] = useState(false);
-
+  const [isConfirmShown, setIsConfirmShown] = useState(false);
+  const [isAlertShown, setIsAlertShown] = useState(false);
   const handleTownButtonClick = (id: number) => {
     setSelectedTownId(id);
     if (selectedTowns.length === 1) {
-      alert('최소 1개의 동네를 설정해주세요.');
+      setIsAlertShown(true);
       return;
     }
     if (selectedTowns.length === 2) {
-      setIsDialogShown(true);
+      setIsConfirmShown(true);
       return;
     }
     // TODO(jayden): 해당 id의 town DELETE 요청 추가
@@ -54,20 +54,32 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
         )}
       </$ButtonContainer>
       <$TownSettingInfo>※ 지역은 최소 1개, 최대 2개까지 설정 가능해요.</$TownSettingInfo>
-      {isDialogShown && (
+      {isConfirmShown && (
         <DialogPortal>
           <Dialog message={'정말 삭제하시겠어요?'}>
             <Dialog.Button
               title="취소"
               onClick={() => {
-                setIsDialogShown(false);
+                setIsConfirmShown(false);
               }}
             />
             <Dialog.Button
               title="삭제"
               onClick={() => {
                 setSelectedTowns(selectedTowns.filter(town => town.townId !== selectedTownId));
-                setIsDialogShown(false);
+                setIsConfirmShown(false);
+              }}
+            />
+          </Dialog>
+        </DialogPortal>
+      )}
+      {isAlertShown && (
+        <DialogPortal>
+          <Dialog message={'최소 1개의 동네를 설정해주세요.'}>
+            <Dialog.Button
+              title="확인"
+              onClick={() => {
+                setIsAlertShown(false);
               }}
             />
           </Dialog>
