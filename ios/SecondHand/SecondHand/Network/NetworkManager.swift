@@ -13,7 +13,6 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
     private let dataDecoder: DataDecodable = DataDecoder()
     private let baseUrlString = Bundle.main.infoDictionary?["baseUrl"] as? String ?? ""
     private let clientId = Bundle.main.infoDictionary?["githubClientId"] as? String ?? ""
-    private let oauthLoginDirectory = Bundle.main.infoDictionary?["OAuth Login URL Directory"] as? String ?? ""
     private let githubBaseUrl = "https://github.com"
     private lazy var githubOAuthParameters = ["client_id": self.clientId, "scope": "user public_repo"]
     
@@ -101,7 +100,7 @@ extension NetworkManager {
     func sendAuthorizationCode(_ code: String) async throws -> Decodable {
         let body = ["authorizationCode": "\(code)", "oAuthProvider": "GITHUB"]
         let header = ["Content-Type": "application/json"]
-            
+        
         do {
             let urlComponents = try self.makeUrlComponents(baseUrl: self.baseUrlString, path: "/auth/login", parameters: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: header, body: body, httpMethod: .post)
