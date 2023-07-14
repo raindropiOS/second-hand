@@ -18,7 +18,8 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
-            let urlRequest = try self.makeUrlRequest(baseUrlString, query: query, httpMethod: .get)
+            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: "/api", parameters: [:])
+            let urlRequest = try self.makeUrlRequest(urlComponents, header: [:], body: [:], httpMethod: .get)
             let data = try await fetchData(with: urlRequest)
             let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self) as? Form
             let products: [Product]? = productsForm?.data
