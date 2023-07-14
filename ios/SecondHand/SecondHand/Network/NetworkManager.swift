@@ -8,13 +8,14 @@
 import Foundation
 import UIKit.UIImage
 
-class NetworkManager: NetworkManageable, URLRequestProducible {
+class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProducible {
     static let shared = NetworkManager()
     private let dataDecoder: DataDecodable = DataDecoder()
     private let baseUrlString = Bundle.main.infoDictionary?["baseUrl"] as? String ?? ""
     private let clientId = Bundle.main.infoDictionary?["githubClientId"] as? String ?? ""
     private let oauthLoginDirectory = Bundle.main.infoDictionary?["OAuth Login URL Directory"] as? String ?? ""
-    private let githubAuthorizationUrlString = "https://github.com/login/oauth/authorize"
+    private let githubBaseUrl = "https://github.com"
+    private lazy var githubOAuthParameters = ["client_id": self.clientId, "scope": "user public_repo"]
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
@@ -77,9 +78,11 @@ class NetworkManager: NetworkManageable, URLRequestProducible {
 // GitHub OAuth
 extension NetworkManager {
     func presentGithubOAuthLoginScreen() {
+        let path = "/login/oauth/authorize"
+        
         do {
-            let urlRequest = try self.makeUrlRequest(self.githubAuthorizationUrlString, query: ["client_id": self.clientId, "scope": "user public_repo"], httpMethod: .get)
-            if let url = urlRequest.url {
+            let urlComponents = try self.makeUrlComponents(baseUrl: self.githubBaseUrl, path: path, parameters: self.githubOAuthParameters)
+            if let url = urlComponents.url {
                 UIApplication.shared.open(url)
             }
         } catch {
