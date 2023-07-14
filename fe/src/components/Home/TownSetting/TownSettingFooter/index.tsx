@@ -6,6 +6,9 @@ import Button from '@atoms/Buttons/Button';
 import Icon from '@atoms/Icon';
 import PATH from '@constants/routerPath';
 import { $FooterContainer, $ButtonContainer, $Button, $FooterName, $TownSettingInfo } from './TownSettingFooter.style';
+import DialogPortal from '@components/portals/DialogPortal';
+import Dialog from '@molecules/Dialog';
+
 interface TownSettingFooterProps {
   towns: { id: number; name: string }[];
 }
@@ -13,6 +16,8 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [selectedTowns, setSelectedTowns] = useState(towns);
+  const [selectedTownId, setSelectedTownId] = useState<number>();
+  const [isDialogShown, setIsDialogShown] = useState(false);
 
   const handleTownButtonClick = (id: number) => {
     // TODO(jayden): 추후 모달창 직접 만들어서 띄우기
