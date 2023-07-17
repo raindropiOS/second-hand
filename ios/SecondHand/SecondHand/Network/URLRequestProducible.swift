@@ -20,10 +20,11 @@ extension URLRequestProducible {
         for (key, value) in header {
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
-        
-        // 바디 수정
-        let jsonData = try? JSONSerialization.data(withJSONObject: body)
-        urlRequest.httpBody = jsonData
+        if httpMethod != .get {
+            // 바디 수정
+            let jsonData = try? JSONSerialization.data(withJSONObject: body)
+            urlRequest.httpBody = jsonData
+        }
         
         // 메소드 수정
         urlRequest.httpMethod = httpMethod.rawValue
