@@ -25,15 +25,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
             let networkManager = NetworkManager()
-            
+            let keychainManager = KeychainManager()
             Task {
-//                do {
-//                    let authorizationCode = try networkManager.getQueryItemValue(urlString: url.absoluteString, key: "code")
-//                    // TODO: 받은 데이터를 처리해야함.
-//                    let responseData = try await networkManager.sendAuthorizationCode(authorizationCode)
-//                } catch {
-//                    print("error : \(error)")
-//                }
+                do {
+                    let authorizationCode = try networkManager.getQueryItemValue(urlString: url.absoluteString, key: "code")
+                    // TODO: 받은 데이터를 처리해야함.
+                    let responseData = try await networkManager.sendAuthorizationCode(authorizationCode)
+                    if let dto = responseData as? GitHubOAuthResponseDTO {
+                        let jwtToken = dto.data.jwtToken
+                        let accessToken = jwtToken.accessToken
+                        let refreshToken = jwtToken.refreshToken
+                        let tempToken = accessToken + "." + refreshToken
+                        let jwt = JWT(token: tempToken)
+                        await keychainManager.saveJWT(jwt)
+                    } else {
+                        print("failed to type cast responseData while receiving jwt token")
+                    }
+                } catch {
+                    print("error : \(error)")
+                }
             }
           
             let tabBarController = self.window?.rootViewController as? TabBarController
