@@ -120,7 +120,7 @@ extension NetworkManager {
             let urlComponents = try self.makeUrlComponents(baseUrl: self.baseUrlString, path: "/api/auth/github/login", parameters: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: header, body: body, httpMethod: .post)
             let data = try await self.fetchData(with: urlRequest)
-            let reponseData = try self.dataDecoder.decodeJSON(data, DTO: OAuthLoginResponseDTO.self)
+            let reponseData = try self.dataDecoder.decodeJSON(data, DTO: GitHubOAuthResponseDTO.self)
             return reponseData
         } catch {
             print("error : \(error)")
