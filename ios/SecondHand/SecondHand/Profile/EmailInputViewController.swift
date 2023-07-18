@@ -86,6 +86,17 @@ class EmailInputViewController: UIViewController {
     }
     
     @objc func signUpButtonTouched() {
+        let email = self.emailInputView.inputText
+        
+        Task { [weak self] in
+            self?.networkManager.sendEmail(email)
+        }
+        
+//        DispatchQueue.global().async { [weak self] in
+//            if let networkManager = self?.networkManager {
+//                networkManager.sendEmail(email)
+//            }
+//        }
         self.navigationController?.popViewController(animated: true)
     }
 }
