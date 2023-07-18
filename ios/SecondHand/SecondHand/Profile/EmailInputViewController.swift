@@ -9,6 +9,7 @@ import UIKit
 
 class EmailInputViewController: UIViewController {
     private let networkManager: NetworkManageable
+    private let keychainManager: KeychainManageable
     private lazy var topBottomPadding: CGFloat = self.view.frame.height * 80/852
     private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     private let emailInputView: InputView = {
@@ -32,8 +33,9 @@ class EmailInputViewController: UIViewController {
         self.configureSignUpButton()
     }
     
-    init(networkManager: NetworkManageable) {
+    init(networkManager: NetworkManageable, keychainManager: KeychainManageable) {
         self.networkManager = networkManager
+        self.keychainManager = keychainManager
         super.init()
     }
     
@@ -43,6 +45,7 @@ class EmailInputViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.networkManager = NetworkManager()
+        self.keychainManager = KeychainManager()
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
