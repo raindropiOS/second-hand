@@ -24,6 +24,8 @@ class EmailInputViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
+        
         self.configureSeparatorViewUnderNavigationBar()
         self.configureIdInputView()
         self.configureSignUpButton()
@@ -64,5 +66,11 @@ class EmailInputViewController: UIViewController {
             self.signUpButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.signUpButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -self.topBottomPadding)
         ])
+        
+        self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
+    }
+    
+    @objc func signUpButtonTouched() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
