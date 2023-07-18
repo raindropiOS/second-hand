@@ -41,6 +41,11 @@ class EmailInputViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.networkManager = NetworkManager()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
     private func configureSeparatorViewUnderNavigationBar() {
         self.view.addSubview(separatorViewUnderNavigationBar)
         self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
