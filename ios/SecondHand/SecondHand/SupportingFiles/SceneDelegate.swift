@@ -27,12 +27,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let networkManager = NetworkManager()
             
             Task {
-                do {
-                    let authorizationCode = try networkManager.getQueryItemValue(urlString: url.absoluteString, key: "code")
-                    // TODO: 받은 데이터를 처리해야함.
-                    let responseData = try await networkManager.sendAuthorizationCode(authorizationCode)
-                } catch {
-                    print("error : \(error)")
+//                do {
+//                    let authorizationCode = try networkManager.getQueryItemValue(urlString: url.absoluteString, key: "code")
+//                    // TODO: 받은 데이터를 처리해야함.
+//                    let responseData = try await networkManager.sendAuthorizationCode(authorizationCode)
+//                } catch {
+//                    print("error : \(error)")
+//                }
+            }
+          
+            let tabBarController = self.window?.rootViewController as? TabBarController
+            
+            if let tabBarController = tabBarController {
+                if let navigationController = tabBarController.viewControllers?[4] as? UINavigationController {
+                    navigationController.pushViewController(EmailInputViewController(), animated: true)
                 }
             }
         }
