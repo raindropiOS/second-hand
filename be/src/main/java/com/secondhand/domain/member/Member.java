@@ -3,7 +3,7 @@ package com.secondhand.domain.member;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.town.Town;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
-import com.secondhand.web.dto.requset.JoinRequest;
+import com.sun.xml.bind.v2.TODO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,16 +26,23 @@ public class Member {
     private Long id;
 
     private String loginName;
-    private String memberEmail;
-    private String memberToken;
     private String imgUrl;
     private String oauthProvider;
 
-    @ManyToOne
+    // 프록시 지연로딩이 안되고 즉시로딩 되는 문제가 있다.
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_profile_id")
+    private MemberProfile memberProfile;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_password_id")
+    private MemberPassword memberPassword;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "main_town_id")
     private Town mainTown;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_town_id")
     private Town subTown;
 
@@ -44,47 +51,43 @@ public class Member {
 
 
     //Ouath로그인
-    public static Member create(OAuthInfoResponse memberInfo) {
+    public static Member create(OAuthInfoResponse memberInfo, MemberProfile memberProfile) {
         return Member.builder()
                 .loginName(memberInfo.getNickname())
                 .imgUrl(memberInfo.getAvatarUrl())
-                .memberEmail(memberInfo.getEmail())
+                .memberProfile(memberProfile)
                 .oauthProvider(memberInfo.getOAuthProvider().name())
                 .build();
     }
 
-
     //일반로그인
-//    public static Member create(JoinRequest joinRequest) {
-//        return Member.builder()
-//                .loginName(joinRequest.getNickName())
-//                .imgUrl("감자")
-//                .memberEmail(joinRequest.getMemberEmail())
-//                .oauthProvider("GENERAL")
-//                .build();
-//    }
-    public static Member create(String nickName, String memberEmail, String general) {
+    public static Member create(String loginName, String oauthProvider,
+                                MemberProfile memberProfile, MemberPassword memberPassword) {
         return Member.builder()
-                .loginName(nickName)
-                .memberEmail(memberEmail)
-                .oauthProvider(general)
+                .loginName(loginName)
+                .oauthProvider(oauthProvider)
+                .memberProfile(memberProfile)
+                .memberPassword(memberPassword)
                 .build();
     }
 
+    //일반로그인
+    public static Member toEntity(String loginName, String oauthProvider, String imgUrl,
+                                  MemberProfile memberProfile, MemberPassword memberPassword) {
+        return Member.builder()
+                .loginName(loginName)
+                .oauthProvider(oauthProvider)
+                .imgUrl(imgUrl)
+                .memberProfile(memberProfile)
+                .memberPassword(memberPassword)
+                .build();
+    }
 
-    public Member update(OAuthInfoResponse memberInfo, final String jwtToken) {
+    //깃허브 oauth 로그인 제대로처리
+    public void update(OAuthInfoResponse memberInfo) {
         this.loginName = memberInfo.getNickname();
         this.imgUrl = memberInfo.getAvatarUrl();
-        this.memberToken = jwtToken;
-        return this;
-    }
-
-    public void updateTokens(String refreshToken) {
-        this.memberToken = refreshToken;
-    }
-
-    public void removeToken() {
-        this.memberToken = null;
+        this.oauthProvider = memberInfo.getOAuthProvider().name();
     }
 
     public void changeTown(Town town) {
@@ -105,14 +108,16 @@ public class Member {
     }
 
     public void updateEmail(String email) {
-        this.memberEmail = email;
+        this.memberProfile.setEmail(email);
     }
 
     public boolean checkProductIsMine(long id) {
-        if (this.getId() == id) {
-            return true;
-        }
-        return false;
+        return this.getId() == id;
     }
 
+    public void resetUpdateEntity() {
+        this.loginName = "0";
+        this.imgUrl = "0";
+        this.oauthProvider = "0";
+    }
 }

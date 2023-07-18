@@ -2,8 +2,7 @@ package com.secondhand.service;
 
 import com.secondhand.domain.exception.JoinException;
 import com.secondhand.domain.exception.MemberNotFoundException;
-import com.secondhand.domain.member.Member;
-import com.secondhand.domain.member.MemberRepository;
+import com.secondhand.domain.member.*;
 import com.secondhand.oauth.RequestOAuthInfoService;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
 import com.secondhand.oauth.dto.req.OAuthLoginParams;
@@ -23,61 +22,82 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
+    private final MemberPasswordRepository memberPasswordRepository;
+    private final MemberProfileRepository memberProfileRepository;
+
+    private final MemberTokenRepository memberTokenRepository;
     private final RequestOAuthInfoService requestOAuthInfoService;
 
     @Transactional
     public MemberLoginResponse login(OAuthLoginParams params, String userAgent) {
-        //TODO  authorization code 를 받는다
         OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params, userAgent);
 
-        // TODO: 이미 있는 멤버라면 토큰을 업데이트 해주고 아니라면 새로만든다
-        if (MemberExists(oAuthInfoResponse.getEmail())) {
+        //이미 있는 멤버라면 토큰을 업데이트 해주고 아니라면 새로만든다
+        if (isMemberEmailExists(oAuthInfoResponse.getEmail())) {
             Member member = findMemberByEmail(oAuthInfoResponse.getEmail());
             Token jwtToken = jwtService.createToken(member);
-            //TODO update 하면 토큰만 새로줘야 하는것 아닌가?
-            member.updateTokens(jwtToken.getRefreshToken());
+            MemberToken memberToken = memberTokenRepository.findByMemberId(member.getId()).orElseThrow();
+            memberToken.update(jwtToken.getRefreshToken());
             log.debug("jwtToken = {}", jwtToken);
             log.debug("기존에 있던 회원 ==========================");
             return MemberLoginResponse.of(member, jwtToken);
         }
-        log.debug("깃허브로부터 받은 닉네임 = {}", oAuthInfoResponse.getNickname());
-        //TODO: db컬럼에 토큰을 저장해야하나?
-        Member member = memberRepository.save(Member.create(oAuthInfoResponse));
+
+        // 이메일이없는 임시회원 깃허브는 이메일을 안줌
+        if (oAuthInfoResponse.getEmail() == null) {
+            log.debug("임시회원 저장 ================");
+            Member findMember = findMemberById(0L);
+            log.debug("member id  = {}", findMember.getId());
+            findMember.update(oAuthInfoResponse);
+            Token jwtToken = jwtService.createToken(findMember);
+            memberTokenRepository.save(new MemberToken(jwtToken.getRefreshToken(), findMember));
+            return MemberLoginResponse.of(findMember, jwtToken);
+        }
+
+        // 새로운 회원
+        log.debug("오쓰로부터 받은 닉네임 = {}", oAuthInfoResponse.getNickname());
+        log.debug("오쓰로부터 받은 닉네임 깃허브는 안줌 = {}", oAuthInfoResponse.getEmail());
+        MemberProfile memberProfile = memberProfileRepository.save(new MemberProfile(oAuthInfoResponse.getEmail()));
+        Member member = memberRepository.save(Member.create(oAuthInfoResponse, memberProfile));
         Token jwtToken = jwtService.createToken(member);
-        member.updateTokens(jwtToken.getRefreshToken());
-        log.debug("jwt token = {}", jwtToken);
+        MemberToken memberToken = memberTokenRepository.save(new MemberToken(jwtToken.getRefreshToken(), member));
+        log.debug("새로 만든 jwt 토큰 = {}", jwtToken);
+        log.debug("회원이 저장할 refresh token = {}", memberToken.getMemberToken());
         log.debug("새로 생긴  회원 ==========================");
         return MemberLoginResponse.of(member, jwtToken);
     }
 
-    private boolean MemberExists(String email) {
-        //TODO : 토큰을 받은 후 깃허브로 부터 받은 정보가 DB에 저장하거나 있는 정보인지 체크한다.
-        return memberRepository.findByMemberEmail(email).isPresent();
+    private boolean isMemberEmailExists(String email) {
+        return memberProfileRepository.findMemberByMemberEmail(email).isPresent();
     }
 
     private Member findMemberByEmail(String email) {
-        //TODO : 토큰을 받은 후 깃허브로 부터 받은 정보가 DB에 저장하거나 있는 정보인지 체크한다.
-        return memberRepository.findByMemberEmail(email).orElseThrow(MemberNotFoundException::new);
+        MemberProfile memberProfile = memberProfileRepository.findMemberByMemberEmail(email).orElseThrow(MemberNotFoundException::new);
+        return memberProfile.getMember();
     }
 
-
+    // 일반 회원가입.
     @Transactional
     public MemberLoginResponse join(JoinRequest joinRequest) {
-        if (MemberExists(joinRequest.getMemberEmail())) {
+        if (isMemberEmailExists(joinRequest.getMemberEmail())) {
             throw new JoinException("이미 존재하는 회원입니다");
         }
-        Member member = memberRepository.save(joinRequest.toEntity());
+
+        MemberPassword memberPassword = memberPasswordRepository.save(new MemberPassword(joinRequest.getPassword()));
+        MemberProfile memberProfile = memberProfileRepository.save(new MemberProfile(joinRequest.getMemberEmail()));
+        Member member = memberRepository.save(Member.create(joinRequest.getNickName(),
+                "GENERAL", memberProfile, memberPassword));
+
         Token jwtToken = jwtService.createToken(member);
-        member.updateTokens(jwtToken.getRefreshToken());
+        memberTokenRepository.save(new MemberToken(jwtToken.getRefreshToken(), member));
         log.debug("jwt token = {}", jwtToken);
         log.debug("새로운 맴버 생성 = {}", member);
         return MemberLoginResponse.of(member, jwtToken);
     }
 
     public void logout(long userId) {
-        Member member = findMemberById(userId);
-        member.removeToken();
-        memberRepository.save(member);
+        MemberToken memberToken = memberTokenRepository.findByMemberId(userId).orElseThrow();
+        memberTokenRepository.delete(memberToken);
     }
 
     public MemberResponse getUserInfo(long userId) {
@@ -91,8 +111,17 @@ public class MemberService {
     @Transactional
     public void signupEmail(long userId, SignupSocialRequest signupSocialRequest) {
         Member member = findMemberById(userId);
-        if (member.getMemberEmail() == null) {
-            member.updateEmail(signupSocialRequest.getEmail());
+        log.debug("회원의 이메일 = {}", member.getMemberProfile().getMemberEmail());
+        log.debug("입력 받은 이메일 = {}", signupSocialRequest.getEmail());
+        log.debug("이메일이있는지 체크 = {}", memberProfileRepository.findMemberByMemberEmail(signupSocialRequest.getEmail()).isEmpty());
+        log.debug("이메일이 기본 레코드인지 체크 = {}", member.getMemberProfile().getMemberEmail().equals("0"));
+
+        if (userId == 0L && memberProfileRepository.findMemberByMemberEmail(signupSocialRequest.getEmail()).isEmpty() &&
+                member.getMemberProfile().getMemberEmail().equals("0")) {
+            MemberProfile memberProfile = memberProfileRepository.save(new MemberProfile(signupSocialRequest.getEmail()));
+            memberRepository.save(Member.toEntity(member.getLoginName(), member.getOauthProvider(), member.getImgUrl(),
+                    memberProfile, member.getMemberPassword()));
+            member.resetUpdateEntity();
             return;
         }
         throw new JoinException("이미 이메일이 존재하는 회원입니다");

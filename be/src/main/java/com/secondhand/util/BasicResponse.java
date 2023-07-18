@@ -1,7 +1,9 @@
 package com.secondhand.util;
 
-import com.secondhand.web.dto.response.MemberLoginResponse;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @Builder
@@ -27,7 +29,7 @@ public class BasicResponse<T> {
                 .build();
     }
 
-    public static <T> BasicResponse send(String message) {
+    public static <T> BasicResponse<T> send(String message) {
         return BasicResponse.<T>builder()
                 .success(true)
                 .message(message)
