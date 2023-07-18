@@ -50,7 +50,7 @@ public class GitHubOauth implements Oauth {
 
     @Override
     public String getToken(OAuthLoginParams params, String userAgent) {
-        java.lang.String code = ((GithubRequestCode) params).getAuthorizationCode();
+        String code = ((GithubRequestCode) params).getAuthorizationCode();
         AccessTokenRequestBodyDTO requestBodyDTO = AccessTokenRequestBodyDTO.builder()
                 .clientId(giHubService.getClientId(userAgent))
                 .clientSecret(giHubService.getClientSecret(userAgent))
@@ -74,7 +74,7 @@ public class GitHubOauth implements Oauth {
     }
 
     @Override
-    public OAuthInfoResponse getUserInfo(java.lang.String accessToken) {
+    public OAuthInfoResponse getUserInfo(String accessToken) {
         return webClient.get()
                 .uri(redirectUrl)
                 .accept(MediaType.APPLICATION_JSON)

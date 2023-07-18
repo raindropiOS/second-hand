@@ -1,16 +1,14 @@
 package com.secondhand.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Token {
-//    private String grantType;
+    //    private String grantType;
     private String accessToken;
     private String refreshToken;
 }
