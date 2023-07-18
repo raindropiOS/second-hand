@@ -78,6 +78,18 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
 }
 
 // GitHub OAuth
+/*
+ 1. 'GitHub로 로그인' 버튼 터치
+     - Safari로 GitHub Authorize 화면으로 이동
+ 2. Safari에서 GitHub 로그인 및 Authorize 버튼 터치
+     - 앱으로 리다이렉트하는 창 팝업
+ 3. 앱으로 리다이렉트하는 확인 버튼 터치
+     - 앱으로 리다이렉트
+     - 인증코드를 서버에 전달
+     - 이메일을 입력하는 화면을 팝업
+ 4. 이메일을 입력하고 완료 버튼 터치
+     - 이메일을 서버에 전달
+ */
 extension NetworkManager {
     func presentGithubOAuthLoginScreen() {
         let path = "/login/oauth/authorize"
@@ -115,11 +127,41 @@ extension NetworkManager {
             throw NetworkingError.failedToSendAuthorizationCode
         }
     }
+    
+    /// GitHub OAuth 인증코드를 전달한 뒤, 이메일을 보내는 작업을 수행하는 메소드
+    func sendEmail(_ email: String) {
+        DispatchQueue.global().async { [weak self] in
+            guard let networkManager = self else { return }
+            do {
+                let urlComponents = try networkManager.makeUrlComponents(
+                    baseUrl: networkManager.baseUrlString,
+                    path: "/api/members/signup",
+                    parameters: [:])
+                let urlRequest = try networkManager.makeUrlRequest(
+                    urlComponents,
+                    header: [:],
+                    body: ["email": "\(email)"],
+                    httpMethod: .post)
+                Task { [weak self] in
+                    do {
+                        _ = try await self?.fetchData(with: urlRequest)
+                    } catch {
+                        print("error : \(error)")
+                        print("GitHub sending email failed")
+                    }
+                }
+            } catch {
+                print("error : \(error)")
+                print("GitHub sending email failed")
+            }
+        }
+    }
 }
 
 protocol NetworkManageable {
     func fetchProducts(query: [String: String]) async -> [Product]
     func presentGithubOAuthLoginScreen()
+    func sendEmail(_ email: String)
 }
 
 enum NetworkingError: Error {
