@@ -31,11 +31,11 @@ class HomeViewController: UIViewController {
         self.setTableViewLayout()
         
         Task {
-            await self.productListViewModel.loadProductList(query: [:]) {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+//            await self.productListViewModel.loadProductList(query: [:]) {
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            }
         }
     }
     
