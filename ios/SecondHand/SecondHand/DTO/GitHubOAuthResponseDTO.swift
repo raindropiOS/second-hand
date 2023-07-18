@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OAuthLoginResponseDTO: Decodable {
+struct GitHubOAuthResponseDTO: Decodable {
     let success: Bool
     let httpStatus: String
     let apiStatus: Int
@@ -18,5 +18,10 @@ struct OAuthLoginResponseDTO: Decodable {
 struct UserInfoData: Decodable {
     let name: String
     let imgUrl: String
-    let jwtToken: String
+    let jwtToken: JwtDTO
+}
+
+struct JwtDTO: Decodable {
+    let accessToken: String
+    let refreshToken: String
 }
