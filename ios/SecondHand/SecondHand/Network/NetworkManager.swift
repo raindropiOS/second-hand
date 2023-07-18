@@ -113,11 +113,11 @@ extension NetworkManager {
     }
     
     func sendAuthorizationCode(_ code: String) async throws -> Decodable {
-        let body = ["authorizationCode": "\(code)", "oAuthProvider": "GITHUB"]
+        let body = ["authorizationCode": "\(code)"]
         let header = ["Content-Type": "application/json"]
         
         do {
-            let urlComponents = try self.makeUrlComponents(baseUrl: self.baseUrlString, path: "/auth/login", parameters: [:])
+            let urlComponents = try self.makeUrlComponents(baseUrl: self.baseUrlString, path: "/api/auth/github/login", parameters: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: header, body: body, httpMethod: .post)
             let data = try await self.fetchData(with: urlRequest)
             let reponseData = try self.dataDecoder.decodeJSON(data, DTO: OAuthLoginResponseDTO.self)
