@@ -7,7 +7,7 @@
 
 import Foundation
 
-class KeychainManager {
+class KeychainManager: KeychainManageable {
     func saveJWT(_ jwt: JWT) async {
         /*
          1. 기존에 저장된 JWT가 있는지 확인
@@ -114,4 +114,8 @@ extension KeychainManager {
 // Keychain에 저장할 구조체
 struct JWT {
     let token: String
+}
+
+protocol KeychainManageable {
+    func saveJWT(_ jwt: JWT) async
 }
