@@ -8,6 +8,7 @@
 import UIKit
 
 class EmailInputViewController: UIViewController {
+    private let networkManager: NetworkManageable
     private lazy var topBottomPadding: CGFloat = self.view.frame.height * 80/852
     private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     private let emailInputView: InputView = {
@@ -29,6 +30,15 @@ class EmailInputViewController: UIViewController {
         self.configureSeparatorViewUnderNavigationBar()
         self.configureIdInputView()
         self.configureSignUpButton()
+    }
+    
+    init(networkManager: NetworkManageable) {
+        self.networkManager = networkManager
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func configureSeparatorViewUnderNavigationBar() {

@@ -40,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             if let tabBarController = tabBarController {
                 if let navigationController = tabBarController.viewControllers?[4] as? UINavigationController {
-                    navigationController.pushViewController(EmailInputViewController(), animated: true)
+                    navigationController.pushViewController(EmailInputViewController(networkManager: NetworkManager()), animated: true)
                 }
             }
         }
