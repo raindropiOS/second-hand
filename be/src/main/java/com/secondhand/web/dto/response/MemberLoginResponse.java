@@ -1,7 +1,7 @@
 package com.secondhand.web.dto.response;
 
 import com.secondhand.domain.member.Member;
-import com.secondhand.oauth.Token;
+import com.secondhand.domain.oauth.Token;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

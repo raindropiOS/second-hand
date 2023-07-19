@@ -1,7 +1,7 @@
 package com.secondhand.service;
 
-import com.secondhand.domain.exception.CategoryNotFoundException;
-import com.secondhand.domain.exception.TownNotFoundException;
+import com.secondhand.exception.CategoryNotFoundException;
+import com.secondhand.exception.TownNotFoundException;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
 import com.secondhand.domain.town.TownRepository;

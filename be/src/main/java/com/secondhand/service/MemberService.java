@@ -1,13 +1,14 @@
 package com.secondhand.service;
 
-import com.secondhand.domain.exception.JoinException;
-import com.secondhand.domain.exception.MemberNotFoundException;
+import com.secondhand.exception.JoinException;
+import com.secondhand.exception.MemberNotFoundException;
 import com.secondhand.domain.member.*;
-import com.secondhand.oauth.RequestOAuthInfoService;
-import com.secondhand.oauth.Token;
-import com.secondhand.oauth.dto.OAuthInfoResponse;
-import com.secondhand.oauth.dto.req.OAuthLoginParams;
-import com.secondhand.oauth.service.JwtService;
+import com.secondhand.domain.oauth.RequestOAuthInfoService;
+import com.secondhand.domain.oauth.Token;
+import com.secondhand.domain.oauth.dto.OAuthInfoResponse;
+import com.secondhand.domain.oauth.dto.req.OAuthLoginParams;
+import com.secondhand.domain.oauth.service.JwtService;
+import com.secondhand.exception.RefreshTokenNotFoundException;
 import com.secondhand.web.dto.requset.JoinRequest;
 import com.secondhand.web.dto.requset.SignupSocialRequest;
 import com.secondhand.web.dto.requset.UpdateNickNameRequest;
@@ -38,7 +39,8 @@ public class MemberService {
         if (isMemberEmailExists(oAuthInfoResponse.getEmail())) {
             Member member = findMemberByEmail(oAuthInfoResponse.getEmail());
             Token jwtToken = jwtService.createToken(member);
-            MemberToken memberToken = memberTokenRepository.findByMemberId(member.getId()).orElseThrow();
+            MemberToken memberToken = memberTokenRepository.findByMemberId(member.getId())
+                    .orElseThrow(RefreshTokenNotFoundException::new);
             memberToken.update(jwtToken.getRefreshToken());
             log.debug("jwtToken = {}", jwtToken);
             log.debug("기존에 있던 회원 ==========================");
@@ -52,7 +54,8 @@ public class MemberService {
             log.debug("member id  = {}", findMember.getId());
             findMember.update(oAuthInfoResponse);
             Token jwtToken = jwtService.createToken(findMember);
-            MemberToken memberToken = memberTokenRepository.findByMemberId(findMember.getId()).orElseThrow();
+            MemberToken memberToken = memberTokenRepository.findByMemberId(findMember.getId())
+                    .orElseThrow(RefreshTokenNotFoundException::new);
             memberToken.update(jwtToken.getRefreshToken());
             log.debug("getAccessToken토큰  = {}", jwtToken.getAccessToken());
             log.debug("getRefreshToken토큰  = {}", jwtToken.getRefreshToken());
@@ -101,7 +104,7 @@ public class MemberService {
     }
 
     public void logout(long userId) {
-        MemberToken memberToken = memberTokenRepository.findByMemberId(userId).orElseThrow();
+        MemberToken memberToken = memberTokenRepository.findByMemberId(userId).orElseThrow(RefreshTokenNotFoundException::new);
         memberTokenRepository.delete(memberToken);
     }
 
@@ -126,7 +129,11 @@ public class MemberService {
             MemberProfile memberProfile = memberProfileRepository.save(new MemberProfile(signupSocialRequest.getEmail()));
             memberRepository.save(Member.toEntity(member.getLoginName(), member.getOauthProvider(), member.getImgUrl(),
                     memberProfile, member.getMemberPassword()));
+
             member.resetUpdateEntity();
+            MemberToken memberToken = memberTokenRepository.findByMemberId(userId)
+                    .orElseThrow(RefreshTokenNotFoundException::new);
+            memberToken.update("0");
             return;
         }
         throw new JoinException("이미 이메일이 존재하는 회원입니다");

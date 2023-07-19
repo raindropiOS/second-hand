@@ -2,7 +2,7 @@ package com.secondhand.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.secondhand.domain.categorie.Category;
-import com.secondhand.domain.exception.NotUserMineProductException;
+import com.secondhand.exception.NotUserMineProductException;
 import com.secondhand.domain.image.Image;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;

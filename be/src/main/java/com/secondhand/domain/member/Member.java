@@ -2,8 +2,7 @@ package com.secondhand.domain.member;
 
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.town.Town;
-import com.secondhand.oauth.dto.OAuthInfoResponse;
-import com.sun.xml.bind.v2.TODO;
+import com.secondhand.domain.oauth.dto.OAuthInfoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
