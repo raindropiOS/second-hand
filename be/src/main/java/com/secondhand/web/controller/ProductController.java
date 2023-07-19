@@ -15,6 +15,7 @@ import com.secondhand.web.dto.requset.StatusOrLikeRequest;
 import com.secondhand.web.dto.response.MainPageCategoryResponse;
 import com.secondhand.web.dto.response.MainPageResponse;
 import com.secondhand.web.dto.response.ProductResponse;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Slf4j
+@Api(tags = "상품")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/products")
@@ -35,9 +37,7 @@ public class ProductController {
     private final ProductQueryService productQueryService;
 
     @Operation(
-            summary = "상품 10개씩 리스트",
-            tags = "products",
-            description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다(지역 과 카테고리) 좋아요유무.."
+            summary = "상품 10개씩 리스트", description = "사용자는 상품을 10개씩 상품 리스프로 볼 수 있다(지역 과 카테고리) 좋아요유무.."
     )
     @LoginCheck
     @GetMapping
@@ -52,9 +52,7 @@ public class ProductController {
     }
 
     @Operation(
-            summary = "관심 목록을 카테고리 별로 확인",
-            tags = "products",
-            description = "사용자는 자시의 관심 목록을 카테고리 뱔로 확인 가능."
+            summary = "관심 목록을 카테고리 별로 확인", description = "사용자는 자시의 관심 목록을 카테고리 뱔로 확인 가능."
     )
     @LoginCheck
     @GetMapping("/like")
@@ -69,9 +67,7 @@ public class ProductController {
     }
 
     @Operation(
-            summary = "상품 관심 상품 등록/해제  상품의 상태를 변경할 수 있다",
-            tags = "products",
-            description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
+            summary = "상품 관심 상품 등록/해제  상품의 상태를 변경할 수 있다", description = "사용자는상품을 과 관심상품 / 해제 할수 있다 또는 특정 상품의 상태를 변경할 수 있다."
     )
     @LoginCheck
     @PatchMapping("/{productId}")
@@ -94,9 +90,7 @@ public class ProductController {
 
 
     @Operation(
-            summary = "판매/세일 중인 상품",
-            tags = "products",
-            description = "사용자는 세일/판매 중인 상품을 볼수 있다."
+            summary = "판매/세일 중인 상품", description = "사용자는 세일/판매 중인 상품을 볼수 있다."
     )
     @LoginCheck
     @GetMapping("/sales")
@@ -111,9 +105,7 @@ public class ProductController {
     }
 
     @Operation(
-            summary = "상품 등록",
-            tags = "products",
-            description = "사용자는 단일 상품을 등록할 수 있다 저장된 product id반환."
+            summary = "상품 등록", description = "사용자는 단일 상품을 등록할 수 있다 저장된 product id반환."
     )
     @LoginCheck
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -126,9 +118,7 @@ public class ProductController {
     }
 
     @Operation(
-            summary = "상품 수정",
-            tags = "products",
-            description = "사용자는 단일 상품을 수정할 수 있다."
+            summary = "상품 수정", description = "사용자는 단일 상품을 수정할 수 있다."
     )
     @LoginCheck
     @PutMapping("/{productId}")
@@ -143,9 +133,7 @@ public class ProductController {
 
 
     @Operation(
-            summary = "상품 디테일 페이지",
-            tags = "products",
-            description = "사용자는 단일 상품을 조회할 수 있다."
+            summary = "상품 디테일 페이지", description = "사용자는 단일 상품을 조회할 수 있다."
     )
     @LoginCheck
     @GetMapping("/{productId}")
@@ -157,20 +145,13 @@ public class ProductController {
     }
 
     @Operation(
-            summary = "상품 삭제",
-            tags = "products",
-            description = "사용자는 단일 상품 삭제 가능합니다.."
+            summary = "상품 삭제", description = "사용자는 단일 상품 삭제 가능합니다.."
     )
     @LoginCheck
     @DeleteMapping("/{productId}")
-    public BasicResponse deleteProduct(@LoginValue long userId, @PathVariable long productId) {
+    public BasicResponse<String> deleteProduct(@LoginValue long userId, @PathVariable long productId) {
         productService.delete(userId, productId);
 
-        return BasicResponse.builder()
-                .success(true)
-                .message("상품 삭제")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return BasicResponse.send(" 상품 삭제");
     }
 }

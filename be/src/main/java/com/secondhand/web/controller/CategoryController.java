@@ -4,10 +4,11 @@ import com.secondhand.domain.categorie.Category;
 import com.secondhand.service.CategoryService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.CategoryResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,19 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+@Api(tags = "카테고리")
 @RestController
 @RequestMapping("/api/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 
-    @Autowired
     CategoryService categoryService;
 
-    @Operation(
-            summary = "모든 카테고리 목록",
-            tags = "categories",
-            description = "사용자는 모든 카테고리 목록을 가져올 수 있다."
-    )
+    @Operation(summary = "모든 카테고리 목록", description = "사용자는 모든 카테고리 목록을 가져올 수 있다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "BAD REQUEST"),
+            @ApiResponse(code = 404, message = "NOT FOUND"),
+            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR"),
+    })
 
     @GetMapping("")
     public BasicResponse<List<CategoryResponse>> read() {
@@ -45,12 +48,6 @@ public class CategoryController {
             categoryResponseList.add(categoryResponse);
         }
 
-        return BasicResponse.<List<CategoryResponse>>builder()
-                .success(true)
-                .message("")
-                .apiStatus(20000)
-                .httpStatus(HttpStatus.OK)
-                .data(categoryResponseList)
-                .build();
+        return BasicResponse.send("사용자는 모든 카테고리 목록을 가져올 수 있다", categoryResponseList);
     }
 }

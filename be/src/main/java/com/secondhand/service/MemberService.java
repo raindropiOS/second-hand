@@ -4,6 +4,7 @@ import com.secondhand.domain.exception.JoinException;
 import com.secondhand.domain.exception.MemberNotFoundException;
 import com.secondhand.domain.member.*;
 import com.secondhand.oauth.RequestOAuthInfoService;
+import com.secondhand.oauth.Token;
 import com.secondhand.oauth.dto.OAuthInfoResponse;
 import com.secondhand.oauth.dto.req.OAuthLoginParams;
 import com.secondhand.oauth.service.JwtService;
@@ -11,6 +12,7 @@ import com.secondhand.web.dto.requset.JoinRequest;
 import com.secondhand.web.dto.requset.SignupSocialRequest;
 import com.secondhand.web.dto.requset.UpdateNickNameRequest;
 import com.secondhand.web.dto.response.MemberLoginResponse;
+import com.secondhand.web.dto.response.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,12 +47,15 @@ public class MemberService {
 
         // 이메일이없는 임시회원 깃허브는 이메일을 안줌
         if (oAuthInfoResponse.getEmail() == null) {
-            log.debug("임시회원 저장 ================");
+            log.debug("깃허브 로그인 임시회원 저장 ================");
             Member findMember = findMemberById(0L);
             log.debug("member id  = {}", findMember.getId());
             findMember.update(oAuthInfoResponse);
             Token jwtToken = jwtService.createToken(findMember);
-            memberTokenRepository.save(new MemberToken(jwtToken.getRefreshToken(), findMember));
+            MemberToken memberToken = memberTokenRepository.findByMemberId(findMember.getId()).orElseThrow();
+            memberToken.update(jwtToken.getRefreshToken());
+            log.debug("getAccessToken토큰  = {}", jwtToken.getAccessToken());
+            log.debug("getRefreshToken토큰  = {}", jwtToken.getRefreshToken());
             return MemberLoginResponse.of(findMember, jwtToken);
         }
 

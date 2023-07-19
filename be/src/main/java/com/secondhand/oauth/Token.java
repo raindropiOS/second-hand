@@ -1,4 +1,4 @@
-package com.secondhand.service;
+package com.secondhand.oauth;
 
 import lombok.*;
 
@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Token {
-    //    private String grantType;
     private String accessToken;
     private String refreshToken;
 }
