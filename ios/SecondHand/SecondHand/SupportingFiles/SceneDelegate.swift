@@ -37,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         let refreshToken = jwtToken.refreshToken
                         let tempToken = accessToken + "." + refreshToken
                         let jwt = JWT(token: tempToken)
-                        await keychainManager.saveJWT(jwt)
+                        keychainManager.temporarySavedJwt = jwt
                     } else {
                         print("failed to type cast responseData while receiving jwt token")
                     }
