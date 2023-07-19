@@ -4,7 +4,7 @@ import com.secondhand.login.LoginCheck;
 import com.secondhand.login.LoginValue;
 import com.secondhand.oauth.dto.req.GithubRequestCode;
 import com.secondhand.oauth.dto.req.KakaoRequestCode;
-import com.secondhand.service.MemberResponse;
+import com.secondhand.web.dto.response.MemberResponse;
 import com.secondhand.service.MemberService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.requset.JoinRequest;

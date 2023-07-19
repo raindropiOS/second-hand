@@ -1,7 +1,7 @@
 package com.secondhand.oauth.service;
 
 import com.secondhand.domain.member.Member;
-import com.secondhand.service.Token;
+import com.secondhand.oauth.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -54,11 +54,7 @@ public class JwtService {
                     .setSigningKey(secret)
                     .parseClaimsJws(token);
 
-            if (claimsJws.getBody().getExpiration().before(new Date())) {
-                return false;
-            }
-
-            return true;
+            return !claimsJws.getBody().getExpiration().before(new Date());
 
         } catch (Exception e) {
             return false;
