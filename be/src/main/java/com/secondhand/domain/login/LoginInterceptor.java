@@ -1,8 +1,8 @@
 package com.secondhand.domain.login;
 
+import com.secondhand.domain.member.Member;
 import com.secondhand.exception.MemberNotFoundException;
 import com.secondhand.domain.member.MemberRepository;
-import com.secondhand.domain.oauth.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public static final String BEARER = "Bearer";
     public static final String USER_ID = "userId";
     private final AuthorizationExtractor authExtractor;
-    private final JwtService jwtService;
+    private final JwtTokenProvider jwtService;
     private final MemberRepository memberRepository;
 
     @Override
@@ -31,13 +31,17 @@ public class LoginInterceptor implements HandlerInterceptor {
             String token = authExtractor.extract(request, BEARER);
 
             //헤더로 부터 토큰을 얻어온 후 유효한 토큰인지 검증한다. 요청에  디코딩한 값을 세팅
-            if ((token != null && !token.equals("")) && jwtService.validateToken(token)) {
-                Long id = jwtService.getSubject(token);
-                log.debug("토큰으로 부터 받아온 userId", id);
-                request.setAttribute(USER_ID, id);
+            if ((token != null && !token.equals(""))) {
+                TokenType tokenType = jwtService.validateToken(token);
+                Long id;
+                if (tokenType == TokenType.ACCESS_TOKEN) {
+                    id = jwtService.getSubject(token); // 액세스 토큰에서 사용자 ID 추출
+                } else {
+                    id = jwtService.getSubjectRefreshSecretKey(token); // 리프레시 토큰에서 사용자 ID 추출
+                }
 
-                memberRepository.findById(jwtService.getSubject(token))
-                        .orElseThrow(() -> new MemberNotFoundException());
+                log.debug("토큰으로 부터 받아온 userId = {}", id);
+                request.setAttribute(USER_ID, id);
             }
         }
 
