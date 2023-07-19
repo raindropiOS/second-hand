@@ -1,4 +1,4 @@
-package com.secondhand.domain.oauth;
+package com.secondhand.domain.login;
 
 import lombok.*;
 

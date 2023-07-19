@@ -1,13 +1,13 @@
 package com.secondhand.service;
 
+import com.secondhand.domain.login.JwtTokenProvider;
 import com.secondhand.exception.JoinException;
 import com.secondhand.exception.MemberNotFoundException;
 import com.secondhand.domain.member.*;
 import com.secondhand.domain.oauth.RequestOAuthInfoService;
-import com.secondhand.domain.oauth.Token;
+import com.secondhand.domain.login.Token;
 import com.secondhand.domain.oauth.dto.OAuthInfoResponse;
 import com.secondhand.domain.oauth.dto.req.OAuthLoginParams;
-import com.secondhand.domain.oauth.service.JwtService;
 import com.secondhand.exception.RefreshTokenNotFoundException;
 import com.secondhand.web.dto.requset.JoinRequest;
 import com.secondhand.web.dto.requset.SignupSocialRequest;
@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-    private final JwtService jwtService;
+    private final JwtTokenProvider jwtService;
     private final MemberRepository memberRepository;
     private final MemberPasswordRepository memberPasswordRepository;
     private final MemberProfileRepository memberProfileRepository;

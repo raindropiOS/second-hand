@@ -1,5 +1,7 @@
 package com.secondhand.exception;
 
+import com.secondhand.domain.oauth.exception.AccessTokenTimeException;
+import com.secondhand.domain.oauth.exception.AccessTokenNotFoundException;
 import com.secondhand.domain.oauth.exception.GitHubRequestException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -112,6 +114,22 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     @ExceptionHandler(JoinException.class)
     public final ResponseEntity<Object> handleAllJoinExceptionExceptions(JoinException e, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessTokenTimeException.class)
+    public final ResponseEntity<Object> handleAllAccessTokenTimeExceptions(AccessTokenTimeException e, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessTokenNotFoundException.class)
+    public final ResponseEntity<Object> handleAllAccessTokenNotFoundExceptions(AccessTokenNotFoundException e, WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(e.getMessage(), request.getDescription(false));
 

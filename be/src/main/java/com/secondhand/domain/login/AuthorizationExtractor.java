@@ -1,5 +1,6 @@
 package com.secondhand.domain.login;
 
+import com.secondhand.domain.oauth.exception.AccessTokenNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,6 @@ public class AuthorizationExtractor {
             }
         }
 
-        return Strings.EMPTY;
+        throw new AccessTokenNotFoundException();
     }
 }
