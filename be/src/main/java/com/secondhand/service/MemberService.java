@@ -54,6 +54,8 @@ public class MemberService {
             Token jwtToken = jwtService.createToken(findMember);
             MemberToken memberToken = memberTokenRepository.findByMemberId(findMember.getId()).orElseThrow();
             memberToken.update(jwtToken.getRefreshToken());
+            log.debug("getAccessToken토큰  = {}", jwtToken.getAccessToken());
+            log.debug("getRefreshToken토큰  = {}", jwtToken.getRefreshToken());
             return MemberLoginResponse.of(findMember, jwtToken);
         }
 

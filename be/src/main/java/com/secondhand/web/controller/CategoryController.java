@@ -6,6 +6,7 @@ import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.CategoryResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,12 @@ public class CategoryController {
     CategoryService categoryService;
 
     @Operation(summary = "모든 카테고리 목록", description = "사용자는 모든 카테고리 목록을 가져올 수 있다.")
-    @ApiResponse(code = 200, message = "ok")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "BAD REQUEST"),
+            @ApiResponse(code = 404, message = "NOT FOUND"),
+            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR"),
+    })
 
     @GetMapping("")
     public BasicResponse<List<CategoryResponse>> read() {
