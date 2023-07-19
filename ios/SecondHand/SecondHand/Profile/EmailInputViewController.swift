@@ -92,7 +92,10 @@ class EmailInputViewController: UIViewController {
         let email = self.emailInputView.inputText
         
         Task { [weak self] in
-            self?.networkManager.sendEmail(email)
+            if let jwt = self?.keychainManager.temporarySavedJwt?.token.components(separatedBy: ".") {
+                let accessToken = jwt[0]
+                self?.networkManager.sendEmail(email, jwtAccessToken: accessToken)
+            }
         }
         
 //        DispatchQueue.global().async { [weak self] in
@@ -100,6 +103,7 @@ class EmailInputViewController: UIViewController {
 //                networkManager.sendEmail(email)
 //            }
 //        }
+        
         self.navigationController?.popViewController(animated: true)
     }
 }
