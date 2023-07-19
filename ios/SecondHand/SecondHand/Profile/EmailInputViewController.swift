@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmailInputViewController: UIViewController {
+class EmailInputViewController: UIViewController, UITextFieldDelegate {
     private let networkManager: NetworkManageable
     private let keychainManager: KeychainManageable
     private lazy var topBottomPadding: CGFloat = self.view.frame.height * 80/852
@@ -31,6 +31,8 @@ class EmailInputViewController: UIViewController {
         self.configureSeparatorViewUnderNavigationBar()
         self.configureIdInputView()
         self.configureSignUpButton()
+        
+        self.emailInputView.inputField.delegate = self
     }
     
     init(networkManager: NetworkManageable, keychainManager: KeychainManageable) {
@@ -105,5 +107,10 @@ class EmailInputViewController: UIViewController {
 //        }
         
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
