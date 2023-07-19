@@ -11,6 +11,7 @@ import com.secondhand.web.dto.requset.JoinRequest;
 import com.secondhand.web.dto.requset.SignupSocialRequest;
 import com.secondhand.web.dto.requset.UpdateNickNameRequest;
 import com.secondhand.web.dto.response.MemberLoginResponse;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @Slf4j
+@Api(tags = "회원")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -28,9 +30,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @Operation(
-            summary = "깃허브 로그인",
-            tags = "members",
-            description = "사용자 깃허브를 통한 로그인"
+            summary = "깃허브 로그인", description = "사용자 깃허브를 통한 로그인"
     )
     @PostMapping("/auth/github/login")
     public BasicResponse<MemberLoginResponse> login(@RequestHeader(name = "User-Agent") String userAgent, @RequestBody GithubRequestCode code) throws IOException, InterruptedException {
@@ -41,9 +41,7 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "카카오 로그인",
-            tags = "members",
-            description = "사용자 카카오를 통한 로그인"
+            summary = "카카오 로그인", description = "사용자 카카오를 통한 로그인"
     )
     @PostMapping("/auth/kakao/login")
     public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestHeader(name = "User-Agent") String userAgent, @RequestBody KakaoRequestCode params) {
@@ -55,9 +53,7 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "일반 로그인",
-            tags = "members",
-            description = "사용자 카카오를 통한 로그인"
+            summary = "일반 로그인", description = "사용자 카카오를 통한 로그인"
     )
     @PostMapping("/join")
     public BasicResponse<MemberLoginResponse> join(final @Valid @RequestBody JoinRequest joinRequest) {
@@ -67,9 +63,7 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "사용자 이메일 추가",
-            tags = "members",
-            description = "사용자 카카오를 통한 로그인"
+            summary = "사용자 이메일 추가", description = "사용자 카카오를 통한 로그인"
     )
     @LoginCheck
     @PostMapping("/members/signup")
@@ -81,9 +75,7 @@ public class MemberController {
 
 
     @Operation(
-            summary = "유저 닉네임 수정",
-            tags = "members",
-            description = "사용자 카카오를 통한 로그인"
+            summary = "유저 닉네임 수정", description = "사용자 카카오를 통한 로그인"
     )
     @LoginCheck
     @PatchMapping("/members")
@@ -95,9 +87,7 @@ public class MemberController {
 
 
     @Operation(
-            summary = "로그아웃",
-            tags = "members",
-            description = "사용자 로그아웃."
+            summary = "로그아웃", description = "사용자 로그아웃."
     )
     @LoginCheck
     @GetMapping("/auth/logout")
@@ -109,9 +99,7 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "사용자의 정보를 가져온다",
-            tags = "members",
-            description = "사용자의 id를 통해 사용자 정보를 가져온다."
+            summary = "사용자의 정보를 가져온다", description = "사용자의 id를 통해 사용자 정보를 가져온다."
     )
     @LoginCheck
     @GetMapping("/members")

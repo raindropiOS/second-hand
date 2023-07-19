@@ -47,12 +47,13 @@ public class MemberService {
 
         // 이메일이없는 임시회원 깃허브는 이메일을 안줌
         if (oAuthInfoResponse.getEmail() == null) {
-            log.debug("임시회원 저장 ================");
+            log.debug("깃허브 로그인 임시회원 저장 ================");
             Member findMember = findMemberById(0L);
             log.debug("member id  = {}", findMember.getId());
             findMember.update(oAuthInfoResponse);
             Token jwtToken = jwtService.createToken(findMember);
-            memberTokenRepository.save(new MemberToken(jwtToken.getRefreshToken(), findMember));
+            MemberToken memberToken = memberTokenRepository.findByMemberId(findMember.getId()).orElseThrow();
+            memberToken.update(jwtToken.getRefreshToken());
             return MemberLoginResponse.of(findMember, jwtToken);
         }
 

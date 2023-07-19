@@ -27,4 +27,5 @@ public class MemberProfile {
     public void setEmail(String email) {
         this.memberEmail = email;
     }
+
 }
