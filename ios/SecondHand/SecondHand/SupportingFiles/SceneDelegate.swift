@@ -29,7 +29,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             Task {
                 do {
                     let authorizationCode = try networkManager.getQueryItemValue(urlString: url.absoluteString, key: "code")
-                    // TODO: 받은 데이터를 처리해야함.
                     let responseData = try await networkManager.sendAuthorizationCode(authorizationCode)
                     if let dto = responseData as? GitHubOAuthResponseDTO {
                         let jwtToken = dto.data.jwtToken
@@ -50,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             if let tabBarController = tabBarController {
                 if let navigationController = tabBarController.viewControllers?[4] as? UINavigationController {
-                    navigationController.pushViewController(EmailInputViewController(networkManager: NetworkManager(), keychainManager: KeychainManager()), animated: true)
+                    navigationController.pushViewController(EmailInputViewController(networkManager: NetworkManager(), keychainManager: keychainManager), animated: true)
                 }
             }
         }
