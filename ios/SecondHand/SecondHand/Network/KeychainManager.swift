@@ -8,6 +8,9 @@
 import Foundation
 
 class KeychainManager: KeychainManageable {
+    /// GitHub OAuth 인증코드를 서버에 전달하고 받은 토큰, 이를 이메일과 함께 다시 보내 인증을 완료한다.
+    var temporarySavedJwt: JWT?
+    
     func saveJWT(_ jwt: JWT) async {
         /*
          1. 기존에 저장된 JWT가 있는지 확인
@@ -118,4 +121,5 @@ struct JWT {
 
 protocol KeychainManageable {
     func saveJWT(_ jwt: JWT) async
+    var temporarySavedJwt: JWT? { get set }
 }
