@@ -1,8 +1,7 @@
 package com.secondhand.service;
 
-import com.secondhand.domain.exception.ImageCountException;
-import com.secondhand.domain.exception.ImageUploadFailException;
-import com.secondhand.domain.image.Image;
+import com.secondhand.exception.ImageCountException;
+import com.secondhand.exception.ImageUploadFailException;
 import com.secondhand.domain.image.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

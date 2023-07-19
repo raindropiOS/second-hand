@@ -1,7 +1,7 @@
 package com.secondhand.web.controller;
 
-import com.secondhand.login.LoginCheck;
-import com.secondhand.login.LoginValue;
+import com.secondhand.domain.login.LoginCheck;
+import com.secondhand.domain.login.LoginValue;
 import com.secondhand.service.TownService;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.requset.TownRegisterRequest;
@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.secondhand.web.controller;
 
 import com.secondhand.domain.product.Product;
-import com.secondhand.login.LoginCheck;
-import com.secondhand.login.LoginValue;
+import com.secondhand.domain.login.LoginCheck;
+import com.secondhand.domain.login.LoginValue;
 import com.secondhand.service.ProductQueryService;
 import com.secondhand.service.ProductService;
 import com.secondhand.util.BasicResponse;
@@ -20,7 +20,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

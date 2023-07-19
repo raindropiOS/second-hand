@@ -2,7 +2,7 @@ package com.secondhand.service;
 
 import com.secondhand.domain.categorie.Category;
 import com.secondhand.domain.categorie.CategoryRepository;
-import com.secondhand.domain.exception.CategoryNotFoundException;
+import com.secondhand.exception.CategoryNotFoundException;
 import com.secondhand.web.dto.updatedto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.secondhand.domain.product;
 
-import com.secondhand.domain.exception.StatusNotFoundException;
+import com.secondhand.exception.StatusNotFoundException;
 
 public enum Status {
     SELLING(0, "SELLING"),

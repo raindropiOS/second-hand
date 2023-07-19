@@ -1,6 +1,6 @@
 package com.secondhand.service;
 
-import com.secondhand.domain.exception.ProductNotFoundException;
+import com.secondhand.exception.ProductNotFoundException;
 import com.secondhand.domain.interested.Interested;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.product.Product;

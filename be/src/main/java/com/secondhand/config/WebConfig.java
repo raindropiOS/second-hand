@@ -1,8 +1,8 @@
 package com.secondhand.config;
 
 import com.secondhand.filter.LogFilter;
-import com.secondhand.login.LoginArgumentResolver;
-import com.secondhand.login.LoginInterceptor;
+import com.secondhand.domain.login.LoginArgumentResolver;
+import com.secondhand.domain.login.LoginInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
