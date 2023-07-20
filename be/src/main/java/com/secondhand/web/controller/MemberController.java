@@ -4,6 +4,7 @@ import com.secondhand.domain.login.LoginCheck;
 import com.secondhand.domain.login.LoginValue;
 import com.secondhand.domain.oauth.dto.req.GithubRequestCode;
 import com.secondhand.domain.oauth.dto.req.KakaoRequestCode;
+import com.secondhand.service.LoginService;
 import com.secondhand.web.dto.response.MemberResponse;
 import com.secondhand.service.MemberService;
 import com.secondhand.util.BasicResponse;
@@ -28,6 +29,7 @@ import java.io.IOException;
 public class MemberController {
 
     private final MemberService memberService;
+    private final LoginService loginService;
 
     @Operation(
             summary = "깃허브 로그인", description = "사용자 깃허브를 통한 로그인"
@@ -35,7 +37,7 @@ public class MemberController {
     @PostMapping("/auth/github/login")
     public BasicResponse<MemberLoginResponse> login(@RequestHeader(name = "User-Agent") String userAgent, @RequestBody GithubRequestCode code) throws IOException, InterruptedException {
         log.debug("프론트로 부터받은  코드= {}", code.getAuthorizationCode());
-        MemberLoginResponse memberResponseDTO = memberService.login(code, userAgent);
+        MemberLoginResponse memberResponseDTO = loginService.login(code, userAgent);
 
         return BasicResponse.send("깃허브 로그인", memberResponseDTO);
     }
@@ -47,7 +49,7 @@ public class MemberController {
     public BasicResponse<MemberLoginResponse> kakaoLogin(@RequestHeader(name = "User-Agent") String userAgent, @RequestBody KakaoRequestCode params) {
         log.debug("프론트로 부터 받은 코드 = {}", params.getAuthorizationCode());
         log.debug("프론트로 부터 받은 코드 = {}", params.oAuthProvider().name());
-        MemberLoginResponse memberResponseDTO = memberService.login(params, userAgent);
+        MemberLoginResponse memberResponseDTO = loginService.login(params, userAgent);
 
         return BasicResponse.send("카카오 로그인", memberResponseDTO);
     }
@@ -57,7 +59,7 @@ public class MemberController {
     )
     @PostMapping("/join")
     public BasicResponse<MemberLoginResponse> join(final @Valid @RequestBody JoinRequest joinRequest) {
-        MemberLoginResponse memberResponseDTO = memberService.join(joinRequest);
+        MemberLoginResponse memberResponseDTO = loginService.join(joinRequest);
 
         return BasicResponse.send("일반 회원가입 로그인", memberResponseDTO);
     }
@@ -67,10 +69,10 @@ public class MemberController {
     )
     @LoginCheck
     @PostMapping("/members/signup")
-    public BasicResponse<String> signupEmail(@LoginValue long userId, final @Valid @RequestBody SignupSocialRequest signupSocialRequest) {
-        memberService.signupEmail(userId, signupSocialRequest);
+    public BasicResponse<MemberLoginResponse> signupEmail(@LoginValue long userId, final @Valid @RequestBody SignupSocialRequest signupSocialRequest) {
+        MemberLoginResponse memberLoginResponse = loginService.signupEmail(userId, signupSocialRequest);
 
-        return BasicResponse.send("사용자 이메일 추가");
+        return BasicResponse.send("사용자 이메일 추가", memberLoginResponse);
     }
 
 
@@ -93,7 +95,7 @@ public class MemberController {
     @GetMapping("/auth/logout")
     public BasicResponse<String> logout(@LoginValue long userId) {
         log.debug("로그아웃 요청");
-        memberService.logout(userId);
+        loginService.logout(userId);
 
         return BasicResponse.send("로그아웃 요청");
     }
