@@ -23,6 +23,6 @@ public class AuthorizationExtractor {
             }
         }
 
-        throw new AccessTokenNotFoundException();
+        return "";
     }
 }
