@@ -10,7 +10,6 @@ import com.secondhand.domain.oauth.dto.OAuthInfoResponse;
 import com.secondhand.domain.oauth.dto.GithubInfoResponse;
 import com.secondhand.domain.oauth.dto.req.GithubRequestCode;
 import com.secondhand.domain.oauth.dto.req.OAuthLoginParams;
-import com.secondhand.exception.token.AccessTokenNotFoundException;
 import com.secondhand.exception.ouath.GitHubRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

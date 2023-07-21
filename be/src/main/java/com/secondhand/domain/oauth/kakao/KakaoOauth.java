@@ -7,7 +7,6 @@ import com.secondhand.domain.oauth.dto.KakaoInfoResponse;
 import com.secondhand.domain.oauth.dto.OAuthInfoResponse;
 import com.secondhand.domain.oauth.dto.req.KakaoRequestCode;
 import com.secondhand.domain.oauth.dto.req.OAuthLoginParams;
-import com.secondhand.exception.token.AccessTokenNotFoundException;
 import com.secondhand.exception.ouath.GitHubRequestException;
 import com.secondhand.exception.ouath.KakoRequestException;
 import lombok.RequiredArgsConstructor;
