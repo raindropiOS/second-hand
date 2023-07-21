@@ -1,5 +1,6 @@
 package com.secondhand.domain.oauth.kakao;
 
+import com.secondhand.exception.ouath.AccessTokenNotFoundException;
 import com.secondhand.exception.ouath.GitHubUserInfoNotFoundException;
 import com.secondhand.domain.oauth.OAuthProvider;
 import com.secondhand.domain.oauth.Oauth;
