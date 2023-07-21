@@ -8,7 +8,6 @@ import com.secondhand.domain.oauth.dto.OAuthInfoResponse;
 import com.secondhand.domain.oauth.dto.req.OAuthLoginParams;
 import com.secondhand.exception.JoinException;
 import com.secondhand.exception.MemberNotFoundException;
-import com.secondhand.exception.RefreshTokenNotFoundException;
 import com.secondhand.web.dto.requset.JoinRequest;
 import com.secondhand.web.dto.requset.SignupSocialRequest;
 import com.secondhand.web.dto.response.MemberLoginResponse;

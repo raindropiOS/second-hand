@@ -1,4 +1,4 @@
-package com.secondhand.exception;
+package com.secondhand.exception.token;
 
 public class MissingTokenException extends RuntimeException {
 

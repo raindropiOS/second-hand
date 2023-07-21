@@ -1,4 +1,4 @@
-package com.secondhand.domain.oauth.exception;
+package com.secondhand.exception.ouath;
 
 public class GitHubUserInfoNotFoundException extends OAuthException {
     public GitHubUserInfoNotFoundException() {

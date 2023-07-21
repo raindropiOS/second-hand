@@ -1,17 +1,15 @@
 package com.secondhand.domain.login;
 
 import com.secondhand.domain.member.Member;
-import com.secondhand.domain.oauth.exception.AccessTokenTimeException;
-import com.secondhand.domain.oauth.exception.RefreshTokenTimeException;
-import com.secondhand.domain.oauth.exception.TokenException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.secondhand.exception.token.TokenException;
+import com.secondhand.exception.token.TokenNotFoundException;
+import com.secondhand.exception.token.TokenTimeException;
+import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.Date;
 
 @Slf4j
@@ -81,12 +79,16 @@ public class JwtTokenProvider {
                 claimsJws.getBody();
             }
 
+        } catch (ExpiredJwtException | SignatureException e) {
+            throw new TokenTimeException();
+        } catch (MalformedJwtException e) {
+            throw new TokenNotFoundException();
         } catch (RuntimeException e) {
-            throw new AccessTokenTimeException();
+            throw new TokenException();
         }
     }
 
-    public boolean isRefreshToken(String token) throws RefreshTokenTimeException {
+    public boolean isRefreshToken(String token) throws RuntimeException {
         try {
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(refreshSecretKey)
@@ -94,8 +96,12 @@ public class JwtTokenProvider {
 
             return !claimsJws.getBody().getExpiration().before(new Date()) && !claimsJws.getBody().isEmpty();
 
+        } catch (ExpiredJwtException | SignatureException e) {
+            throw new TokenTimeException();
+        } catch (MalformedJwtException e) {
+            throw new TokenNotFoundException();
         } catch (RuntimeException e) {
-            throw new RefreshTokenTimeException();
+            throw new TokenException();
         }
     }
 

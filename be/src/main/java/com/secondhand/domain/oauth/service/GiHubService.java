@@ -1,7 +1,7 @@
 package com.secondhand.domain.oauth.service;
 
 import com.secondhand.domain.oauth.UserAgent;
-import com.secondhand.domain.oauth.exception.UnknownUserAgentException;
+import com.secondhand.exception.ouath.UnknownUserAgentException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

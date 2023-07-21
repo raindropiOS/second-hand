@@ -1,9 +1,7 @@
 package com.secondhand.exception;
 
-import com.secondhand.domain.oauth.exception.AccessTokenTimeException;
-import com.secondhand.domain.oauth.exception.AccessTokenNotFoundException;
-import com.secondhand.domain.oauth.exception.GitHubRequestException;
-import com.secondhand.domain.oauth.exception.RefreshTokenTimeException;
+import com.secondhand.exception.ouath.GitHubRequestException;
+import com.secondhand.exception.token.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +16,19 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-//    @ExceptionHandler(Exception.class)
-//    public final ResponseEntity<Object> handleAllExceptions(Exception e, WebRequest request) {
-//        ExceptionResponse exceptionResponse =
-//                new ExceptionResponse(e.getMessage(), request.getDescription(false));
-//
-//        return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<Object> handleAllExceptions(Exception e, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR.value()
+                        , e.getMessage(), false, request.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(ImageUploadFailException.class)
     public final ResponseEntity<Object> handleAllRuntimeExceptions(ImageUploadFailException e, WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
-
+                new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR.value()
+                        , e.getMessage(), false, request.getDescription(false));
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -40,14 +38,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                                                                   HttpStatus status,
                                                                   WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(ex.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.BAD_REQUEST.value()
+                        , ex.getMessage(), false, request.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MissingTokenException.class)
     public final ResponseEntity<Object> handleTokenExceptions(MissingTokenException e, WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.BAD_REQUEST.value()
+                        , e.getMessage(), false, request.getDescription(false));
+
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -55,7 +56,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleElementNotFoundExceptions(ElementNotFoundException e,
                                                                         WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.NOT_FOUND.value()
+                        , e.getMessage(), false, request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -64,7 +66,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleTownNotFoundExceptions(TownNotFoundException e,
                                                                      WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.NOT_FOUND.value()
+                        , e.getMessage(), false, request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -73,7 +76,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleMemberNotFoundExceptions(MemberNotFoundException e,
                                                                        WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.NOT_FOUND.value()
+                        , e.getMessage(), false, request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -82,7 +86,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleGCategoryFoundExceptions(CategoryNotFoundException e,
                                                                        WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.NOT_FOUND.value()
+                        , e.getMessage(), false, request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -91,7 +96,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleStatusNotFoundExceptions(StatusNotFoundException e,
                                                                        WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.NOT_FOUND.value()
+                        , e.getMessage(), false, request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -100,7 +106,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<Object> handleNotUserMineProductExceptions(NotUserMineProductException e,
                                                                            WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.NOT_FOUND.value()
+                        , e.getMessage(), false, request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -108,7 +115,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     @ExceptionHandler(GitHubRequestException.class)
     public final ResponseEntity<Object> handleAllGitHubRequestExceptions(GitHubRequestException e, WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR.value()
+                        , e.getMessage(), false, request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -116,32 +124,39 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     @ExceptionHandler(JoinException.class)
     public final ResponseEntity<Object> handleAllJoinExceptionExceptions(JoinException e, WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.BAD_REQUEST.value()
+                        , e.getMessage(), false, request.getDescription(false));
+
 
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(AccessTokenTimeException.class)
-    public final ResponseEntity<Object> handleAllAccessTokenTimeExceptions(AccessTokenTimeException e, WebRequest request) {
-        ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
 
-        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(TokenException.class)
+    public final ResponseEntity<Object> handleAllAccessTokenTimeExceptions(TokenException e, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(HttpStatus.NOT_FOUND.value()
+                        , e.getMessage(), false, request.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND); //400
     }
 
-    @ExceptionHandler(AccessTokenNotFoundException.class)
-    public final ResponseEntity<Object> handleAllAccessTokenNotFoundExceptions(AccessTokenNotFoundException e, WebRequest request) {
-        ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
 
-        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(TokenTimeException.class)
+    public final ResponseEntity<Object> handleAllAccessTokenTimeExceptions(TokenTimeException e, WebRequest request) {
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(HttpStatus.UNAUTHORIZED.value()
+                        , e.getMessage(), false, request.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED); //400
     }
 
-    @ExceptionHandler(RefreshTokenTimeException.class)
-    public final ResponseEntity<Object> handleAllRefreshTokenTimeExceptions(RefreshTokenTimeException e, WebRequest request) {
+    @ExceptionHandler(TokenNotFoundException.class)
+    public final ResponseEntity<Object> handleAllRefreshTokenTimeExceptions(TokenNotFoundException e, WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(e.getMessage(), request.getDescription(false));
+                new ExceptionResponse(HttpStatus.BAD_REQUEST.value()
+                        , e.getMessage(), false, request.getDescription(false));
 
-        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }

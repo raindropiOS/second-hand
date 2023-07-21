@@ -7,7 +7,7 @@ import com.secondhand.domain.member.Member;
 import com.secondhand.domain.member.MemberRepository;
 import com.secondhand.domain.member.MemberToken;
 import com.secondhand.domain.member.MemberTokenRepository;
-import com.secondhand.domain.oauth.exception.TokenException;
+import com.secondhand.exception.token.TokenException;
 import com.secondhand.exception.MemberNotFoundException;
 import com.secondhand.util.BasicResponse;
 import com.secondhand.web.dto.response.ResponseTokens;
