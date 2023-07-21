@@ -86,7 +86,7 @@ public class JwtTokenProvider {
         }
     }
 
-    private boolean isRefreshToken(String token) {
+    public boolean isRefreshToken(String token) throws RefreshTokenTimeException {
         try {
             Jws<Claims> claimsJws = Jwts.parser()
                     .setSigningKey(refreshSecretKey)

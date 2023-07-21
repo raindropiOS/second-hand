@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class TownService {
 
@@ -55,10 +56,10 @@ public class TownService {
 
     public List<TownResponse> findTownDetail(long userId) {
         Member member = memberService.findMemberById(userId);
-        TownResponse mainTown = new TownResponse(member.getMainTown());
         if (member.getMainTown() == null) {
             throw new TownNotFoundException();
         }
+        TownResponse mainTown = new TownResponse(member.getMainTown());
         //TODO: subTown은 NULL이 올수있음
         if (member.getSubTown() == null) {
             return List.of(mainTown);
@@ -69,10 +70,5 @@ public class TownService {
 
     public Town findById(Long townId) {
         return townRepository.findById(townId).orElseThrow(TownNotFoundException::new);
-    }
-
-    public TownDTO findDtoById(Long townId) {
-        Town town = townRepository.findById(townId).orElseThrow(CategoryNotFoundException::new);
-        return TownDTO.from(town);
     }
 }
