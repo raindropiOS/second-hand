@@ -77,14 +77,14 @@ public class MemberController {
 
 
     @Operation(
-            summary = "유저 닉네임 수정", description = "사용자 카카오를 통한 로그인"
+            summary = "유저 닉네임 수정", description = "유저 닉네임 수정"
     )
     @LoginCheck
     @PatchMapping("/members")
     public BasicResponse<String> updateNickName(@LoginValue long userId, @RequestBody UpdateNickNameRequest nickNameRequest) {
         memberService.updateNickName(userId, nickNameRequest);
 
-        return BasicResponse.send("카카오 로그인");
+        return BasicResponse.send("유저닉네임수정");
     }
 
 

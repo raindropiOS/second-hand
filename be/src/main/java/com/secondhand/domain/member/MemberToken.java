@@ -25,8 +25,9 @@ public class MemberToken {
         this.member = member;
     }
 
-    public void update(String refreshToken) {
+    public void update(String refreshToken, Member member) {
         this.memberToken = refreshToken;
+        this.member = member;
     }
 
     public void removeToken() {

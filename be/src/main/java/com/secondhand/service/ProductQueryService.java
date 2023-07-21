@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ProductQueryService {
 
@@ -38,13 +39,11 @@ public class ProductQueryService {
         return ProductResponse.of(product.checkIsMine(userId), product);
     }
 
-    @Transactional
     public ProductResponse isValidMinePage(long productId, long userId) {
         Product product = findById(productId);
         return ProductResponse.of(product.checkIsDetailPageMine(userId), product);
     }
 
-    @Transactional
     public MainPageResponse getProductList(ProductSearchCondition productSearchCondition, Pageable pageable, long userId) {
         Slice<Product> page = productRepository.findAllByTowns(productSearchCondition, pageable, userId);
         List<Product> products = page.getContent();
@@ -52,7 +51,6 @@ public class ProductQueryService {
         return MainPageResponse.of(products, userId);
     }
 
-    @Transactional
     public MainPageResponse getMemberSalesProducts(ProductSalesSearchCondition condition, Pageable pageable, long userId) {
         Slice<Product> page = productRepository.findAllByStatus(condition, pageable, userId);
         List<Product> products = page.getContent();
@@ -62,7 +60,6 @@ public class ProductQueryService {
         log.debug("products = {}", products);
         return MainPageResponse.of(products, userId);
     }
-
 
     public MainPageCategoryResponse getLikeProductList(ProductCategorySearchCondition productSearchCondition, Pageable pageable, long userId) {
         //로그인한 유저가 좋아요 누른목록

@@ -40,7 +40,7 @@ public class LoginService {
             Token jwtToken = jwtTokenProvider.createToken(member);
             MemberToken memberToken = memberTokenRepository.findByMemberId(member.getId())
                     .orElseThrow(RefreshTokenNotFoundException::new);
-            memberToken.update(jwtToken.getRefreshToken());
+            memberToken.update(jwtToken.getRefreshToken(), member);
             log.debug("jwtToken = {}", jwtToken);
             log.debug("기존에 있던 회원 ==========================");
             return MemberLoginResponse.of(member, jwtToken);
@@ -55,7 +55,7 @@ public class LoginService {
             Token jwtToken = jwtTokenProvider.createToken(findMember);
             MemberToken memberToken = memberTokenRepository.findByMemberId(findMember.getId())
                     .orElseThrow(RefreshTokenNotFoundException::new);
-            memberToken.update(jwtToken.getRefreshToken());
+            memberToken.update(jwtToken.getRefreshToken(), findMember);
             log.debug("getAccessToken토큰  = {}", jwtToken.getAccessToken());
             log.debug("getRefreshToken토큰  = {}", jwtToken.getRefreshToken());
             return MemberLoginResponse.of(findMember, jwtToken);
@@ -120,10 +120,11 @@ public class LoginService {
         Member member = findMemberById(userId);
         MemberToken temporaryMemberToken = memberTokenRepository.findByMemberId(userId)
                 .orElseThrow(RefreshTokenNotFoundException::new);
-        temporaryMemberToken.update("0");
+        temporaryMemberToken.update("0", member);
         member.resetUpdateEntity();
     }
 
+    @Transactional
     public void logout(long userId) {
         MemberToken memberToken = memberTokenRepository.findByMemberId(userId).orElseThrow(RefreshTokenNotFoundException::new);
         memberTokenRepository.delete(memberToken);
