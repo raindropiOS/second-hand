@@ -1,8 +1,7 @@
 package com.secondhand.domain.login;
 
-import com.secondhand.domain.oauth.exception.AccessTokenNotFoundException;
+import com.secondhand.exception.token.AccessTokenNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

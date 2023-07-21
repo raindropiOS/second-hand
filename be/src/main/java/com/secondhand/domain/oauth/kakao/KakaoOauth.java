@@ -1,15 +1,15 @@
 package com.secondhand.domain.oauth.kakao;
 
-import com.secondhand.domain.oauth.exception.GitHubUserInfoNotFoundException;
+import com.secondhand.exception.ouath.GitHubUserInfoNotFoundException;
 import com.secondhand.domain.oauth.OAuthProvider;
 import com.secondhand.domain.oauth.Oauth;
 import com.secondhand.domain.oauth.dto.KakaoInfoResponse;
 import com.secondhand.domain.oauth.dto.OAuthInfoResponse;
 import com.secondhand.domain.oauth.dto.req.KakaoRequestCode;
 import com.secondhand.domain.oauth.dto.req.OAuthLoginParams;
-import com.secondhand.domain.oauth.exception.AccessTokenNotFoundException;
-import com.secondhand.domain.oauth.exception.GitHubRequestException;
-import com.secondhand.domain.oauth.exception.KakoRequestException;
+import com.secondhand.exception.token.AccessTokenNotFoundException;
+import com.secondhand.exception.ouath.GitHubRequestException;
+import com.secondhand.exception.ouath.KakoRequestException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

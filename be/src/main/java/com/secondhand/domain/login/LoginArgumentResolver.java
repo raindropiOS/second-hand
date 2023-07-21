@@ -1,6 +1,6 @@
 package com.secondhand.domain.login;
 
-import com.secondhand.exception.MissingTokenException;
+import com.secondhand.exception.token.MissingTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

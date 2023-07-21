@@ -1,9 +1,10 @@
 package com.secondhand.domain.login;
 
 import com.secondhand.domain.member.Member;
-import com.secondhand.domain.oauth.exception.AccessTokenTimeException;
-import com.secondhand.domain.oauth.exception.RefreshTokenTimeException;
-import com.secondhand.domain.oauth.exception.TokenException;
+import com.secondhand.exception.token.AccessTokenTimeException;
+import com.secondhand.exception.token.RefreshTokenTimeException;
+import com.secondhand.exception.token.TokenException;
+import com.secondhand.exception.token.RefreshTokenNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -95,7 +96,7 @@ public class JwtTokenProvider {
             return !claimsJws.getBody().getExpiration().before(new Date()) && !claimsJws.getBody().isEmpty();
 
         } catch (RuntimeException e) {
-            throw new RefreshTokenTimeException();
+            throw new RefreshTokenNotFoundException();
         }
     }
 

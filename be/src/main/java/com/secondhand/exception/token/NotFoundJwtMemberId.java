@@ -1,4 +1,6 @@
-package com.secondhand.exception;
+package com.secondhand.exception.token;
+
+import com.secondhand.exception.ElementNotFoundException;
 
 public class NotFoundJwtMemberId  extends ElementNotFoundException {
 

@@ -1,4 +1,4 @@
-package com.secondhand.domain.oauth.exception;
+package com.secondhand.exception.token;
 
 public class AccessTokenTimeException extends RuntimeException {
 

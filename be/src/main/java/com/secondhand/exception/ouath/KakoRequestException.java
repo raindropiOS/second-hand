@@ -1,4 +1,4 @@
-package com.secondhand.domain.oauth.exception;
+package com.secondhand.exception.ouath;
 
 public class KakoRequestException extends OAuthException {
     public KakoRequestException() {
