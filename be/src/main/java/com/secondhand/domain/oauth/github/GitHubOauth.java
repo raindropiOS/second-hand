@@ -2,6 +2,7 @@ package com.secondhand.domain.oauth.github;
 
 import com.secondhand.domain.oauth.dto.AccessTokenResponseDTO;
 import com.secondhand.domain.oauth.dto.req.AccessTokenRequestBodyDTO;
+import com.secondhand.exception.ouath.AccessTokenNotFoundException;
 import com.secondhand.exception.ouath.GitHubUserInfoNotFoundException;
 import com.secondhand.domain.oauth.service.GiHubService;
 import com.secondhand.domain.oauth.OAuthProvider;
