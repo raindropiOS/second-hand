@@ -37,19 +37,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         let tempToken = accessToken + "*" + refreshToken
                         let jwt = JWT(token: tempToken)
                         keychainManager.temporarySavedJwt = jwt
+                        
+                        DispatchQueue.main.async {
+                            let tabBarController = self.window?.rootViewController as? TabBarController
+                            
+                            if let tabBarController = tabBarController {
+                                if let navigationController = tabBarController.viewControllers?[4] as? UINavigationController {
+                                    navigationController.pushViewController(EmailInputViewController(networkManager: NetworkManager(), keychainManager: keychainManager), animated: true)
+                                }
+                            }
+                        }
                     } else {
                         print("failed to type cast responseData while receiving jwt token")
                     }
                 } catch {
                     print("error : \(error)")
-                }
-            }
-          
-            let tabBarController = self.window?.rootViewController as? TabBarController
-            
-            if let tabBarController = tabBarController {
-                if let navigationController = tabBarController.viewControllers?[4] as? UINavigationController {
-                    navigationController.pushViewController(EmailInputViewController(networkManager: NetworkManager(), keychainManager: keychainManager), animated: true)
                 }
             }
         }
