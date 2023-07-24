@@ -86,20 +86,13 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
     
     @objc func signUpButtonTouched() {
         let email = self.emailInputView.inputText
-        
-        Task { [weak self] in
-            if let jwt = self?.keychainManager.temporarySavedJwt?.token.components(separatedBy: ".") {
-                let accessToken = jwt[0]
-                self?.networkManager.sendEmail(email, jwtAccessToken: accessToken)
+        if let jwt = self.keychainManager.temporarySavedJwt?.token.components(separatedBy: "*") {
+            let accessToken = jwt[1]
+            Task {
+                self.networkManager.sendEmail(email, jwtAccessToken: accessToken)
+                // TODO: sendEmail 성공시 jwt 토큰을 키체인에 저장하기
             }
         }
-        
-//        DispatchQueue.global().async { [weak self] in
-//            if let networkManager = self?.networkManager {
-//                networkManager.sendEmail(email)
-//            }
-//        }
-        
         self.navigationController?.popViewController(animated: true)
     }
     
