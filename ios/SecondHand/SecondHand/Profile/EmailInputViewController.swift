@@ -38,17 +38,11 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
     init(networkManager: NetworkManageable, keychainManager: KeychainManageable) {
         self.networkManager = networkManager
         self.keychainManager = keychainManager
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.networkManager = NetworkManager()
-        self.keychainManager = KeychainManager()
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     private func configureSeparatorViewUnderNavigationBar() {
