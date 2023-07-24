@@ -130,26 +130,21 @@ extension NetworkManager {
     
     /// GitHub OAuth 인증코드를 전달한 뒤, 이메일을 보내는 작업을 수행하는 메소드
     func sendEmail(_ email: String, jwtAccessToken: String) {
-        DispatchQueue.global().async { [weak self] in
-            guard let networkManager = self else { return }
+        Task {
             do {
-                let urlComponents = try networkManager.makeUrlComponents(
-                    baseUrl: networkManager.baseUrlString,
+                let urlComponents = try self.makeUrlComponents(
+                    baseUrl: self.baseUrlString,
                     path: "/api/members/signup",
                     parameters: [:])
-                let urlRequest = try networkManager.makeUrlRequest(
+                let urlRequest = try self.makeUrlRequest(
                     urlComponents,
-                    header: ["userId":"\(jwtAccessToken)"],
+                    header: [
+                        "Authorization": "Bearer\(jwtAccessToken)",
+                        "Content-Type": "application/json",
+                    ],
                     body: ["email": "\(email)"],
                     httpMethod: .post)
-                Task { [weak self] in
-                    do {
-                        _ = try await self?.fetchData(with: urlRequest)
-                    } catch {
-                        print("error : \(error)")
-                        print("GitHub sending email failed")
-                    }
-                }
+                _ = try await self.fetchData(with: urlRequest)
             } catch {
                 print("error : \(error)")
                 print("GitHub sending email failed")
