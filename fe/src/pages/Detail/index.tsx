@@ -31,7 +31,7 @@ const Detail = () => {
     return (
       <$Template isDetail={true}>
         <DetailHeader imgUrls={productDetail && productDetail.imgUrls} isMine={productDetail && productDetail.isMine} />
-        <DetailMain productDetail={productDetail} />
+        <DetailMain productDetail={productDetail} handleRefreshData={handleRefreshData} />
         <DetailTabBar
           price={productDetail && productDetail.price}
           isLiked={productDetail && productDetail.isLiked}

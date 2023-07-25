@@ -16,6 +16,7 @@ interface DetailTabBarProps {
 }
 
 const DetailTabBar = ({ price, isLiked, productId, handleRefreshData }: DetailTabBarProps) => {
+  // TODO(hoonding): useMutation으로 변경.
   const handleLikeClick = async (isLiked: boolean, productId: string) => {
     const { data } = await changeLikeStatus(productId, isLiked);
 

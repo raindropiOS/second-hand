@@ -19,12 +19,14 @@ import StatusModal from '@components/molecules/StatusModal';
 
 interface DetailMainProps {
   productDetail?: DetailProductType;
+  handleRefreshData: (data: DetailProductType) => void;
 }
 
-const DetailMain = ({ productDetail }: DetailMainProps) => {
+const DetailMain = ({ productDetail, handleRefreshData }: DetailMainProps) => {
   const [isStatusModalOpen, setIsStatusModalOpen, modalRef] = useOutsideClick(false);
 
   const statusModalHandler = () => {
+    if (!productDetail?.isMine) return;
     setIsStatusModalOpen(prev => !prev);
   };
 
@@ -40,7 +42,9 @@ const DetailMain = ({ productDetail }: DetailMainProps) => {
             <$ProductStatusButton isStatusModalOpen={isStatusModalOpen} onClick={statusModalHandler}>
               <span>{`${GetStatusWord(productDetail?.status as number)}`}</span>
               {isStatusModalOpen ? <Icon name="chevronUp" width={12} /> : <Icon name="chevronDown" width={12} />}
-              {isStatusModalOpen && productDetail.isMine && <StatusModal currentStatus={productDetail.status} />}
+              {isStatusModalOpen && productDetail.isMine && (
+                <StatusModal currentStatus={productDetail.status} handleRefreshData={handleRefreshData} />
+              )}
             </$ProductStatusButton>
 
             <$ProductTitle>{`${productDetail?.title}`}</$ProductTitle>

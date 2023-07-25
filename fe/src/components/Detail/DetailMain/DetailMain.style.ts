@@ -1,3 +1,4 @@
+import { MutableRefObject } from 'react';
 import styled, { css } from 'styled-components';
 
 const $DetailMainContainer = styled.main`
@@ -43,7 +44,9 @@ const isModalOpenStyle = css`
   border-bottom-right-radius: 0px;
 `;
 
-const $ProductStatusButton = styled.button<{ isStatusModalOpen: boolean }>`
+const $ProductStatusButton = styled.button<{
+  isStatusModalOpen: boolean;
+}>`
   position: relative;
   display: flex;
   width: 106px;
