@@ -74,23 +74,24 @@ class KeychainManager: KeychainManageable {
         }
     }
     
-    func updateJWT(_ jwt: JWT) {
+    func updateJsonWebToken(email: String, newJwt: JWT) async throws {
         let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: email,
+            kSecAttrService as String: self.appName,
         ]
         
-        let newToken = jwt.token
-        let newAttrs: [String: Any] = [
-            kSecValueData as String: newToken.data(using: .utf8) as Any,
+        let tokenString = newJwt.accsssToken + "*" + newJwt.refreshToken
+        guard let tokenData = tokenString.data(using: .utf8) else {
+            throw KeychainManagerError.failedToMakeTokenData
+        }
+        let attributesToUpdate: [String: Any] = [
+            kSecValueData as String: tokenData,
         ]
         
-        self.updateKeychainItem(searchAttributes: query as CFDictionary, update: newAttrs as CFDictionary) { status in
-            if status == errSecSuccess {
-                print("updated item")
-            } else {
-                print("failed to update item")
-                print("status : \(status)")
-            }
+        let status = SecItemUpdate(query as CFDictionary, attributesToUpdate as CFDictionary)
+        if status != errSecSuccess {
+            throw KeychainManagerError.failedToUpdateJsonWebToken
         }
     }
 }
