@@ -13,7 +13,7 @@ class KeychainManager: KeychainManageable {
     var temporarySavedJwt: JWT?
     
     func addJsonWebToken(_ jwt: JWT, email: String) async throws {
-        let accessToken = jwt.accsssToken
+        let accessToken = jwt.accessToken
         let refreshToken = jwt.refreshToken
         let token = accessToken + "*" + refreshToken
         let attrs: [String: Any] = [
@@ -49,7 +49,7 @@ class KeychainManager: KeychainManageable {
                let tokenData = attributes[kSecValueData] as? Data,
                let tokenString = String(data: tokenData, encoding: .utf8) {
                 let tokens = tokenString.components(separatedBy: "*")
-                let jwt = JWT(accsssToken: tokens[0], refreshToken: tokens[1])
+                let jwt = JWT(accessToken: tokens[0], refreshToken: tokens[1])
                 return jwt
             } else {
                 throw KeychainManagerError.failedToTypeCast
@@ -64,7 +64,7 @@ class KeychainManager: KeychainManageable {
             kSecAttrService as String: self.appName,
         ]
         
-        let tokenString = newJwt.accsssToken + "*" + newJwt.refreshToken
+        let tokenString = newJwt.accessToken + "*" + newJwt.refreshToken
         guard let tokenData = tokenString.data(using: .utf8) else {
             throw KeychainManagerError.failedToMakeTokenData
         }
@@ -82,7 +82,7 @@ class KeychainManager: KeychainManageable {
 /// Json Web Token,
 /// Keychain에 저장할 구조체
 struct JWT {
-    let accsssToken: String
+    let accessToken: String
     let refreshToken: String
 }
 
