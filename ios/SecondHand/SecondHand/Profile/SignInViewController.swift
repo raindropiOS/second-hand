@@ -19,7 +19,7 @@ class SignInViewController: UIViewController {
         stack.axis = .vertical
         return stack
     }()
-    let signInButton: SignInOutButton = SignInOutButton()
+    private let signInButton = SignInButton()
     let signUpButton: UIButton = UIButton()
     
     init(networkManager: NetworkManageable) {
@@ -44,10 +44,6 @@ class SignInViewController: UIViewController {
         self.configureIdInputView()
         self.configureSeparatorView()
         self.configureSignInSignUpButton()
-    }
-    
-    private func configureLoginButtonAction() {
-        self.signInButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
     }
     
     @objc func loginButtonAction() {
@@ -104,13 +100,10 @@ extension SignInViewController {
         let height = self.view.frame.height
         let padding = self.topBottomPadding * height
         
-        self.signInButton.setTitle("GitHub으로 로그인", for: .normal)
-        self.signInButton.setBackgroundColor(UIColor(named: "black"))
+        self.signInButton.configure(imageName: "github-logo", text: "GitHub로 로그인", backgroundColor: UIColor(named: "black"), target: self, action: #selector(loginButtonAction))
         
         self.signUpButton.setTitle("회원가입", for: .normal)
         self.signUpButton.setTitleColor(.black, for: .normal)
-        
-        self.signInButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
         self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
         
         self.view.addSubview(self.stackView)
@@ -121,9 +114,12 @@ extension SignInViewController {
         self.signInButton.translatesAutoresizingMaskIntoConstraints = false
         self.signUpButton.translatesAutoresizingMaskIntoConstraints = false
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
-            self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.signInButton.widthAnchor.constraint(equalToConstant: 330),
+            self.signInButton.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
     

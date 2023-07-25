@@ -43,7 +43,7 @@ class SignInButton: UIView {
         self.constraintSubviews()
         
         self.label.textColor = .white
-//        self.label.font = UIFont(name: <#T##String#>, size: <#T##CGFloat#>)
+        self.label.font = FontStyle.headline
     }
     
     private func constraintSubviews() {
