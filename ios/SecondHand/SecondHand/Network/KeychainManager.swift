@@ -30,10 +30,9 @@ class KeychainManager: KeychainManageable {
         }
     }
     
-    func readJsonWebToken(email: String) async throws -> JWT {
+    func readJsonWebToken() async throws -> JWT {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: email,
             kSecAttrService as String: self.appName,
             kSecReturnAttributes as String: true, // item이 nil이 되지 않고 확인 가능
             kSecReturnData as String: true // data로 저장한 token 출력 가능
@@ -89,7 +88,7 @@ struct JWT {
 protocol KeychainManageable {
     var temporarySavedJwt: JWT? { get set }
     func addJsonWebToken(_ jwt: JWT, email: String) async throws
-    func readJsonWebToken(email: String) async throws -> JWT
+    func readJsonWebToken() async throws -> JWT
     func updateJsonWebToken(email: String, newJwt: JWT) async throws
 }
 
