@@ -21,7 +21,7 @@ interface Product {
 }
 
 interface Town {
-  id: number;
+  townId: number;
   name: string;
 }
 
@@ -57,7 +57,7 @@ const HomeMain = () => {
 
       if (!isSuccess) throw new Error('Failed to fetch towns');
       setTowns(towns);
-      setSelectedTownId(towns[0].id);
+      setSelectedTownId(towns[0].townId);
     };
 
     getTowns();

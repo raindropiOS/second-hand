@@ -23,8 +23,6 @@ const Modal = ({ menus }: ModalProps) => {
 
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
-
-    console.log(1);
   };
 
   return (
