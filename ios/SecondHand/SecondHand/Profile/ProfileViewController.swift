@@ -72,6 +72,7 @@ extension ProfileViewController {
         let height = self.view.frame.height
         let padding = (60/height) * height
         self.signOutButton.setTitle("로그아웃", for: .normal)
+        self.signOutButton.setBackgroundColor(UIColor(named: "orange"))
 
         self.view.addSubview(self.signOutButton)
         
