@@ -12,23 +12,6 @@ class KeychainManager: KeychainManageable {
     /// GitHub OAuth 인증코드를 서버에 전달하고 받은 토큰, 이를 이메일과 함께 다시 보내 인증을 완료한다.
     var temporarySavedJwt: JWT?
     
-    func saveJWT(_ jwt: JWT) async {
-        /*
-         1. 기존에 저장된 JWT가 있는지 확인
-         2. 키체인 아이템 추가 또는 업데이트
-            a. 없는 경우) 키체인 아이템을 추가한다
-            b. 있는 경우) 기존 키체인 아이템을 업데이트
-         */
-        
-        let jwtIsAlreadyPresentInKeychain = await self.findJWT(jwt)
-        
-        if jwtIsAlreadyPresentInKeychain {
-            self.updateJWT(jwt)
-        } else {
-            self.addJWT(jwt)
-        }
-    }
-    
     func addJsonWebToken(_ jwt: JWT, email: String) async throws {
         let accessToken = jwt.accsssToken
         let refreshToken = jwt.refreshToken
@@ -92,34 +75,6 @@ class KeychainManager: KeychainManageable {
         let status = SecItemUpdate(query as CFDictionary, attributesToUpdate as CFDictionary)
         if status != errSecSuccess {
             throw KeychainManagerError.failedToUpdateJsonWebToken
-        }
-    }
-}
-
-extension KeychainManager {
-    private func addKeychainItem(attributes attrs: CFDictionary, _ completion: @escaping (OSStatus, CFTypeRef?) -> Void) {
-        DispatchQueue.global().async {
-            var item: CFTypeRef?
-            let result = SecItemAdd(attrs, &item)
-            completion(result, item)
-        }
-    }
-    
-    private func findKeychainItem(attributes attrs: CFDictionary) async -> OSStatus {
-        return await withCheckedContinuation { continuation in
-            DispatchQueue.global().async {
-                var item: CFTypeRef?
-                let result = SecItemCopyMatching(attrs, &item)
-                
-                continuation.resume(returning: result)
-            }
-        }
-    }
-    
-    private func updateKeychainItem(searchAttributes attrs: CFDictionary, update updateAttrs: CFDictionary, _ completion: @escaping (OSStatus) -> Void) {
-        DispatchQueue.global().async {
-            let result = SecItemUpdate(attrs, updateAttrs)
-            completion(result)
         }
     }
 }
