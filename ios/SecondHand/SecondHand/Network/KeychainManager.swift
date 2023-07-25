@@ -28,22 +28,21 @@ class KeychainManager: KeychainManageable {
         }
     }
     
-    private func addJWT(_ jwt: JWT) {
-        // 추가 쿼리 만들기
-        let token = jwt.token
-        let query: [String: Any] = [
+    func addJsonWebToken(_ jwt: JWT, email: String) async throws {
+        let accessToken = jwt.accsssToken
+        let refreshToken = jwt.refreshToken
+        let token = accessToken + "*" + refreshToken
+        let attrs: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: email,
+            kSecAttrService as String: self.appName,
             kSecValueData as String: token.data(using: .utf8) as Any,
         ]
         
-        self.addKeychainItem(attributes: query as CFDictionary) { status, _ in
-            // 이미 있는 아이템 추가 하면 fail, 항상 status 확인할 것
-            if status != errSecSuccess {
-                if let errorMessageCfString = SecCopyErrorMessageString(status, nil) {
-                    let errorMessage = errorMessageCfString as NSString
-                    print("error : \(errorMessage)")
-                }
-            }
+        let status = SecItemAdd(attrs as CFDictionary, nil)
+        
+        if status != errSecSuccess {
+            throw KeychainManagerError.failedToAddJsonWebToken
         }
     }
     
