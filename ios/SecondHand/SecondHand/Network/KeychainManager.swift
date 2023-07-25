@@ -47,21 +47,30 @@ class KeychainManager: KeychainManageable {
         }
     }
     
-    private func findJWT(_ jwt: JWT) async -> Bool {
-        // 추가 쿼리 만들기
-        let token = jwt.token
+    func readJsonWebToken(email: String) async throws -> JWT {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecValueData as String: token.data(using: .utf8) as Any,
+            kSecAttrAccount as String: email,
+            kSecAttrService as String: self.appName,
+            kSecReturnAttributes as String: true, // item이 nil이 되지 않고 확인 가능
+            kSecReturnData as String: true // data로 저장한 token 출력 가능
         ]
         
-        let status = await self.findKeychainItem(attributes: query as CFDictionary)
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        
         if status != errSecSuccess {
-            print("failed to find item")
-            return false
+            throw KeychainManagerError.failedToReadJsonWebToken
         } else {
-            print("found item")
-            return true
+            if let attributes = result as? NSDictionary,
+               let tokenData = attributes[kSecValueData] as? Data,
+               let tokenString = String(data: tokenData, encoding: .utf8) {
+                let tokens = tokenString.components(separatedBy: "*")
+                let jwt = JWT(accsssToken: tokens[0], refreshToken: tokens[1])
+                return jwt
+            } else {
+                throw KeychainManagerError.failedToTypeCast
+            }
         }
     }
     
