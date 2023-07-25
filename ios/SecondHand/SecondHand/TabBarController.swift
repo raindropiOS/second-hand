@@ -9,7 +9,19 @@ import Combine
 import UIKit
 
 class TabBarController: UITabBarController {
+    private let networkManager: NetworkManageable
+    private let keychainManager: KeychainManageable
     var cancellables = Set<AnyCancellable>()
+    
+    init(networkManager: NetworkManageable, keychainManager: KeychainManageable) {
+        self.networkManager = networkManager
+        self.keychainManager = keychainManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +45,7 @@ class TabBarController: UITabBarController {
         let salesLogViewController = SalesLogViewController()
         let likeListViewController = LikeListViewController()
         let chattingViewController = ChattingViewController()
-        let signInViewController = UINavigationController(rootViewController: SignInViewController(networkManager: NetworkManager()))
+        let signInViewController = UINavigationController(rootViewController: SignInViewController(networkManager: self.networkManager))
         
         let viewControllers = [
             homeViewController,

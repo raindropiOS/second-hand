@@ -9,12 +9,14 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    private let networkManager = NetworkManager()
+    private let keychainManager = KeychainManager()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        let tabBarController = TabBarController()
+        let tabBarController = TabBarController(networkManager: self.networkManager, keychainManager: self.keychainManager)
         
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
@@ -24,8 +26,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
-            let networkManager = NetworkManager()
-            let keychainManager = KeychainManager()
             Task {
                 do {
                     let authorizationCode = try networkManager.getQueryItemValue(urlString: url.absoluteString, key: "code")
@@ -35,14 +35,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         let accessToken = jwtToken.accessToken
                         let refreshToken = jwtToken.refreshToken
                         let jwt = JWT(accessToken: accessToken, refreshToken: refreshToken)
-                        keychainManager.temporarySavedJwt = jwt
+                        self.keychainManager.temporarySavedJwt = jwt
                         
                         DispatchQueue.main.async {
                             let tabBarController = self.window?.rootViewController as? TabBarController
                             
                             if let tabBarController = tabBarController {
                                 if let navigationController = tabBarController.viewControllers?[4] as? UINavigationController {
-                                    navigationController.pushViewController(EmailInputViewController(networkManager: NetworkManager(), keychainManager: keychainManager), animated: true)
+                                    navigationController.pushViewController(EmailInputViewController(networkManager: self.networkManager, keychainManager: self.keychainManager), animated: true)
                                 }
                             }
                         }
