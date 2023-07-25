@@ -8,6 +8,7 @@
 import Foundation
 
 class KeychainManager: KeychainManageable {
+    private let appName = "com.team02.SecondHand"
     /// GitHub OAuth 인증코드를 서버에 전달하고 받은 토큰, 이를 이메일과 함께 다시 보내 인증을 완료한다.
     var temporarySavedJwt: JWT?
     
@@ -123,4 +124,16 @@ struct JWT {
 protocol KeychainManageable {
     func saveJWT(_ jwt: JWT) async
     var temporarySavedJwt: JWT? { get set }
+}
+
+enum KeychainManagerError: Error {
+    case failedToAddJsonWebToken
+    case failedToReadJsonWebToken
+    /// 찾은 키체인 아이템의 타입 캐스팅 실패
+    case failedToTypeCast
+    /// 키체인에 저장된 JWT 코드가 String이 아닐 때
+    case failedToConvertKeychainValueToString
+    /// JWT -> Data 인코딩 실패
+    case failedToMakeTokenData
+    case failedToUpdateJsonWebToken
 }
