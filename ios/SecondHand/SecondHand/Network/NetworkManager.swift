@@ -19,7 +19,7 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
-            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, parameters: [:])
+            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, query: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: [:], body: [:], httpMethod: .get)
             let data = try await fetchData(with: urlRequest)
             let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self) as? Form
@@ -47,7 +47,7 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
     
     func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         do {
-            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, parameters: [:])
+            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, query: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: [:], body: [:], httpMethod: .get)
             URLSession.shared.downloadTask(with: urlRequest) { (location, _, error) in
                 if let error = error {
@@ -95,7 +95,7 @@ extension NetworkManager {
         let path = "/login/oauth/authorize"
         
         do {
-            let urlComponents = try self.makeUrlComponents(baseUrl: self.githubBaseUrl, path: path, parameters: self.githubOAuthParameters)
+            let urlComponents = try self.makeUrlComponents(baseUrl: self.githubBaseUrl, path: path, query: self.githubOAuthParameters)
             if let url = urlComponents.url {
                 UIApplication.shared.open(url)
             }
@@ -117,7 +117,7 @@ extension NetworkManager {
         let header = ["Content-Type": "application/json"]
         
         do {
-            let urlComponents = try self.makeUrlComponents(baseUrl: self.baseUrlString, path: "/api/auth/github/login", parameters: [:])
+            let urlComponents = try self.makeUrlComponents(baseUrl: self.baseUrlString, path: "/api/auth/github/login", query: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: header, body: body, httpMethod: .post)
             let data = try await self.fetchData(with: urlRequest)
             let reponseData = try self.dataDecoder.decodeJSON(data, DTO: GitHubOAuthResponseDTO.self)
@@ -134,7 +134,7 @@ extension NetworkManager {
             let urlComponents = try self.makeUrlComponents(
                 baseUrl: self.baseUrlString,
                 path: "/api/members/signup",
-                parameters: [:])
+                query: [:])
             let urlRequest = try self.makeUrlRequest(
                 urlComponents,
                 header: [
