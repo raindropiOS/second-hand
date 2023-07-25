@@ -86,11 +86,23 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
     
     @objc func signUpButtonTouched() {
         let email = self.emailInputView.inputText
-        if let accessToken = self.keychainManager.temporarySavedJwt?.refreshToken {
+        if let jwt = self.keychainManager.temporarySavedJwt {
             Task {
-                self.networkManager.sendEmail(email, jwtAccessToken: accessToken)
-                // TODO: sendEmail 성공시 jwt 토큰을 키체인에 저장하기
+                do {
+                    try await self.networkManager.sendEmail(email, jwtAccessToken: jwt.refreshToken)
+                    do {
+                        // 동일한 email로 저장된 keychain 아이템이 있는 경우
+                        try await self.keychainManager.addJsonWebToken(jwt, email: email)
+                    } catch {
+                        // 동일한 email로 저장된 keychain 아이템이 없는 경우
+                        try await self.keychainManager.updateJsonWebToken(email: email, newJwt: jwt)
+                    }
+                } catch {
+                    print("error: \(error)")
+                }
             }
+        } else {
+            print("temporarySavedJwt is nil")
         }
         self.navigationController?.popViewController(animated: true)
     }
