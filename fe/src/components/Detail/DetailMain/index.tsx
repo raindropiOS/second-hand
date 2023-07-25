@@ -36,7 +36,7 @@ const DetailMain = ({ productDetail, handleRefreshData }: DetailMainProps) => {
         <$DetailMainContainer>
           <$SellerInfoWrapper>
             <div>판매자 정보</div>
-            <div>{`${productDetail?.seller.name}`}</div>
+            <div>{`${productDetail.seller.name}`}</div>
           </$SellerInfoWrapper>
           <$ProductInfoContainer>
             <$ProductStatusButton isStatusModalOpen={isStatusModalOpen} onClick={statusModalHandler}>

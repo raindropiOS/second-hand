@@ -20,7 +20,11 @@ export const changeLikeStatus = async (productId: string, isLiked: boolean) => {
   return response.data;
 };
 
-export const changeProductStatus = async (productId: string, status: number) => {
+interface ChangeProductStatusType {
+  productId: string;
+  status: number;
+}
+export const changeProductStatus = async ({ productId, status }: ChangeProductStatusType) => {
   const response = await axiosFetch.patch(`/products/${productId}`, {
     status,
   });
