@@ -8,20 +8,9 @@
 import Combine
 import Foundation
 
+/// 뷰에 필요한 유저 정보를 저장하는 Repository Layer
 class UserInfoManager: URLRequestProducible, URLComponentsProducible {
     static let shared = UserInfoManager()
-    private let keychainManagerDelegate: KeychainManageable?
-    private var jwt: JWT?
     @Published var isSignedIn = false
-    
-    init() {
-        self.keychainManagerDelegate = KeychainManager()
-    }
-    
-    func readJsonWebToken() async throws {
-        if let jwt = try await self.keychainManagerDelegate?.readJsonWebToken() {
-            self.jwt = jwt
-            self.isSignedIn = true
-        }
-    }
+    var userInfo: UserInfo?
 }
