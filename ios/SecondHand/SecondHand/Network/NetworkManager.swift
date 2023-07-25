@@ -129,26 +129,23 @@ extension NetworkManager {
     }
     
     /// GitHub OAuth 인증코드를 전달한 뒤, 이메일을 보내는 작업을 수행하는 메소드
-    func sendEmail(_ email: String, jwtAccessToken: String) {
-        Task {
-            do {
-                let urlComponents = try self.makeUrlComponents(
-                    baseUrl: self.baseUrlString,
-                    path: "/api/members/signup",
-                    parameters: [:])
-                let urlRequest = try self.makeUrlRequest(
-                    urlComponents,
-                    header: [
-                        "Authorization": "Bearer\(jwtAccessToken)",
-                        "Content-Type": "application/json",
-                    ],
-                    body: ["email": "\(email)"],
-                    httpMethod: .post)
-                _ = try await self.fetchData(with: urlRequest)
-            } catch {
-                print("error : \(error)")
-                print("GitHub sending email failed")
-            }
+    func sendEmail(_ email: String, jwtAccessToken: String) async throws {
+        do {
+            let urlComponents = try self.makeUrlComponents(
+                baseUrl: self.baseUrlString,
+                path: "/api/members/signup",
+                parameters: [:])
+            let urlRequest = try self.makeUrlRequest(
+                urlComponents,
+                header: [
+                    "Authorization": "Bearer\(jwtAccessToken)",
+                    "Content-Type": "application/json",
+                ],
+                body: ["email": "\(email)"],
+                httpMethod: .post)
+            _ = try await self.fetchData(with: urlRequest)
+        } catch {
+            throw NetworkingError.failedToSendEmail
         }
     }
 }
@@ -156,10 +153,11 @@ extension NetworkManager {
 protocol NetworkManageable {
     func fetchProducts(query: [String: String]) async -> [Product]
     func presentGithubOAuthLoginScreen()
-    func sendEmail(_ email: String, jwtAccessToken: String)
+    func sendEmail(_ email: String, jwtAccessToken: String) async throws
 }
 
 enum NetworkingError: Error {
     case failedToGetQueryItemValue
     case failedToSendAuthorizationCode
+    case failedToSendEmail
 }
