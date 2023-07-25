@@ -87,8 +87,10 @@ struct JWT {
 }
 
 protocol KeychainManageable {
-    func saveJWT(_ jwt: JWT) async
     var temporarySavedJwt: JWT? { get set }
+    func addJsonWebToken(_ jwt: JWT, email: String) async throws
+    func readJsonWebToken(email: String) async throws -> JWT
+    func updateJsonWebToken(email: String, newJwt: JWT) async throws
 }
 
 enum KeychainManagerError: Error {
