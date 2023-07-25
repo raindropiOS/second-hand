@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 class TabBarController: UITabBarController {
-    private let networkManager: NetworkManageable
+    private var networkManager: NetworkManageable
     private let keychainManager: KeychainManageable
     var cancellables = Set<AnyCancellable>()
     
@@ -34,7 +34,23 @@ class TabBarController: UITabBarController {
                 }
             }
             .store(in: &cancellables)
-        setTabViewControllers()
+        
+        Task {
+            do {
+                // 저장된 JWT를 정상적으로 읽은 경우 -> 로그인 상태로 뷰 처리
+                self.networkManager.jwt = try await self.keychainManager.readJsonWebToken()
+                DispatchQueue.main.async {
+                    self.setTabViewControllers()
+                    self.updateProfileView()
+                }
+            } catch {
+                // 저장된 JWT를 읽지 못한 경우 -> 비로그인 상태로 뷰 처리
+                DispatchQueue.main.async {
+                    self.setTabViewControllers()
+                }
+                print("error: \(error)")
+            }
+        }
     }
     
     private func setTabViewControllers() {
