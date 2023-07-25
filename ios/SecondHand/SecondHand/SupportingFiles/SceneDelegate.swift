@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         let jwtToken = dto.data.jwtToken
                         let accessToken = jwtToken.accessToken
                         let refreshToken = jwtToken.refreshToken
-                        let jwt = JWT(accsssToken: accessToken, refreshToken: refreshToken)
+                        let jwt = JWT(accessToken: accessToken, refreshToken: refreshToken)
                         keychainManager.temporarySavedJwt = jwt
                         
                         DispatchQueue.main.async {
