@@ -16,6 +16,7 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
     private let clientId = Bundle.main.infoDictionary?["githubClientId"] as? String ?? ""
     private let githubBaseUrl = "https://github.com"
     private lazy var githubOAuthParameters = ["client_id": self.clientId, "scope": "user public_repo"]
+    var jwt: JWT?
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
@@ -151,6 +152,7 @@ extension NetworkManager {
 }
 
 protocol NetworkManageable {
+    var jwt: JWT? { get set }
     func fetchProducts(query: [String: String]) async -> [Product]
     func presentGithubOAuthLoginScreen()
     func sendEmail(_ email: String, jwtAccessToken: String) async throws
