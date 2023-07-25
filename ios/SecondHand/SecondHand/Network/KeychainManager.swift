@@ -114,9 +114,11 @@ extension KeychainManager {
     }
 }
 
-// Keychain에 저장할 구조체
+/// Json Web Token,
+/// Keychain에 저장할 구조체
 struct JWT {
-    let token: String
+    let accsssToken: String
+    let refreshToken: String
 }
 
 protocol KeychainManageable {
