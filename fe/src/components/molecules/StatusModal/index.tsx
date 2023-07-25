@@ -19,8 +19,8 @@ const StatusModal = ({ currentStatus, handleRefreshData }: StatusModalProps) => 
   const mutateChangeProductStatus = useMutation(
     (newStatus: { productId: string; status: number }) => changeProductStatus(newStatus),
     {
-      onSuccess: data => {
-        handleRefreshData(data.data);
+      onSuccess: ({ data }) => {
+        handleRefreshData(data);
       },
     }
   );
