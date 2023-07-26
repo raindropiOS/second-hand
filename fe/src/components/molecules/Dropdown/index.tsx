@@ -13,7 +13,7 @@ import PATH from '@constants/routerPath';
 import { useNavigate } from 'react-router-dom';
 
 type Town = {
-  id: number;
+  townId: number;
   name: string;
 };
 
@@ -37,7 +37,7 @@ const Dropdown = ({ towns, handleFilterTownId }: DropdownProps) => {
 
   const handleSelectTown = (townId: number) => {
     // FIXME(jayden): type assertion 제거
-    setSelectedTown(towns.find(town => town.id === townId) as Town);
+    setSelectedTown(towns.find(town => town.townId === townId) as Town);
     setIsDropdownOpen(false);
   };
 
@@ -55,14 +55,14 @@ const Dropdown = ({ towns, handleFilterTownId }: DropdownProps) => {
       </$DropdownButton>
       {isDropdownOpen && (
         <$DropdownLayout>
-          {towns.map(({ id, name }, index, arr) => {
+          {towns.map(({ townId, name }, index, arr) => {
             return (
               <>
                 <$MyTownButton
-                  key={id}
+                  key={townId}
                   onClick={() => {
-                    handleSelectTown(id);
-                    handleFilterTownId(id);
+                    handleSelectTown(townId);
+                    handleFilterTownId(townId);
                   }}
                 >
                   {name.split(' ')[2]}
