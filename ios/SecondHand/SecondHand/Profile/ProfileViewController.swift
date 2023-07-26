@@ -8,6 +8,13 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
+    let navigationBar: UINavigationBar = {
+        let bar = UINavigationBar()
+        bar.barTintColor = .white
+        let item = UINavigationItem(title: "내 계정")
+        bar.setItems([item], animated: true)
+        return bar
+    }()
     let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     let profileImageView = ProfileImageView()
     let nameLabel = UILabel()
@@ -15,12 +22,12 @@ class ProfileViewController: UIViewController {
     let profileImageViewSize: CGSize = CGSize(width: 100, height: 100)
     
     override func viewDidLoad() {
-        self.navigationItem.title = "내 계정"
         self.view.backgroundColor = .white
         self.configureProfileImageView()
         self.configureSeparatorViewUnderNavigationBar()
         self.configureNameLabel()
         self.configureSignOutButton()
+        self.layoutNavigationBar()
     }
     
     private func setName(_ name: String) {
@@ -80,6 +87,18 @@ extension ProfileViewController {
         NSLayoutConstraint.activate([
             self.signOutButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             self.signOutButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        ])
+    }
+    
+    private func layoutNavigationBar() {
+        self.view.addSubview(self.navigationBar)
+        
+        self.navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            self.navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            self.navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
 }
