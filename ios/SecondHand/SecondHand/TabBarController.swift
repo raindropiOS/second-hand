@@ -29,9 +29,7 @@ class TabBarController: UITabBarController {
         
         UserInfoManager.shared.$isSignedIn
             .sink { [weak self] newData in
-                if newData == true {
-                    self?.updateProfileView()
-                }
+                self?.updateProfileTab(isSignedIn: newData)
             }
             .store(in: &cancellables)
         self.setTabViewControllers()
@@ -39,9 +37,7 @@ class TabBarController: UITabBarController {
             do {
                 // 저장된 JWT를 정상적으로 읽은 경우 -> 로그인 상태로 뷰 처리
                 self.networkManager.jwt = try await self.keychainManager.readJsonWebToken()
-                DispatchQueue.main.async {
-                    self.updateProfileView()
-                }
+                UserInfoManager.shared.isSignedIn = true
             } catch {
                 // 저장된 JWT를 읽지 못한 경우 -> 비로그인 상태로 뷰 처리
                 print("error: \(error)")
@@ -87,18 +83,29 @@ class TabBarController: UITabBarController {
         }
     }
     
-    private func updateProfileView() {
-
-        Task {
-            let userInfo = try await self.networkManager.fetchProfileInfo()
-            let profileViewModel = ProfileViewModel(
-                profileImageUrlString: userInfo.profileImageUrlString,
-                userName: userInfo.name)
-            
+    private func updateProfileTab(isSignedIn: Bool) {
+        if isSignedIn {
+            Task {
+                let userInfo = try await self.networkManager.fetchProfileInfo()
+                let profileViewModel = ProfileViewModel(
+                    profileImageUrlString: userInfo.profileImageUrlString,
+                    userName: userInfo.name)
+                DispatchQueue.main.async {
+                    self.viewControllers?[4] = ProfileViewController(
+                        networkManager: self.networkManager,
+                        viewModel: profileViewModel)
+                    
+                    if let items = self.tabBar.items {
+                        items[4].title = "내 계정"
+                        items[4].image = UIImage(systemName: "person")
+                    }
+                }
+            }
+        } else {
             DispatchQueue.main.async {
-                self.viewControllers?[4] = ProfileViewController(
-                    networkManager: self.networkManager,
-                    viewModel: profileViewModel)
+                let signInViewController = SignInViewController(networkManager: self.networkManager)
+                let viewController = UINavigationController(rootViewController: signInViewController)
+                self.viewControllers?[4] = viewController
                 
                 if let items = self.tabBar.items {
                     items[4].title = "내 계정"
