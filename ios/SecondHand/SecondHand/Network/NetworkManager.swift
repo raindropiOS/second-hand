@@ -157,6 +157,7 @@ extension NetworkManager {
     }
     
     func fetchProfileInfo() async throws -> UserInfo {
+        guard let jwt = self.jwt else { throw NetworkingError.jwtIsNil }
         let urlComponents = try self.makeUrlComponents(
             baseUrl: self.baseUrlString,
             path: "/api/members",
@@ -164,7 +165,7 @@ extension NetworkManager {
         let urlRequest = try self.makeUrlRequest(
             urlComponents,
             header: [
-                "Authorization": "Bearer\(self.jwt?.refreshToken)",
+                "Authorization": "Bearer\(jwt.refreshToken)",
                 "Content-Type": "application/json",
             ],
             body: [:],
@@ -190,4 +191,5 @@ enum NetworkingError: Error {
     case failedToGetQueryItemValue
     case failedToSendAuthorizationCode
     case failedToSendEmail
+    case jwtIsNil
 }
