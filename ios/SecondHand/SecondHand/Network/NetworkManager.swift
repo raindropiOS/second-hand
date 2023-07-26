@@ -48,7 +48,7 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
     
     func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         do {
-            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, query: [:])
+            let urlComponents = try self.makeUrlComponents(baseUrl: urlString, path: "", query: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: [:], body: [:], httpMethod: .get)
             URLSession.shared.downloadTask(with: urlRequest) { (location, _, error) in
                 if let error = error {
