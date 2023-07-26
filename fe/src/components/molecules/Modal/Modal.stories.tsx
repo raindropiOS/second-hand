@@ -12,6 +12,11 @@ type Story = StoryObj<typeof meta>;
 
 export const SaleModal: Story = {
   args: {
+    onClickHandlers: [
+      () => {
+        console.log(1);
+      },
+    ],
     menus: SALE_MODAL_MENUS,
   },
 
@@ -20,6 +25,11 @@ export const SaleModal: Story = {
 
 export const DetailModal: Story = {
   args: {
+    onClickHandlers: [
+      () => {
+        console.log(1);
+      },
+    ],
     menus: DETAIL_MODAL_MENUS,
   },
   argTypes: {},

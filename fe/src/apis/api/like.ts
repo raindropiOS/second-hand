@@ -5,7 +5,6 @@ import { PRODUCTS } from '@constants/API';
 import { LikeProductsType, APIDefaultResponseType } from '@type/productsType';
 // TODO(hoonding) : axiosFetch로 변경해야함
 import axiosFetch from '@apis/instances/axiosFetch';
-import mockAxiosFetch from '../instances/mockAxiosFetch';
 
 const getLikeProducts = async (pageNum?: number, categoryId?: number) => {
   const response = await axiosFetch.get(PRODUCTS.GET_LIKE_PRODUCTS, {
