@@ -88,12 +88,22 @@ class TabBarController: UITabBarController {
     }
     
     private func updateProfileView() {
-        DispatchQueue.main.async {
-            self.viewControllers?[4] = ProfileViewController(networkManager: self.networkManager)
+
+        Task {
+            let userInfo = try await self.networkManager.fetchProfileInfo()
+            let profileViewModel = ProfileViewModel(
+                profileImageUrlString: userInfo.profileImageUrlString,
+                userName: userInfo.name)
             
-            if let items = self.tabBar.items {
-                items[4].title = "내 계정"
-                items[4].image = UIImage(systemName: "person")
+            DispatchQueue.main.async {
+                self.viewControllers?[4] = ProfileViewController(
+                    networkManager: self.networkManager,
+                    viewModel: profileViewModel)
+                
+                if let items = self.tabBar.items {
+                    items[4].title = "내 계정"
+                    items[4].image = UIImage(systemName: "person")
+                }
             }
         }
     }

@@ -8,7 +8,8 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    let networkManager: NetworkManageable
+    private let networkManager: NetworkManageable
+    private let viewModel: ProfileViewModel
     let navigationBar: UINavigationBar = {
         let bar = UINavigationBar()
         bar.barTintColor = .white
@@ -22,8 +23,9 @@ class ProfileViewController: UIViewController {
     let signOutButton = SignInOutButton()
     let profileImageViewSize: CGSize = CGSize(width: 100, height: 100)
     
-    init(networkManager: NetworkManageable) {
+    init(networkManager: NetworkManageable, viewModel: ProfileViewModel) {
         self.networkManager = networkManager
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
