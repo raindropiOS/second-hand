@@ -8,6 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
+    let networkManager: NetworkManageable
     let navigationBar: UINavigationBar = {
         let bar = UINavigationBar()
         bar.barTintColor = .white
@@ -20,6 +21,15 @@ class ProfileViewController: UIViewController {
     let nameLabel = UILabel()
     let signOutButton = SignInOutButton()
     let profileImageViewSize: CGSize = CGSize(width: 100, height: 100)
+    
+    init(networkManager: NetworkManageable) {
+        self.networkManager = networkManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         self.view.backgroundColor = .white
