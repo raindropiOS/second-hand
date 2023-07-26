@@ -40,6 +40,7 @@ class ProfileViewController: UIViewController {
         self.configureNameLabel()
         self.configureSignOutButton()
         self.layoutNavigationBar()
+        self.loadProfile()
     }
     
     private func setName(_ name: String) {
@@ -48,6 +49,14 @@ class ProfileViewController: UIViewController {
     
     private func setImage(_ uiImage: UIImage) {
         self.profileImageView.image = uiImage
+    }
+    
+    private func loadProfile() {
+        let imageUrlString = self.viewModel.profileImageUrlString
+        let userName = self.viewModel.userName
+        
+        self.profileImageView.loadImage(imageUrlString)
+        self.setName(userName)
     }
 }
 
