@@ -76,6 +76,18 @@ class KeychainManager: KeychainManageable {
             throw KeychainManagerError.failedToUpdateJsonWebToken
         }
     }
+    
+    func deleteJsonWebToken() async throws {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: self.appName,
+        ]
+        
+        let status = SecItemDelete(query as CFDictionary)
+        if status != errSecSuccess {
+            throw KeychainManagerError.failedToDeleteJsonWebToken
+        }
+    }
 }
 
 /// Json Web Token,
@@ -90,6 +102,7 @@ protocol KeychainManageable {
     func addJsonWebToken(_ jwt: JWT, email: String) async throws
     func readJsonWebToken() async throws -> JWT
     func updateJsonWebToken(email: String, newJwt: JWT) async throws
+    func deleteJsonWebToken() async throws
 }
 
 enum KeychainManagerError: Error {
@@ -102,4 +115,5 @@ enum KeychainManagerError: Error {
     /// JWT -> Data 인코딩 실패
     case failedToMakeTokenData
     case failedToUpdateJsonWebToken
+    case failedToDeleteJsonWebToken
 }
