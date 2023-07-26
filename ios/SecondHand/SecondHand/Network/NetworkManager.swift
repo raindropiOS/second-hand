@@ -130,7 +130,7 @@ extension NetworkManager {
     }
     
     /// GitHub OAuth 인증코드를 전달한 뒤, 이메일을 보내는 작업을 수행하는 메소드
-    func sendEmail(_ email: String, jwtAccessToken: String) async throws {
+    func sendEmail(_ email: String, jwtAccessToken: String) async throws -> (UserInfo, JWT) {
         do {
             let urlComponents = try self.makeUrlComponents(
                 baseUrl: self.baseUrlString,
@@ -144,7 +144,13 @@ extension NetworkManager {
                 ],
                 body: ["email": "\(email)"],
                 httpMethod: .post)
-            _ = try await self.fetchData(with: urlRequest)
+            let userData = try await self.fetchData(with: urlRequest)
+            let dto = try self.dataDecoder.decodeJSON(userData,
+                                                              DTO: GitHubOAuthResponseDTO.self)
+            let userInfo = UserInfo(name: dto.data.name, profileImageUrlString: dto.data.imgUrl)
+            let jwt = JWT(accessToken: dto.data.jwtToken.accessToken,
+                          refreshToken: dto.data.jwtToken.refreshToken)
+            return (userInfo, jwt)
         } catch {
             throw NetworkingError.failedToSendEmail
         }
@@ -155,7 +161,7 @@ protocol NetworkManageable {
     var jwt: JWT? { get set }
     func fetchProducts(query: [String: String]) async -> [Product]
     func presentGithubOAuthLoginScreen()
-    func sendEmail(_ email: String, jwtAccessToken: String) async throws
+    func sendEmail(_ email: String, jwtAccessToken: String) async throws -> (UserInfo, JWT)
 }
 
 enum NetworkingError: Error {
