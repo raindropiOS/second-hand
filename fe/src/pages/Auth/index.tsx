@@ -15,17 +15,19 @@ const Auth = () => {
     const getAccessToken = async () => {
       // Type Guard
       // TODO(hoonding): authorizationCode가 없을 경우 처리
-      // TODO(jayden): get이 아닌 post로 바꾸기
       if (!authorizationCode) return;
 
+      // FIXME(jayden): 일단 KAKAO부터 테스트. 추후에 GITHUB도 되게 수정할 것
       const {
         data: {
           data: { jwtToken },
         },
       } = await axiosFetch.post(AUTH.LOGIN, { authorizationCode });
+      const { accessToken, refreshToken } = jwtToken;
 
       if (!sessionStorage.getItem('accessToken')) {
-        sessionStorage.setItem('accessToken', jwtToken);
+        console.log('accessToken', accessToken);
+        sessionStorage.setItem('accessToken', accessToken);
       }
 
       const {
