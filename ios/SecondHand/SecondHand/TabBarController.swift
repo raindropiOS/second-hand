@@ -89,7 +89,7 @@ class TabBarController: UITabBarController {
     
     private func updateProfileView() {
         DispatchQueue.main.async {
-            self.viewControllers?[4] = ProfileViewController()
+            self.viewControllers?[4] = ProfileViewController(networkManager: self.networkManager)
             
             if let items = self.tabBar.items {
                 items[4].title = "내 계정"
