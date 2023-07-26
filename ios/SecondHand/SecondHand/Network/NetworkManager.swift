@@ -23,9 +23,9 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
             let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, query: [:])
             let urlRequest = try self.makeUrlRequest(urlComponents, header: [:], body: [:], httpMethod: .get)
             let data = try await fetchData(with: urlRequest)
-            let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self) as? Form
-            let products: [Product]? = productsForm?.data
-            return products ?? []
+            let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self)
+            let products: [Product] = productsForm.data
+            return products
         } catch {
             print("error : \(error)")
             return []
