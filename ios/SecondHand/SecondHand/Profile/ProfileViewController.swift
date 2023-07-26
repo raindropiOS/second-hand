@@ -58,9 +58,12 @@ class ProfileViewController: UIViewController {
         self.profileImageView.loadImage(imageUrlString)
         self.setName(userName)
     }
+    
+    @objc func signOutButtonTouched() {
+        UserInfoManager.shared.isSignedIn = false
+    }
 }
 
-// MARK: Autolayout
 extension ProfileViewController {
     private func configureSeparatorViewUnderNavigationBar() {
         self.view.addSubview(separatorViewUnderNavigationBar)
@@ -109,6 +112,8 @@ extension ProfileViewController {
             self.signOutButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             self.signOutButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
+        
+        self.signOutButton.addTarget(self, action: #selector(self.signOutButtonTouched), for: .touchUpInside)
     }
     
     private func layoutNavigationBar() {
