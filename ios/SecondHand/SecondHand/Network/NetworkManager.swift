@@ -155,6 +155,27 @@ extension NetworkManager {
             throw NetworkingError.failedToSendEmail
         }
     }
+    
+    func fetchProfileInfo() async throws -> UserInfo {
+        let urlComponents = try self.makeUrlComponents(
+            baseUrl: self.baseUrlString,
+            path: "/api/members",
+            query: [:])
+        let urlRequest = try self.makeUrlRequest(
+            urlComponents,
+            header: [
+                "Authorization": "Bearer\(self.jwt?.refreshToken)",
+                "Content-Type": "application/json",
+            ],
+            body: [:],
+            httpMethod: .get)
+        let userInfoData = try await self.fetchData(with: urlRequest)
+        let dto =
+        try dataDecoder.decodeJSON(userInfoData, DTO: UserInfoDto.self)
+        let userName = dto.data.name
+        let profileImageUrlString = dto.data.imgUrl
+        return UserInfo(name: userName, profileImageUrlString: profileImageUrlString)
+    }
 }
 
 protocol NetworkManageable {
@@ -162,6 +183,7 @@ protocol NetworkManageable {
     func fetchProducts(query: [String: String]) async -> [Product]
     func presentGithubOAuthLoginScreen()
     func sendEmail(_ email: String, jwtAccessToken: String) async throws -> (UserInfo, JWT)
+    func fetchProfileInfo() async throws -> UserInfo
 }
 
 enum NetworkingError: Error {
