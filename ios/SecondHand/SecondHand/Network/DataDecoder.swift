@@ -8,7 +8,7 @@
 import Foundation
 
 class DataDecoder: DataDecodable {
-    func decodeJSON<T: Decodable>(_ data: Data, DTO: T.Type) throws -> Decodable {
+    func decodeJSON<T: Decodable>(_ data: Data, DTO: T.Type) throws -> T {
         do {
             return try JSONDecoder().decode(DTO.self, from: data)
         } catch {
@@ -18,7 +18,7 @@ class DataDecoder: DataDecodable {
 }
 
 protocol DataDecodable {
-    func decodeJSON<T: Decodable>(_ data: Data, DTO: T.Type) throws -> Decodable
+    func decodeJSON<T: Decodable>(_ data: Data, DTO: T.Type) throws -> T
 }
 
 enum DecodingError: Error {
