@@ -9,7 +9,7 @@ import UIKit
 
 class NewSignInButton: UIView {
     private let label: UILabel = .init()
-    private let topBottomInset: CGFloat = 8.0
+    private let topBottomInset: CGFloat = 15.0
     private let leadingTrailingInset: CGFloat = 50
     private let imageLabelPadding: CGFloat = 10
     
