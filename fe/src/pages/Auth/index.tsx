@@ -26,8 +26,8 @@ const Auth = () => {
       const { accessToken, refreshToken } = jwtToken;
 
       if (!sessionStorage.getItem('accessToken')) {
-        console.log('accessToken', accessToken);
         sessionStorage.setItem('accessToken', accessToken);
+        sessionStorage.setItem('refreshToken', refreshToken);
       }
 
       const {
