@@ -5,11 +5,13 @@
 //  Created by 에디 on 2023/06/08.
 //
 
+import Combine
 import UIKit
 
 class ProfileViewController: UIViewController {
     private let networkManager: NetworkManageable
-    private let viewModel: ProfileViewModel
+    private var viewModel: ProfileViewModel
+    var cancellables = Set<AnyCancellable>()
     let navigationBar: UINavigationBar = {
         let bar = UINavigationBar()
         bar.barTintColor = .white
@@ -34,6 +36,7 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.view.backgroundColor = .white
         self.configureProfileImageView()
         self.configureSeparatorViewUnderNavigationBar()
@@ -41,6 +44,22 @@ class ProfileViewController: UIViewController {
         self.configureSignOutButton()
         self.layoutNavigationBar()
         self.loadProfile()
+        
+        UserInfoManager.shared.$userInfo
+            .sink { [weak self] newUserInfo in
+                if let userInfo = newUserInfo {
+                    let name = userInfo.name
+                    let profileImageUrlString = userInfo.profileImageUrlString
+                    let viewModel = ProfileViewModel(profileImageUrlString: profileImageUrlString,
+                                                     userName: name)
+                    self?.updateViewModel(viewModel)
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func updateViewModel(_ viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
     }
     
     private func setName(_ name: String) {

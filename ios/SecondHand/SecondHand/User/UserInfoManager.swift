@@ -12,5 +12,5 @@ import Foundation
 class UserInfoManager: URLRequestProducible, URLComponentsProducible {
     static let shared = UserInfoManager()
     @Published var isSignedIn = false
-    var userInfo: UserInfo?
+    @Published var userInfo: UserInfo?
 }
