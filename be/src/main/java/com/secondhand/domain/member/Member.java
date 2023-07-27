@@ -50,27 +50,28 @@ public class Member {
 
 
     //Ouath로그인
-    public static Member create(OAuthInfoResponse memberInfo, MemberProfile memberProfile) {
+    public static Member create(OAuthInfoResponse memberInfo, MemberProfile memberProfile, Town mainTown) {
         return Member.builder()
                 .loginName(memberInfo.getNickname())
                 .imgUrl(memberInfo.getAvatarUrl())
                 .memberProfile(memberProfile)
                 .oauthProvider(memberInfo.getOAuthProvider().name())
+                .mainTown(mainTown)
                 .build();
     }
 
     //일반로그인
     public static Member create(String loginName, String oauthProvider,
-                                MemberProfile memberProfile, MemberPassword memberPassword) {
+                                MemberProfile memberProfile, MemberPassword memberPassword, Town mainTown) {
         return Member.builder()
                 .loginName(loginName)
                 .oauthProvider(oauthProvider)
                 .memberProfile(memberProfile)
                 .memberPassword(memberPassword)
+                .mainTown(mainTown)
                 .build();
     }
 
-    //일반로그인
     public static Member toEntity(String loginName, String oauthProvider, String imgUrl,
                                   MemberProfile memberProfile, MemberPassword memberPassword) {
         return Member.builder()
