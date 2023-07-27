@@ -10,6 +10,7 @@ const Auth = () => {
   const navigate = useNavigate();
   const currentURL = new URL(window.location.href);
   const authorizationCode = currentURL.searchParams.get('code');
+  let ignore = false;
 
   useEffect(() => {
     const getAccessToken = async () => {
@@ -29,7 +30,6 @@ const Auth = () => {
         sessionStorage.setItem('accessToken', accessToken);
         sessionStorage.setItem('refreshToken', refreshToken);
       }
-
       const {
         data: {
           data: { name, imgUrl },
@@ -42,7 +42,11 @@ const Auth = () => {
       navigate(PATH.HOME.DEFAULT);
     };
 
-    getAccessToken();
+    if (!ignore) getAccessToken();
+
+    return () => {
+      ignore = true;
+    };
   }, [window.location]);
 
   return <Skeleton />;
