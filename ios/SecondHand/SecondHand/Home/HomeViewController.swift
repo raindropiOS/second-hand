@@ -9,6 +9,7 @@ import Combine
 import UIKit
 
 /// 상품 목록 화면
+/// 로그인 상태에서만 상품목록을 가져오도록 ProductRepository의 loadProducts 메소드가 작성되었음.
 class HomeViewController: UIViewController {
     let tableView = UITableView()
     let productListViewModel: ProductListViewModel

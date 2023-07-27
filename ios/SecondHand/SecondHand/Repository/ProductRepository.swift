@@ -30,8 +30,10 @@ class ProductRepository: Repository, ObservableObject {
     }
     
     func loadProducts(query: [String: String]) async {
-        let products = await networkManagerDelegate.fetchProducts(query: query)
-        self.products = products
+        if UserInfoManager.shared.isSignedIn == true {
+            let products = await networkManagerDelegate.fetchProducts(query: query)
+            self.products = products
+        }
     }
     
     func readAll() -> [Product] {
