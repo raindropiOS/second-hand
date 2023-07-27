@@ -8,7 +8,7 @@
 import Foundation
 import UIKit.UIImage
 
-class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProducible {
+class NetworkManager: NetworkManageable, URLRequestable, URLRequestProducible, URLComponentsProducible {
     static let shared = NetworkManager()
     private let dataDecoder: DataDecodable = DataDecoder()
     private let baseUrlString = Bundle.main.infoDictionary?["baseUrl"] as? String ?? ""
@@ -29,20 +29,6 @@ class NetworkManager: NetworkManageable, URLRequestProducible, URLComponentsProd
         } catch {
             print("error : \(error)")
             return []
-        }
-    }
-    
-    private func fetchData(with urlRequest: URLRequest) async throws -> Data {
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw URLError(.badServerResponse)
-        }
-        
-        let status = httpResponse.statusCode
-        if status >= 200 && status < 300 {
-            return data
-        } else {
-            throw NSError(domain: "com.SecondHand.fetchDataError", code: status, userInfo: nil)
         }
     }
     
