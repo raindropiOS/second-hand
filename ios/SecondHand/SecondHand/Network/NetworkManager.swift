@@ -26,8 +26,12 @@ class NetworkManager: NetworkManageable, URLRequestable, URLRequestProducible, U
     
     func fetchProducts(query: [String: String]) async -> [Product] {
         do {
-            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: self.basePath, query: [:])
-            let urlRequest = try self.makeUrlRequest(urlComponents, header: [:], body: [:], httpMethod: .get)
+            guard let jwt = self.jwt else { throw NetworkingError.jwtIsNil }
+            let urlComponents = try self.makeUrlComponents(baseUrl: baseUrlString, path: "/api/products", query: [:])
+            let urlRequest = try self.makeUrlRequest(urlComponents, header: [
+                "Authorization": "Bearer\(jwt.accessToken)",
+                "Content-Type": "application/json",
+            ], body: [:], httpMethod: .get)
             let data = try await fetchData(with: urlRequest)
             let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self)
             let products: [Product] = productsForm.data
