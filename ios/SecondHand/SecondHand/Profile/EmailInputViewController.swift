@@ -17,8 +17,8 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
         
         return inputView
     }()
-    private let signUpButton: NewSignInButton = {
-        let button = NewSignInButton()
+    private let signUpButton: SignInOutButton = {
+        let button = SignInOutButton()
         return button
     }()
     
