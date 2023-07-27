@@ -17,10 +17,8 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
         
         return inputView
     }()
-    private let signUpButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("회원가입 완료", for: .normal)
-        button.backgroundColor = .orange
+    private let signUpButton: NewSignInButton = {
+        let button = NewSignInButton()
         return button
     }()
     
@@ -81,7 +79,7 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
             self.signUpButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -self.topBottomPadding)
         ])
         
-        self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
+        self.signUpButton.configure(text: "이메일 입력 완료", backgroundColor: UIColor(named: "orange"), target: self, action: #selector(signUpButtonTouched))
     }
     
     @objc func signUpButtonTouched() {
