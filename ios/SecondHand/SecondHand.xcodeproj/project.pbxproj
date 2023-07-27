@@ -710,7 +710,7 @@
 		};
 		8F7C71552A2DD79B00C10206 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E499461128D922FE59459A04 /* Pods-SecondHand.debug.xcconfig */;
+			baseConfigurationReference = 8F0F6B562A41FE2100F8F1D5 /* Pods-SecondHand.secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -741,7 +741,7 @@
 		};
 		8F7C71562A2DD79B00C10206 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33BCF5B7409A53165064EB3E /* Pods-SecondHand.release.xcconfig */;
+			baseConfigurationReference = 8F0F6B562A41FE2100F8F1D5 /* Pods-SecondHand.secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
