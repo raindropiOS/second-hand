@@ -51,7 +51,6 @@
 		8FA8F3332A413D7D002C1828 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8F3322A413D7D002C1828 /* Form.swift */; };
 		8FA8F3352A413F64002C1828 /* CountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8F3342A413F64002C1828 /* CountInfo.swift */; };
 		8FCAA43B2A35D04C0015FE4D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43A2A35D04C0015FE4D /* InputView.swift */; };
-		8FCAA43D2A35D08A0015FE4D /* SignInOutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43C2A35D08A0015FE4D /* SignInOutButton.swift */; };
 		8FCAA43F2A35D21D0015FE4D /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */; };
 		8FCAA48B2A36397D0015FE4D /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */; };
 		8FD6BF2A2A664F8E00C338FB /* EmailInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD6BF292A664F8E00C338FB /* EmailInputViewController.swift */; };
@@ -108,7 +107,6 @@
 		8FA8F3322A413D7D002C1828 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		8FA8F3342A413F64002C1828 /* CountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountInfo.swift; sourceTree = "<group>"; };
 		8FCAA43A2A35D04C0015FE4D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
-		8FCAA43C2A35D08A0015FE4D /* SignInOutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInOutButton.swift; sourceTree = "<group>"; };
 		8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		8FD6BF292A664F8E00C338FB /* EmailInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailInputViewController.swift; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 				8F7C71782A31C37A00C10206 /* SignInViewController.swift */,
 				8FD6BF292A664F8E00C338FB /* EmailInputViewController.swift */,
 				8FCAA43A2A35D04C0015FE4D /* InputView.swift */,
-				8FCAA43C2A35D08A0015FE4D /* SignInOutButton.swift */,
 				8FCAA43E2A35D21D0015FE4D /* SeparatorView.swift */,
 				8FCAA48A2A36397D0015FE4D /* ProfileImageView.swift */,
 				8F9EC5912A6FA0E50097BDBB /* SignInButton.swift */,
@@ -476,7 +473,6 @@
 				8F0F6BD52A58401900F8F1D5 /* ImageCacheManager.swift in Sources */,
 				8F0F6B5F2A42C7E900F8F1D5 /* DataDecoder.swift in Sources */,
 				8F7C71462A2DD79900C10206 /* SceneDelegate.swift in Sources */,
-				8FCAA43D2A35D08A0015FE4D /* SignInOutButton.swift in Sources */,
 				8FD6BF2A2A664F8E00C338FB /* EmailInputViewController.swift in Sources */,
 				8F9EC5922A6FA0E50097BDBB /* SignInButton.swift in Sources */,
 				8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */,
