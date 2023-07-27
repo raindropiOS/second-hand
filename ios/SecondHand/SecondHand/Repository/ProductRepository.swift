@@ -16,7 +16,7 @@ class ProductRepository: Repository, ObservableObject {
     private let networkManagerDelegate: NetworkManageable
     private var subscriptions = Set<AnyCancellable>()
     
-    @Published private var products: [Product] = []
+    @Published var products: [Product] = []
     
     init(networkManagerDelegate: NetworkManageable) {
         self.networkManagerDelegate = networkManagerDelegate

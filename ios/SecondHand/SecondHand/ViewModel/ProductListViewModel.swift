@@ -24,10 +24,9 @@ class ProductListViewModel: ProductListRepresentable {
         let productViewModels = self.convertProductToProductViewModel(products)
         self.productViewModels = productViewModels
         
-        self.productRepository.objectWillChange
-            .sink { _ in
-                let products = self.readProductList()
-                let productViewModels = self.convertProductToProductViewModel(products)
+        self.productRepository.$products
+            .sink { newProducts in
+                let productViewModels = self.convertProductToProductViewModel(newProducts)
                 self.productViewModels = productViewModels
             }
             .store(in: &subscriptions)
