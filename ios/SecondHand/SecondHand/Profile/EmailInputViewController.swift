@@ -91,13 +91,9 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
                     // 이메일 전달 후 새로 받은 유저 정보 및 JWT
                     let jwt = dataTuple.1
                     
-                    do {
-                        // 동일한 email로 저장된 keychain 아이템이 있는 경우
-                        try await self.keychainManager.addJsonWebToken(jwt, email: email)
-                    } catch {
-                        // 동일한 email로 저장된 keychain 아이템이 없는 경우
-                        try await self.keychainManager.updateJsonWebToken(email: email, newJwt: jwt)
-                    }
+                    try await self.keychainManager.deleteJsonWebToken()
+                    try await self.keychainManager.addJsonWebToken(jwt, email: email)
+                    UserInfoManager.shared.isSignedIn = true
                 } catch {
                     print("error: \(error)")
                 }
