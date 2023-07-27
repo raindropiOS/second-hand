@@ -5,6 +5,7 @@
 //  Created by 에디 on 2023/06/21.
 //
 
+import Combine
 import Foundation
 
 class ProductRepository: Repository, ObservableObject {
@@ -13,11 +14,19 @@ class ProductRepository: Repository, ObservableObject {
     
     /// Repository Layer와 Network Layer 분리를 위한 delegate 및 extension으로 network 메소드 선언하였습니다.
     private let networkManagerDelegate: NetworkManageable
+    private var subscriptions = Set<AnyCancellable>()
     
     @Published private var products: [Product] = []
     
     init(networkManagerDelegate: NetworkManageable) {
         self.networkManagerDelegate = networkManagerDelegate
+        
+        UserInfoManager.shared.$isSignedIn.sink { _ in
+            Task {
+                await self.loadProducts(query: [:])
+            }
+        }
+        .store(in: &subscriptions)
     }
     
     func loadProducts(query: [String: String]) async {
