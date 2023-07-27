@@ -100,7 +100,7 @@ extension SignInViewController {
         let height = self.view.frame.height
         let padding = self.topBottomPadding * height
         
-        self.signInButton.configure(imageName: "github-logo", text: "GitHub로 로그인", backgroundColor: UIColor(named: "black"), target: self, action: #selector(loginButtonAction))
+        self.signInButton.configure(imageName: "github-mark-white", text: "GitHub로 로그인", backgroundColor: UIColor(named: "black"), target: self, action: #selector(loginButtonAction))
         
         self.signUpButton.setTitle("회원가입", for: .normal)
         self.signUpButton.setTitleColor(.black, for: .normal)
