@@ -69,14 +69,18 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func configureSignUpButton() {
+        let height = self.view.frame.height
+        let padding = (60/height) * height
+        let leadingBottomPadding: CGFloat = 50
+        
         self.view.addSubview(self.signUpButton)
         self.signUpButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            self.signUpButton.widthAnchor.constraint(equalToConstant: 330),
-            self.signUpButton.heightAnchor.constraint(equalToConstant: 40),
+            self.signUpButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             self.signUpButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.signUpButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -self.topBottomPadding)
+            self.signUpButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: leadingBottomPadding),
+            self.signUpButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -leadingBottomPadding),
         ])
         
         self.signUpButton.configure(text: "이메일 입력 완료", backgroundColor: UIColor(named: "orange"), target: self, action: #selector(signUpButtonTouched))
