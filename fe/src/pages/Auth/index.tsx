@@ -10,24 +10,26 @@ const Auth = () => {
   const navigate = useNavigate();
   const currentURL = new URL(window.location.href);
   const authorizationCode = currentURL.searchParams.get('code');
+  let ignore = false;
 
   useEffect(() => {
     const getAccessToken = async () => {
       // Type Guard
       // TODO(hoonding): authorizationCode가 없을 경우 처리
-      // TODO(jayden): get이 아닌 post로 바꾸기
       if (!authorizationCode) return;
 
+      // FIXME(jayden): 일단 KAKAO부터 테스트. 추후에 GITHUB도 되게 수정할 것
       const {
         data: {
           data: { jwtToken },
         },
       } = await axiosFetch.post(AUTH.LOGIN, { authorizationCode });
+      const { accessToken, refreshToken } = jwtToken;
 
       if (!sessionStorage.getItem('accessToken')) {
-        sessionStorage.setItem('accessToken', jwtToken);
+        sessionStorage.setItem('accessToken', accessToken);
+        sessionStorage.setItem('refreshToken', refreshToken);
       }
-
       const {
         data: {
           data: { name, imgUrl },
@@ -40,7 +42,11 @@ const Auth = () => {
       navigate(PATH.HOME.DEFAULT);
     };
 
-    getAccessToken();
+    if (!ignore) getAccessToken();
+
+    return () => {
+      ignore = true;
+    };
   }, [window.location]);
 
   return <Skeleton />;

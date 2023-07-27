@@ -17,6 +17,7 @@ interface Product {
   price: number;
   countInfo: { chatCount: number; likeCount: number };
   imgUrl: string;
+  isMine: boolean;
 }
 
 interface SalesHistoryMainProps {
@@ -36,7 +37,7 @@ const SalesHistoryMain = ({ products, observerTarget }: SalesHistoryMainProps) =
             {...product}
             key={product.productId}
             price={ConvertPriceFormat(product.price)}
-            isCurrentUserItem={true}
+            isCurrentUserItem={product.isMine}
             onItemClick={() => navigate(`${PATH.PRODUCT.DETAIL(product.productId)}`)}
           />
         ))}

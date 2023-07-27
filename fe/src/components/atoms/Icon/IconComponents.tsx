@@ -16,9 +16,11 @@ import { ReactComponent as plus } from '@assets/Icons/plus.svg';
 import { ReactComponent as search } from '@assets/Icons/search.svg';
 import { ReactComponent as soldList } from '@assets/Icons/soldList.svg';
 import { ReactComponent as townSetting } from '@assets/Icons/townSetting.svg';
+import { ReactComponent as kakao } from '@assets/Icons/kakao.svg';
 import { ReactComponent as github } from '@assets/Icons/github.svg';
 import { ReactComponent as checkmark } from '@assets/Icons/checkmark.svg';
 import { ReactComponent as fillHeart } from '@assets/Icons/fillHeart.svg';
+import { ReactComponent as chevronUp } from '@assets/Icons/chevronUp.svg';
 
 const IconComponents = {
   account,
@@ -39,9 +41,11 @@ const IconComponents = {
   search,
   soldList,
   townSetting,
+  kakao,
   github,
   checkmark,
   fillHeart,
+  chevronUp,
 };
 
 export { IconComponents };

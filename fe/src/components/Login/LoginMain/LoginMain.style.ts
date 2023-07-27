@@ -19,22 +19,30 @@ const $ProfileImage = styled.div`
   border-radius: 50%;
 `;
 
-const $LoginButton = styled.button`
+const $LoginButtonWrapper = styled.div`
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 144px;
+`;
+
+const $LoginButton = styled.button<{ color: string; backgroundColor: string }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 8px 32px;
   gap: 12px;
-  margin-top: 160px;
   width: 304px;
   height: 56px;
-  background: #000000;
+  background: ${props => props.backgroundColor};
   border-radius: 10px;
 
   font-weight: 700;
   font-size: 20px;
-  color: #ffffff;
+  color: ${props => props.color};
 `;
 
-export { $LoginMain, $LoginButton, $ProfileImage };
+export { $LoginMain, $LoginButtonWrapper, $LoginButton, $ProfileImage };

@@ -7,7 +7,6 @@ import { $Template } from '@styles/PageTemplate.style';
 import DetailHeader from '@components/Detail/DetailHeader';
 import DetailMain from '@components/Detail/DetailMain';
 import DetailTabBar from '@molecules/TabBars/DetailTabBar';
-import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 
 import { DetailProductType } from '@type/productsType';
 import Ready from '@pages/Ready';
@@ -17,7 +16,7 @@ const Detail = () => {
   const params = useParams();
   const { productId } = params;
   const [productDetail, setProductDetail] = useState<DetailProductType>();
-  const { error, isLoading, refetch } = useProductDetailData(
+  const { error, isLoading } = useProductDetailData(
     productId as string,
     setProductDetail as React.Dispatch<React.SetStateAction<DetailProductType>>
   );
@@ -32,7 +31,7 @@ const Detail = () => {
     return (
       <$Template isDetail={true}>
         <DetailHeader imgUrls={productDetail && productDetail.imgUrls} isMine={productDetail && productDetail.isMine} />
-        <DetailMain productDetail={productDetail} />
+        <DetailMain productDetail={productDetail} handleRefreshData={handleRefreshData} />
         <DetailTabBar
           price={productDetail && productDetail.price}
           isLiked={productDetail && productDetail.isLiked}

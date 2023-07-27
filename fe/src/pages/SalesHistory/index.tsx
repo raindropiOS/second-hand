@@ -4,25 +4,14 @@ import useSaleHistoryProductsData from '@apis/api/saleHistory';
 
 import SalesHistoryHeader from '@components/SalesHistory/SalesHistoryHeader';
 import SalesHistoryMain from '@components/SalesHistory/SalesHistoryMain';
-import mockAxiosFetch from '@apis/instances/mockAxiosFetch';
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
 import { $Template } from '@styles/PageTemplate.style';
 import { Outlet } from 'react-router-dom';
 import Skeleton from '@pages/Loading/Skeleton';
-
-interface Product {
-  productId: number;
-  title: string;
-  town: { townId: number; name: string };
-  createdAt: string;
-  status: number;
-  price: number;
-  countInfo: { chatCount: number; likeCount: number };
-  imgUrl: string;
-}
+import { ProductType } from '@type/productsType';
 
 const SalesHistory = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [status, setStatus] = useState(0);
   const [isPageUpdated, setIsPageUpdated] = useState(false);

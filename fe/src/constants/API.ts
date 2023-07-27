@@ -39,10 +39,12 @@ const PRODUCTS = Object.freeze({
 const TOWNS = Object.freeze({});
 
 const AUTH = Object.freeze({
-  LOGIN: `/${API_TYPE.AUTH}/login`,
+  LOGIN: `/${API_TYPE.AUTH}/kakao/login`,
   MEMBERS: `/${API_TYPE.MEMBERS}`,
   GITHUB_LOGIN_URL: (clientId: string, scope: string) =>
     `https://github.com/login/oauth/authorize?response_type=code&client_id=${clientId}&scope=${scope}`,
+  KAKAO_LOGIN_URL: (clientId: string) =>
+    `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${process.env.REACT_APP_OAUTH_KAKAO_CLIENT_API_URL}`,
 });
 
 const KAKAO = Object.freeze({
