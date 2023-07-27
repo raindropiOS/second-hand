@@ -5,6 +5,7 @@ import com.secondhand.web.dto.updatedto.CountInfoDTO;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class ProductListResponse {
     private Long productId;
     private String title;
     private TownResponse town;
-    private LocalDateTime createdAt;
+    private String createdAt;
     private Integer status;
     private Integer price;
     private CountInfoDTO countInfo;
@@ -28,7 +29,7 @@ public class ProductListResponse {
         this.productId = product.getId();
         this.title = product.getTitle();
         this.town = new TownResponse(product.getTowns());
-        this.createdAt = product.getCreatedAt();
+        this.createdAt = product.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         this.status = product.getStatus().getValue();
         this.price = product.getPrice();
         this.countInfo = new CountInfoDTO(0, product.getCountLike());
