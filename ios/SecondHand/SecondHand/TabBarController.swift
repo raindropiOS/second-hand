@@ -47,7 +47,7 @@ class TabBarController: UITabBarController {
     
     private func setTabViewControllers() {
         let pastTimeCalculator: PastTimeCalculable = PastTimeCalculator()
-        let productListViewModel = ProductListViewModel(productRepository: ProductRepository(), pastTimeCalculator: pastTimeCalculator)
+        let productListViewModel = ProductListViewModel(productRepository: ProductRepository(networkManagerDelegate: self.networkManager), pastTimeCalculator: pastTimeCalculator)
         
         let homeViewController = UINavigationController(rootViewController: HomeViewController(productListViewModel: productListViewModel))
         let salesLogViewController = SalesLogViewController()
