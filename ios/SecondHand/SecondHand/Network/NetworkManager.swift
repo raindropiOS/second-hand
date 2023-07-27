@@ -34,7 +34,7 @@ class NetworkManager: NetworkManageable, URLRequestable, URLRequestProducible, U
             ], body: [:], httpMethod: .get)
             let data = try await fetchData(with: urlRequest)
             let productsForm = try dataDecoder.decodeJSON(data, DTO: Form.self)
-            let products: [Product] = productsForm.data
+            let products: [Product] = productsForm.data.products
             return products
         } catch {
             print("error : \(error)")
