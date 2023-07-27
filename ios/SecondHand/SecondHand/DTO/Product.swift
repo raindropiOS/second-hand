@@ -12,7 +12,9 @@ struct Product: Decodable {
     let title: String
     let town: Town
     let createdAt: String
-    let status: String
+    let isLiked: Bool
+    let isMine: Bool
+    let status: Int
     let price: Int
     let countInfo: CountInfo
     let imgUrl: String
@@ -20,6 +22,6 @@ struct Product: Decodable {
 
 extension Product {
     var isReserved: Bool {
-        self.status == "예약중"
+        self.status == 0
     }
 }
