@@ -1,11 +1,24 @@
 import styled, { css } from 'styled-components';
 
 const $ModalLayout = styled.section`
+  position: absolute;
+  bottom: 0;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   width: 100%;
-  gap: 8px;
+  height: 100%;
   background-color: ${({ theme }) => theme.COLORS.NEUTRAL.OVERLAY.DEFAULT};
+`;
+
+const $ButtonsLayout = styled.div`
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 `;
 
 const commonButtonStyle = css`
@@ -14,17 +27,14 @@ const commonButtonStyle = css`
   align-items: center;
 
   // TODO(hoonding): width 바꿔야함.
-  width: 377px;
+  width: 100%;
+  max-width: 767px;
   height: 61px;
   background-color: transparent;
   color: ${({ theme }) => theme.COLORS.SYSTEM.DEFAULT};
   font-size: ${({ theme }) => theme.FONT_TOKEN.TITLE_3.FONT_SIZE};
   font-weight: ${({ theme }) => theme.FONT_TOKEN.TITLE_3.FONT_WEIGHT};
   border-bottom: 0.3px solid ${({ theme }) => theme.COLORS.NEUTRAL.BORDER.STRONG};
-
-  &:hover {
-    opacity: 0.8;
-  }
 `;
 
 const $CancelButton = styled.button`
@@ -40,7 +50,8 @@ const $ModalButtons = styled.div`
   display: flex;
   flex-direction: column-reverse;
   overflow: hidden;
-  width: 377px;
+  width: 100%;
+  max-width: 767px;
   border-radius: 13px;
   background-color: ${({ theme }) => theme.COLORS.SYSTEM.BACKGROUND.WEAK};
 `;
@@ -53,6 +64,8 @@ const $ModalFirstButton = styled.button`
 
 const $ModalButton = styled.button`
   ${commonButtonStyle};
+
+  opacity: 0.8;
 `;
 
-export { $ModalLayout, $CancelButton, $ModalButtons, $ModalFirstButton, $ModalButton };
+export { $ModalLayout, $ButtonsLayout, $CancelButton, $ModalButtons, $ModalFirstButton, $ModalButton };

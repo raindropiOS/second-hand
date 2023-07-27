@@ -8,6 +8,8 @@ export interface ProductType {
   price: number;
   countInfo: { chatCount: number; likeCount: number };
   imgUrl: string;
+  isLiked: boolean;
+  isMine: boolean;
 }
 
 export interface LikeProductsType {

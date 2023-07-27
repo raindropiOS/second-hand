@@ -20,6 +20,7 @@ import { ReactComponent as kakao } from '@assets/Icons/kakao.svg';
 import { ReactComponent as github } from '@assets/Icons/github.svg';
 import { ReactComponent as checkmark } from '@assets/Icons/checkmark.svg';
 import { ReactComponent as fillHeart } from '@assets/Icons/fillHeart.svg';
+import { ReactComponent as chevronUp } from '@assets/Icons/chevronUp.svg';
 
 const IconComponents = {
   account,
@@ -44,6 +45,7 @@ const IconComponents = {
   github,
   checkmark,
   fillHeart,
+  chevronUp,
 };
 
 export { IconComponents };
