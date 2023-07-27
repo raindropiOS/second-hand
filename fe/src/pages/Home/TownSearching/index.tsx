@@ -5,8 +5,10 @@ import TownSearchingHeader from '@components/Home/TownSearching/TownSearchingHea
 import TownSearchingMain from '@components/Home/TownSearching/TownSearchingMain';
 import TownSearchingFooter from '@components/Home/TownSearching/TownSearchingFooter';
 import axiosFetch from '@apis/instances/axiosFetch';
+
 import DialogPortal from '@components/portals/DialogPortal';
 import Dialog from '@molecules/Dialog';
+
 
 interface Town {
   townId: number;
@@ -52,6 +54,7 @@ const TownSearching = () => {
         method: 'GET',
       });
       const data = await response.data;
+
       const isSuccess = data.success;
       const towns = data.data;
 
