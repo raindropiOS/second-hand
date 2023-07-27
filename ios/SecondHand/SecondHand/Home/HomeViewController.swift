@@ -5,13 +5,16 @@
 //  Created by 에디 on 2023/06/08.
 //
 
+import Combine
 import UIKit
+
 /// 상품 목록 화면
 class HomeViewController: UIViewController {
     let tableView = UITableView()
-    let productListViewModel: ProductListRepresentable
+    let productListViewModel: ProductListViewModel
+    private var cancellables = Set<AnyCancellable>()
     
-    init(productListViewModel: ProductListRepresentable) {
+    init(productListViewModel: ProductListViewModel) {
             self.productListViewModel = productListViewModel
             super.init(nibName: nil, bundle: nil)
         }
@@ -31,12 +34,20 @@ class HomeViewController: UIViewController {
         self.setTableViewLayout()
         
         Task {
+            // Authorization code 없이 상품 목록을 가져올 수 있도록 API 변경시 사용될 코드
 //            await self.productListViewModel.loadProductList(query: [:]) {
 //                DispatchQueue.main.async {
 //                    self.tableView.reloadData()
 //                }
 //            }
         }
+        
+        self.productListViewModel.$productViewModels.sink { _ in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        .store(in: &self.cancellables)
     }
     
     private func setTableViewLayout() {
