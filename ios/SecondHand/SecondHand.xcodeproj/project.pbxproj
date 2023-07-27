@@ -21,6 +21,7 @@
 		8F26E76E2A70E652003C2918 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F26E76D2A70E652003C2918 /* ProfileViewModel.swift */; };
 		8F26E7702A70EAA0003C2918 /* UserInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F26E76F2A70EAA0003C2918 /* UserInfoDto.swift */; };
 		8F26E7742A71FD1D003C2918 /* NewSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F26E7732A71FD1D003C2918 /* NewSignInButton.swift */; };
+		8F26E7782A725D80003C2918 /* URLRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F26E7772A725D80003C2918 /* URLRequestable.swift */; };
 		8F2CA02F2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA02E2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift */; };
 		8F2CA0882A5E85790011C337 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA0872A5E85790011C337 /* KeychainManager.swift */; };
 		8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71432A2DD79900C10206 /* AppDelegate.swift */; };
@@ -74,6 +75,7 @@
 		8F26E76D2A70E652003C2918 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		8F26E76F2A70EAA0003C2918 /* UserInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoDto.swift; sourceTree = "<group>"; };
 		8F26E7732A71FD1D003C2918 /* NewSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSignInButton.swift; sourceTree = "<group>"; };
+		8F26E7772A725D80003C2918 /* URLRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestable.swift; sourceTree = "<group>"; };
 		8F2CA02E2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubOAuthResponseDTO.swift; sourceTree = "<group>"; };
 		8F2CA0872A5E85790011C337 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		8F7C71402A2DD79900C10206 /* SecondHand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondHand.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +234,7 @@
 				8F0F6B5E2A42C7E900F8F1D5 /* DataDecoder.swift */,
 				8F984BFE2A617B4000773DD4 /* URLComponentsProducible.swift */,
 				8F0F6B5C2A42C6F000F8F1D5 /* URLRequestProducible.swift */,
+				8F26E7772A725D80003C2918 /* URLRequestable.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				8F7C716D2A319EE100C10206 /* HomeViewController.swift in Sources */,
 				8FA8F2E62A3DCC12002C1828 /* ImageLabelStackView.swift in Sources */,
 				8F7C71652A30488B00C10206 /* FontStyle.swift in Sources */,
+				8F26E7782A725D80003C2918 /* URLRequestable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
