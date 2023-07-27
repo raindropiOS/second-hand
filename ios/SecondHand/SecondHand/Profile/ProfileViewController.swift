@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController {
     let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     let profileImageView = ProfileImageView()
     let nameLabel = UILabel()
-    let signOutButton = SignInOutButton()
+    let signOutButton = NewSignInButton()
     let profileImageViewSize: CGSize = CGSize(width: 100, height: 100)
     
     init(networkManager: NetworkManageable, viewModel: ProfileViewModel) {
@@ -102,18 +102,18 @@ extension ProfileViewController {
     private func configureSignOutButton() {
         let height = self.view.frame.height
         let padding = (60/height) * height
-        self.signOutButton.setTitle("로그아웃", for: .normal)
-        self.signOutButton.setBackgroundColor(UIColor(named: "orange"))
+        let leadingBottomPadding: CGFloat = 50
+        self.signOutButton.configure(text: "로그아웃", backgroundColor: UIColor(named: "orange"), target: self, action: #selector(signOutButtonTouched))
 
         self.view.addSubview(self.signOutButton)
         
         self.signOutButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.signOutButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
-            self.signOutButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            self.signOutButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.signOutButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: leadingBottomPadding),
+            self.signOutButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -leadingBottomPadding),
         ])
-        
-        self.signOutButton.addTarget(self, action: #selector(self.signOutButtonTouched), for: .touchUpInside)
     }
     
     private func layoutNavigationBar() {
