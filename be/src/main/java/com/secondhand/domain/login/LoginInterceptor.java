@@ -1,8 +1,12 @@
 package com.secondhand.domain.login;
 
 import com.secondhand.domain.member.Member;
+import com.secondhand.domain.member.MemberToken;
+import com.secondhand.domain.member.MemberTokenRepository;
 import com.secondhand.exception.MemberNotFoundException;
 import com.secondhand.domain.member.MemberRepository;
+import com.secondhand.exception.token.RefreshTokenNotFoundException;
+import com.secondhand.exception.token.TokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -22,6 +26,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private final AuthorizationExtractor authExtractor;
     private final JwtTokenProvider jwtService;
     private final MemberRepository memberRepository;
+    private final MemberTokenRepository memberTokenRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -38,6 +43,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                     id = jwtService.getSubject(token); // 액세스 토큰에서 사용자 ID 추출
                 } else {
                     id = jwtService.getSubjectRefreshSecretKey(token); // 리프레시 토큰에서 사용자 ID 추출
+                    MemberToken memberToken = memberTokenRepository.findByMemberId(id).orElseThrow(RefreshTokenNotFoundException::new);
+                    if (!memberToken.getMemberToken().equals(token)) {
+                        log.debug("DB에있는 유저 토큰과 header에 있는 토큰 비교 = {}", memberToken.getMemberToken().equals(token));
+                        return false;
+                    }
                 }
 
                 log.debug("토큰으로 부터 받아온 userId = {}", id);
