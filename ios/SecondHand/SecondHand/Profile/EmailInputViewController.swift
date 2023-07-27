@@ -91,7 +91,6 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
                 do {
                     let dataTuple = try await self.networkManager.sendEmail(email, jwtAccessToken: temporarySavedjwt.refreshToken)
                     // 이메일 전달 후 새로 받은 유저 정보 및 JWT
-                    let userInfo = dataTuple.0
                     let jwt = dataTuple.1
                     
                     do {
