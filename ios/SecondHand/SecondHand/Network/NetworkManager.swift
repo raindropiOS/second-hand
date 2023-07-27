@@ -113,7 +113,7 @@ extension NetworkManager {
         return value
     }
     
-    func sendAuthorizationCode(_ code: String) async throws -> Decodable {
+    func sendAuthorizationCode(_ code: String) async throws -> GitHubOAuthResponseDTO {
         let body = ["authorizationCode": "\(code)"]
         let header = ["Content-Type": "application/json"]
         

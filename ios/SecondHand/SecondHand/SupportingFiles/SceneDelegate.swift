@@ -29,9 +29,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             Task {
                 do {
                     let authorizationCode = try networkManager.getQueryItemValue(urlString: url.absoluteString, key: "code")
-                    let responseData = try await networkManager.sendAuthorizationCode(authorizationCode)
-                    if let dto = responseData as? GitHubOAuthResponseDTO {
-                        let jwtToken = dto.data.jwtToken
+                    let responseDto = try await networkManager.sendAuthorizationCode(authorizationCode)
+                        let jwtToken = responseDto.data.jwtToken
                         let accessToken = jwtToken.accessToken
                         let refreshToken = jwtToken.refreshToken
                         let jwt = JWT(accessToken: accessToken, refreshToken: refreshToken)
@@ -46,9 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                 }
                             }
                         }
-                    } else {
-                        print("failed to type cast responseData while receiving jwt token")
-                    }
+                    
                 } catch {
                     print("error : \(error)")
                 }
