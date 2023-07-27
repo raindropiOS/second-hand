@@ -13,7 +13,7 @@ class SignInButton: UIView {
     private let topBottomInset: CGFloat = 8.0
     private let leadingTrailingInset: CGFloat = 50
     private let imageLabelPadding: CGFloat = 10
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
@@ -125,4 +125,3 @@ extension SignInButton {
         }
     }
 }
-
