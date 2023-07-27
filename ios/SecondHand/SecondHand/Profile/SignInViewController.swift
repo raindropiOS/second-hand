@@ -19,7 +19,7 @@ class SignInViewController: UIViewController {
         stack.axis = .vertical
         return stack
     }()
-    private let signInButton = SignInButton()
+    private let signInButton = OAuthSignInButton()
     let signUpButton: UIButton = UIButton()
     
     init(networkManager: NetworkManageable) {
