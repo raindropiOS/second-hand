@@ -28,6 +28,7 @@ public class LoginService {
     private final MemberProfileRepository memberProfileRepository;
 
     private final MemberTokenRepository memberTokenRepository;
+    private final TownService townService;
     private final RequestOAuthInfoService requestOAuthInfoService;
 
     @Transactional
@@ -65,7 +66,7 @@ public class LoginService {
         log.debug("오쓰로부터 받은 닉네임 = {}", oAuthInfoResponse.getNickname());
         log.debug("오쓰로부터 받은 닉네임 깃허브는 안줌 = {}", oAuthInfoResponse.getEmail());
         MemberProfile memberProfile = memberProfileRepository.save(new MemberProfile(oAuthInfoResponse.getEmail()));
-        Member member = memberRepository.save(Member.create(oAuthInfoResponse, memberProfile));
+        Member member = memberRepository.save(Member.create(oAuthInfoResponse, memberProfile, townService.findById(1L)));
         Token jwtToken = jwtTokenProvider.createToken(member);
         MemberToken memberToken = memberTokenRepository.save(new MemberToken(jwtToken.getRefreshToken(), member));
         log.debug("새로 만든 jwt 토큰 = {}", jwtToken);
@@ -83,7 +84,7 @@ public class LoginService {
         MemberPassword memberPassword = memberPasswordRepository.save(new MemberPassword(joinRequest.getPassword()));
         MemberProfile memberProfile = memberProfileRepository.save(new MemberProfile(joinRequest.getMemberEmail()));
         Member member = memberRepository.save(Member.create(joinRequest.getNickName(),
-                "GENERAL", memberProfile, memberPassword));
+                "GENERAL", memberProfile, memberPassword, townService.findById(1L)));
 
         Token jwtToken = jwtTokenProvider.createToken(member);
         memberTokenRepository.save(new MemberToken(jwtToken.getRefreshToken(), member));
