@@ -21,7 +21,7 @@ class ProductRepository: Repository, ObservableObject {
     init(networkManagerDelegate: NetworkManageable) {
         self.networkManagerDelegate = networkManagerDelegate
         
-        UserInfoManager.shared.$isSignedIn.sink { _ in
+        UserManager.shared.$isSignedIn.sink { _ in
             Task {
                 await self.loadProducts(query: [:])
             }
@@ -30,7 +30,7 @@ class ProductRepository: Repository, ObservableObject {
     }
     
     func loadProducts(query: [String: String]) async {
-        if UserInfoManager.shared.isSignedIn == true {
+        if UserManager.shared.isSignedIn == true {
             let products = await networkManagerDelegate.fetchProducts(query: query)
             self.products = products
         }

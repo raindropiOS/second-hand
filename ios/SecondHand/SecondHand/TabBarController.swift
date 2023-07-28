@@ -27,7 +27,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         self.tabBar.backgroundColor = UIColor(named: "gray200")
         
-        UserInfoManager.shared.$isSignedIn
+        UserManager.shared.$isSignedIn
             .sink { [weak self] newData in
                 self?.updateProfileTab(isSignedIn: newData)
             }
@@ -37,7 +37,7 @@ class TabBarController: UITabBarController {
             do {
                 // 저장된 JWT를 정상적으로 읽은 경우 -> 로그인 상태로 뷰 처리
                 self.networkManager.jwt = try await self.keychainManager.readJsonWebToken()
-                UserInfoManager.shared.isSignedIn = true
+                UserManager.shared.isSignedIn = true
             } catch {
                 // 저장된 JWT를 읽지 못한 경우 -> 비로그인 상태로 뷰 처리
                 print("error: \(error)")

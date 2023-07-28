@@ -8,9 +8,8 @@
 import Combine
 import Foundation
 
-/// 뷰에 필요한 유저 정보를 저장하는 Repository Layer
-class UserInfoManager: URLRequestProducible, URLComponentsProducible {
-    static let shared = UserInfoManager()
+class UserManager {
+    static let shared = UserManager()
     @Published var isSignedIn = false
     @Published var userInfo: UserInfo?
 }
