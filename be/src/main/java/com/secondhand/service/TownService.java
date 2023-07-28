@@ -37,20 +37,20 @@ public class TownService {
     }
 
     //TODO 경우의 수를 생각해야함
+    //1. main 타운만 들어오는 경우
+    //2. 둘다 오는경우
+    //3. sub 타운만들어오는경우
     @Transactional
     public void update(long userId, TownRequest townRequest) {
         Member member = memberService.findMemberById(userId);
 
         Town mainTown = townRepository.findById(townRequest.getMainTownId()).orElseThrow(TownNotFoundException::new);
-        member.updateMainTowns(mainTown);
-
-        if (townRequest.getSubTownId() == null) {
-            member.updateTowns(mainTown, null);
+        if (townRequest.getSubTownId() != null) {
+            Town subTown = townRepository.findById(townRequest.getSubTownId()).orElseThrow(TownNotFoundException::new);
+            member.updateTowns(mainTown, subTown);
             return;
         }
-
-        Town subTown = townRepository.findById(townRequest.getSubTownId()).orElseThrow(TownNotFoundException::new);
-        member.updateTowns(mainTown, subTown);
+        member.updateMainTowns(mainTown);
     }
 
 
