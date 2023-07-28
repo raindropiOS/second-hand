@@ -29,14 +29,6 @@ class LoginManager: LoginManageable, URLRequestable, URLRequestProducible, URLCo
         }
     }
     
-    func getQueryItemValue(urlString: String, key: String) throws -> String {
-        let url = URLComponents(string: urlString)
-        let value = url?.queryItems?.first(where: { $0.name == key })?.value
-        
-        guard let value = value else { throw NetworkingError.failedToGetQueryItemValue }
-        return value
-    }
-    
     func sendAuthorizationCode(_ code: String) async throws -> GitHubOAuthResponseDTO {
         let body = ["authorizationCode": "\(code)"]
         let header = ["Content-Type": "application/json"]
@@ -83,7 +75,6 @@ class LoginManager: LoginManageable, URLRequestable, URLRequestProducible, URLCo
 
 protocol LoginManageable {
     func presentGithubOAuthLoginScreen()
-    func getQueryItemValue(urlString: String, key: String) throws -> String
     func sendAuthorizationCode(_ code: String) async throws -> GitHubOAuthResponseDTO
     func sendEmail(_ email: String, jwtAccessToken: String) async throws -> (UserInfo, JWT)
 }
