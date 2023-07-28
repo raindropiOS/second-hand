@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -55,7 +56,7 @@ public class TownController {
     @LoginCheck
     @PostMapping
     public BasicResponse<String> registerTown(@LoginValue long userId,
-                                      @RequestBody TownRegisterRequest request) {
+                                              @RequestBody TownRegisterRequest request) {
 
         if (request.getTownId() == null) {
             throw new IllegalArgumentException("필수 지역 정보 없음");
@@ -72,7 +73,7 @@ public class TownController {
     @LoginCheck
     @PatchMapping
     public BasicResponse<String> updateTown(@LoginValue long userId,
-                                    @RequestBody TownRequest townRequest) {
+                                            final @Valid @RequestBody TownRequest townRequest) {
 
         if (townRequest.getMainTownId() == null) {
             throw new IllegalArgumentException("필수 지역 정보 없음");
