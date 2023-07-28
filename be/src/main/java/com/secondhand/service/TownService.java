@@ -1,13 +1,11 @@
 package com.secondhand.service;
 
-import com.secondhand.exception.CategoryNotFoundException;
-import com.secondhand.exception.TownNotFoundException;
 import com.secondhand.domain.member.Member;
 import com.secondhand.domain.town.Town;
 import com.secondhand.domain.town.TownRepository;
+import com.secondhand.exception.TownNotFoundException;
 import com.secondhand.web.dto.requset.TownRequest;
 import com.secondhand.web.dto.response.TownResponse;
-import com.secondhand.web.dto.updatedto.TownDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,13 +42,14 @@ public class TownService {
     public void update(long userId, TownRequest townRequest) {
         Member member = memberService.findMemberById(userId);
 
-        Town mainTown = townRepository.findById(townRequest.getMainTownId()).orElseThrow(TownNotFoundException::new);
-        if (townRequest.getSubTownId() != null) {
-            Town subTown = townRepository.findById(townRequest.getSubTownId()).orElseThrow(TownNotFoundException::new);
-            member.updateTowns(mainTown, subTown);
+        Town mainTown = townRepository.findById(townRequest.getTownsId()[0]).orElseThrow(TownNotFoundException::new);
+        if (townRequest.getTownsId().length == 1) {
+            member.updateTowns(mainTown, null);
             return;
         }
-        member.updateMainTowns(mainTown);
+
+        Town subTown = townRepository.findById(townRequest.getTownsId()[1]).orElseThrow(TownNotFoundException::new);
+        member.updateTowns(mainTown, subTown);
     }
 
 

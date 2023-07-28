@@ -75,7 +75,7 @@ public class TownController {
     public BasicResponse<String> updateTown(@LoginValue long userId,
                                             final @Valid @RequestBody TownRequest townRequest) {
 
-        if (townRequest.getMainTownId() == null) {
+        if (townRequest.getTownsId()[0] == null) {
             throw new IllegalArgumentException("필수 지역 정보 없음");
         }
 
