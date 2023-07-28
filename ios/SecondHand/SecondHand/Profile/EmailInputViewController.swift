@@ -97,7 +97,7 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
                     
                     try await self.keychainManager.deleteJsonWebToken()
                     try await self.keychainManager.addJsonWebToken(jwt, email: email)
-                    UserInfoManager.shared.isSignedIn = true
+                    UserManager.shared.isSignedIn = true
                 } catch {
                     print("error: \(error)")
                 }

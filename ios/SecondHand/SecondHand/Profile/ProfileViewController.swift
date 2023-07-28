@@ -45,7 +45,7 @@ class ProfileViewController: UIViewController {
         self.layoutNavigationBar()
         self.loadProfile()
         
-        UserInfoManager.shared.$userInfo
+        UserManager.shared.$userInfo
             .sink { [weak self] newUserInfo in
                 if let userInfo = newUserInfo {
                     let name = userInfo.name
@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func signOutButtonTouched() {
-        UserInfoManager.shared.isSignedIn = false
+        UserManager.shared.isSignedIn = false
     }
 }
 
