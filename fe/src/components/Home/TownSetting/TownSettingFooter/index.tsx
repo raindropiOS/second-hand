@@ -7,6 +7,7 @@ import PATH from '@constants/routerPath';
 import { $FooterContainer, $ButtonContainer, $Button, $FooterName, $TownSettingInfo } from './TownSettingFooter.style';
 import DialogPortal from '@components/portals/DialogPortal';
 import Dialog from '@molecules/Dialog';
+import axiosFetch from '@apis/instances/axiosFetch';
 
 interface TownSettingFooterProps {
   towns: { townId: number; name: string }[];
@@ -19,12 +20,13 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
   const [selectedTownId, setSelectedTownId] = useState<number>();
   const [isConfirmShown, setIsConfirmShown] = useState(false);
   const [isAlertShown, setIsAlertShown] = useState(false);
-  const handleTownButtonClick = (id: number) => {
+  const handleTownButtonClick = (id: number, index: number) => {
     setSelectedTownId(id);
-    if (selectedTowns.length === 1) {
+    if (index === 0) {
       setIsAlertShown(true);
       return;
     }
+
     if (selectedTowns.length === 2) {
       setIsConfirmShown(true);
       return;
@@ -32,12 +34,30 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
     // TODO(jayden): 해당 id의 town DELETE 요청 추가
   };
 
+  const handleDeleteButtonClick = async () => {
+    // TODO(jayden): 해당 id의 town DELETE 요청 추가
+    console.log(selectedTowns.slice(0, 1)[0].townId);
+    const response = await axiosFetch.patch('/towns', { townsId: [selectedTowns[0].townId] });
+
+    const { success } = await response.data;
+
+    if (success) {
+      setSelectedTowns(selectedTowns.filter(town => town.townId !== selectedTownId));
+      setIsConfirmShown(false);
+    }
+  };
+
   return (
     <$FooterContainer>
       <$FooterName>내 동네</$FooterName>
       <$ButtonContainer>
-        {selectedTowns.map(town => (
-          <$Button key={town.townId} onClick={() => handleTownButtonClick(town.townId)} size="large" status="active">
+        {selectedTowns.map((town, index) => (
+          <$Button
+            key={town.townId}
+            onClick={() => handleTownButtonClick(town.townId, index)}
+            size="large"
+            status="active"
+          >
             {town.name.split(' ')[2]}
             <Icon name="cancel" fill={theme.COLORS.NEUTRAL.BACKGROUND.DEFAULT} />
           </$Button>
@@ -66,8 +86,7 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
             <Dialog.Button
               title="삭제"
               onClick={() => {
-                setSelectedTowns(selectedTowns.filter(town => town.townId !== selectedTownId));
-                setIsConfirmShown(false);
+                handleDeleteButtonClick();
               }}
             />
           </Dialog>
@@ -75,7 +94,7 @@ const TownSettingFooter = ({ towns }: TownSettingFooterProps) => {
       )}
       {isAlertShown && (
         <DialogPortal>
-          <Dialog message={'최소 1개의 동네를 설정해주세요.'}>
+          <Dialog message={'메인 동네는 삭제할 수 없습니다.'}>
             <Dialog.Button
               title="확인"
               onClick={() => {
