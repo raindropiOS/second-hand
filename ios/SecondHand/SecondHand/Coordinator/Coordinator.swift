@@ -8,3 +8,13 @@
 import UIKit
 
 
+protocol Coordinator: AnyObject, CoordinatorFinishDelegate {
+    
+    var delegate: CoordinatorFinishDelegate? { get set }
+    
+    var presenter: UINavigationController { get set }
+    
+    var childCoordinators: [Coordinator] { get set }
+    
+    func start()
+}
