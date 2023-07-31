@@ -30,7 +30,6 @@ const TownSearchingFooter = ({ totalTowns, inputTownName, selectedTowns, onItemC
       const { success } = await response.data;
 
       if (success) {
-        console.log('동네 변경');
         onItemClick(townId);
         setSelectedTownIds(prev => [...prev, townId]);
       } else {
@@ -54,6 +53,9 @@ const TownSearchingFooter = ({ totalTowns, inputTownName, selectedTowns, onItemC
         throw new Error('동네를 변경하는데 실패했습니다!');
       }
     } else if (selectedTownIds.length === 2) {
+      if (!selectedTownIds.includes(townId)) {
+        return;
+      }
       const response = await axiosFetch.patch('/towns', {
         townsId: selectedTownIds.slice(0, 1),
       });
