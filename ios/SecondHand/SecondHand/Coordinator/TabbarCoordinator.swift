@@ -34,3 +34,15 @@ class TabBarCoordinator: NSObject, Coordinator {
             }
         }
             
+        
+
+        func getCoordinator(presenter: UINavigationController) -> Coordinator {
+            switch self {
+            case .home: return HomeCoordinator(presenter: presenter)
+            case .salesLog: return SalesLogCoordinator(presenter: presenter)
+            case .likeList: return LikeListCoordinator(presenter: presenter)
+            case .chatting: return SalesLogCoordinator(presenter: presenter)
+            case .profile: return ProfileCoordinator(presenter: presenter)
+            }
+        }
+    }
