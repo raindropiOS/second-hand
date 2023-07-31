@@ -10,6 +10,7 @@ import UIKit
 class HomeViewController: UIViewController {
     let tableView = UITableView()
     let productListViewModel: ProductListRepresentable
+    weak var coordinator: HomeCoordinator?
     
     init(productListViewModel: ProductListRepresentable) {
             self.productListViewModel = productListViewModel

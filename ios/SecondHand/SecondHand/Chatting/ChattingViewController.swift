@@ -8,6 +8,8 @@
 import UIKit
 
 class ChattingViewController: UIViewController {
+    
+    weak var coordinator: ChattingCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()

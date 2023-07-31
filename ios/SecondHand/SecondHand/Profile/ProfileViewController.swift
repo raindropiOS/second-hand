@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
+    var coordinator: ProfileCoordinator?
     let profileImageView = ProfileImageView()
     let nameLabel = UILabel()
     let signOutButton = OrangeButton()
@@ -18,7 +18,6 @@ class ProfileViewController: UIViewController {
         self.navigationItem.title = "내 계정"
         self.view.backgroundColor = .white
         self.configureProfileImageView()
-        self.configureSeparatorViewUnderNavigationBar()
         self.configureNameLabel()
         self.configureSignOutButton()
     }
@@ -34,18 +33,7 @@ class ProfileViewController: UIViewController {
 
 // MARK: Autolayout
 extension ProfileViewController {
-    private func configureSeparatorViewUnderNavigationBar() {
-        self.view.addSubview(separatorViewUnderNavigationBar)
-        self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.separatorViewUnderNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.separatorViewUnderNavigationBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.separatorViewUnderNavigationBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            self.separatorViewUnderNavigationBar.heightAnchor.constraint(equalToConstant: SeparatorView.height)
-        ])
-        self.separatorViewUnderNavigationBar.configure()
-    }
-    
+  
     private func configureProfileImageView() {
         self.view.addSubview(self.profileImageView)
         
