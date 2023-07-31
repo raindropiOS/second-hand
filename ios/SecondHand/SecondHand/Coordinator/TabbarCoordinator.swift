@@ -46,3 +46,24 @@ class TabBarCoordinator: NSObject, Coordinator {
             }
         }
     }
+    
+    var delegate: CoordinatorFinishDelegate?
+    
+    var presenter: UINavigationController
+    
+    var childCoordinators: [Coordinator] = []
+    
+    var tabBarController: UITabBarController
+    
+    
+    var tabBarItems: [TabBarItem] = [.home, .salesLog, .likeList, .chatting, .profile]
+    
+    init(presenter: UINavigationController) {
+        
+        self.presenter = presenter
+        self.childCoordinators = []
+        self.tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = UIColor(named: "gray200")
+
+        }
+    
