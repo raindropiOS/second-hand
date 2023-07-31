@@ -8,6 +8,12 @@
 import UIKit
 
 
+protocol CoordinatorFinishDelegate {
+    func coordinatorDidFinish()
+    func removeChildCoordinator(_ coordinator: Coordinator)
+}
+
+
 protocol Coordinator: AnyObject, CoordinatorFinishDelegate {
     
     var delegate: CoordinatorFinishDelegate? { get set }
