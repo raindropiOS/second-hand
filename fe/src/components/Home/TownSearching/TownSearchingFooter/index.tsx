@@ -38,7 +38,6 @@ const TownSearchingFooter = ({ totalTowns, inputTownName, selectedTowns, onItemC
       }
     } else if (selectedTownIds.length === 1) {
       if (selectedTownIds[0] === townId) {
-        console.log('동네 변경 안함');
         setSelectedTownIds([]);
         onItemClick(townId);
         return;
