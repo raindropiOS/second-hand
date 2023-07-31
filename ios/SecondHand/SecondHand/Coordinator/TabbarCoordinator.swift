@@ -67,3 +67,21 @@ class TabBarCoordinator: NSObject, Coordinator {
 
         }
     
+    func getTabController(item: TabBarItem) -> UINavigationController {
+        let navigationController = UINavigationController()
+        let tabItem = UITabBarItem(title: item.title, image: UIImage(systemName: item.image), selectedImage: nil)
+        navigationController.tabBarItem = tabItem
+        
+        let coordinator = item.getCoordinator(presenter: navigationController)
+        coordinator.delegate = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
+        
+        return navigationController
+    }
+    private func prepareTabBarController(withTabControllers tabControllers: [UIViewController]) {
+            tabBarController.setViewControllers(tabControllers, animated: true)
+            tabBarController.selectedIndex = 0
+            tabBarController.tabBar.isTranslucent = false
+            presenter.viewControllers = [tabBarController]
+        }
