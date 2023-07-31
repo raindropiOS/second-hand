@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 class TabBarCoordinator: NSObject, Coordinator {
     
     enum TabBarItem: CaseIterable {
@@ -67,6 +68,10 @@ class TabBarCoordinator: NSObject, Coordinator {
 
         }
     
+    func start() {
+        let controllers = tabBarItems.map { getTabController(item: $0) }
+        prepareTabBarController(withTabControllers: controllers)
+    }
     func getTabController(item: TabBarItem) -> UINavigationController {
         let navigationController = UINavigationController()
         let tabItem = UITabBarItem(title: item.title, image: UIImage(systemName: item.image), selectedImage: nil)
@@ -85,3 +90,5 @@ class TabBarCoordinator: NSObject, Coordinator {
             tabBarController.tabBar.isTranslucent = false
             presenter.viewControllers = [tabBarController]
         }
+    
+}
