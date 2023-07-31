@@ -6,3 +6,31 @@
 //
 
 import UIKit
+class TabBarCoordinator: NSObject, Coordinator {
+    
+    enum TabBarItem: CaseIterable {
+        case home
+        case salesLog
+        case likeList
+        case chatting
+        case profile
+        
+        var title: String {
+            switch self {
+            case .home: return "홈"
+            case .salesLog: return "판매내역"
+            case .likeList: return "관심목록"
+            case .chatting: return "채팅"
+            case .profile: return "내 계정"
+            }
+        }
+        var image: String {
+            switch self {
+            case .home: return "house"
+            case .salesLog: return "newspaper"
+            case .likeList: return "heart"
+            case .chatting: return "message"
+            case .profile: return "person"
+            }
+        }
+            
