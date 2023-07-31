@@ -9,7 +9,6 @@ import axiosFetch from '@apis/instances/axiosFetch';
 import DialogPortal from '@components/portals/DialogPortal';
 import Dialog from '@molecules/Dialog';
 
-
 interface Town {
   townId: number;
   name: string;
@@ -39,7 +38,6 @@ const TownSearching = () => {
       if (prev.map(town => town.townId).includes(townId)) return prev.filter(town => town.townId !== townId);
       // 선택된 타운이 2개 이상이면 선택 불가
       if (prev.length >= 2) {
-        // NOTE(jayden): strict mode로 인해, alert가 처음만 두 번 실행됨
         handleMoreTownClick();
         return prev;
       }
@@ -50,9 +48,7 @@ const TownSearching = () => {
   // 타운 전체 목록 가져오는 API 호출
   useEffect(() => {
     const getTotalTowns = async () => {
-      const response = await axiosFetch('/towns', {
-        method: 'GET',
-      });
+      const response = await axiosFetch.get('/towns');
       const data = await response.data;
 
       const isSuccess = data.success;
