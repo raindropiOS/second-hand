@@ -24,3 +24,22 @@ protocol Coordinator: AnyObject, CoordinatorFinishDelegate {
     
     func start()
 }
+
+
+extension Coordinator {
+    func start() { }
+    
+    func coordinatorDidFinish() {
+        delegate?.removeChildCoordinator(self)
+    }
+    
+    func removeChildCoordinator(_ coordinator: Coordinator) {
+        for (index, child) in childCoordinators.enumerated() {
+            if coordinator === child {
+                childCoordinators.remove(at: index)
+                break
+            }
+        }
+    }
+    
+}
