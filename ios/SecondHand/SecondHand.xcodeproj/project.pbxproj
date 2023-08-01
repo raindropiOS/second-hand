@@ -57,6 +57,14 @@
 		CC208F442A41AAE300C19467 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC208F432A41AAE300C19467 /* PermissionManager.swift */; };
 		CC208F462A42DBAF00C19467 /* TownSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC208F452A42DBAF00C19467 /* TownSettingViewController.swift */; };
 		CC208F482A42E8F700C19467 /* TownSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC208F472A42E8F700C19467 /* TownSearchViewController.swift */; };
+		CC3D21CF2A6FB53600B7AAF5 /* TabbarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3D21CE2A6FB53600B7AAF5 /* TabbarCoordinator.swift */; };
+		CC818F8B2A64DC3200698A51 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC818F8A2A64DC3200698A51 /* Coordinator.swift */; };
+		CC818F8D2A66D15F00698A51 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC818F8C2A66D15F00698A51 /* AppCoordinator.swift */; };
+		CCE794E22A68F7D70045A62F /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE794E12A68F7D70045A62F /* HomeCoordinator.swift */; };
+		CCE794E42A690FA00045A62F /* SalesLogCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE794E32A690FA00045A62F /* SalesLogCoordinator.swift */; };
+		CCE794E62A690FC70045A62F /* LikeListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE794E52A690FC70045A62F /* LikeListCoordinator.swift */; };
+		CCE794E82A690FDA0045A62F /* ChattingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE794E72A690FDA0045A62F /* ChattingCoordinator.swift */; };
+		CCE794EA2A6910030045A62F /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE794E92A6910030045A62F /* ProfileCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +121,14 @@
 		CC208F432A41AAE300C19467 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		CC208F452A42DBAF00C19467 /* TownSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownSettingViewController.swift; sourceTree = "<group>"; };
 		CC208F472A42E8F700C19467 /* TownSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownSearchViewController.swift; sourceTree = "<group>"; };
+		CC3D21CE2A6FB53600B7AAF5 /* TabbarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarCoordinator.swift; sourceTree = "<group>"; };
+		CC818F8A2A64DC3200698A51 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		CC818F8C2A66D15F00698A51 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		CCE794E12A68F7D70045A62F /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		CCE794E32A690FA00045A62F /* SalesLogCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesLogCoordinator.swift; sourceTree = "<group>"; };
+		CCE794E52A690FC70045A62F /* LikeListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeListCoordinator.swift; sourceTree = "<group>"; };
+		CCE794E72A690FDA0045A62F /* ChattingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingCoordinator.swift; sourceTree = "<group>"; };
+		CCE794E92A6910030045A62F /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		E499461128D922FE59459A04 /* Pods-SecondHand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondHand.debug.xcconfig"; path = "Target Support Files/Pods-SecondHand/Pods-SecondHand.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,7 +186,9 @@
 		8F7C71422A2DD79900C10206 /* SecondHand */ = {
 			isa = PBXGroup;
 			children = (
-				8F9EC5952A6FBCB90097BDBB /* User */,
+
+				CC818F892A64DC1200698A51 /* Coordinator */,
+
 				CC208F422A41AAAE00C19467 /* Permission */,
 				8F7C71612A2F731A00C10206 /* Network */,
 				8F0F6B642A42F20A00F8F1D5 /* Repository */,
@@ -314,6 +332,21 @@
 			path = Permission;
 			sourceTree = "<group>";
 		};
+		CC818F892A64DC1200698A51 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CC818F8A2A64DC3200698A51 /* Coordinator.swift */,
+				CC3D21CE2A6FB53600B7AAF5 /* TabbarCoordinator.swift */,
+				CC818F8C2A66D15F00698A51 /* AppCoordinator.swift */,
+				CCE794E12A68F7D70045A62F /* HomeCoordinator.swift */,
+				CCE794E32A690FA00045A62F /* SalesLogCoordinator.swift */,
+				CCE794E52A690FC70045A62F /* LikeListCoordinator.swift */,
+				CCE794E72A690FDA0045A62F /* ChattingCoordinator.swift */,
+				CCE794E92A6910030045A62F /* ProfileCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		D7C660D9C43ACA63A840F117 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,28 +475,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC3D21CF2A6FB53600B7AAF5 /* TabbarCoordinator.swift in Sources */,
 				8FA8F32E2A408B53002C1828 /* Product.swift in Sources */,
 				8FA8F3352A413F64002C1828 /* CountInfo.swift in Sources */,
 				CC208F442A41AAE300C19467 /* PermissionManager.swift in Sources */,
 				CC208F482A42E8F700C19467 /* TownSearchViewController.swift in Sources */,
+				CCE794E42A690FA00045A62F /* SalesLogCoordinator.swift in Sources */,
 				8F0F6B912A52A6E800F8F1D5 /* PastTimeCalculator.swift in Sources */,
 				8FCAA48B2A36397D0015FE4D /* ProfileImageView.swift in Sources */,
 				8F26E76E2A70E652003C2918 /* ProfileViewModel.swift in Sources */,
 				8FCAA43B2A35D04C0015FE4D /* InputView.swift in Sources */,
+				CCE794EA2A6910030045A62F /* ProfileCoordinator.swift in Sources */,
 				CC208F462A42DBAF00C19467 /* TownSettingViewController.swift in Sources */,
 				8F26E7702A70EAA0003C2918 /* UserInfoDto.swift in Sources */,
 				8F7C716F2A319FA400C10206 /* SalesLogViewController.swift in Sources */,
 				8F2CA0882A5E85790011C337 /* KeychainManager.swift in Sources */,
 				8F7C71602A2F730800C10206 /* NetworkManager.swift in Sources */,
+
+				CC818F8B2A64DC3200698A51 /* Coordinator.swift in Sources */,
+
 				8F26E77A2A725F03003C2918 /* LoginManager.swift in Sources */,
 				8F984BFF2A617B4000773DD4 /* URLComponentsProducible.swift in Sources */,
+
 				8FA8F3332A413D7D002C1828 /* Form.swift in Sources */,
 				8F0F6B612A42E31100F8F1D5 /* Repository.swift in Sources */,
 				8F2CA02F2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift in Sources */,
 				8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */,
 				8F984C012A6187F700773DD4 /* RoundedLabel.swift in Sources */,
 				8F167CEE2A386237003805CE /* ProductTableViewCell.swift in Sources */,
+
+				CCE794E82A690FDA0045A62F /* ChattingCoordinator.swift in Sources */,
+
+
 				8F0F6B5D2A42C6F000F8F1D5 /* URLRequestProducible.swift in Sources */,
+
 				8F0F6B692A4D197C00F8F1D5 /* ProductListViewModel.swift in Sources */,
 				8F7C71692A319B2900C10206 /* TabBarController.swift in Sources */,
 				8F7C71792A31C37A00C10206 /* SignInViewController.swift in Sources */,
@@ -477,7 +522,10 @@
 				8F9EC5922A6FA0E50097BDBB /* OAuthSignInButton.swift in Sources */,
 				8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */,
 				8F7C71752A31A04D00C10206 /* ProfileViewController.swift in Sources */,
+				CC818F8D2A66D15F00698A51 /* AppCoordinator.swift in Sources */,
 				8FA8F3312A408BA2002C1828 /* Town.swift in Sources */,
+				CCE794E22A68F7D70045A62F /* HomeCoordinator.swift in Sources */,
+				CCE794E62A690FC70045A62F /* LikeListCoordinator.swift in Sources */,
 				8F7C71732A31A01E00C10206 /* ChattingViewController.swift in Sources */,
 				8F9EC5BD2A6FD1A60097BDBB /* UserInfo.swift in Sources */,
 				8F26E7742A71FD1D003C2918 /* SignInOutButton.swift in Sources */,

@@ -9,19 +9,22 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    var appCoordinator: AppCoordinator?
     private let networkManager = NetworkManager()
     private let keychainManager = KeychainManager()
+
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let window = UIWindow(windowScene: windowScene)
+
+        window = UIWindow(windowScene: windowScene)
         let tabBarController = TabBarController(networkManager: self.networkManager, keychainManager: self.keychainManager)
+
         
-        window.rootViewController = tabBarController
-        window.makeKeyAndVisible()
+        self.appCoordinator = AppCoordinator(window: window!)
+        appCoordinator?.start()
         
-        self.window = window
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

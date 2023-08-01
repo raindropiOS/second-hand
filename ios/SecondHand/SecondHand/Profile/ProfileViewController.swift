@@ -9,17 +9,11 @@ import Combine
 import UIKit
 
 class ProfileViewController: UIViewController {
+
+    var coordinator: ProfileCoordinator?
     private let networkManager: NetworkManageable
     private var viewModel: ProfileViewModel
     var cancellables = Set<AnyCancellable>()
-    let navigationBar: UINavigationBar = {
-        let bar = UINavigationBar()
-        bar.barTintColor = .white
-        let item = UINavigationItem(title: "내 계정")
-        bar.setItems([item], animated: true)
-        return bar
-    }()
-    let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     let profileImageView = ProfileImageView()
     let nameLabel = UILabel()
     let signOutButton = SignInOutButton()
@@ -39,10 +33,8 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.configureProfileImageView()
-        self.configureSeparatorViewUnderNavigationBar()
         self.configureNameLabel()
         self.configureSignOutButton()
-        self.layoutNavigationBar()
         self.loadProfile()
         
         UserManager.shared.$userInfo
@@ -84,18 +76,7 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController {
-    private func configureSeparatorViewUnderNavigationBar() {
-        self.view.addSubview(separatorViewUnderNavigationBar)
-        self.separatorViewUnderNavigationBar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.separatorViewUnderNavigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.separatorViewUnderNavigationBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.separatorViewUnderNavigationBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            self.separatorViewUnderNavigationBar.heightAnchor.constraint(equalToConstant: SeparatorView.height)
-        ])
-        self.separatorViewUnderNavigationBar.configure()
-    }
-    
+  
     private func configureProfileImageView() {
         self.view.addSubview(self.profileImageView)
         
@@ -132,18 +113,6 @@ extension ProfileViewController {
             self.signOutButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.signOutButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: leadingBottomPadding),
             self.signOutButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -leadingBottomPadding),
-        ])
-    }
-    
-    private func layoutNavigationBar() {
-        self.view.addSubview(self.navigationBar)
-        
-        self.navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            self.navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            self.navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            self.navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
 }

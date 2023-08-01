@@ -8,11 +8,13 @@
 import UIKit
 
 class LikeListViewController: UIViewController {
+    
+    weak var coordinator: LikeListCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor = .white
     }
     
 

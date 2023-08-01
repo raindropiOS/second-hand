@@ -25,6 +25,7 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.tabBar.backgroundColor = UIColor(named: "gray200")
         
         UserManager.shared.$isSignedIn
