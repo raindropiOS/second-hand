@@ -35,6 +35,10 @@ class InputView: UIView {
         return textField
     }()
     
+    var inputText: String {
+        self.inputField.text ?? ""
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setup()

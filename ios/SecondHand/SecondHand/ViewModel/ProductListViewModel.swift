@@ -14,25 +14,20 @@ class ProductListViewModel: ProductListRepresentable {
     /// ProductListViewModel가 할당해제 될 때 자동적으로 이 프라퍼티가 할당해제 되고, 구독 해제됨.
     private var subscriptions = Set<AnyCancellable>()
     @Published var productViewModels: [ProductViewModel] = []
-    @Published var products: [Product] {
-        didSet {
-            let productViewModels = convertProductToProductViewModel(self.products)
-            self.productViewModels = productViewModels
-        }
-    }
     private let pastTimeCalculator: PastTimeCalculable
     
     init(productRepository: ProductRepository, pastTimeCalculator: PastTimeCalculable) {
-        let products = productRepository.readAll()
-        
-        self.products = products
         self.productRepository = productRepository
         self.pastTimeCalculator = pastTimeCalculator
         
-        self.productRepository.objectWillChange
-            .sink { [weak self] _ in
-                let products = productRepository.readAll()
-                self?.products = products
+        let products = productRepository.readAll()
+        let productViewModels = self.convertProductToProductViewModel(products)
+        self.productViewModels = productViewModels
+        
+        self.productRepository.$products
+            .sink { newProducts in
+                let productViewModels = self.convertProductToProductViewModel(newProducts)
+                self.productViewModels = productViewModels
             }
             .store(in: &subscriptions)
     }
@@ -49,7 +44,7 @@ class ProductListViewModel: ProductListRepresentable {
     /// DTO이자 모델에 해당하는 Product를 ViewModel로 변경하는 메소드
     private func convertProductToProductViewModel(_ products: [Product]) -> [ProductViewModel] {
         
-        return self.products.map { product in ProductViewModel(product: product, pastTimeCalculator: self.pastTimeCalculator) }
+        return products.map { product in ProductViewModel(product: product, pastTimeCalculator: self.pastTimeCalculator) }
     }
     
     private func updateView() {

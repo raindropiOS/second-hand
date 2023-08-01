@@ -8,6 +8,7 @@
 import UIKit
 
 class SignInViewController: UIViewController {
+    let networkManager: NetworkManageable
     let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     let idInputView: InputView = InputView()
     let separatorView: SeparatorView = SeparatorView()
@@ -18,8 +19,22 @@ class SignInViewController: UIViewController {
         stack.axis = .vertical
         return stack
     }()
-    let loginButton: OrangeButton = OrangeButton()
+    private let signInButton = OAuthSignInButton()
     let signUpButton: UIButton = UIButton()
+    
+    init(networkManager: NetworkManageable) {
+        self.networkManager = networkManager
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.networkManager = NetworkManager()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,20 +43,11 @@ class SignInViewController: UIViewController {
         self.configureSeparatorViewUnderNavigationBar()
         self.configureIdInputView()
         self.configureSeparatorView()
-        self.configureLoginSignUpButton()
-        
-        self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
-    }
-    
-    private func configureLoginButtonAction() {
-        self.loginButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
+        self.configureSignInSignUpButton()
     }
     
     @objc func loginButtonAction() {
-        let clientId: String = "ClientId"
-        let urlStr = "https://github.com/login/oauth/authorize?client_id=\(clientId)"
-        guard let url = URL(string: urlStr) else { return }
-        UIApplication.shared.open(url)
+        self.networkManager.presentGithubOAuthLoginScreen()
     }
     
     @objc func signUpButtonTouched() {
@@ -90,27 +96,30 @@ extension SignInViewController {
         self.separatorView.configure()
     }
     
-    private func configureLoginSignUpButton() {
+    private func configureSignInSignUpButton() {
         let height = self.view.frame.height
         let padding = self.topBottomPadding * height
         
-        self.loginButton.setTitle("로그인", for: .normal)
+        self.signInButton.configure(imageName: "github-mark-white", text: "GitHub로 로그인", backgroundColor: UIColor(named: "black"), target: self, action: #selector(loginButtonAction))
+        
         self.signUpButton.setTitle("회원가입", for: .normal)
         self.signUpButton.setTitleColor(.black, for: .normal)
-        
-        self.loginButton.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
+        self.signUpButton.addTarget(self, action: #selector(signUpButtonTouched), for: .touchUpInside)
         
         self.view.addSubview(self.stackView)
         
-        self.stackView.addArrangedSubview(loginButton)
+        self.stackView.addArrangedSubview(signInButton)
         self.stackView.addArrangedSubview(signUpButton)
         
-        self.loginButton.translatesAutoresizingMaskIntoConstraints = false
+        self.signInButton.translatesAutoresizingMaskIntoConstraints = false
         self.signUpButton.translatesAutoresizingMaskIntoConstraints = false
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             self.stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
-            self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.signInButton.widthAnchor.constraint(equalToConstant: 330),
+            self.signInButton.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
     

@@ -5,14 +5,20 @@
 //  Created by 에디 on 2023/06/08.
 //
 
+import Combine
 import UIKit
+
 /// 상품 목록 화면
+/// 로그인 상태에서만 상품목록을 가져오도록 ProductRepository의 loadProducts 메소드가 작성되었음.
 class HomeViewController: UIViewController {
     let tableView = UITableView()
-    let productListViewModel: ProductListRepresentable
+
     weak var coordinator: HomeCoordinator?
+    let productListViewModel: ProductListViewModel
+    private var cancellables = Set<AnyCancellable>()
+
     
-    init(productListViewModel: ProductListRepresentable) {
+    init(productListViewModel: ProductListViewModel) {
             self.productListViewModel = productListViewModel
             super.init(nibName: nil, bundle: nil)
         }
@@ -32,12 +38,20 @@ class HomeViewController: UIViewController {
         self.setTableViewLayout()
         
         Task {
-            await self.productListViewModel.loadProductList(query: [:]) {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+            // Authorization code 없이 상품 목록을 가져올 수 있도록 API 변경시 사용될 코드
+//            await self.productListViewModel.loadProductList(query: [:]) {
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            }
+        }
+        
+        self.productListViewModel.$productViewModels.sink { _ in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
+        .store(in: &self.cancellables)
     }
     
     private func setTableViewLayout() {
