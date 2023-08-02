@@ -8,6 +8,7 @@
 import UIKit
 
 class SalesLogCoordinator: Coordinator {
+    
     var delegate: CoordinatorFinishDelegate?
     
     var presenter: UINavigationController
@@ -18,8 +19,9 @@ class SalesLogCoordinator: Coordinator {
         self.presenter = presenter
         self.childCoordinators = []
     }
-    func start() {
-        let salesLogViewController = SalesLogViewController()
+    
+    func start(networkManager: NetworkManageable) {
+        let salesLogViewController = SalesLogViewController(netwokrManager: networkManager)
         salesLogViewController.coordinator = self
         salesLogViewController.title = "판매 내역"
         presenter.pushViewController(salesLogViewController, animated: true)

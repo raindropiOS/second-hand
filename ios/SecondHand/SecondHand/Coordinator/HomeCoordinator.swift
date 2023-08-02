@@ -19,10 +19,11 @@ class HomeCoordinator: Coordinator {
         self.childCoordinators = []
     }
     
-    func start() {
+    func start(networkManager: NetworkManageable) {
         let pastTimeCalculator: PastTimeCalculable = PastTimeCalculator()
-        let productListViewModel = ProductListViewModel(productRepository: ProductRepository(), pastTimeCalculator: pastTimeCalculator)
-        let homeViewController = HomeViewController(productListViewModel: productListViewModel)
+        let productRepository: ProductRepository = ProductRepository(networkManagerDelegate: networkManager)
+        let productListViewModel = ProductListViewModel(productRepository: productRepository, pastTimeCalculator: pastTimeCalculator)
+        let homeViewController = HomeViewController(productListViewModel: productListViewModel, netwokrManager: networkManager)
         homeViewController.coordinator = self
         presenter.pushViewController(homeViewController, animated: true)
     }

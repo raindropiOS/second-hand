@@ -8,6 +8,7 @@
 import UIKit
 
 class LikeListCoordinator: Coordinator {
+    
     var delegate: CoordinatorFinishDelegate?
     
     var presenter: UINavigationController
@@ -18,11 +19,12 @@ class LikeListCoordinator: Coordinator {
         self.presenter = presenter
         self.childCoordinators = []
     }
-    func start() {
-        let likeListVC = LikeListViewController()
-        likeListVC.coordinator = self
-        likeListVC.title = "관심 목록"
-        presenter.pushViewController(likeListVC, animated: true)
+
+    func start(networkManager: NetworkManageable) {
+        let likeListViewController = LikeListViewController(netwokrManager: networkManager)
+        likeListViewController.coordinator = self
+        likeListViewController.title = "관심 목록"
+        presenter.pushViewController(likeListViewController, animated: true)
         separatorLine()
     }
     

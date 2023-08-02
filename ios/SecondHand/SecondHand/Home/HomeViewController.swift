@@ -12,16 +12,18 @@ import UIKit
 /// 로그인 상태에서만 상품목록을 가져오도록 ProductRepository의 loadProducts 메소드가 작성되었음.
 class HomeViewController: UIViewController {
     let tableView = UITableView()
-
+    let netwokrManager: NetworkManageable
+    
     weak var coordinator: HomeCoordinator?
     let productListViewModel: ProductListViewModel
     private var cancellables = Set<AnyCancellable>()
 
     
-    init(productListViewModel: ProductListViewModel) {
-            self.productListViewModel = productListViewModel
-            super.init(nibName: nil, bundle: nil)
-        }
+    init(productListViewModel: ProductListViewModel, netwokrManager: NetworkManageable) {
+        self.productListViewModel = productListViewModel
+        self.netwokrManager = netwokrManager
+        super.init(nibName: nil, bundle: nil)
+    }
         
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

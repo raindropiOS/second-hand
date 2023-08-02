@@ -54,7 +54,10 @@ class TabBarCoordinator: NSObject, Coordinator {
     
     var childCoordinators: [Coordinator] = []
     
-    var tabBarController: UITabBarController
+    var tabBarController: TabBarController
+    
+    private let networkManager = NetworkManager.shared
+    private let keychainManager = KeychainManager()
     
     
     var tabBarItems: [TabBarItem] = [.home, .salesLog, .likeList, .chatting, .profile]
@@ -63,15 +66,16 @@ class TabBarCoordinator: NSObject, Coordinator {
         
         self.presenter = presenter
         self.childCoordinators = []
-        self.tabBarController = UITabBarController()
+        self.tabBarController = TabBarController(networkManager: self.networkManager, keychainManager: self.keychainManager)
         tabBarController.tabBar.backgroundColor = UIColor(named: "gray200")
 
         }
     
-    func start() {
+    func start(networkManager: NetworkManageable) {
         let controllers = tabBarItems.map { getTabController(item: $0) }
         prepareTabBarController(withTabControllers: controllers)
     }
+    
     func getTabController(item: TabBarItem) -> UINavigationController {
         let navigationController = UINavigationController()
         let tabItem = UITabBarItem(title: item.title, image: UIImage(systemName: item.image), selectedImage: nil)
@@ -80,7 +84,7 @@ class TabBarCoordinator: NSObject, Coordinator {
         let coordinator = item.getCoordinator(presenter: navigationController)
         coordinator.delegate = self
         childCoordinators.append(coordinator)
-        coordinator.start()
+        coordinator.start(networkManager: networkManager)
         
         return navigationController
     }

@@ -19,8 +19,6 @@ class AppCoordinator: NSObject, Coordinator {
 
     var childCoordinators: [Coordinator]
     
-    var tabBarController: UITabBarController
-    
     
     // MARK: Initializing
     
@@ -32,17 +30,15 @@ class AppCoordinator: NSObject, Coordinator {
         self.presenter = navigationController
         
         self.childCoordinators = []
-        self.tabBarController = UITabBarController()
     }
     
-    func start() {
+    func start(networkManager: NetworkManageable) {
         window.rootViewController = presenter
         let coordinator = TabBarCoordinator(presenter: presenter)
         coordinator.delegate = self
         childCoordinators.append(coordinator)
-        coordinator.start()
+        coordinator.start(networkManager: networkManager)
         
         window.makeKeyAndVisible()
     }
-    
 }

@@ -19,12 +19,12 @@ class ChattingCoordinator: NSObject, Coordinator {
         self.presenter = presenter
         self.childCoordinators = []
     }
-    
-    func start() {
-        let chattingVC = ChattingViewController()
-        chattingVC.coordinator = self
-        chattingVC.title = "채팅 목록"
-        presenter.pushViewController(chattingVC, animated: true)
+
+    func start(networkManager: NetworkManageable) {
+        let chattingViewController = ChattingViewController(netwokrManager: networkManager)
+        chattingViewController.coordinator = self
+        chattingViewController.title = "채팅 목록"
+        presenter.pushViewController(chattingViewController, animated: true)
         separatorLine()
     }
     

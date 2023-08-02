@@ -22,13 +22,11 @@ protocol Coordinator: AnyObject, CoordinatorFinishDelegate {
     
     var childCoordinators: [Coordinator] { get set }
     
-    func start()
+    func start(networkManager: NetworkManageable)
 }
 
 
 extension Coordinator {
-    func start() { }
-    
     func coordinatorDidFinish() {
         delegate?.removeChildCoordinator(self)
     }
