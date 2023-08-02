@@ -11,7 +11,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var appCoordinator: AppCoordinator?
     private let networkManager = NetworkManager()
-    private let keychainManager = KeychainManager()
 
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -21,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.appCoordinator = AppCoordinator(window: window!)
         appCoordinator?.start(networkManager: networkManager)
-        
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -34,16 +32,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         let accessToken = jwtToken.accessToken
                         let refreshToken = jwtToken.refreshToken
                         let jwt = JWT(accessToken: accessToken, refreshToken: refreshToken)
-                        self.keychainManager.temporarySavedJwt = jwt
+                    KeychainManager.shared.temporarySavedJwt = jwt
                         
                         DispatchQueue.main.async {
                             if let profileCoordinator = self.appCoordinator?
                                 .childCoordinators[0]
                                 .childCoordinators[4] as? ProfileCoordinator {
-                                profileCoordinator.startEmailInputView(networkManager: self.networkManager,
-                                                                       keychainManager: self.keychainManager)
+                                profileCoordinator.startEmailInputView(networkManager: self.networkManager)
                             }
-                        }
+                        } 
                     
                 } catch {
                     print("error : \(error)")
