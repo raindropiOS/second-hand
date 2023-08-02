@@ -37,12 +37,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         self.keychainManager.temporarySavedJwt = jwt
                         
                         DispatchQueue.main.async {
-                            let tabBarController = self.window?.rootViewController as? TabBarController
-                            
-                            if let tabBarController = tabBarController {
-                                if let navigationController = tabBarController.viewControllers?[4] as? UINavigationController {
-                                    navigationController.pushViewController(EmailInputViewController(networkManager: self.networkManager, keychainManager: self.keychainManager), animated: true)
-                                }
+                            if let profileCoordinator = self.appCoordinator?
+                                .childCoordinators[0]
+                                .childCoordinators[4] as? ProfileCoordinator {
+                                profileCoordinator.startEmailInputView(networkManager: self.networkManager,
+                                                                       keychainManager: self.keychainManager)
                             }
                         }
                     
