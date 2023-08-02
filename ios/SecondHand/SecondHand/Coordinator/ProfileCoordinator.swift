@@ -17,9 +17,10 @@ class ProfileCoordinator: Coordinator {
     
     var cancellables = Set<AnyCancellable>()
     
-    private let networkManager: NetworkManageable = NetworkManager.shared
+    private let networkManager: NetworkManageable
     
-    init(presenter: UINavigationController) {
+    init(presenter: UINavigationController, networkManager: NetworkManageable) {
+        self.networkManager = networkManager
         self.presenter = presenter
         self.childCoordinators = []
         
@@ -42,6 +43,7 @@ class ProfileCoordinator: Coordinator {
         }
         .store(in: &self.cancellables)
     }
+    
     func start(networkManager: NetworkManageable) {
         let signInViewController = SignInViewController(networkManager: networkManager)
         presenter.pushViewController(signInViewController, animated: true)
@@ -56,10 +58,8 @@ class ProfileCoordinator: Coordinator {
         separatorLine()
     }
     
-    func startEmailInputView(networkManager: NetworkManageable,
-                             keychainManager: KeychainManageable) {
-        let emailInputViewController = EmailInputViewController(networkManager: networkManager,
-                                                                keychainManager: keychainManager)
+    func startEmailInputView(networkManager: NetworkManageable) {
+        let emailInputViewController = EmailInputViewController(networkManager: networkManager)
         emailInputViewController.coordinator = self
         presenter.pushViewController(emailInputViewController, animated: true)
     }

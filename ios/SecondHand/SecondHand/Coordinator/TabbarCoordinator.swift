@@ -37,13 +37,13 @@ class TabBarCoordinator: NSObject, Coordinator {
             
         
 
-        func getCoordinator(presenter: UINavigationController) -> Coordinator {
+        func getCoordinator(presenter: UINavigationController, networkManager: NetworkManageable) -> Coordinator {
             switch self {
             case .home: return HomeCoordinator(presenter: presenter)
             case .salesLog: return SalesLogCoordinator(presenter: presenter)
             case .likeList: return LikeListCoordinator(presenter: presenter)
             case .chatting: return SalesLogCoordinator(presenter: presenter)
-            case .profile: return ProfileCoordinator(presenter: presenter)
+            case .profile: return ProfileCoordinator(presenter: presenter, networkManager: networkManager)
             }
         }
     }
@@ -56,17 +56,15 @@ class TabBarCoordinator: NSObject, Coordinator {
     
     var tabBarController: TabBarController
     
-    private let networkManager = NetworkManager.shared
-    private let keychainManager = KeychainManager()
-    
+    private let networkManager: NetworkManageable
     
     var tabBarItems: [TabBarItem] = [.home, .salesLog, .likeList, .chatting, .profile]
     
-    init(presenter: UINavigationController) {
-        
+    init(presenter: UINavigationController, networkManager: NetworkManageable) {
+        self.networkManager = networkManager
         self.presenter = presenter
         self.childCoordinators = []
-        self.tabBarController = TabBarController(networkManager: self.networkManager, keychainManager: self.keychainManager)
+        self.tabBarController = TabBarController(networkManager: networkManager)
         tabBarController.tabBar.backgroundColor = UIColor(named: "gray200")
 
         }
@@ -81,7 +79,7 @@ class TabBarCoordinator: NSObject, Coordinator {
         let tabItem = UITabBarItem(title: item.title, image: UIImage(systemName: item.image), selectedImage: nil)
         navigationController.tabBarItem = tabItem
         
-        let coordinator = item.getCoordinator(presenter: navigationController)
+        let coordinator = item.getCoordinator(presenter: navigationController, networkManager: networkManager)
         coordinator.delegate = self
         childCoordinators.append(coordinator)
         coordinator.start(networkManager: networkManager)
