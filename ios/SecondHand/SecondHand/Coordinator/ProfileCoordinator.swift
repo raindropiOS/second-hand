@@ -51,6 +51,7 @@ class ProfileCoordinator: Coordinator {
     func start(viewModel: ProfileViewModel, networkManager: NetworkManageable) {
         let profileViewController = ProfileViewController(networkManager: networkManager, viewModel: viewModel)
         profileViewController.coordinator = self
+        profileViewController.navigationItem.hidesBackButton = true
         presenter.pushViewController(profileViewController, animated: true)
         separatorLine()
     }
