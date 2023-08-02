@@ -34,7 +34,7 @@ class AppCoordinator: NSObject, Coordinator {
     
     func start(networkManager: NetworkManageable) {
         window.rootViewController = presenter
-        let coordinator = TabBarCoordinator(presenter: presenter)
+        let coordinator = TabBarCoordinator(presenter: presenter, networkManager: networkManager)
         coordinator.delegate = self
         childCoordinators.append(coordinator)
         coordinator.start(networkManager: networkManager)
