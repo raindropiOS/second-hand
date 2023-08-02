@@ -9,6 +9,7 @@ import Foundation
 
 class KeychainManager: KeychainManageable {
     private let appName = "com.team02.SecondHand"
+    static let shared = KeychainManager()
     /// GitHub OAuth 인증코드를 서버에 전달하고 받은 토큰, 이를 이메일과 함께 다시 보내 인증을 완료한다.
     var temporarySavedJwt: JWT?
     

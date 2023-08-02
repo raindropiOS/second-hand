@@ -10,7 +10,6 @@ import UIKit
 class EmailInputViewController: UIViewController, UITextFieldDelegate {
     var coordinator: ProfileCoordinator?
     private let networkManager: NetworkManageable
-    private let keychainManager: KeychainManageable
     private lazy var topBottomPadding: CGFloat = self.view.frame.height * 80/852
     private let separatorViewUnderNavigationBar: SeparatorView = SeparatorView()
     private let emailInputView: InputView = {
@@ -34,9 +33,8 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
         self.emailInputView.inputField.delegate = self
     }
     
-    init(networkManager: NetworkManageable, keychainManager: KeychainManageable) {
+    init(networkManager: NetworkManageable) {
         self.networkManager = networkManager
-        self.keychainManager = keychainManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -89,14 +87,14 @@ class EmailInputViewController: UIViewController, UITextFieldDelegate {
     
     @objc func signUpButtonTouched() {
         let email = self.emailInputView.inputText
-        if let temporarySavedjwt = self.keychainManager.temporarySavedJwt {
+        if let temporarySavedjwt = KeychainManager.shared.temporarySavedJwt {
             Task {
                 let dataTuple = try await self.networkManager.sendEmail(email, jwtAccessToken: temporarySavedjwt.refreshToken)
-                async let _ = try await self.keychainManager.deleteJsonWebToken()
+                async let _ = try await KeychainManager.shared.deleteJsonWebToken()
                 // 이메일 전달 후 새로 받은 유저 정보 및 JWT
                 let jwt = dataTuple.1
                 do {
-                    try await self.keychainManager.addJsonWebToken(jwt, email: email)
+                    try await KeychainManager.shared.addJsonWebToken(jwt, email: email)
                     UserManager.shared.isSignedIn = true
                 } catch {
                     print("error: \(error)")

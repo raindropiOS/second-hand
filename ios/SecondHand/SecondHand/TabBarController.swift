@@ -11,12 +11,10 @@ import UIKit
 class TabBarController: UITabBarController {
     weak var coordinator: TabBarCoordinator?
     private var networkManager: NetworkManageable
-    private let keychainManager: KeychainManageable
     var cancellables = Set<AnyCancellable>()
     
-    init(networkManager: NetworkManageable, keychainManager: KeychainManageable) {
+    init(networkManager: NetworkManageable) {
         self.networkManager = networkManager
-        self.keychainManager = keychainManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,7 +29,7 @@ class TabBarController: UITabBarController {
         Task {
             do {
                 // 저장된 JWT를 정상적으로 읽은 경우 -> 로그인 상태로 뷰 처리
-                self.networkManager.jwt = try await self.keychainManager.readJsonWebToken()
+                self.networkManager.jwt = try await KeychainManager.shared.readJsonWebToken()
                 UserManager.shared.isSignedIn = true
             } catch {
                 // 저장된 JWT를 읽지 못한 경우 -> 비로그인 상태로 뷰 처리
