@@ -37,6 +37,8 @@ class ProfileViewController: UIViewController {
         self.configureSignOutButton()
         self.loadProfile()
         
+        self.navigationItem.title = "내 계정"
+        
         UserManager.shared.$userInfo
             .sink { [weak self] newUserInfo in
                 if let userInfo = newUserInfo {
