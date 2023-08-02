@@ -8,6 +8,7 @@
 import UIKit
 
 class EmailInputViewController: UIViewController, UITextFieldDelegate {
+    var coordinator: ProfileCoordinator?
     private let networkManager: NetworkManageable
     private let keychainManager: KeychainManageable
     private lazy var topBottomPadding: CGFloat = self.view.frame.height * 80/852

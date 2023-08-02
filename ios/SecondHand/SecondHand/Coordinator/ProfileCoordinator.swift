@@ -56,6 +56,14 @@ class ProfileCoordinator: Coordinator {
         separatorLine()
     }
     
+    func startEmailInputView(networkManager: NetworkManageable,
+                             keychainManager: KeychainManageable) {
+        let emailInputViewController = EmailInputViewController(networkManager: networkManager,
+                                                                keychainManager: keychainManager)
+        emailInputViewController.coordinator = self
+        presenter.pushViewController(emailInputViewController, animated: true)
+    }
+    
     private func separatorLine() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .white
