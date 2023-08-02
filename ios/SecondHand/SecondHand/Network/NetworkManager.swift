@@ -132,7 +132,7 @@ extension NetworkManager {
     }
 }
 
-protocol NetworkManageable {
+protocol NetworkManageable: AnyObject {
     var jwt: JWT? { get set }
     func fetchProducts(query: [String: String]) async -> [Product]
     func presentGithubOAuthLoginScreen()
