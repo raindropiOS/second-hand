@@ -18,7 +18,6 @@ class ProfileCoordinator: Coordinator {
     var cancellables = Set<AnyCancellable>()
     
     private let networkManager: NetworkManageable = NetworkManager.shared
-    private var viewModel: ProfileViewModel = ProfileViewModel(profileImageUrlString: "", userName: "")
     
     init(presenter: UINavigationController) {
         self.presenter = presenter
@@ -26,11 +25,22 @@ class ProfileCoordinator: Coordinator {
         
         UserManager.shared.$isSignedIn.sink { [self] newData in
             if newData == true {
-                self.start(viewModel: viewModel, networkManager: networkManager)
+                Task {
+                    let userInfo = try await self.networkManager.fetchProfileInfo()
+                    let viewModel = ProfileViewModel(
+                        profileImageUrlString: userInfo.profileImageUrlString,
+                        userName: userInfo.name)
+                    DispatchQueue.main.async {
+                        self.start(viewModel: viewModel, networkManager: self.networkManager)
+                    }
+                }
             } else {
-                self.start(networkManager: networkManager)
+                if presenter.visibleViewController is ProfileViewController {
+                    presenter.popViewController(animated: true)
+                }
             }
         }
+        .store(in: &self.cancellables)
     }
     func start(networkManager: NetworkManageable) {
         let signInViewController = SignInViewController(networkManager: networkManager)
