@@ -18,6 +18,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
+        Task {
+            do {
+                // 저장된 JWT를 정상적으로 읽은 경우 -> 로그인 상태로 뷰 처리
+                self.networkManager.jwt = try await KeychainManager.shared.readJsonWebToken()
+                UserManager.shared.isSignedIn = true
+            } catch {
+                // 저장된 JWT를 읽지 못한 경우 -> 비로그인 상태로 뷰 처리
+                print("error: \(error)")
+            }
+        }
+        
         self.appCoordinator = AppCoordinator(window: window!)
         appCoordinator?.start(networkManager: networkManager)
     }

@@ -25,16 +25,5 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.backgroundColor = UIColor(named: "gray200")
-        
-        Task {
-            do {
-                // 저장된 JWT를 정상적으로 읽은 경우 -> 로그인 상태로 뷰 처리
-                self.networkManager.jwt = try await KeychainManager.shared.readJsonWebToken()
-                UserManager.shared.isSignedIn = true
-            } catch {
-                // 저장된 JWT를 읽지 못한 경우 -> 비로그인 상태로 뷰 처리
-                print("error: \(error)")
-            }
-        }
     }
 }
