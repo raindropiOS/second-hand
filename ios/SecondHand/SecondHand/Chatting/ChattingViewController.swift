@@ -11,6 +11,7 @@ class ChattingViewController: UIViewController {
     
     weak var coordinator: ChattingCoordinator?
     let netwokrManager: NetworkManageable
+    private let tableView: UITableView = .init()
     
     init(netwokrManager: NetworkManageable) {
         self.netwokrManager = netwokrManager
@@ -23,8 +24,23 @@ class ChattingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor = .white
+        
+        self.view.addSubview(self.tableView)
+        
+        self.layoutTableView()
+    }
+    
+    private func layoutTableView() {
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        let safeArea = self.view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            self.tableView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            self.tableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            self.tableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            self.tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+        ])
     }
     
 
