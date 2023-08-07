@@ -24,6 +24,7 @@
 		8F26E7782A725D80003C2918 /* URLRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F26E7772A725D80003C2918 /* URLRequestable.swift */; };
 		8F26E77A2A725F03003C2918 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F26E7792A725F03003C2918 /* LoginManager.swift */; };
 		8F2C0A9D2A809789006947EA /* ChattingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */; };
+		8F2C0A9F2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */; };
 		8F2CA02F2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA02E2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift */; };
 		8F2CA0882A5E85790011C337 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA0872A5E85790011C337 /* KeychainManager.swift */; };
 		8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71432A2DD79900C10206 /* AppDelegate.swift */; };
@@ -87,6 +88,7 @@
 		8F26E7772A725D80003C2918 /* URLRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestable.swift; sourceTree = "<group>"; };
 		8F26E7792A725F03003C2918 /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListTableViewCell.swift; sourceTree = "<group>"; };
+		8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		8F2CA02E2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubOAuthResponseDTO.swift; sourceTree = "<group>"; };
 		8F2CA0872A5E85790011C337 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		8F7C71402A2DD79900C10206 /* SecondHand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondHand.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -293,6 +295,7 @@
 			children = (
 				8F7C71722A31A01E00C10206 /* ChattingListViewController.swift */,
 				8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */,
+				8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				CC818F8B2A64DC3200698A51 /* Coordinator.swift in Sources */,
 				8F2C0A9D2A809789006947EA /* ChattingListTableViewCell.swift in Sources */,
 				8F26E77A2A725F03003C2918 /* LoginManager.swift in Sources */,
+				8F2C0A9F2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift in Sources */,
 				8F984BFF2A617B4000773DD4 /* URLComponentsProducible.swift in Sources */,
 				8FA8F3332A413D7D002C1828 /* Form.swift in Sources */,
 				8F0F6B612A42E31100F8F1D5 /* Repository.swift in Sources */,
