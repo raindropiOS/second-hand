@@ -12,9 +12,11 @@ class ChattingListViewController: UIViewController {
     weak var coordinator: ChattingCoordinator?
     let netwokrManager: NetworkManageable
     private let tableView: UITableView = .init()
+    private let viewModel: ChattingListViewModel
     
-    init(netwokrManager: NetworkManageable) {
+    init(netwokrManager: NetworkManageable, viewModel: ChattingListViewModel) {
         self.netwokrManager = netwokrManager
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,6 +29,11 @@ class ChattingListViewController: UIViewController {
         self.view.backgroundColor = .white
         
         self.view.addSubview(self.tableView)
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        
+        self.tableView.register(ChattingListTableViewCell.self, forCellReuseIdentifier: ChattingListTableViewCell.identifier)
         
         self.layoutTableView()
     }
@@ -41,5 +48,31 @@ class ChattingListViewController: UIViewController {
             self.tableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             self.tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
+    }
+}
+
+// MARK: UITableViewDataSource
+extension ChattingListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChattingListTableViewCell.identifier, for: indexPath) as? ChattingListTableViewCell else { return UITableViewCell() }
+        let viewModel = self.viewModel.chattingList[indexPath.row]
+        cell.configure(viewModel)
+        return cell
+    }
+}
+
+// MARK: UITableViewDelegate
+extension ChattingListViewController: UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        self.viewModel.chattingList.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let heightAspect: CGFloat = 120.0/393.0
+        return heightAspect * self.view.frame.width
     }
 }
