@@ -72,7 +72,7 @@ extension ChattingListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let heightAspect: CGFloat = 120.0/393.0
+        let heightAspect: CGFloat = 60.0/393.0
         return heightAspect * self.view.frame.width
     }
 }
