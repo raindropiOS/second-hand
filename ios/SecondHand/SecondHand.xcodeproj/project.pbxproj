@@ -25,6 +25,7 @@
 		8F26E77A2A725F03003C2918 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F26E7792A725F03003C2918 /* LoginManager.swift */; };
 		8F2C0A9D2A809789006947EA /* ChattingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */; };
 		8F2C0A9F2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */; };
+		8F2C0AA12A80D6DE006947EA /* ChattingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0AA02A80D6DE006947EA /* ChattingListViewModel.swift */; };
 		8F2CA02F2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA02E2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift */; };
 		8F2CA0882A5E85790011C337 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA0872A5E85790011C337 /* KeychainManager.swift */; };
 		8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71432A2DD79900C10206 /* AppDelegate.swift */; };
@@ -89,6 +90,7 @@
 		8F26E7792A725F03003C2918 /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListTableViewCell.swift; sourceTree = "<group>"; };
 		8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListTableViewCellViewModel.swift; sourceTree = "<group>"; };
+		8F2C0AA02A80D6DE006947EA /* ChattingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListViewModel.swift; sourceTree = "<group>"; };
 		8F2CA02E2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubOAuthResponseDTO.swift; sourceTree = "<group>"; };
 		8F2CA0872A5E85790011C337 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		8F7C71402A2DD79900C10206 /* SecondHand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondHand.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				8F7C71722A31A01E00C10206 /* ChattingListViewController.swift */,
+				8F2C0AA02A80D6DE006947EA /* ChattingListViewModel.swift */,
 				8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */,
 				8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */,
 			);
@@ -520,6 +523,7 @@
 				8FD6BF2A2A664F8E00C338FB /* EmailInputViewController.swift in Sources */,
 				8F9EC5922A6FA0E50097BDBB /* OAuthSignInButton.swift in Sources */,
 				8F7C71772A31C37000C10206 /* SignUpViewController.swift in Sources */,
+				8F2C0AA12A80D6DE006947EA /* ChattingListViewModel.swift in Sources */,
 				8F7C71752A31A04D00C10206 /* ProfileViewController.swift in Sources */,
 				CC818F8D2A66D15F00698A51 /* AppCoordinator.swift in Sources */,
 				8FA8F3312A408BA2002C1828 /* Town.swift in Sources */,
