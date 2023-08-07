@@ -21,7 +21,7 @@ class ChattingCoordinator: NSObject, Coordinator {
     }
 
     func start(networkManager: NetworkManageable) {
-        let chattingViewController = ChattingViewController(netwokrManager: networkManager)
+        let chattingViewController = ChattingListViewController(netwokrManager: networkManager)
         chattingViewController.coordinator = self
         chattingViewController.title = "채팅 목록"
         presenter.pushViewController(chattingViewController, animated: true)

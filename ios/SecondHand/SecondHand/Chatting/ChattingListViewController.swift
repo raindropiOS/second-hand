@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChattingViewController: UIViewController {
+class ChattingListViewController: UIViewController {
     
     weak var coordinator: ChattingCoordinator?
     let netwokrManager: NetworkManageable
