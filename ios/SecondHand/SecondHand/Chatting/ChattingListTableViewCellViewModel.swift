@@ -7,6 +7,10 @@
 
 import Foundation
 
-class ChattingListTableViewCellViewModel {
-    
+struct ChattingListTableViewCellViewModel {
+    let userImageUrl: String
+    let userName: String
+    let timePast: String
+    let lastChatMessage: String
+    let productImageUrl: String
 }
