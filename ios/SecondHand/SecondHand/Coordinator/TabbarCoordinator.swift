@@ -42,7 +42,7 @@ class TabBarCoordinator: NSObject, Coordinator {
             case .home: return HomeCoordinator(presenter: presenter)
             case .salesLog: return SalesLogCoordinator(presenter: presenter)
             case .likeList: return LikeListCoordinator(presenter: presenter)
-            case .chatting: return SalesLogCoordinator(presenter: presenter)
+            case .chatting: return ChattingCoordinator(presenter: presenter)
             case .profile: return ProfileCoordinator(presenter: presenter, networkManager: networkManager)
             }
         }
