@@ -37,7 +37,7 @@ class ChattingCoordinator: NSObject, Coordinator {
         let chattingViewController = ChattingListViewController(netwokrManager: networkManager,
                                                                 viewModel: viewModel)
         chattingViewController.coordinator = self
-        chattingViewController.title = "채팅 목록"
+        chattingViewController.title = "채팅"
         presenter.pushViewController(chattingViewController, animated: true)
         separatorLine()
     }
