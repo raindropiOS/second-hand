@@ -26,6 +26,8 @@
 		8F2C0A9D2A809789006947EA /* ChattingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */; };
 		8F2C0A9F2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */; };
 		8F2C0AA12A80D6DE006947EA /* ChattingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0AA02A80D6DE006947EA /* ChattingListViewModel.swift */; };
+		8F2C0AA32A81DA6A006947EA /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0AA22A81DA6A006947EA /* ChattingViewController.swift */; };
+		8F2C0AA52A81DA98006947EA /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2C0AA42A81DA98006947EA /* ChattingViewModel.swift */; };
 		8F2CA02F2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA02E2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift */; };
 		8F2CA0882A5E85790011C337 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA0872A5E85790011C337 /* KeychainManager.swift */; };
 		8F7C71442A2DD79900C10206 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7C71432A2DD79900C10206 /* AppDelegate.swift */; };
@@ -91,6 +93,8 @@
 		8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListTableViewCell.swift; sourceTree = "<group>"; };
 		8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		8F2C0AA02A80D6DE006947EA /* ChattingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListViewModel.swift; sourceTree = "<group>"; };
+		8F2C0AA22A81DA6A006947EA /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
+		8F2C0AA42A81DA98006947EA /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
 		8F2CA02E2A5BD9F50011C337 /* GitHubOAuthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubOAuthResponseDTO.swift; sourceTree = "<group>"; };
 		8F2CA0872A5E85790011C337 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		8F7C71402A2DD79900C10206 /* SecondHand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondHand.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -299,6 +303,8 @@
 				8F2C0AA02A80D6DE006947EA /* ChattingListViewModel.swift */,
 				8F2C0A9C2A809789006947EA /* ChattingListTableViewCell.swift */,
 				8F2C0A9E2A80CA2B006947EA /* ChattingListTableViewCellViewModel.swift */,
+				8F2C0AA22A81DA6A006947EA /* ChattingViewController.swift */,
+				8F2C0AA42A81DA98006947EA /* ChattingViewModel.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -486,6 +492,7 @@
 				CC3D21CF2A6FB53600B7AAF5 /* TabbarCoordinator.swift in Sources */,
 				8FA8F32E2A408B53002C1828 /* Product.swift in Sources */,
 				8FA8F3352A413F64002C1828 /* CountInfo.swift in Sources */,
+				8F2C0AA32A81DA6A006947EA /* ChattingViewController.swift in Sources */,
 				CC208F442A41AAE300C19467 /* PermissionManager.swift in Sources */,
 				CC208F482A42E8F700C19467 /* TownSearchViewController.swift in Sources */,
 				CCE794E42A690FA00045A62F /* SalesLogCoordinator.swift in Sources */,
@@ -516,6 +523,7 @@
 				8F7C71692A319B2900C10206 /* TabBarController.swift in Sources */,
 				8F7C71792A31C37A00C10206 /* SignInViewController.swift in Sources */,
 				8F0F6B632A42F1FE00F8F1D5 /* ProductRepository.swift in Sources */,
+				8F2C0AA52A81DA98006947EA /* ChattingViewModel.swift in Sources */,
 				8F0F6B662A44117200F8F1D5 /* ProductViewModel.swift in Sources */,
 				8F0F6BD52A58401900F8F1D5 /* ImageCacheManager.swift in Sources */,
 				8F0F6B5F2A42C7E900F8F1D5 /* DataDecoder.swift in Sources */,
