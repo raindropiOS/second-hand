@@ -75,4 +75,13 @@ extension ChattingListViewController: UITableViewDelegate {
         let heightAspect: CGFloat = 60.0/393.0
         return heightAspect * self.view.frame.width
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sentMessagesExample = [Message(text: "안녕하세요"), Message(text: "네고 가능한가요?")]
+        let receivedMessagesExample = [Message(text: "하이요"), Message(text: "얼마 정도요?")]
+        let viewModelExample = ChattingViewModel(sentMessages: sentMessagesExample,
+                                                 receivedMessages: receivedMessagesExample)
+        self.navigationController?.pushViewController(ChattingViewController(viewModel: viewModelExample), animated: true)
+        
+    }
 }
