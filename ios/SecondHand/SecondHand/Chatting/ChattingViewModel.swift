@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct ChattingViewModel {
+    let sentMessages: [Message]
+    let receivedMessages: [Message]
+}
+
+struct Message {
+    let text: String
+}
