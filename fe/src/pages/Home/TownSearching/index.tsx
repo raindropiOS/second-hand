@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 import TownSearchingHeader from '@components/Home/TownSearching/TownSearchingHeader';
 import TownSearchingMain from '@components/Home/TownSearching/TownSearchingMain';
@@ -8,6 +9,7 @@ import axiosFetch from '@apis/instances/axiosFetch';
 
 import DialogPortal from '@components/portals/DialogPortal';
 import Dialog from '@molecules/Dialog';
+import { AxiosError } from 'axios';
 
 interface Town {
   townId: number;
@@ -19,8 +21,19 @@ const TownSearching = () => {
   const { towns } = state;
   const [selectedTowns, setSelectedTowns] = useState<Town[]>(towns);
   const [inputTownName, setInputTownName] = useState('');
-  const [totalTowns, setTotalTowns] = useState<Town[]>([]);
   const [isAlertShown, setIsAlertShown] = useState(false);
+
+  const {
+    data: totalTowns,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Town[], AxiosError>(['townsData'], async () => {
+    const response = await axiosFetch.get('/towns');
+    const { data } = await response.data;
+
+    return data;
+  });
 
   const handleInputTownNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputTownName(e.target.value);
@@ -41,31 +54,20 @@ const TownSearching = () => {
         handleMoreTownClick();
         return prev;
       }
-      return [...prev, totalTowns.find(town => town.townId === townId)] as Town[];
+      return [...prev, totalTowns!.find(town => town.townId === townId)] as Town[];
     });
   };
 
-  // 타운 전체 목록 가져오는 API 호출
-  useEffect(() => {
-    const getTotalTowns = async () => {
-      const response = await axiosFetch.get('/towns');
-      const data = await response.data;
+  if (isLoading) return <div>로딩중...</div>;
 
-      const isSuccess = data.success;
-      const towns = data.data;
+  if (isError) return <div>에러 발생! {error.message}</div>;
 
-      if (!isSuccess) throw new Error('Failed to fetch total towns');
-      setTotalTowns(towns);
-    };
-
-    getTotalTowns();
-  }, []);
-  return totalTowns.length ? (
+  return (
     <>
       <TownSearchingHeader selectedTowns={selectedTowns} />
       <TownSearchingMain inputTownName={inputTownName} onChange={handleInputTownNameChange} />
       <TownSearchingFooter
-        totalTowns={totalTowns}
+        totalTowns={totalTowns as Town[]}
         inputTownName={inputTownName}
         selectedTowns={selectedTowns}
         onItemClick={handleSelectedTownsClick}
@@ -83,8 +85,6 @@ const TownSearching = () => {
         </DialogPortal>
       )}
     </>
-  ) : (
-    <>로딩중</>
   );
 };
 
